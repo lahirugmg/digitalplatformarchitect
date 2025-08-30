@@ -99,7 +99,7 @@ export const blocks: Record<string, Block> = {
       {
         kind: "list",
         title: "Tech examples",
-        items: ["MuleSoft", "Boomi", "Camel", "WSO2", "Azure Integration Services"]
+        items: ["MuleSoft", "Boomi", "Apache Camel", "Spring Integration", "Azure Integration Services"]
       },
       {
         kind: "list",
@@ -159,7 +159,7 @@ export const blocks: Record<string, Block> = {
       {
         kind: "list",
         title: "Tech examples",
-        items: ["Kong", "Apigee", "WSO2", "Azure API Management", "Tyk"]
+        items: ["Kong", "Apigee", "Ambassador", "Azure API Management", "Tyk"]
       },
       {
         kind: "list",

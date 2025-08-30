@@ -214,6 +214,15 @@ footer.footer {
   border-radius: 2px;
 }
 
+/* Centered variant for titles that need the underline centered */
+.section-title.centered {
+  text-align: center;
+}
+.section-title.centered::after {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .stack {
   display: flex;
   flex-direction: column;
@@ -1962,5 +1971,75 @@ html {
   .patterns-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+}
+
+/* Blueprint Navigation */
+.blueprint-nav {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.nav-item {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-item:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.nav-item.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.nav-title {
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.nav-indicator {
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+.view-indicator {
+  margin-top: 0.75rem;
+}
+
+.text-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.text-link:hover {
+  color: var(--primary-hover);
+}
+
+@media (max-width: 768px) {
+  .nav-grid {
+    grid-template-columns: 1fr;
   }
 }

@@ -397,6 +397,152 @@ export const patterns: Record<string, Pattern> = {
         "Workflow orchestration with reusable steps"
       ]}
     ]
+  },
+  "zero-trust-security": {
+    slug: "zero-trust-security",
+    title: "Zero-Trust Security Architecture",
+    summary:
+      "Never trust, always verify. Security model assuming breach and requiring verification for every access request.",
+    keywords: ["zero trust", "verification", "least privilege", "identity", "network security"],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "A security framework that eliminates implicit trust and requires verification for every user, device, and service attempting access, regardless of location." },
+      { kind: "list", title: "Core Principles", items: [
+        "Verify explicitly: Use all available data points for authentication",
+        "Least privilege access: Limit user and service permissions to minimum required",
+        "Assume breach: Design for containment and minimize blast radius"
+      ]},
+      { kind: "list", title: "Implementation Components", items: [
+        "Identity and Access Management with multi-factor authentication",
+        "Network micro-segmentation and policy enforcement",
+        "Device compliance and endpoint protection",
+        "Real-time risk assessment and adaptive policies"
+      ]},
+      { kind: "list", title: "Benefits", items: [
+        "Reduced attack surface and lateral movement",
+        "Improved visibility and audit trails",
+        "Better compliance posture",
+        "Support for remote work and cloud adoption"
+      ]},
+      { kind: "list", title: "When to use", items: [
+        "Cloud-first or hybrid infrastructure",
+        "Regulatory compliance requirements",
+        "Remote workforce or BYOD environments",
+        "Legacy perimeter security proving inadequate"
+      ]}
+    ]
+  },
+  "oauth2-patterns": {
+    slug: "oauth2-patterns",
+    title: "OAuth2 & OIDC Patterns",
+    summary:
+      "Secure authorization and authentication patterns using OAuth2 flows and OpenID Connect for identity federation.",
+    keywords: ["oauth2", "oidc", "authorization", "authentication", "tokens", "federation"],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "OAuth2 provides secure authorization flows, while OpenID Connect adds authentication. Together they enable identity federation and API access control." },
+      { kind: "list", title: "Common Flows", items: [
+        "Authorization Code Flow: Server-side apps with confidential clients",
+        "PKCE Flow: Mobile and SPA apps requiring additional security",
+        "Client Credentials Flow: Service-to-service authentication",
+        "Device Flow: Input-constrained devices (IoT, smart TV)"
+      ]},
+      { kind: "list", title: "Token Types", items: [
+        "Access Token: Bearer token for API authorization (JWT or opaque)",
+        "Refresh Token: Long-lived token for obtaining new access tokens",
+        "ID Token: JWT containing user identity information (OIDC)",
+        "Token introspection for real-time validation"
+      ]},
+      { kind: "list", title: "Security Considerations", items: [
+        "Token storage and transmission security",
+        "Proper scope management and least privilege",
+        "Token lifetime and refresh strategies",
+        "PKCE for public clients and CSRF protection"
+      ]},
+      { kind: "list", title: "When to use", items: [
+        "API access control and resource protection",
+        "Single sign-on across multiple applications",
+        "Third-party integrations and partner access",
+        "Modern web and mobile application authentication"
+      ]}
+    ]
+  },
+  "api-security-gateway": {
+    slug: "api-security-gateway",
+    title: "API Security Gateway Pattern",
+    summary:
+      "Centralized security enforcement for APIs including authentication, authorization, rate limiting, and threat protection.",
+    keywords: ["api gateway", "security", "rate limiting", "authentication", "authorization", "waf"],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "A security-focused API gateway that provides centralized policy enforcement, threat protection, and observability for API traffic." },
+      { kind: "list", title: "Security Capabilities", items: [
+        "Authentication and authorization enforcement",
+        "Rate limiting and DDoS protection",
+        "Request/response filtering and validation",
+        "SSL/TLS termination and certificate management",
+        "Web Application Firewall (WAF) integration"
+      ]},
+      { kind: "list", title: "Threat Protection", items: [
+        "SQL injection and XSS prevention",
+        "OWASP API Security Top 10 coverage",
+        "Bot detection and IP reputation filtering",
+        "Payload size limits and format validation"
+      ]},
+      { kind: "list", title: "Observability", items: [
+        "Security event logging and SIEM integration",
+        "Real-time security metrics and alerting",
+        "API usage analytics and anomaly detection",
+        "Compliance reporting and audit trails"
+      ]},
+      { kind: "list", title: "When to use", items: [
+        "Protecting public-facing APIs",
+        "Enforcing consistent security policies",
+        "High-traffic environments requiring protection",
+        "Regulatory compliance requirements"
+      ]}
+    ]
+  },
+  "data-encryption-patterns": {
+    slug: "data-encryption-patterns",
+    title: "Data Encryption Patterns",
+    summary:
+      "Comprehensive data protection using encryption at rest, in transit, and in use, with proper key management.",
+    keywords: ["encryption", "key management", "data protection", "tls", "database encryption"],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "A set of patterns for protecting data confidentiality through encryption across all states: at rest, in transit, and in processing." },
+      { kind: "list", title: "Encryption at Rest", items: [
+        "Database encryption (TDE - Transparent Data Encryption)",
+        "File system and volume encryption",
+        "Application-level field encryption",
+        "Cloud storage encryption with customer-managed keys"
+      ]},
+      { kind: "list", title: "Encryption in Transit", items: [
+        "TLS/SSL for HTTP and API communications",
+        "Message queue encryption (Kafka, RabbitMQ)",
+        "Database connection encryption",
+        "VPN and network-level encryption"
+      ]},
+      { kind: "list", title: "Key Management", items: [
+        "Hardware Security Modules (HSM) for key storage",
+        "Key rotation and lifecycle management",
+        "Envelope encryption for scalable key management",
+        "Key escrow and recovery procedures"
+      ]},
+      { kind: "list", title: "Advanced Patterns", items: [
+        "Format-preserving encryption for legacy systems",
+        "Homomorphic encryption for computation on encrypted data",
+        "Searchable encryption for encrypted databases",
+        "Client-side encryption with zero-knowledge architecture"
+      ]},
+      { kind: "list", title: "When to use", items: [
+        "Handling sensitive personal or financial data",
+        "Regulatory compliance (GDPR, HIPAA, PCI-DSS)",
+        "Zero-trust security architectures",
+        "Multi-tenant environments requiring data isolation"
+      ]}
+    ]
   }
 };
 
@@ -408,6 +554,11 @@ export const patternList = [
   patterns["client-server"],
   patterns["plugin-based"],
   patterns["hexagonal-architecture"],
+  // security patterns
+  patterns["zero-trust-security"],
+  patterns["oauth2-patterns"],
+  patterns["api-security-gateway"],
+  patterns["data-encryption-patterns"],
   // extras
   patterns["domain-centric-architecture"],
   patterns["clean-architecture"],

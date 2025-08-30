@@ -2,26 +2,24 @@ export type BlueprintView = {
   slug: string;
   title: string;
   summary: string;
-  diagram?: "wso2-small-ha-logical" | "wso2-small-ha-deployment";
+  diagram?: "platform-ha-logical" | "platform-ha-deployment";
 };
 
 export type Blueprint = {
   slug: string;
-  vendor: "WSO2" | "Vendor-neutral";
   title: string;
   summary: string;
   tags: string[];
   views: BlueprintView[];
 };
 
-export const wso2Blueprints: Record<string, Blueprint> = {
+export const platformBlueprints: Record<string, Blueprint> = {
   "small-ha": {
     slug: "small-ha",
-    vendor: "WSO2",
-    title: "WSO2 Small HA",
+    title: "Small Enterprise HA Platform",
     summary:
       "Single-region highly available deployment for API Management, Integration, and IAM with shared observability.",
-    tags: ["WSO2", "HA", "API-M", "IS", "Integration", "Kubernetes"],
+    tags: ["HA", "API Management", "Integration", "Identity", "Kubernetes"],
     views: [
       {
         slug: "business-goals",
@@ -39,19 +37,52 @@ export const wso2Blueprints: Record<string, Blueprint> = {
         slug: "logical-architecture",
         title: "Logical Architecture",
         summary:
-          "WSO2 API Manager gateway + publisher/portal, Micro Integrator, and Identity Server, integrated with observability and data stores.",
-        diagram: "wso2-small-ha-logical"
+          "API gateway with developer portal, integration runtime, and identity services, integrated with observability and data stores.",
+        diagram: "platform-ha-logical"
       },
       {
         slug: "deployment-blueprint",
         title: "Deployment Blueprint",
         summary:
           "Kubernetes with ingress/WAF, separate node pools per workload, data services, and shared observability.",
-        diagram: "wso2-small-ha-deployment"
+        diagram: "platform-ha-deployment"
+      }
+    ]
+  },
+  "microservices-platform": {
+    slug: "microservices-platform",
+    title: "Microservices Platform Blueprint",
+    summary:
+      "Cloud-native microservices platform with service mesh, observability, and developer experience tools.",
+    tags: ["Microservices", "Service Mesh", "Cloud-native", "DevEx", "Observability"],
+    views: [
+      {
+        slug: "business-goals",
+        title: "Business Goals",
+        summary:
+          "Enable rapid feature delivery, team autonomy, and scalable system architecture for growing organizations."
+      },
+      {
+        slug: "capability-map",
+        title: "Capability Map",
+        summary:
+          "Container Orchestration, Service Mesh, API Gateway, Identity Management, CI/CD, and Observability."
+      },
+      {
+        slug: "logical-architecture",
+        title: "Logical Architecture",
+        summary:
+          "Containerized microservices with service mesh, centralized logging, distributed tracing, and automated deployment pipelines."
+      },
+      {
+        slug: "deployment-blueprint",
+        title: "Deployment Blueprint",
+        summary:
+          "Multi-zone Kubernetes clusters with service mesh, GitOps workflows, and comprehensive monitoring stack."
       }
     ]
   }
 };
 
-export const wso2List = Object.values(wso2Blueprints);
+export const blueprintList = Object.values(platformBlueprints);
 

@@ -1,4 +1,4 @@
-export function SmallHADeployment() {
+export function PlatformHADeployment() {
   const c = {
     text: "var(--text)",
     subtle: "var(--text-secondary)",

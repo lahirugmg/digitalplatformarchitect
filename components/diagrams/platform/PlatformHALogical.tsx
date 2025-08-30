@@ -1,4 +1,4 @@
-export function SmallHALogical() {
+export function PlatformHALogical() {
   const c = {
     text: "var(--text)",
     subtle: "var(--text-secondary)",
@@ -15,8 +15,8 @@ export function SmallHALogical() {
   );
 
   return (
-    <svg viewBox="0 0 960 520" role="img" aria-labelledby="wso2-logical-title" preserveAspectRatio="xMidYMid meet">
-      <title id="wso2-logical-title">WSO2 Small HA Logical Architecture</title>
+    <svg viewBox="0 0 960 520" role="img" aria-labelledby="platform-logical-title" preserveAspectRatio="xMidYMid meet">
+      <title id="platform-logical-title">Platform HA Logical Architecture</title>
       {/* Lanes */}
       <rect x="20" y="20" width="920" height="150" rx="14" ry="14" fill={c.surface} stroke={c.border} />
       {title(40, 44, "API Management")}

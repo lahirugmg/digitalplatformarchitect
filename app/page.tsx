@@ -55,7 +55,7 @@ export default function HomePage() {
 
       <section className="patterns-showcase">
         <div className="patterns-header">
-          <h2 className="section-title">Architecture Patterns</h2>
+          <h2 className="section-title centered">Architecture Patterns</h2>
           <p className="section-description">
             Visual guides to proven architectural approaches. Each pattern includes interactive 
             diagrams showing structure, components, and key relationships.
@@ -73,10 +73,10 @@ export default function HomePage() {
 
       <section className="architecture-journey-sleek">
         <div className="journey-header-sleek">
-          <h2 className="section-title">Architecture Journey</h2>
+          <h2 className="section-title centered">Architecture Journey</h2>
           <p className="section-description">
-            Transform business requirements into production-ready platforms through a structured, 
-            proven methodology. Each phase builds upon the previous to create comprehensive solutions.
+            Transform business requirements into secure, production-ready platforms through a structured, 
+            proven methodology. Each phase builds upon the previous: Business Architecture → Solution Architecture → Security Architecture → Platform Building Blocks → Deployment Architecture.
           </p>
         </div>
 
@@ -103,6 +103,16 @@ export default function HomePage() {
 
           <ArchitectureJourneyStep
             stepNumber={3}
+            title="Security Architecture"
+            phase="Security"
+            description="Design comprehensive security controls covering access management, threat protection, data encryption, and regulatory compliance requirements."
+            keyPoints={["Identity Management", "OAuth2/SAML/JWT", "Threat Protection", "GDPR/HIPAA Compliance"]}
+            ctaText="Security Patterns"
+            ctaLink="/patterns#security"
+          />
+
+          <ArchitectureJourneyStep
+            stepNumber={4}
             title="Platform Building Blocks"
             phase="Implementation"
             description="Implement patterns using concrete technologies and platform capabilities that provide the foundation for scalable systems."
@@ -112,7 +122,7 @@ export default function HomePage() {
           />
 
           <ArchitectureJourneyStep
-            stepNumber={4}
+            stepNumber={5}
             title="Deployment Architecture"
             phase="Operations"
             description="Define deployment strategies, infrastructure requirements, and operational models for production-ready platforms."
