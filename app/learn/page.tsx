@@ -13,7 +13,7 @@ export default function LearnPage() {
         <li>Platform strategy and product operating model</li>
         <li>
           Building blocks:
-          <a href="/blocks"> message broker, streaming, integration, API mgmt, IAM, IDP</a>
+          <a href="/blocks"> event-driven (messaging & streaming), integration, API mgmt, IAM, IDP</a>
         </li>
         <li>Architecture patterns: event-driven, APIs, zero trust, multi-cloud</li>
         <li>Governance: platform taxonomy, guardrails, and dev experience</li>

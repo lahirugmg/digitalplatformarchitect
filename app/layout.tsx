@@ -13,11 +13,11 @@ export const metadata: Metadata = {
     template: "%s | Digital Platform Architect"
   },
   description:
-    "Learn enterprise digital platform architecture: principles, patterns, and practices.",
+    "Master enterprise digital platform architecture: explore core building blocks like message brokers, streaming platforms, API management, and more.",
   openGraph: {
     title: "Digital Platform Architect",
     description:
-      "Learn enterprise digital platform architecture: principles, patterns, and practices.",
+      "Master enterprise digital platform architecture: explore core building blocks like message brokers, streaming platforms, API management, and more.",
     url: "https://digitalplatformarchitect.com",
     siteName: "Digital Platform Architect",
     locale: "en_US",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Digital Platform Architect",
     description:
-      "Learn enterprise digital platform architecture: principles, patterns, and practices."
+      "Master enterprise digital platform architecture: explore core building blocks like message brokers, streaming platforms, API management, and more."
   },
   icons: {
     icon: "/favicon.svg"

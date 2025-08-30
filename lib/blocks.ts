@@ -10,124 +10,47 @@ export type Block = {
 };
 
 export const blocks: Record<string, Block> = {
-  "message-broker": {
-    slug: "message-broker",
-    title: "Message Broker",
+  "event-driven-architecture": {
+    slug: "event-driven-architecture",
+    title: "Event-Driven Architecture",
     summary:
-      "Reliable message delivery and decoupling via queues, topics, and pub/sub.",
-    keywords: ["async", "pub/sub", "queues", "decoupling", "routing"],
+      "Asynchronous messaging and streaming for decoupled, reactive systems — from simple queues/topics to log-based streams and processing.",
+    keywords: ["messaging", "pub/sub", "streams", "cdc", "eda"],
     sections: [
-      {
-        kind: "text",
-        title: "What it is",
-        body:
-          "A message broker routes and stores messages between producers and consumers, enabling asynchronous communication, decoupling, and back-pressure handling."
-      },
-      {
-        kind: "list",
-        title: "Responsibilities",
-        items: [
-          "Durable queues and topics with ordered delivery where needed",
-          "Routing (direct, fanout, topic, headers)",
-          "Dead-letter, retry, and back-off policies",
-          "Observability: tracing, metrics, DLQ visibility"
-        ]
-      },
-      {
-        kind: "list",
-        title: "Core capabilities",
-        items: [
-          "At-least-once and exactly-once semantics (where supported)",
-          "Consumer groups and competing consumers",
-          "Security: TLS, mTLS, authz per vhost/exchange/queue",
-          "Multi-tenant isolation and quotas"
-        ]
-      },
-      {
-        kind: "list",
-        title: "Architecture patterns",
-        items: [
-          "Pub/sub with topic routing",
-          "Competing consumers for throughput scaling",
-          "Transactional outbox for reliable emission",
-          "Saga orchestration with compensations"
-        ]
-      },
-      {
-        kind: "list",
-        title: "Tech examples",
-        items: ["RabbitMQ", "ActiveMQ Artemis", "Azure Service Bus", "AWS SQS"]
-      },
-      {
-        kind: "list",
-        title: "KPIs/SLIs",
-        items: [
-          "Publish/consume latency p95/p99",
-          "Redelivery and DLQ rate",
-          "Consumer lag/backlog size",
-          "Availability and partition tolerance events"
-        ]
-      }
-    ]
-  },
-  "streaming-platform": {
-    slug: "streaming-platform",
-    title: "Streaming Platform",
-    summary:
-      "High-throughput event streaming, retention, and stateful processing at scale.",
-    keywords: ["kafka", "event streams", "cdc", "flink", "ksqldb"],
-    sections: [
-      {
-        kind: "text",
-        title: "What it is",
-        body:
-          "A log-based distributed system for append-only event streams with retention, replay, and stream processing for real-time and near-real-time workloads."
-      },
-      {
-        kind: "list",
-        title: "Responsibilities",
-        items: [
-          "Durable partitioned logs with retention policies",
-          "Consumer group coordination and offset management",
-          "Schema governance and compatibility",
-          "Stream processing runtime and connectors"
-        ]
-      },
-      {
-        kind: "list",
-        title: "Core capabilities",
-        items: [
-          "Exactly-once processing (EOS) in pipelines",
-          "Change Data Capture (CDC) ingestion",
-          "Schema registry with compatibility checks",
-          "Tiered storage and multi-region replication"
-        ]
-      },
-      {
-        kind: "list",
-        title: "Architecture patterns",
-        items: [
-          "Event sourcing and CQRS",
-          "Log compaction for state streams",
-          "Streaming ETL and materialized views",
-          "Data mesh domain event contracts"
-        ]
-      },
-      {
-        kind: "list",
-        title: "Tech examples",
-        items: ["Apache Kafka", "Redpanda", "Pulsar", "Flink", "ksqlDB"]
-      },
-      {
-        kind: "list",
-        title: "KPIs/SLIs",
-        items: [
-          "Producer/consumer throughput",
-          "End-to-end event latency",
-          "Consumer lag and rebalance stability",
-          "Schema evolution failures"
-        ]
-      }
+      { kind: "text", title: "What it is", body:
+        "EDA uses events and messages to communicate between services asynchronously. It spans simple messaging (queues/topics) and streaming (partitioned logs) with retention and replay." },
+      { kind: "list", title: "Modes", items: [
+        "Simple messaging: queues & topics for work dispatch, decoupling, and back-pressure (e.g., RabbitMQ, SQS)",
+        "Streaming: append-only, partitioned logs for high-throughput events, replay, and stateful processing (e.g., Kafka, Pulsar)"
+      ]},
+      { kind: "list", title: "Responsibilities", items: [
+        "Durable delivery, ordering where required, and routing",
+        "Consumer groups, scaling, retries, DLQs/backoff",
+        "Schema governance and compatibility (for streams)",
+        "Observability: traces, metrics, and lag visibility"
+      ]},
+      { kind: "list", title: "Core capabilities", items: [
+        "At-least-once; exactly-once where supported",
+        "Retention and replay (streaming)",
+        "Connectors and CDC to ingest from databases",
+        "Security: TLS/mTLS, authz, multi-tenant isolation"
+      ]},
+      { kind: "list", title: "Architecture patterns", items: [
+        "Pub/sub topics and competing consumers",
+        "Transactional outbox and sagas",
+        "Event sourcing + CQRS",
+        "Streaming ETL and materialized views"
+      ]},
+      { kind: "list", title: "Tech examples", items: [
+        "RabbitMQ", "ActiveMQ Artemis", "AWS SQS/SNS",
+        "Apache Kafka", "Redpanda", "Pulsar", "Flink", "ksqlDB"
+      ]},
+      { kind: "list", title: "KPIs/SLIs", items: [
+        "Publish/consume latency and throughput",
+        "Consumer lag/backlog and redeliveries",
+        "DLQ rate and processing success",
+        "Rebalance stability and availability"
+      ]}
     ]
   },
   "enterprise-integration": {
@@ -370,7 +293,276 @@ export const blocks: Record<string, Block> = {
       }
     ]
   }
+  ,
+  "data-platform": {
+    slug: "data-platform",
+    title: "Data Platform",
+    summary:
+      "Lakehouse, BI/analytics, and ML pipelines with governance, quality, and lineage.",
+    keywords: [
+      "delta lake",
+      "ETL/ELT",
+      "BI",
+      "ML pipelines",
+      "catalog"
+    ],
+    sections: [
+      {
+        kind: "text",
+        title: "What it is",
+        body:
+          "An enterprise data platform that ingests, stores, models, and serves analytical and operational data — enabling BI and ML with strong governance and observability."
+      },
+      {
+        kind: "list",
+        title: "Related patterns",
+        items: [
+          "Data Mesh (decentralized ownership, federated governance)",
+          "Pipes and Filters (pipelines composition)",
+          "Event-Driven Architecture (streaming ingestion)"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Responsibilities",
+        items: [
+          "Batch and streaming ingestion (CDC, connectors)",
+          "Curated storage (lakehouse/warehouse) and modeling",
+          "Metadata, catalog, lineage, and governance",
+          "Pipelines orchestration and quality monitoring",
+          "Serving: BI, ML features, and APIs"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Core capabilities",
+        items: [
+          "Medallion/layered data architecture",
+          "Transformations (dbt/Spark/Flink) and orchestration",
+          "Lineage, data contracts, and quality checks",
+          "Feature store and reproducible ML pipelines"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Architecture patterns",
+        items: [
+          "Lambda/Kappa processing",
+          "Data mesh with domain ownership",
+          "CDC into lakes and warehouses",
+          "Materialized views and serving layers"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Tech examples",
+        items: [
+          "Databricks/Delta Lake",
+          "Snowflake",
+          "BigQuery",
+          "Apache Hudi/Iceberg",
+          "dbt",
+          "Airflow/Prefect"
+        ]
+      },
+      {
+        kind: "list",
+        title: "KPIs/SLIs",
+        items: [
+          "Data freshness and completeness",
+          "Pipeline success rate and duration",
+          "Quality rule violations",
+          "Lineage coverage"
+        ]
+      }
+    ]
+  },
+  "observability-operations": {
+    slug: "observability-operations",
+    title: "Observability & Operations",
+    summary:
+      "Telemetry, tracing, logging, SLOs, and incident response to run platforms reliably.",
+    keywords: [
+      "opentelemetry",
+      "grafana",
+      "prometheus",
+      "chaos testing",
+      "slos"
+    ],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "End-to-end visibility and operations: instrumentation, tracing, metrics, logs, alerting, SLOs, and incident management." },
+      { kind: "list", title: "Responsibilities", items: [
+        "Standardized telemetry and propagation",
+        "Dashboards, alerts, on-call and runbooks",
+        "SLO/SLI definition and reporting",
+        "Incident and problem management"
+      ]},
+      { kind: "list", title: "Core capabilities", items: [
+        "OpenTelemetry instrumentation and collectors",
+        "Distributed tracing and sampling",
+        "Metrics TSDB and log pipelines",
+        "SLO tooling and synthetic monitoring"
+      ]},
+      { kind: "list", title: "Architecture patterns", items: [
+        "RED/USE metrics",
+        "Centralized vs. federated observability",
+        "Event-driven alerting and correlation",
+        "Chaos and resilience testing"
+      ]},
+      { kind: "list", title: "Tech examples", items: [
+        "Grafana/Prometheus/Tempo/Loki",
+        "OpenTelemetry",
+        "Jaeger",
+        "Splunk",
+        "Datadog/New Relic"
+      ]},
+      { kind: "list", title: "KPIs/SLIs", items: [
+        "MTTD/MTTR",
+        "SLO compliance",
+        "Alert noise vs. signal",
+        "Trace/log coverage"
+      ]}
+    ]
+  },
+  "security-services": {
+    slug: "security-services",
+    title: "Security Services",
+    summary:
+      "Secrets, encryption, policy, and threat detection beyond IAM — enabling zero trust.",
+    keywords: ["vault", "KMS", "DLP", "threat detection", "policy"],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "Platform security capabilities including secrets and key management, encryption, scanning, and policy enforcement across the stack." },
+      { kind: "list", title: "Responsibilities", items: [
+        "Secrets lifecycle and dynamic credentials",
+        "Encryption (at-rest/in-transit) and key rotation",
+        "Policy-as-code and admission control",
+        "Vuln scanning and compliance reporting"
+      ]},
+      { kind: "list", title: "Core capabilities", items: [
+        "Vault/KMS/HSM integration",
+        "OPA/Kyverno policies",
+        "SAST/DAST/dependency scanning",
+        "Tokenization and data protection"
+      ]},
+      { kind: "list", title: "Architecture patterns", items: [
+        "Zero trust and short-lived credentials",
+        "Envelope encryption",
+        "Shift-left security with CI/CD gates",
+        "Runtime policy enforcement"
+      ]},
+      { kind: "list", title: "Tech examples", items: [
+        "HashiCorp Vault",
+        "AWS KMS/Azure Key Vault/GCP KMS",
+        "OPA/Kyverno",
+        "Trivy/Grype"
+      ]},
+      { kind: "list", title: "KPIs/SLIs", items: [
+        "Rotation compliance",
+        "Vulnerability MTTR",
+        "Policy violation rate",
+        "Secrets exposure incidents"
+      ]}
+    ]
+  },
+  "cloud-native-platform-services": {
+    slug: "cloud-native-platform-services",
+    title: "Cloud-Native Platform Services",
+    summary:
+      "Container orchestration, service mesh, networking, and policy for modern apps.",
+    keywords: [
+      "kubernetes",
+      "istio/linkerd",
+      "cilium",
+      "terraform",
+      "pulumi"
+    ],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "The platform runtime: clusters, networking, deployment tooling, and policies enabling secure, scalable delivery." },
+      { kind: "list", title: "Responsibilities", items: [
+        "Cluster and workload management",
+        "Networking, ingress/egress, and discovery",
+        "Service-to-service security (mTLS)",
+        "Scaling, scheduling, and multi-tenancy",
+        "Policy enforcement and cost controls"
+      ]},
+      { kind: "list", title: "Core capabilities", items: [
+        "GitOps (Argo CD/Flux) and Helm",
+        "Service mesh and traffic management",
+        "eBPF networking and observability",
+        "Secrets and config management"
+      ]},
+      { kind: "list", title: "Architecture patterns", items: [
+        "Blue/green and canary deployments",
+        "Progressive delivery",
+        "Multi-cluster and multi-region",
+        "Sidecars vs. ambient mesh"
+      ]},
+      { kind: "list", title: "Tech examples", items: [
+        "Kubernetes",
+        "Istio/Linkerd",
+        "Cilium",
+        "Crossplane",
+        "Terraform/Pulumi",
+        "Argo CD/Flux",
+        "Helm"
+      ]},
+      { kind: "list", title: "KPIs/SLIs", items: [
+        "Cluster uptime and SLOs",
+        "Deployment lead time and CFR",
+        "Cost efficiency and utilization",
+        "Policy compliance"
+      ]}
+    ]
+  },
+  "collaboration-knowledge-platforms": {
+    slug: "collaboration-knowledge-platforms",
+    title: "Collaboration & Knowledge Platforms",
+    summary:
+      "Enterprise knowledge, docs, and workflow platforms supporting collaboration and process automation.",
+    keywords: ["confluence", "sharepoint", "camunda", "process mining"],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "Tools and services that enable documentation, knowledge sharing, and workflow orchestration across the enterprise." },
+      { kind: "list", title: "Responsibilities", items: [
+        "Documentation and knowledge management",
+        "Search and access control",
+        "Workflow/BPM and process automation",
+        "Integration with dev and business tools"
+      ]},
+      { kind: "list", title: "Core capabilities", items: [
+        "Doc-as-code and templates",
+        "Taxonomy and discovery",
+        "Process modeling (BPMN) and execution",
+        "Event hooks and APIs"
+      ]},
+      { kind: "list", title: "Tech examples", items: [
+        "Confluence",
+        "SharePoint",
+        "Camunda",
+        "Process mining (Celonis, etc.)"
+      ]},
+      { kind: "list", title: "KPIs/SLIs", items: [
+        "Adoption and engagement",
+        "Search success rate",
+        "Onboarding time",
+        "Workflow cycle time"
+      ]}
+    ]
+  }
 };
 
-export const blockList = Object.values(blocks);
-
+export const blockList = [
+  blocks["event-driven-architecture"],
+  blocks["enterprise-integration"],
+  blocks["api-management"],
+  blocks["identity-access-management"],
+  blocks["internal-developer-platform"],
+  blocks["data-platform"],
+  blocks["observability-operations"],
+  blocks["security-services"],
+  blocks["cloud-native-platform-services"],
+  blocks["collaboration-knowledge-platforms"]
+];
