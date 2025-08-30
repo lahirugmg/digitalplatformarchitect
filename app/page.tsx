@@ -9,8 +9,8 @@ import { patterns } from "@/lib/patterns";
 
 export default function HomePage() {
   return (
-    <div className="stack gap-lg">
-      <section className="hero stack gap-md">
+    <div className="stack gap-2xl">
+      <section className="hero stack gap-lg">
         <h1 className="title">Master Digital Platform Architecture</h1>
         <p className="lede">
           Explore the essential building blocks of modern enterprise platforms —
@@ -20,16 +20,18 @@ export default function HomePage() {
           capabilities.
         </p>
         <div className="cta">
-          <Link href="/blocks" className="button primary">Dive into Building Blocks</Link>
-          <Link href="/learn" className="button">Start Learning</Link>
+          <Link href="/blocks" className="button accent sm">Dive into Building Blocks</Link>
+          <Link href="/learn" className="button ghost sm">Start Learning</Link>
         </div>
       </section>
 
-      <section className="stack gap-md">
-        <h2 className="section-title">Building Blocks</h2>
-        <p className="lede" style={{ marginTop: '-0.5rem' }}>
-          The foundational technologies powering scalable, resilient enterprise systems.
-        </p>
+      <section className="stack gap-lg">
+        <div className="stack gap-sm">
+          <h2 className="section-title">Building Blocks</h2>
+          <p className="lede" style={{ marginTop: '0' }}>
+            The foundational technologies powering scalable, resilient enterprise systems.
+          </p>
+        </div>
         <div className="card-grid featured">
           {blockList.map((b) => (
             <BlockCard key={b.slug} block={b} />
@@ -37,11 +39,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="stack gap-md">
-        <h2 className="section-title">From Building Blocks to Architecture Patterns</h2>
-        <p className="lede" style={{ marginTop: '-0.5rem' }}>
-          Modern enterprises succeed when capabilities (building blocks) and design choices (architectural patterns) reinforce each other. Building blocks provide the platform foundation, while architectural patterns provide the organizational blueprint. Together, they enable scalable, secure, and adaptive systems.
-        </p>
+      <section className="stack gap-lg">
+        <div className="stack gap-sm">
+          <h2 className="section-title">From Building Blocks to Architecture Patterns</h2>
+          <p className="lede" style={{ marginTop: '0' }}>
+            Modern enterprises succeed when capabilities (building blocks) and design choices (architectural patterns) reinforce each other. Building blocks provide the platform foundation, while architectural patterns provide the organizational blueprint. Together, they enable scalable, secure, and adaptive systems.
+          </p>
+        </div>
         <div className="connections-table">
           <div className="table-header">
             <div>Building Block</div>
@@ -71,8 +75,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="stack gap-md">
-        <h2 className="section-title">Architectural Patterns</h2>
+      <section className="stack gap-lg">
+        <div className="stack gap-sm">
+          <h2 className="section-title">Architectural Patterns</h2>
+          <p className="lede" style={{ marginTop: '0' }}>
+            Common software architecture styles, their trade-offs, and when to use them.
+          </p>
+        </div>
         <div className="card-grid">
           {patternList.slice(0, 4).map((p) => (
             <PatternCard key={p.slug} pattern={p} />
@@ -83,8 +92,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="stack gap-md">
-        <h2 className="section-title">Learn & Resources</h2>
+      <section className="stack gap-lg">
+        <div className="stack gap-sm">
+          <h2 className="section-title">Learn & Resources</h2>
+          <p className="lede" style={{ marginTop: '0' }}>
+            Structured guides and reference materials for platform architecture.
+          </p>
+        </div>
         <div className="card-grid">
           <Link href="/learn" className="card">
             <h2>Learning Paths</h2>
