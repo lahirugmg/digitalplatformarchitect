@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { patterns } from "@/lib/patterns";
+import { connections } from "@/lib/connections";
+import { blocks } from "@/lib/blocks";
 
 type Props = { params: { slug: string } };
 
@@ -25,6 +27,30 @@ export default function PatternPage({ params }: Props) {
     <article className="prose stack gap-md">
       <h1>{pattern.title}</h1>
       <p>{pattern.summary}</p>
+
+      {/* Cross-link: which building blocks typically enable this pattern */}
+      {(() => {
+        // Find all connections referencing this pattern slug
+        const enablingConnections = connections.filter((c) =>
+          c.patternSlugs.includes(pattern.slug)
+        );
+        if (!enablingConnections.length) return null;
+        return (
+          <section className="stack gap-sm">
+            <h2>Enabled By Platform Building Blocks</h2>
+            <ul>
+              {enablingConnections.map((c) => {
+                const b = blocks[c.block.slug];
+                return (
+                  <li key={c.block.slug}>
+                    <a href={`/blocks/${c.block.slug}`}>{c.block.name || b?.title}</a>: {c.description}
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        );
+      })()}
 
       {pattern.sections.map((s, idx) => (
         <section key={idx} className="stack gap-sm">
