@@ -99,7 +99,7 @@ export const blocks: Record<string, Block> = {
       {
         kind: "list",
         title: "Tech examples",
-        items: ["MuleSoft", "Boomi", "Apache Camel", "Spring Integration", "Azure Integration Services"]
+        items: ["WSO2 Integrator: Ballerina Integrator", "WSO2 IPaaS solution: Devant", "MuleSoft", "Boomi", "Apache Camel", "Spring Integration", "Azure Integration Services"]
       },
       {
         kind: "list",
@@ -159,7 +159,7 @@ export const blocks: Record<string, Block> = {
       {
         kind: "list",
         title: "Tech examples",
-        items: ["Kong", "Apigee", "Ambassador", "Azure API Management", "Tyk"]
+        items: ["WSO2 API Manager", "WSO2 Cloud API Management solution Bijira", "Kong", "Apigee", "Ambassador", "Azure API Management", "Tyk"]
       },
       {
         kind: "list",
@@ -219,7 +219,7 @@ export const blocks: Record<string, Block> = {
       {
         kind: "list",
         title: "Tech examples",
-        items: ["Keycloak", "Auth0", "Azure AD", "Okta", "SPIRE"]
+        items: ["WSO2 Identity Server", "WSO2 IAM SaaS solution Asgardeo", "Keycloak", "Auth0", "Azure AD", "Okta", "SPIRE"]
       },
       {
         kind: "list",
