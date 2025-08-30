@@ -279,7 +279,7 @@ export const blocks: Record<string, Block> = {
       {
         kind: "list",
         title: "Tech examples",
-        items: ["Backstage", "Humanitec", "Port", "Internal", "Harness IDP"]
+        items: ["WSO2 Choreo", "Backstage", "Humanitec", "Port", "Internal", "Harness IDP"]
       },
       {
         kind: "list",
