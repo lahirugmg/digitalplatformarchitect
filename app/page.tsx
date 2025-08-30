@@ -12,37 +12,41 @@ export default function HomePage() {
       <section className="hero stack gap-lg">
         <h1 className="title">Master Digital Platform Architecture</h1>
         <p className="lede">
-          Explore the essential building blocks of modern enterprise platforms —
-          from reliable messaging and high‑throughput streaming to API
-          management, IAM and developer platforms, plus data platforms,
-          observability, security services, and cloud‑native platform
-          capabilities.
+          Explore proven architectural patterns and the platform building blocks that enable them. 
+          Learn when and how to apply microservices, event-driven, layered, and other patterns 
+          in your enterprise systems.
         </p>
         <div className="cta">
-          <Link href="/blocks" className="button accent sm">Dive into Building Blocks</Link>
-          <Link href="/learn" className="button ghost sm">Start Learning</Link>
+          <Link href="/patterns" className="button accent sm">Explore Patterns</Link>
+          <Link href="/blocks" className="button ghost sm">Platform Building Blocks</Link>
         </div>
       </section>
 
       <section className="stack gap-lg">
         <div className="stack gap-sm">
-          <h2 className="section-title">Building Blocks</h2>
+          <h2 className="section-title">Architecture Patterns</h2>
           <p className="lede" style={{ marginTop: '0' }}>
-            The foundational technologies powering scalable, resilient enterprise systems.
+            Proven architectural approaches with visual diagrams showing their structure, 
+            components, and interactions. Understand the trade-offs and when to apply each pattern.
           </p>
         </div>
         <div className="card-grid featured">
-          {blockList.map((b) => (
-            <BlockCard key={b.slug} block={b} />
+          {patternList.slice(0, 6).map((p) => (
+            <PatternCard key={p.slug} pattern={p} />
           ))}
+        </div>
+        <div>
+          <Link href="/patterns" className="button accent" aria-label="View all patterns">View All Patterns</Link>
         </div>
       </section>
 
       <section className="stack gap-lg">
         <div className="stack gap-sm">
-          <h2 className="section-title">From Building Blocks to Architecture Patterns</h2>
+          <h2 className="section-title">From Patterns to Platform Building Blocks</h2>
           <p className="lede" style={{ marginTop: '0' }}>
-            Modern enterprises succeed when capabilities (building blocks) and design choices (architectural patterns) reinforce each other. Building blocks provide the platform foundation, while architectural patterns provide the organizational blueprint. Together, they enable scalable, secure, and adaptive systems.
+            Architecture patterns describe how to structure systems, while platform building blocks 
+            provide the concrete technologies and capabilities that enable these patterns. 
+            Explore the connections between them.
           </p>
         </div>
         <ConnectionsExplorer />
@@ -50,18 +54,18 @@ export default function HomePage() {
 
       <section className="stack gap-lg">
         <div className="stack gap-sm">
-          <h2 className="section-title">Architectural Patterns</h2>
+          <h2 className="section-title">Platform Building Blocks</h2>
           <p className="lede" style={{ marginTop: '0' }}>
-            Common software architecture styles, their trade-offs, and when to use them.
+            The foundational platform capabilities that power modern enterprise systems.
           </p>
         </div>
         <div className="card-grid">
-          {patternList.slice(0, 4).map((p) => (
-            <PatternCard key={p.slug} pattern={p} />
+          {blockList.slice(0, 6).map((b) => (
+            <BlockCard key={b.slug} block={b} />
           ))}
         </div>
         <div>
-          <Link href="/patterns" className="button" aria-label="View all patterns">Explore All Patterns</Link>
+          <Link href="/blocks" className="button" aria-label="View all building blocks">View All Building Blocks</Link>
         </div>
       </section>
 
@@ -73,6 +77,14 @@ export default function HomePage() {
           </p>
         </div>
         <div className="card-grid">
+          <Link href="/story" className="card">
+            <h2>Architecture Story</h2>
+            <p>Follow a real-world journey from business challenge to platform implementation.</p>
+          </Link>
+          <Link href="/blueprints" className="card">
+            <h2>Blueprints</h2>
+            <p>From business goals to deployment. Start with WSO2.</p>
+          </Link>
           <Link href="/learn" className="card">
             <h2>Learning Paths</h2>
             <p>Structured guides to master platform architecture concepts and practices.</p>
@@ -80,10 +92,6 @@ export default function HomePage() {
           <Link href="/resources" className="card">
             <h2>Reference Materials</h2>
             <p>Capability maps, patterns, and decision guides for platform design.</p>
-          </Link>
-          <Link href="/about" className="card">
-            <h2>About This Site</h2>
-            <p>Purpose, scope, and how to contribute to the platform architecture knowledge base.</p>
           </Link>
         </div>
       </section>

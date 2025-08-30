@@ -10,15 +10,15 @@ export type Block = {
 };
 
 export const blocks: Record<string, Block> = {
-  "event-driven-architecture": {
-    slug: "event-driven-architecture",
-    title: "Event-Driven Architecture",
+  "messaging-streaming-platform": {
+    slug: "messaging-streaming-platform",
+    title: "Messaging & Streaming Platform",
     summary:
-      "Asynchronous messaging and streaming for decoupled, reactive systems — from simple queues/topics to log-based streams and processing.",
+      "Asynchronous messaging and streaming infrastructure for decoupled, reactive systems — from simple queues/topics to log-based streams and processing.",
     keywords: ["messaging", "pub/sub", "streams", "cdc", "eda"],
     sections: [
       { kind: "text", title: "What it is", body:
-        "EDA uses events and messages to communicate between services asynchronously. It spans simple messaging (queues/topics) and streaming (partitioned logs) with retention and replay." },
+        "A platform capability that provides messaging and streaming infrastructure to enable event-driven architectures. It spans simple messaging (queues/topics) and streaming (partitioned logs) with retention and replay." },
       { kind: "list", title: "Modes", items: [
         "Simple messaging: queues & topics for work dispatch, decoupling, and back-pressure (e.g., RabbitMQ, SQS)",
         "Streaming: append-only, partitioned logs for high-throughput events, replay, and stateful processing (e.g., Kafka, Pulsar)"
@@ -555,7 +555,7 @@ export const blocks: Record<string, Block> = {
 };
 
 export const blockList = [
-  blocks["event-driven-architecture"],
+  blocks["messaging-streaming-platform"],
   blocks["enterprise-integration"],
   blocks["api-management"],
   blocks["identity-access-management"],
