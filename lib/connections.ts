@@ -1,5 +1,7 @@
 export type Connection = {
   block: { name: string; slug: string };
+  /** Optional subtopics to clarify scope within a block (e.g., Messaging vs Streaming) */
+  subtopics?: string[];
   /** Comma separated label version kept for simple textual display */
   patterns: string;
   /** Slugs of the architectural patterns this block enables */
@@ -9,16 +11,11 @@ export type Connection = {
 
 export const connections: Connection[] = [
   {
-    block: { name: "Message Broker", slug: "event-driven-architecture" },
-    patterns: "Event-Driven, Microservices",
-    patternSlugs: ["event-driven-architecture", "microservice-architecture"],
-    description: "Decouples services, enables async workflows, and supports resilience.",
-  },
-  {
-    block: { name: "Streaming Platform", slug: "event-driven-architecture" },
-    patterns: "Event-Driven, CQRS",
-    patternSlugs: ["event-driven-architecture", "cqrs"],
-    description: "High-throughput event streams for real-time processing and event sourcing.",
+    block: { name: "Event-Driven Architecture", slug: "event-driven-architecture" },
+    subtopics: ["Messaging", "Streaming"],
+    patterns: "Event-Driven, Microservices, CQRS",
+    patternSlugs: ["event-driven-architecture", "microservice-architecture", "cqrs"],
+    description: "Decouples services, enables async workflows, supports event sourcing and real-time processing.",
   },
   {
     block: { name: "Enterprise Integration", slug: "enterprise-integration" },
@@ -45,7 +42,7 @@ export const connections: Connection[] = [
     description: "Enables self-service deployments, golden paths, and faster delivery cycles.",
   },
   {
-    block: { name: "Data Platform & Analytics", slug: "data-platform" },
+    block: { name: "Data Platform", slug: "data-platform" },
     patterns: "Data Mesh, CQRS",
     patternSlugs: ["data-mesh", "cqrs"],
     description: "Treats data as a product, enabling insights, ML, and distributed governance.",

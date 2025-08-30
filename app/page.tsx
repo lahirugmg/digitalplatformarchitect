@@ -4,8 +4,7 @@ import { blockList } from "@/lib/blocks";
 import { BlockCard } from "@/components/BlockCard";
 import { patternList } from "@/lib/patterns";
 import { PatternCard } from "@/components/PatternCard";
-import { connections } from "@/lib/connections";
-import { patterns } from "@/lib/patterns";
+import { ConnectionsExplorer } from "@/components/ConnectionsExplorer";
 
 export default function HomePage() {
   return (
@@ -46,33 +45,7 @@ export default function HomePage() {
             Modern enterprises succeed when capabilities (building blocks) and design choices (architectural patterns) reinforce each other. Building blocks provide the platform foundation, while architectural patterns provide the organizational blueprint. Together, they enable scalable, secure, and adaptive systems.
           </p>
         </div>
-        <div className="connections-table">
-          <div className="table-header">
-            <div>Building Block</div>
-            <div>Enables Patterns</div>
-            <div>How it Helps</div>
-          </div>
-          {connections.map((c) => {
-            const patternLinks = c.patternSlugs
-              .map((slug) => patterns[slug])
-              .filter(Boolean)
-              .map((p) => (
-                <Link key={p.slug} href={`/patterns/${p.slug}`}>{p.title}</Link>
-              ))
-              .reduce<(JSX.Element | string)[]>((acc, el, idx, arr) => {
-                acc.push(el);
-                if (idx < arr.length - 1) acc.push(', ');
-                return acc;
-              }, []);
-            return (
-              <div key={c.block.name} className="table-row">
-                <div><Link href={`/blocks/${c.block.slug}`}>{c.block.name}</Link></div>
-                <div>{patternLinks}</div>
-                <div>{c.description}</div>
-              </div>
-            );
-          })}
-        </div>
+        <ConnectionsExplorer />
       </section>
 
       <section className="stack gap-lg">

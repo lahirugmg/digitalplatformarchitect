@@ -635,6 +635,18 @@ html {
   color: var(--primary-hover);
 }
 
+/* Badge links inside connections table should look like badges, not text links */
+.connections-table .table-row a.badge {
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-color: var(--border);
+}
+
+.connections-table .table-row a.badge:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
 /* Explorer */
 .explorer-bar {
   display: flex;
