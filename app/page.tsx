@@ -4,6 +4,7 @@ import { blockList } from "@/lib/blocks";
 import { patternList } from "@/lib/patterns";
 import { PatternCard } from "@/components/PatternCard";
 import { ConnectionsExplorer } from "@/components/ConnectionsExplorer";
+import { DigitalPlatformDiagram } from "@/components/diagrams/DigitalPlatformDiagram";
 
 function ArchitectureJourneyStep({ 
   stepNumber, 
@@ -199,6 +200,18 @@ export default function HomePage() {
               </div>
             </Link>
           </div>
+        </div>
+      </section>
+
+      <section className="stack gap-lg">
+        <div className="stack gap-sm">
+          <h2 className="section-title">Digital Platform Architecture</h2>
+          <p className="lede" style={{ marginTop: '0' }}>
+            Visual overview of the core building blocks that form a modern digital platform.
+          </p>
+        </div>
+        <div className="diagram-container">
+          <DigitalPlatformDiagram />
         </div>
       </section>
 
