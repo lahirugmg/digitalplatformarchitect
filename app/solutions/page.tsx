@@ -9,15 +9,16 @@ export default function SolutionsPage() {
   return (
     <div className="container">
       <article className="solutions-article">
-        <header className="solutions-header">
-          <h1>Solutions: From Patterns to Platforms</h1>
-          <p className="solutions-subtitle">
+        <header className="page-hero stack gap-sm">
+          <h1 className="page-title">Solutions: From Patterns to Platforms</h1>
+          <p className="lede">
             Turning architecture patterns into real-world digital platforms requires more than just
             building blocks. It needs the right views—business, solution, and deployment—presented at
             the right level of detail (L0–L3) for each audience. This section shows how these
             perspectives connect so stakeholders, architects, and engineers collaborate effectively.
           </p>
           <nav className="solutions-toc" aria-label="Solutions navigation">
+            <a href="#audience-roles" className="toc-link">Audience & Roles</a>
             <a href="#business-architecture" className="toc-link">Business Architecture</a>
             <a href="#solution-architecture" className="toc-link">Solution Architecture</a>
             <a href="#security-architecture" className="toc-link">Security Architecture</a>
@@ -26,6 +27,57 @@ export default function SolutionsPage() {
             <a href="#how-it-connects" className="toc-link">How It Connects</a>
           </nav>
         </header>
+
+        <section id="audience-roles" className="solutions-section">
+          <div className="section-card roles-card">
+            <div className="section-header">
+              <div className="section-icon">👥</div>
+              <h2>Audience & Roles</h2>
+            </div>
+            <div className="section-content">
+              <p className="section-description">
+                These views serve different stakeholders at the right level of detail, from business intent to operational reality.
+              </p>
+              <div className="content-grid">
+                <div className="content-block">
+                  <h3>Business Stakeholders</h3>
+                  <ul className="feature-list">
+                    <li><span className="bullet">🏢</span> Understand how an application interacts with other applications in their domain</li>
+                    <li><span className="bullet">🧭</span> Focus on value, capabilities, KPIs (use Business Architecture L0/L1)</li>
+                  </ul>
+                </div>
+                <div className="content-block">
+                  <h3>Architecture Review Board / Design Authority</h3>
+                  <ul className="feature-list">
+                    <li><span className="bullet">✅</span> Validate conformance to standards and guidelines</li>
+                    <li><span className="bullet">🛡️</span> Review patterns, security, governance, NFRs (Solution/Deployment L1/L2)</li>
+                  </ul>
+                </div>
+                <div className="content-block">
+                  <h3>Software Engineering Leaders</h3>
+                  <ul className="feature-list">
+                    <li><span className="bullet">🎯</span> Assess how the solution addresses the problem and the trade‑offs</li>
+                    <li><span className="bullet">🧩</span> Plan dependencies, staffing, and risks (Solution Architecture L1/L2)</li>
+                  </ul>
+                </div>
+                <div className="content-block">
+                  <h3>Software Engineers</h3>
+                  <ul className="feature-list">
+                    <li><span className="bullet">🛠️</span> Build or evolve applications with clear interfaces and flows</li>
+                    <li><span className="bullet">📐</span> Use contracts, sequences, templates, golden paths (Solution L2 / Deployment L2/L3)</li>
+                  </ul>
+                </div>
+                <div className="content-block">
+                  <h3>Operations Engineers</h3>
+                  <ul className="feature-list">
+                    <li><span className="bullet">⚙️</span> Understand runtime topology to diagnose and resolve issues</li>
+                    <li><span className="bullet">📊</span> Use environments, SLOs, telemetry, networking, runbooks (Deployment L2/L3)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section id="business-architecture" className="solutions-section">
           <div className="section-card business-card">

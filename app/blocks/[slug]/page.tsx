@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { blocks } from "@/lib/blocks";
 import { connections } from "@/lib/connections";
 import { patterns } from "@/lib/patterns";
+import { EnhancedBlockDiagram } from "@/components/EnhancedBlockDiagram";
 
 type Props = { params: { slug: string } };
 
@@ -24,47 +25,65 @@ export default function BlockPage({ params }: Props) {
   if (!block) return notFound();
 
   return (
-    <article className="prose stack gap-md">
-      <h1>{block.title}</h1>
-      <p>{block.summary}</p>
+    <div className="container">
+      <article className="prose stack gap-lg" style={{ maxWidth: '900px', margin: '0 auto' }}>
+        <header className="block-header">
+          <h1 className="page-title">{block.title}</h1>
+          <p className="lede">{block.summary}</p>
+        </header>
 
-      {/* Cross-link: which architectural patterns this block enables */}
-      {(() => {
-        const c = connections.find((c) => c.block.slug === block.slug);
-        if (!c) return null;
-        const related = c.patternSlugs
-          .map((slug) => patterns[slug])
-          .filter(Boolean);
-        if (!related.length) return null;
-        return (
-          <section className="stack gap-sm">
-            <h2>Enables Architectural Patterns</h2>
-            <ul>
-              {related.map((p) => (
-                <li key={p.slug}>
-                  <a href={`/patterns/${p.slug}`}>{p.title}</a>: {p.summary}
-                </li>
-              ))}
-            </ul>
-          </section>
-        );
-      })()}
-
-      {block.sections.map((s, idx) => (
-        <section key={idx} className="stack gap-sm">
-          <h2>{s.title}</h2>
-          {s.kind === "text" ? (
-            <p>{s.body}</p>
-          ) : (
-            <ul>
-              {s.items.map((it, i) => (
-                <li key={i}>{it}</li>
-              ))}
-            </ul>
-          )}
+        {/* Enhanced Interactive Diagram */}
+        <section className="block-diagram-section">
+          <EnhancedBlockDiagram 
+            slug={block.slug} 
+            title={block.title}
+            interactive={true}
+          />
         </section>
-      ))}
-    </article>
+
+        {/* Cross-link: which architectural patterns this block enables */}
+        {(() => {
+          const c = connections.find((c) => c.block.slug === block.slug);
+          if (!c) return null;
+          const related = c.patternSlugs
+            .map((slug) => patterns[slug])
+            .filter(Boolean);
+          if (!related.length) return null;
+          return (
+            <section className="stack gap-sm patterns-section">
+              <h2>Enables Architectural Patterns</h2>
+              <div className="patterns-grid-compact">
+                {related.map((p) => (
+                  <a 
+                    key={p.slug} 
+                    href={`/patterns/${p.slug}`}
+                    className="pattern-link-card"
+                  >
+                    <h3>{p.title}</h3>
+                    <p>{p.summary}</p>
+                  </a>
+                ))}
+              </div>
+            </section>
+          );
+        })()}
+
+        {block.sections.map((s, idx) => (
+          <section key={idx} className="block-content-section">
+            <h2>{s.title}</h2>
+            {s.kind === "text" ? (
+              <p>{s.body}</p>
+            ) : (
+              <ul className="capability-list">
+                {s.items.map((it, i) => (
+                  <li key={i}>{it}</li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ))}
+      </article>
+    </div>
   );
 }
 

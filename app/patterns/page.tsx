@@ -35,20 +35,24 @@ export default function PatternsIndexPage() {
   const patternsWithoutDiagrams = patternList.filter(p => !patternDiagrams[p.slug]);
 
   return (
-    <section className="stack gap-xl">
-      <header className="page-hero stack gap-sm">
-        <h1 className="page-title">Architecture Styles & Patterns</h1>
-        <p className="lede">
-          Explore common architecture styles and patterns, their trade-offs, and when to use them.
-          Visual diagrams help you understand structure and relationships.
-        </p>
-      </header>
+    <div className="container">
+      <article className="patterns-article">
+        <header className="page-hero stack gap-sm">
+          <h1 className="page-title">Architecture Styles & Patterns</h1>
+          <p className="lede">
+            Explore common architecture styles and patterns, their trade-offs, and when to use them.
+            Visual diagrams help you understand structure and relationships.
+          </p>
+        </header>
 
-      {/* Featured Patterns with Diagrams */}
-      <section className="stack gap-md">
-        <h2 className="section-title centered blue">Featured Patterns with Visual Diagrams</h2>
-        <div className="patterns-with-diagrams">
-          {patternsWithDiagrams.map((p) => {
+        {/* Featured Patterns with Diagrams */}
+        <section className="patterns-section">
+          <div className="section-header">
+            <div className="section-icon">📐</div>
+            <h2>Featured Patterns with Visual Diagrams</h2>
+          </div>
+          <div className="patterns-with-diagrams">
+            {patternsWithDiagrams.map((p) => {
             const DiagramComponent = patternDiagrams[p.slug];
             return (
               <div key={p.slug} className="pattern-with-diagram">
@@ -146,6 +150,7 @@ export default function PatternsIndexPage() {
           </ul>
         </div>
       </section>
-    </section>
+    </article>
+    </div>
   );
 }

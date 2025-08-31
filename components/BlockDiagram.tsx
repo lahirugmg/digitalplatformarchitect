@@ -6,8 +6,6 @@ import { IDPDiagram } from "./diagrams/blocks/IDPDiagram";
 import { DataPlatformDiagram } from "./diagrams/blocks/DataPlatformDiagram";
 import { ObservabilityDiagram } from "./diagrams/blocks/ObservabilityDiagram";
 import { SecurityDiagram } from "./diagrams/blocks/SecurityDiagram";
-import { CloudNativeDiagram } from "./diagrams/blocks/CloudNativeDiagram";
-import { CollaborationDiagram } from "./diagrams/blocks/CollaborationDiagram";
 
 const blockDiagrams: Record<string, React.ComponentType> = {
   "messaging-streaming-platform": MessagingDiagram,
@@ -18,8 +16,6 @@ const blockDiagrams: Record<string, React.ComponentType> = {
   "data-platform": DataPlatformDiagram,
   "observability-operations": ObservabilityDiagram,
   "security-services": SecurityDiagram,
-  "cloud-native-platform-services": CloudNativeDiagram,
-  "collaboration-knowledge-platforms": CollaborationDiagram,
 };
 
 export function BlockDiagram({ slug }: { slug: string }) {

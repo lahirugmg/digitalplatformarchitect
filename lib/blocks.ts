@@ -494,92 +494,6 @@ export const blocks: Record<string, Block> = {
         "Secrets exposure incidents"
       ]}
     ]
-  },
-  "cloud-native-platform-services": {
-    slug: "cloud-native-platform-services",
-    title: "Cloud-Native Platform Services",
-    summary:
-      "Container orchestration, service mesh, networking, and policy for modern apps.",
-    keywords: [
-      "kubernetes",
-      "istio/linkerd",
-      "cilium",
-      "terraform",
-      "pulumi"
-    ],
-    sections: [
-      { kind: "text", title: "What it is", body:
-        "The platform runtime: clusters, networking, deployment tooling, and policies enabling secure, scalable delivery." },
-      { kind: "list", title: "Responsibilities", items: [
-        "Cluster and workload management",
-        "Networking, ingress/egress, and discovery",
-        "Service-to-service security (mTLS)",
-        "Scaling, scheduling, and multi-tenancy",
-        "Policy enforcement and cost controls"
-      ]},
-      { kind: "list", title: "Core capabilities", items: [
-        "GitOps (Argo CD/Flux) and Helm",
-        "Service mesh and traffic management",
-        "eBPF networking and observability",
-        "Secrets and config management"
-      ]},
-      { kind: "list", title: "Architecture patterns", items: [
-        "Blue/green and canary deployments",
-        "Progressive delivery",
-        "Multi-cluster and multi-region",
-        "Sidecars vs. ambient mesh"
-      ]},
-      { kind: "list", title: "Tech examples", items: [
-        "Kubernetes",
-        "Istio/Linkerd",
-        "Cilium",
-        "Crossplane",
-        "Terraform/Pulumi",
-        "Argo CD/Flux",
-        "Helm"
-      ]},
-      { kind: "list", title: "KPIs/SLIs", items: [
-        "Cluster uptime and SLOs",
-        "Deployment lead time and CFR",
-        "Cost efficiency and utilization",
-        "Policy compliance"
-      ]}
-    ]
-  },
-  "collaboration-knowledge-platforms": {
-    slug: "collaboration-knowledge-platforms",
-    title: "Collaboration & Knowledge Platforms",
-    summary:
-      "Enterprise knowledge, docs, and workflow platforms supporting collaboration and process automation.",
-    keywords: ["confluence", "sharepoint", "camunda", "process mining"],
-    sections: [
-      { kind: "text", title: "What it is", body:
-        "Tools and services that enable documentation, knowledge sharing, and workflow orchestration across the enterprise." },
-      { kind: "list", title: "Responsibilities", items: [
-        "Documentation and knowledge management",
-        "Search and access control",
-        "Workflow/BPM and process automation",
-        "Integration with dev and business tools"
-      ]},
-      { kind: "list", title: "Core capabilities", items: [
-        "Doc-as-code and templates",
-        "Taxonomy and discovery",
-        "Process modeling (BPMN) and execution",
-        "Event hooks and APIs"
-      ]},
-      { kind: "list", title: "Tech examples", items: [
-        "Confluence",
-        "SharePoint",
-        "Camunda",
-        "Process mining (Celonis, etc.)"
-      ]},
-      { kind: "list", title: "KPIs/SLIs", items: [
-        "Adoption and engagement",
-        "Search success rate",
-        "Onboarding time",
-        "Workflow cycle time"
-      ]}
-    ]
   }
 };
 
@@ -591,7 +505,5 @@ export const blockList = [
   blocks["internal-developer-platform"],
   blocks["data-platform"],
   blocks["observability-operations"],
-  blocks["security-services"],
-  blocks["cloud-native-platform-services"],
-  blocks["collaboration-knowledge-platforms"]
+  blocks["security-services"]
 ];
