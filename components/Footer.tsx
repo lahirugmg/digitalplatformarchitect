@@ -11,7 +11,6 @@ export function Footer() {
         </div>
         <div className="footer-links">
           <a href="/about">About</a>
-          <a href="/resources">Resources</a>
           <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
         <small className="footer-copyright">

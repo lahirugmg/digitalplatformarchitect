@@ -9,7 +9,7 @@ export const metadata = {
 export default function BlueprintsIndexPage() {
   return (
     <section className="stack gap-lg">
-      <h1 className="title">Architecture Blueprints</h1>
+      <h1 className="page-title">Architecture Blueprints</h1>
       <p className="lede">
         End-to-end implementation guides that take you from business goals to production deployment. 
         Each blueprint provides vendor-neutral patterns you can adapt to your technology choices.

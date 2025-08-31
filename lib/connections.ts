@@ -12,10 +12,10 @@ export type Connection = {
 export const connections: Connection[] = [
   {
     block: { name: "Messaging & Streaming Platform", slug: "messaging-streaming-platform" },
-    subtopics: ["Messaging", "Streaming"],
+    subtopics: ["Messaging", "Streaming", "Security", "Observability"],
     patterns: "Event-Driven, Microservices, CQRS",
     patternSlugs: ["event-driven-architecture", "microservice-architecture", "cqrs"],
-    description: "Provides messaging and streaming infrastructure to enable event-driven patterns, decouple services, and support async workflows.",
+    description: "Provides secure, observable messaging and streaming infrastructure to enable event-driven patterns, decouple services, support async workflows, and ensure enterprise-grade reliability.",
   },
   {
     block: { name: "Enterprise Integration", slug: "enterprise-integration" },

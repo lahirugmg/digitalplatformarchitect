@@ -16,7 +16,7 @@ export const patterns: Record<string, Pattern> = {
     title: "Layered Architecture",
     aka: ["n-tier"],
     summary:
-      "Organize code into layers (presentation, business, persistence, database) with clear responsibilities and boundaries.",
+      "Organize code into layers (presentation, business, persistence, database) with clear responsibilities and boundaries (often deployed across N‑tiers).",
     keywords: ["presentation", "business", "persistence", "database", "n-tier"],
     sections: [
       {
@@ -39,7 +39,8 @@ export const patterns: Record<string, Pattern> = {
       { kind: "list", title: "Trade-offs", items: [
         "Risk of anemic domain models",
         "Harder to enforce boundaries in large codebases",
-        "Vertical slices may cut across many layers (slower changes)"
+        "Vertical slices may cut across many layers (slower changes)",
+        "Chatty calls across layers and rigidity if abstractions harden too early"
       ]},
       { kind: "list", title: "When to use", items: [
         "CRUD-heavy business apps",
@@ -139,8 +140,8 @@ export const patterns: Record<string, Pattern> = {
   },
   "plugin-based": {
     slug: "plugin-based",
-    title: "Plugin-Based Architecture",
-    aka: ["modular architecture"],
+    title: "Microkernel / Plugin Architecture",
+    aka: ["microkernel", "plug-in", "modular architecture"],
     summary:
       "Core system exposes extension points; features are delivered as plugins loaded at runtime or build time.",
     keywords: ["extensibility", "plugins", "modules", "extensions"],
@@ -188,13 +189,13 @@ export const patterns: Record<string, Pattern> = {
   "clean-architecture": {
     slug: "clean-architecture",
     title: "Clean Architecture",
-    aka: ["onion", "screaming architecture"],
+    aka: ["uncle bob", "screaming architecture"],
     summary:
-      "Layered concentric rings emphasizing use cases and entities, enforcing inward dependency flow.",
+      "Domain‑centric, dependency‑inversion style family emphasizing concentric layers (entities, use cases, interfaces) and the Dependency Rule.",
     keywords: ["use cases", "entities", "dependency rule"],
     sections: [
       { kind: "text", title: "What it is", body:
-        "A refinement of layered/hexagonal stressing the dependency rule: source code dependencies point only inward toward higher-level policies." },
+        "Best viewed as a family of domain‑centered, dependency‑inversion styles (closely related to Hexagonal and Onion). Many teams use it as a style; others apply its principles (boundaries, Dependency Rule, use‑case orientation) within other patterns." },
       { kind: "list", title: "Benefits", items: [
         "Framework-agnostic domain core",
         "Improved testability and maintainability"
@@ -262,7 +263,7 @@ export const patterns: Record<string, Pattern> = {
   "domain-centric-architecture": {
     slug: "domain-centric-architecture",
     title: "Domain-Centric Architecture",
-    aka: ["onion/hexagonal/clean family", "DDD-aligned"],
+    aka: ["onion/hexagonal/clean family", "DDD-aligned", "domain-centric layering"],
     summary:
       "A family of styles that place the domain model and use cases at the center, enforcing boundaries and dependency inversion.",
     keywords: ["domain", "boundaries", "ports", "dependency rule", "DDD"],
@@ -316,6 +317,32 @@ export const patterns: Record<string, Pattern> = {
         "Large enterprises with many legacy systems",
         "Strong need for standardization and mediation",
         "Gradual modernization toward microservices"
+      ]}
+    ]
+  },
+  "onion-architecture": {
+    slug: "onion-architecture",
+    title: "Onion Architecture",
+    aka: ["domain-centric layering"],
+    summary:
+      "Domain-centric layering with the domain model at the center; infrastructure concerns form outer rings; enforces dependency rule inward.",
+    keywords: ["onion", "layers", "dependency rule", "domain"],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "A domain-first style with concentric layers: domain model at the core, then application services, then infrastructure. Dependencies point inward to protect the domain." },
+      { kind: "list", title: "Benefits", items: [
+        "Strong separation of concerns and testability",
+        "Easier to replace infrastructure and frameworks",
+        "Aligns well with DDD and modularization"
+      ]},
+      { kind: "list", title: "Trade-offs", items: [
+        "More indirection/boilerplate (mappers, interfaces)",
+        "Requires discipline to maintain boundaries"
+      ]},
+      { kind: "list", title: "Related", items: [
+        "Hexagonal (Ports & Adapters)",
+        "Clean Architecture",
+        "Domain-Centric Architecture"
       ]}
     ]
   },
@@ -544,6 +571,60 @@ export const patterns: Record<string, Pattern> = {
       ]}
     ]
   }
+  ,
+  "broker-architecture": {
+    slug: "broker-architecture",
+    title: "Broker (Message‑Brokered)",
+    aka: ["broker", "message-brokered"],
+    summary:
+      "Decouple producers and consumers via a broker that routes, buffers, and delivers messages (queues/topics).",
+    keywords: ["broker", "queue", "topic", "pub/sub", "routing"],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "A mediator style where components communicate indirectly through a broker. The broker handles routing (direct, fanout, topic), buffering, retries, and dead letters." },
+      { kind: "list", title: "Benefits", items: [
+        "Temporal decoupling and backpressure handling",
+        "Scalable consumers (competing consumers)",
+        "Failure isolation via DLQs and retries"
+      ]},
+      { kind: "list", title: "Trade-offs", items: [
+        "Operational complexity of the broker",
+        "At-least-once semantics require idempotency",
+        "Debugging multi-hop flows is harder"
+      ]},
+      { kind: "list", title: "When to use", items: [
+        "Asynchronous work dispatch and integration",
+        "Decoupling services with variable load",
+        "Bridging unreliable or bursty producers"
+      ]}
+    ]
+  },
+  "blackboard-architecture": {
+    slug: "blackboard-architecture",
+    title: "Blackboard",
+    summary:
+      "Multiple specialized components collaborate by reading/writing to a shared knowledge source (the blackboard) until a solution emerges.",
+    keywords: ["ai", "knowledge source", "collaboration", "control"],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "A problem-solving style where independent knowledge sources incrementally contribute partial solutions to a shared blackboard, guided by a control component." },
+      { kind: "list", title: "Benefits", items: [
+        "Flexible problem decomposition and collaboration",
+        "Supports heuristic or uncertain domains",
+        "Extensible with new knowledge sources"
+      ]},
+      { kind: "list", title: "Trade-offs", items: [
+        "Designing the control strategy is complex",
+        "Performance tuning can be difficult",
+        "Shared state contention without careful design"
+      ]},
+      { kind: "list", title: "When to use", items: [
+        "Complex problem domains (e.g., recognition, planning)",
+        "When multiple heuristics contribute to solutions",
+        "Research/AI or analytics-heavy systems"
+      ]}
+    ]
+  }
 };
 
 // Order for homepage: first 6 are the focus topics requested
@@ -560,6 +641,7 @@ export const patternList = [
   patterns["api-security-gateway"],
   patterns["data-encryption-patterns"],
   // extras
+  patterns["onion-architecture"],
   patterns["domain-centric-architecture"],
   patterns["clean-architecture"],
   patterns["cqrs"],
@@ -568,5 +650,7 @@ export const patternList = [
   patterns["service-oriented-architecture"],
   patterns["space-based-architecture"],
   patterns["data-mesh"],
-  patterns["pipes-and-filters"]
+  patterns["pipes-and-filters"],
+  patterns["broker-architecture"],
+  patterns["blackboard-architecture"]
 ];

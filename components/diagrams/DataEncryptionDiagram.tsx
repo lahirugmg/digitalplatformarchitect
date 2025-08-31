@@ -1,178 +1,200 @@
 export function DataEncryptionDiagram() {
+  const c = {
+    text: "var(--text)",
+    subtle: "var(--text-secondary)",
+    border: "var(--border)",
+    surface: "var(--surface)",
+    alt: "var(--surface-alt)",
+    kms: "var(--purple-light)",
+    transit: "var(--orange-light)",
+    rest: "var(--green-light)",
+    use: "#4ecdc4",
+    compliance: "#e74c3c",
+  } as const;
+
+  const font = "600 14px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
+  const fontSub = "500 12px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
+  const fontTitle = "700 16px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
+
   return (
-    <svg viewBox="0 0 800 600" className="w-full h-auto">
+    <svg viewBox="0 0 900 700" role="img" aria-labelledby="encryption-title encryption-desc" preserveAspectRatio="xMidYMid meet">
+      <title id="encryption-title">Data Encryption Patterns</title>
+      <desc id="encryption-desc">Comprehensive data encryption covering at rest, in transit, and in use with key management and compliance frameworks.</desc>
+      
       <defs>
-        <filter id="shadow">
-          <feDropShadow dx="2" dy="2" stdDeviation="2" floodOpacity="0.3"/>
-        </filter>
-        <marker id="arrowhead" markerWidth="10" markerHeight="7" 
-                refX="9" refY="3.5" orient="auto">
-          <polygon points="0 0, 10 3.5, 0 7" fill="var(--text-muted)" />
+        <marker id="arrow-enc" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill={c.subtle} />
         </marker>
-        <pattern id="encrypted" patternUnits="userSpaceOnUse" width="8" height="8">
-          <rect width="8" height="8" fill="var(--accent)" fillOpacity="0.1"/>
-          <path d="M0,8 L8,0" stroke="var(--accent)" strokeWidth="1" opacity="0.3"/>
+        <pattern id="grid-enc" patternUnits="userSpaceOnUse" width="20" height="20">
+          <path d="M 20 0 L 0 0 0 20" fill="none" stroke={c.border} strokeWidth="0.3" opacity="0.2"/>
         </pattern>
+        <pattern id="encrypted-pattern" patternUnits="userSpaceOnUse" width="12" height="12">
+          <rect width="12" height="12" fill={c.rest} fillOpacity="0.1"/>
+          <path d="M0,12 L12,0" stroke={c.rest} strokeWidth="1" opacity="0.3"/>
+          <path d="M0,6 L6,0 M6,12 L12,6" stroke={c.rest} strokeWidth="0.5" opacity="0.2"/>
+        </pattern>
+        <filter id="shadow-enc">
+          <feDropShadow dx="2" dy="2" stdDeviation="3" floodOpacity="0.2"/>
+        </filter>
+        <linearGradient id="kms-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor={c.kms} />
+          <stop offset="100%" stopColor="#e8eaf6" />
+        </linearGradient>
       </defs>
+
+      {/* Background grid */}
+      <rect width="900" height="700" fill="url(#grid-enc)" />
+
+      {/* Main title */}
+      <rect x="200" y="15" width="500" height="35" fill={c.kms} stroke="none" rx="17" ry="17" />
+      <text x="450" y="38" textAnchor="middle" fill="#fff" style={{ font: fontTitle }}>🔐 Data Encryption Patterns</text>
+
+      {/* Key Management System - Top Layer */}
+      <rect x="50" y="70" width="800" height="100" fill="url(#kms-gradient)" fillOpacity="0.2" 
+            stroke={c.kms} strokeWidth="3" rx="15" ry="15" filter="url(#shadow-enc)" />
+      <text x="450" y="100" textAnchor="middle" fill={c.text} style={{ font: fontTitle }}>🗝️ Key Management System (KMS)</text>
       
-      {/* Background */}
-      <rect width="800" height="600" fill="var(--surface)"/>
-      
-      {/* Title */}
-      <text x="400" y="30" textAnchor="middle" className="text-lg font-bold" fill="var(--text)">
-        Data Encryption Patterns - At Rest, In Transit, In Use
-      </text>
-      
-      {/* Key Management Section */}
-      <rect x="50" y="60" width="700" height="80" fill="var(--secondary)" fillOpacity="0.1" 
-            stroke="var(--secondary)" strokeWidth="2" rx="8"/>
-      <text x="400" y="85" textAnchor="middle" fill="var(--secondary)" className="font-bold text-lg">
-        Key Management System (KMS)
-      </text>
-      
-      <rect x="80" y="105" width="120" height="25" fill="var(--secondary)" rx="4"/>
-      <text x="140" y="122" textAnchor="middle" fill="white" className="text-xs font-medium">
-        Hardware Security Module
-      </text>
-      
-      <rect x="220" y="105" width="100" height="25" fill="var(--secondary)" rx="4"/>
-      <text x="270" y="122" textAnchor="middle" fill="white" className="text-xs font-medium">
-        Key Rotation
-      </text>
-      
-      <rect x="340" y="105" width="120" height="25" fill="var(--secondary)" rx="4"/>
-      <text x="400" y="122" textAnchor="middle" fill="white" className="text-xs font-medium">
-        Envelope Encryption
-      </text>
-      
-      <rect x="480" y="105" width="100" height="25" fill="var(--secondary)" rx="4"/>
-      <text x="530" y="122" textAnchor="middle" fill="white" className="text-xs font-medium">
-        Key Escrow
-      </text>
-      
-      <rect x="600" y="105" width="120" height="25" fill="var(--secondary)" rx="4"/>
-      <text x="660" y="122" textAnchor="middle" fill="white" className="text-xs font-medium">
-        Access Control
-      </text>
+      <rect x="80" y="120" width="130" height="35" fill={c.kms} stroke={c.border} rx="6" ry="6" />
+      <text x="145" y="135" textAnchor="middle" fill="white" style={{ font: fontSub }}>🏛️ Hardware Security</text>
+      <text x="145" y="150" textAnchor="middle" fill="white" style={{ font: fontSub }}>Module (HSM)</text>
+
+      <rect x="230" y="120" width="110" height="35" fill={c.kms} stroke={c.border} rx="6" ry="6" />
+      <text x="285" y="135" textAnchor="middle" fill="white" style={{ font: fontSub }}>🔄 Key Rotation</text>
+      <text x="285" y="150" textAnchor="middle" fill="white" style={{ font: fontSub }}>Automated</text>
+
+      <rect x="360" y="120" width="130" height="35" fill={c.kms} stroke={c.border} rx="6" ry="6" />
+      <text x="425" y="135" textAnchor="middle" fill="white" style={{ font: fontSub }}>📦 Envelope Encryption</text>
+      <text x="425" y="150" textAnchor="middle" fill="white" style={{ font: fontSub }}>DEK + KEK Pattern</text>
+
+      <rect x="510" y="120" width="110" height="35" fill={c.kms} stroke={c.border} rx="6" ry="6" />
+      <text x="565" y="135" textAnchor="middle" fill="white" style={{ font: fontSub }}>🛡️ Key Escrow</text>
+      <text x="565" y="150" textAnchor="middle" fill="white" style={{ font: fontSub }}>Recovery</text>
+
+      <rect x="640" y="120" width="130" height="35" fill={c.kms} stroke={c.border} rx="6" ry="6" />
+      <text x="705" y="135" textAnchor="middle" fill="white" style={{ font: fontSub }}>🔐 Access Control</text>
+      <text x="705" y="150" textAnchor="middle" fill="white" style={{ font: fontSub }}>RBAC + Policies</text>
+
+      {/* Three Main Encryption Types */}
       
       {/* Encryption in Transit */}
-      <rect x="50" y="170" width="200" height="140" fill="var(--accent)" fillOpacity="0.1" 
-            stroke="var(--accent)" strokeWidth="2" rx="8"/>
-      <text x="150" y="195" textAnchor="middle" fill="var(--accent)" className="font-bold">
-        Encryption in Transit
-      </text>
+      <rect x="60" y="200" width="240" height="180" fill={c.transit} fillOpacity="0.15" 
+            stroke={c.transit} strokeWidth="2" rx="12" ry="12" />
+      <text x="180" y="225" textAnchor="middle" fill={c.text} style={{ font }}>🚀 Encryption in Transit</text>
       
-      <rect x="70" y="210" width="60" height="40" fill="var(--accent)" rx="4"/>
-      <text x="100" y="225" textAnchor="middle" fill="white" className="text-xs">Client</text>
-      <text x="100" y="240" textAnchor="middle" fill="white" className="text-xs">App</text>
-      
-      <rect x="160" y="210" width="60" height="40" fill="var(--accent)" rx="4"/>
-      <text x="190" y="225" textAnchor="middle" fill="white" className="text-xs">API</text>
-      <text x="190" y="240" textAnchor="middle" fill="white" className="text-xs">Server</text>
-      
-      <line x1="130" y1="230" x2="155" y2="230" stroke="var(--accent)" strokeWidth="3"/>
-      <text x="142" y="222" textAnchor="middle" className="text-xs font-bold" fill="var(--accent)">TLS</text>
-      
-      <text x="75" y="270" className="text-xs" fill="var(--text)">• HTTPS/TLS 1.3</text>
-      <text x="75" y="285" className="text-xs" fill="var(--text)">• Message Encryption</text>
-      <text x="75" y="300" className="text-xs" fill="var(--text)">• Certificate Pinning</text>
-      
+      <rect x="80" y="245" width="80" height="50" fill={c.transit} stroke={c.border} rx="8" ry="8" />
+      <text x="120" y="265" textAnchor="middle" fill="white" style={{ font: fontSub }}>💻 Client</text>
+      <text x="120" y="280" textAnchor="middle" fill="white" style={{ font: fontSub }}>Browser/App</text>
+
+      <rect x="200" y="245" width="80" height="50" fill={c.transit} stroke={c.border} rx="8" ry="8" />
+      <text x="240" y="265" textAnchor="middle" fill="white" style={{ font: fontSub }}>🌐 Server</text>
+      <text x="240" y="280" textAnchor="middle" fill="white" style={{ font: fontSub }}>API Gateway</text>
+
+      {/* TLS Connection */}
+      <line x1="160" y1="270" x2="200" y2="270" stroke={c.transit} strokeWidth={4} />
+      <text x="180" y="265" textAnchor="middle" fill="white" style={{ font: fontSub }}>TLS 1.3</text>
+
+      <rect x="75" y="310" width="190" height="55" fill={c.alt} stroke={c.border} rx="6" ry="6" opacity="0.9" />
+      <text x="170" y="325" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>🔒 Protocols & Standards</text>
+      <text x="170" y="340" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• HTTPS/TLS 1.3 • QUIC</text>
+      <text x="170" y="355" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Certificate Pinning • HSTS</text>
+
       {/* Encryption at Rest */}
-      <rect x="300" y="170" width="200" height="180" fill="var(--primary)" fillOpacity="0.1" 
-            stroke="var(--primary)" strokeWidth="2" rx="8"/>
-      <text x="400" y="195" textAnchor="middle" fill="var(--primary)" className="font-bold">
-        Encryption at Rest
-      </text>
+      <rect x="330" y="200" width="240" height="240" fill={c.rest} fillOpacity="0.15" 
+            stroke={c.rest} strokeWidth="2" rx="12" ry="12" />
+      <text x="450" y="225" textAnchor="middle" fill={c.text} style={{ font }}>💾 Encryption at Rest</text>
       
-      <rect x="320" y="210" width="70" height="50" fill="url(#encrypted)" 
-            stroke="var(--primary)" strokeWidth="2" rx="4"/>
-      <text x="355" y="230" textAnchor="middle" fill="var(--primary)" className="text-xs font-bold">Database</text>
-      <text x="355" y="245" textAnchor="middle" fill="var(--primary)" className="text-xs">TDE</text>
-      
-      <rect x="410" y="210" width="70" height="50" fill="url(#encrypted)" 
-            stroke="var(--primary)" strokeWidth="2" rx="4"/>
-      <text x="445" y="230" textAnchor="middle" fill="var(--primary)" className="text-xs font-bold">File</text>
-      <text x="445" y="245" textAnchor="middle" fill="var(--primary)" className="text-xs">System</text>
-      
-      <rect x="320" y="280" width="70" height="50" fill="url(#encrypted)" 
-            stroke="var(--primary)" strokeWidth="2" rx="4"/>
-      <text x="355" y="300" textAnchor="middle" fill="var(--primary)" className="text-xs font-bold">Object</text>
-      <text x="355" y="315" textAnchor="middle" fill="var(--primary)" className="text-xs">Storage</text>
-      
-      <rect x="410" y="280" width="70" height="50" fill="url(#encrypted)" 
-            stroke="var(--primary)" strokeWidth="2" rx="4"/>
-      <text x="445" y="295" textAnchor="middle" fill="var(--primary)" className="text-xs font-bold">Application</text>
-      <text x="445" y="310" textAnchor="middle" fill="var(--primary)" className="text-xs">Field Level</text>
-      <text x="445" y="325" textAnchor="middle" fill="var(--primary)" className="text-xs">AES-256</text>
-      
+      <rect x="350" y="245" width="90" height="60" fill="url(#encrypted-pattern)" 
+            stroke={c.rest} strokeWidth="2" rx="8" ry="8" />
+      <text x="395" y="265" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>🗄️ Database</text>
+      <text x="395" y="280" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>TDE</text>
+      <text x="395" y="295" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>AES-256</text>
+
+      <rect x="460" y="245" width="90" height="60" fill="url(#encrypted-pattern)" 
+            stroke={c.rest} strokeWidth="2" rx="8" ry="8" />
+      <text x="505" y="265" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>📁 File System</text>
+      <text x="505" y="280" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>BitLocker/LUKS</text>
+      <text x="505" y="295" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Full Disk</text>
+
+      <rect x="350" y="320" width="90" height="60" fill="url(#encrypted-pattern)" 
+            stroke={c.rest} strokeWidth="2" rx="8" ry="8" />
+      <text x="395" y="340" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>☁️ Object Storage</text>
+      <text x="395" y="355" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>S3/Blob</text>
+      <text x="395" y="370" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Server-side</text>
+
+      <rect x="460" y="320" width="90" height="60" fill="url(#encrypted-pattern)" 
+            stroke={c.rest} strokeWidth="2" rx="8" ry="8" />
+      <text x="505" y="340" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>⚙️ Application</text>
+      <text x="505" y="355" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>Field Level</text>
+      <text x="505" y="370" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Column Encrypt</text>
+
+      <rect x="405" y="395" width="90" height="35" fill={c.alt} stroke={c.border} rx="6" ry="6" opacity="0.9" />
+      <text x="450" y="415" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>🔑 Key Hierarchy</text>
+      <text x="450" y="425" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Master → Data Keys</text>
+
       {/* Encryption in Use */}
-      <rect x="550" y="170" width="200" height="140" fill="#4ecdc4" fillOpacity="0.1" 
-            stroke="#4ecdc4" strokeWidth="2" rx="8"/>
-      <text x="650" y="195" textAnchor="middle" fill="#4ecdc4" className="font-bold">
-        Encryption in Use
-      </text>
+      <rect x="600" y="200" width="240" height="180" fill={c.use} fillOpacity="0.15" 
+            stroke={c.use} strokeWidth="2" rx="12" ry="12" />
+      <text x="720" y="225" textAnchor="middle" fill={c.text} style={{ font }}>🧠 Encryption in Use</text>
       
-      <rect x="570" y="210" width="160" height="30" fill="#4ecdc4" rx="4"/>
-      <text x="650" y="230" textAnchor="middle" fill="white" className="text-xs font-bold">
-        Homomorphic Encryption
-      </text>
-      
-      <rect x="570" y="250" width="160" height="30" fill="#4ecdc4" rx="4"/>
-      <text x="650" y="270" textAnchor="middle" fill="white" className="text-xs font-bold">
-        Secure Enclaves (TEE)
-      </text>
-      
-      <text x="575" y="295" className="text-xs" fill="var(--text)">• Process encrypted data</text>
-      <text x="575" y="308" className="text-xs" fill="var(--text)">• Zero-knowledge proofs</text>
-      
+      <rect x="620" y="245" width="200" height="40" fill={c.use} stroke={c.border} rx="8" ry="8" />
+      <text x="720" y="265" textAnchor="middle" fill="white" style={{ font: fontSub }}>🔢 Homomorphic Encryption</text>
+      <text x="720" y="280" textAnchor="middle" fill="white" style={{ font: fontSub }}>Compute on Encrypted Data</text>
+
+      <rect x="620" y="300" width="200" height="40" fill={c.use} stroke={c.border} rx="8" ry="8" />
+      <text x="720" y="320" textAnchor="middle" fill="white" style={{ font: fontSub }}>🏰 Secure Enclaves (TEE)</text>
+      <text x="720" y="335" textAnchor="middle" fill="white" style={{ font: fontSub }}>Intel SGX, ARM TrustZone</text>
+
+      <rect x="615" y="350" width="210" height="20" fill={c.alt} stroke={c.border} rx="4" ry="4" opacity="0.9" />
+      <text x="720" y="362" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Zero-knowledge proofs • Confidential computing</text>
+
       {/* Key Distribution Arrows */}
-      <line x1="150" y1="140" x2="150" y2="165" stroke="var(--secondary)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)" strokeDasharray="5,5"/>
-      <line x1="400" y1="140" x2="400" y2="165" stroke="var(--secondary)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)" strokeDasharray="5,5"/>
-      <line x1="650" y1="140" x2="650" y2="165" stroke="var(--secondary)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)" strokeDasharray="5,5"/>
+      <line x1="180" y1="170" x2="180" y2="200" stroke={c.kms} strokeWidth={2.5} strokeDasharray="5,5" markerEnd="url(#arrow-enc)" />
+      <line x1="450" y1="170" x2="450" y2="200" stroke={c.kms} strokeWidth={2.5} strokeDasharray="5,5" markerEnd="url(#arrow-enc)" />
+      <line x1="720" y1="170" x2="720" y2="200" stroke={c.kms} strokeWidth={2.5} strokeDasharray="5,5" markerEnd="url(#arrow-enc)" />
+
+      {/* Compliance Frameworks */}
+      <rect x="50" y="460" width="800" height="100" fill={c.alt} fillOpacity="0.3" 
+            stroke={c.compliance} strokeWidth="2" rx="12" ry="12" />
+      <text x="450" y="485" textAnchor="middle" fill={c.text} style={{ font }}>📋 Regulatory Compliance Frameworks</text>
       
-      {/* Compliance Framework */}
-      <rect x="50" y="380" width="700" height="80" fill="var(--surface-alt)" 
-            stroke="var(--text-muted)" strokeWidth="1" rx="8"/>
-      <text x="400" y="405" textAnchor="middle" fill="var(--text)" className="font-bold">
-        Regulatory Compliance Frameworks
-      </text>
+      <rect x="80" y="500" width="90" height="35" fill="#e74c3c" stroke={c.border} rx="6" ry="6" />
+      <text x="125" y="520" textAnchor="middle" fill="white" style={{ font: fontSub }}>🇪🇺 GDPR</text>
+      <text x="125" y="530" textAnchor="middle" fill="white" style={{ font: fontSub }}>Data Protection</text>
+
+      <rect x="190" y="500" width="90" height="35" fill="#3498db" stroke={c.border} rx="6" ry="6" />
+      <text x="235" y="520" textAnchor="middle" fill="white" style={{ font: fontSub }}>🏥 HIPAA</text>
+      <text x="235" y="530" textAnchor="middle" fill="white" style={{ font: fontSub }}>Healthcare</text>
+
+      <rect x="300" y="500" width="90" height="35" fill="#f39c12" stroke={c.border} rx="6" ry="6" />
+      <text x="345" y="520" textAnchor="middle" fill="white" style={{ font: fontSub }}>💳 PCI-DSS</text>
+      <text x="345" y="530" textAnchor="middle" fill="white" style={{ font: fontSub }}>Payment Cards</text>
+
+      <rect x="410" y="500" width="90" height="35" fill="#9b59b6" stroke={c.border} rx="6" ry="6" />
+      <text x="455" y="520" textAnchor="middle" fill="white" style={{ font: fontSub }}>🔒 SOC 2</text>
+      <text x="455" y="530" textAnchor="middle" fill="white" style={{ font: fontSub }}>Security Controls</text>
+
+      <rect x="520" y="500" width="90" height="35" fill="#27ae60" stroke={c.border} rx="6" ry="6" />
+      <text x="565" y="520" textAnchor="middle" fill="white" style={{ font: fontSub }}>🏛️ FedRAMP</text>
+      <text x="565" y="530" textAnchor="middle" fill="white" style={{ font: fontSub }}>Government</text>
+
+      <rect x="630" y="500" width="90" height="35" fill="#e67e22" stroke={c.border} rx="6" ry="6" />
+      <text x="675" y="520" textAnchor="middle" fill="white" style={{ font: fontSub }}>🌍 ISO 27001</text>
+      <text x="675" y="530" textAnchor="middle" fill="white" style={{ font: fontSub }}>Info Security</text>
+
+      <rect x="740" y="500" width="90" height="35" fill="#34495e" stroke={c.border} rx="6" ry="6" />
+      <text x="785" y="520" textAnchor="middle" fill="white" style={{ font: fontSub }}>🌐 NIST</text>
+      <text x="785" y="530" textAnchor="middle" fill="white" style={{ font: fontSub }}>Cybersecurity</text>
+
+      {/* Encryption Standards */}
+      <rect x="50" y="580" width="800" height="100" fill={c.alt} stroke={c.border} rx="10" ry="10" opacity="0.9" />
+      <text x="450" y="605" textAnchor="middle" fill={c.text} style={{ font }}>🔐 Encryption Standards & Algorithms</text>
       
-      <rect x="80" y="420" width="80" height="25" fill="#e74c3c" rx="4"/>
-      <text x="120" y="437" textAnchor="middle" fill="white" className="text-xs font-bold">GDPR</text>
-      
-      <rect x="180" y="420" width="80" height="25" fill="#3498db" rx="4"/>
-      <text x="220" y="437" textAnchor="middle" fill="white" className="text-xs font-bold">HIPAA</text>
-      
-      <rect x="280" y="420" width="80" height="25" fill="#f39c12" rx="4"/>
-      <text x="320" y="437" textAnchor="middle" fill="white" className="text-xs font-bold">PCI-DSS</text>
-      
-      <rect x="380" y="420" width="80" height="25" fill="#9b59b6" rx="4"/>
-      <text x="420" y="437" textAnchor="middle" fill="white" className="text-xs font-bold">SOC 2</text>
-      
-      <rect x="480" y="420" width="80" height="25" fill="#27ae60" rx="4"/>
-      <text x="520" y="437" textAnchor="middle" fill="white" className="text-xs font-bold">FedRAMP</text>
-      
-      <rect x="580" y="420" width="80" height="25" fill="#e67e22" rx="4"/>
-      <text x="620" y="437" textAnchor="middle" fill="white" className="text-xs font-bold">ISO 27001</text>
-      
-      {/* Encryption Algorithms */}
-      <rect x="50" y="480" width="700" height="60" fill="var(--surface-alt)" 
-            stroke="var(--accent)" strokeWidth="1" rx="6"/>
-      <text x="60" y="500" className="text-sm font-bold" fill="var(--accent)">Encryption Standards:</text>
-      <text x="60" y="515" className="text-xs" fill="var(--text)">
-        • AES-256 (Symmetric) • RSA-4096 (Asymmetric) • ChaCha20-Poly1305 (AEAD)
-      </text>
-      <text x="60" y="530" className="text-xs" fill="var(--text)">
-        • SHA-256/SHA-3 (Hashing) • PBKDF2/Argon2 (Key Derivation) • ECDH/ECDSA (ECC)
-      </text>
-      
-      {/* Data Flow Indicators */}
-      <text x="275" y="240" className="text-xs font-bold" fill="var(--accent)">🔒 Encrypted</text>
-      <text x="520" y="240" className="text-xs font-bold" fill="var(--primary)">🔐 Stored</text>
-      
+      <text x="450" y="630" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Symmetric: AES-256, ChaCha20-Poly1305 • Asymmetric: RSA-4096, ECDSA-P384, Ed25519</text>
+      <text x="450" y="645" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Hashing: SHA-256, SHA-3, BLAKE2 • Key Derivation: PBKDF2, Argon2, scrypt</text>
+      <text x="450" y="660" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Digital Signatures: ECDSA, RSA-PSS • Key Exchange: ECDH, X25519</text>
+
+      {/* Benefits summary */}
+      <text x="450" y="690" textAnchor="middle" fill={c.text} style={{ font }}>Benefits: Data confidentiality • Integrity protection • Compliance assurance • Trust establishment</text>
     </svg>
   );
 }

@@ -4,6 +4,7 @@ import { blockList } from "@/lib/blocks";
 import { patternList } from "@/lib/patterns";
 import { PatternCard } from "@/components/PatternCard";
 import { ConnectionsExplorer } from "@/components/ConnectionsExplorer";
+import { DigitalPlatformDiagram } from "@/components/diagrams/DigitalPlatformDiagram";
 
 function ArchitectureJourneyStep({ 
   stepNumber, 
@@ -47,10 +48,16 @@ export default function HomePage() {
     <div className="stack gap-2xl">
       <section className="hero stack gap-lg">
         <h1 className="title">Master Digital Platform Architecture</h1>
-        <p className="lede">
-          Explore proven architecture patterns with visual diagrams, then follow the complete 
-          journey from business needs to production deployment.
-        </p>
+        <p className="lede">Digital platform architects identify the essential technical <span className="hl hl-blocks">building blocks</span> and align them with the right <span className="hl hl-patterns">architectural patterns</span> — creating robust, scalable, future‑ready platforms. The ultimate outcome is delivering <span className="hl hl-solutions">solutions</span> that tackle real business challenges and generate measurable value.</p>
+      </section>
+
+      <section className="stack gap-lg">
+        <div className="stack gap-sm">
+          <h2 className="section-title">Digital Platform Building Blocks</h2>
+        </div>
+        <div className="diagram-container">
+          <DigitalPlatformDiagram />
+        </div>
       </section>
 
       <section className="patterns-showcase">
