@@ -10,9 +10,18 @@ export default function ArchitectureStoryPage() {
             How business architecture, solution architecture, and technical architecture 
             collaborate to transform patterns into real-world digital platforms
           </p>
+          <nav className="story-toc" aria-label="Story navigation">
+            <a href="#business-challenge" className="toc-link">Challenge</a>
+            <a href="#act-i" className="toc-link">Act I — Business</a>
+            <a href="#act-ii" className="toc-link">Act II — Solution</a>
+            <a href="#act-iii" className="toc-link">Act III — Technical</a>
+            <a href="#transformation" className="toc-link">Transformation</a>
+            <a href="#results" className="toc-link">Results</a>
+            <a href="#insights" className="toc-link">Insights</a>
+          </nav>
         </header>
 
-        <section className="story-section">
+        <section className="story-section" id="business-challenge">
           <div className="story-scenario">
             <h2>The Business Challenge</h2>
             <div className="scenario-card">
@@ -37,7 +46,7 @@ export default function ArchitectureStoryPage() {
           </div>
         </section>
 
-        <section className="story-section">
+        <section className="story-section" id="act-i">
           <h2>Act I: Business Architecture Sets the Vision</h2>
           
           <div className="architecture-role business-arch">
@@ -72,7 +81,7 @@ export default function ArchitectureStoryPage() {
           </div>
         </section>
 
-        <section className="story-section">
+        <section className="story-section" id="act-ii">
           <h2>Act II: Solution Architecture Designs the Experience</h2>
           
           <div className="architecture-role solution-arch">
@@ -150,7 +159,7 @@ export default function ArchitectureStoryPage() {
           </div>
         </section>
 
-        <section className="story-section">
+        <section className="story-section" id="act-iii">
           <h2>Act III: Technical Architecture Builds the Platform</h2>
           
           <div className="architecture-role technical-arch">
@@ -225,7 +234,7 @@ export default function ArchitectureStoryPage() {
           </div>
         </section>
 
-        <section className="story-section">
+        <section className="story-section" id="transformation">
           <h2>The Transformation Journey</h2>
           
           <div className="journey-timeline">
@@ -285,7 +294,7 @@ export default function ArchitectureStoryPage() {
           </div>
         </section>
 
-        <section className="story-section success-metrics">
+        <section className="story-section success-metrics" id="results">
           <h2>🎉 The Results</h2>
           
           <div className="results-grid">
@@ -337,7 +346,7 @@ export default function ArchitectureStoryPage() {
           </div>
         </section>
 
-        <section className="story-section key-insights">
+        <section className="story-section key-insights" id="insights">
           <h2>🔍 Key Insights: Patterns to Platform</h2>
           
           <div className="insights-list">
