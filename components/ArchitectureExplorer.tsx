@@ -9,6 +9,7 @@ type ArchNode = {
   type: NodeType;
   children?: ArchNode[];
   _children?: ArchNode[];
+  info?: string; // optional tooltip/description
 };
 
 const COLORS: Record<NodeType, string> = {
@@ -20,105 +21,125 @@ const COLORS: Record<NodeType, string> = {
 
 const LEVEL_LABELS = ["L0", "L1", "L2", "L3"];
 
-const SAMPLE: ArchNode = {
-  name: "Digital Platform",
-  level: 0,
-  type: "concept",
-  children: [
-    {
-      name: "Business Architecture (L0→L1)",
-      level: 0,
-      type: "business",
-      children: [
-        {
-          name: "Goals & KPIs (L1)",
-          level: 1,
-          type: "business",
-          children: [
-            { name: "Time‑to‑Market (L2)", level: 2, type: "business" },
-            { name: "NPS/Experience (L2)", level: 2, type: "business" },
-            { name: "Compliance (L2)", level: 2, type: "business" }
-          ]
-        },
-        {
-          name: "Capabilities & Journeys (L1)",
-          level: 1,
-          type: "business",
-          children: [
-            { name: "Onboarding (L2)", level: 2, type: "business" },
-            { name: "Billing (L2)", level: 2, type: "business" }
-          ]
-        }
-      ]
-    },
-    {
-      name: "Solution Architecture (L0→L2)",
-      level: 0,
-      type: "solution",
-      children: [
-        {
-          name: "API Gateway / BFF (L2)",
-          level: 2,
-          type: "solution",
-          children: [
-            { name: "REST/GraphQL (L3)", level: 3, type: "solution" },
-            { name: "Rate Limit / Caching (L3)", level: 3, type: "solution" }
-          ]
-        },
-        {
-          name: "Integration Layer (L2)",
-          level: 2,
-          type: "solution",
-          children: [
-            { name: "Sync/Async (L3)", level: 3, type: "solution" },
-            { name: "Event Bus (L3)", level: 3, type: "solution" }
-          ]
-        },
-        {
-          name: "Identity & Access (L2)",
-          level: 2,
-          type: "solution",
-          children: [
-            { name: "OAuth2/OIDC (L3)", level: 3, type: "solution" },
-            { name: "SAML/JWT (L3)", level: 3, type: "solution" }
-          ]
-        }
-      ]
-    },
-    {
-      name: "Deployment Architecture (L2→L3)",
-      level: 2,
-      type: "deployment",
-      children: [
-        {
-          name: "Environments (dev/test/stage/prod) (L2)",
-          level: 2,
-          type: "deployment",
-          children: [
-            { name: "Blue‑Green/Canary (L3)", level: 3, type: "deployment" }
-          ]
-        },
-        {
-          name: "Networking & Security (L2)",
-          level: 2,
-          type: "deployment",
-          children: [
-            { name: "WAF/mTLS/SG (L3)", level: 3, type: "deployment" },
-            { name: "Zero‑Trust Touchpoints (L3)", level: 3, type: "deployment" }
-          ]
-        },
-        {
-          name: "Observability & DR (L2)",
-          level: 2,
-          type: "deployment",
-          children: [
-            { name: "Metrics/Logs/Traces (L3)", level: 3, type: "deployment" },
-            { name: "Backups & RPO/RTO (L3)", level: 3, type: "deployment" }
-          ]
-        }
-      ]
-    }
-  ]
+type RolePreset = "business" | "architect" | "engineer" | "all";
+
+// Small helpers to build nodes succinctly
+const N = (name: string, level: number, type: NodeType, info?: string, children?: ArchNode[]): ArchNode => ({ name, level, type, info, children });
+
+// Per-role trees reflecting requested connections and depth per layer
+const DATA_BY_ROLE: Record<RolePreset, ArchNode> = {
+  business: N("Digital Platform", 0, "concept", undefined, [
+    N("Business Architecture", 0, "business", "L0–L2: value streams → capabilities → key processes & KPIs.", [
+      N("Value Streams", 1, "business", undefined, [
+        N("Capabilities", 2, "business", "Key processes & KPIs", [
+          N("Key Processes", 3, "business"),
+          N("KPIs", 3, "business")
+        ])
+      ])
+    ]),
+    N("Solution Architecture", 0, "solution", "L0–L1: solution areas, buy‑vs‑build, major integrations, cost & risk.", [
+      N("Solution Areas", 1, "solution"),
+      N("Buy vs Build", 1, "solution"),
+      N("Major Integrations", 1, "solution"),
+      N("Cost & Risk", 1, "solution")
+    ]),
+    N("Deployment Architecture", 0, "deployment", "L0: deployment options (cloud/provider), resilience posture, compliance notes.")
+  ]),
+
+  architect: N("Digital Platform", 0, "concept", undefined, [
+    N("Business Architecture", 0, "business", "L0–L1: capability map, information domains, traceability to OKRs.", [
+      N("Capability Map", 1, "business"),
+      N("Information Domains", 1, "business"),
+      N("Traceability to OKRs", 1, "business")
+    ]),
+    N("Solution Architecture", 0, "solution", "L0–L2: context + container + component views, interfaces, patterns, trade‑offs.", [
+      N("Context", 1, "solution", undefined, [
+        N("Systems & Actors", 2, "solution"),
+        N("External Dependencies", 2, "solution")
+      ]),
+      N("Containers", 1, "solution", undefined, [
+        N("APIs & Interfaces", 2, "solution"),
+        N("Patterns & Trade‑offs", 2, "solution")
+      ]),
+      N("Components", 1, "solution", undefined, [
+        N("Modules/Services", 2, "solution"),
+        N("Contracts", 2, "solution")
+      ])
+    ]),
+    N("Deployment Architecture", 0, "deployment", "L0–L1: high‑level topology, environments, runtime concerns (HA/DR, scaling).", [
+      N("High‑level Topology", 1, "deployment"),
+      N("Environments", 1, "deployment"),
+      N("Runtime Concerns (HA/DR/Scaling)", 1, "deployment")
+    ])
+  ]),
+
+  engineer: N("Digital Platform", 0, "concept", undefined, [
+    N("Business Architecture", 0, "business", "L0–L1: enough domain context to understand why.", [
+      N("Domain Context (Why)", 1, "business")
+    ]),
+    N("Solution Architecture", 0, "solution", "L0–L2: components, APIs, schemas, contracts, sequence & event flows.", [
+      N("Components", 1, "solution", undefined, [
+        N("Modules/Services", 2, "solution"),
+        N("Data Schemas", 2, "solution"),
+        N("API Contracts", 2, "solution")
+      ]),
+      N("Interactions", 1, "solution", undefined, [
+        N("Sequence Flows", 2, "solution"),
+        N("Event Flows", 2, "solution")
+      ])
+    ]),
+    N("Deployment Architecture", 0, "deployment", "L0–L2: clusters/nodes, CI/CD, networking, secrets, SLOs/observability.", [
+      N("Platform", 1, "deployment", undefined, [
+        N("Clusters & Nodes", 2, "deployment"),
+        N("Networking", 2, "deployment")
+      ]),
+      N("Operations", 1, "deployment", undefined, [
+        N("CI/CD", 2, "deployment"),
+        N("Secrets", 2, "deployment"),
+        N("SLOs & Observability", 2, "deployment")
+      ])
+    ])
+  ]),
+
+  // Richest combined view (acts as a superset preview)
+  all: N("Digital Platform", 0, "concept", undefined, [
+    N("Business Architecture", 0, "business", "Value streams → capabilities → key processes & KPIs.", [
+      N("Value Streams", 1, "business", undefined, [
+        N("Capabilities", 2, "business", undefined, [
+          N("Key Processes", 3, "business"),
+          N("KPIs", 3, "business")
+        ])
+      ])
+    ]),
+    N("Solution Architecture", 0, "solution", "Context → containers → components; interfaces, patterns, trade‑offs.", [
+      N("Context", 1, "solution", undefined, [
+        N("Systems & Actors", 2, "solution"),
+        N("External Dependencies", 2, "solution")
+      ]),
+      N("Containers", 1, "solution", undefined, [
+        N("APIs & Interfaces", 2, "solution"),
+        N("Patterns & Trade‑offs", 2, "solution")
+      ]),
+      N("Components", 1, "solution", undefined, [
+        N("Modules/Services", 2, "solution"),
+        N("Contracts", 2, "solution")
+      ])
+    ]),
+    N("Deployment Architecture", 0, "deployment", "Topology → envs → runtime: HA/DR, scaling; SLOs & observability.", [
+      N("Topology", 1, "deployment", undefined, [
+        N("Cloud/Provider Options", 2, "deployment"),
+        N("Resilience Posture", 2, "deployment")
+      ]),
+      N("Environments", 1, "deployment", undefined, [
+        N("Dev/Test/Stage/Prod", 2, "deployment")
+      ]),
+      N("Runtime Concerns", 1, "deployment", undefined, [
+        N("HA/DR & Scaling", 2, "deployment"),
+        N("Compliance Notes", 2, "deployment"),
+        N("SLOs & Observability", 2, "deployment")
+      ])
+    ])
+  ])
 };
 
 function cloneDeep<T>(obj: T): T { return JSON.parse(JSON.stringify(obj)); }
@@ -132,17 +153,19 @@ function collapseToLevel(root: ArchNode, maxLevel: number) {
 }
 function toggleNode(n: any) { if (n.children) { n._children = n.children; n.children = null; } else { n.children = n._children; n._children = null; } }
 
-export function ArchitectureExplorer({ data = SAMPLE }: { data?: ArchNode }) {
-  const [maxLevel, setMaxLevel] = useState<number>(1);
-  const [rolePreset, setRolePreset] = useState<"business" | "architect" | "engineer" | "all">("business");
+export function ArchitectureExplorer({ data }: { data?: ArchNode }) {
+  const [rolePreset, setRolePreset] = useState<RolePreset>("business");
+  const [maxLevel, setMaxLevel] = useState<number>(2);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const gRef = useRef<SVGGElement | null>(null);
-  const prepared = useMemo(() => { const seed = cloneDeep(data); collapseToLevel(seed, maxLevel); return seed; }, [data, maxLevel]);
+  const roleData = useMemo(() => cloneDeep(data ?? DATA_BY_ROLE[rolePreset]), [data, rolePreset]);
+  const prepared = useMemo(() => { const seed = cloneDeep(roleData); collapseToLevel(seed, maxLevel); return seed; }, [roleData, maxLevel]);
 
   useEffect(() => {
-    if (rolePreset === "business") setMaxLevel(1);
+    // Sensible defaults per role, can be overridden using L0-L3 buttons
+    if (rolePreset === "business") setMaxLevel(2);
     if (rolePreset === "architect") setMaxLevel(2);
-    if (rolePreset === "engineer") setMaxLevel(3);
+    if (rolePreset === "engineer") setMaxLevel(2);
     if (rolePreset === "all") setMaxLevel(3);
   }, [rolePreset]);
 
@@ -191,6 +214,9 @@ export function ArchitectureExplorer({ data = SAMPLE }: { data?: ArchNode }) {
       .attr("fill", "#111827")
       .attr("opacity", (d: any) => (d.data.level <= maxLevel ? 1 : 0.85));
 
+    // Native tooltip with role-specific info when available
+    node.append("title").text((d: any) => d.data.info ? `${d.data.name}: ${d.data.info}` : d.data.name);
+
     // Fit-to-view: compute bounding box of rendered content and center it with margin
     try {
       const margin = 40;
@@ -224,13 +250,36 @@ export function ArchitectureExplorer({ data = SAMPLE }: { data?: ArchNode }) {
           <strong>Explore Architecture Layers</strong>
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {[{ key: "business", label: "Business" }, { key: "architect", label: "Architects" }, { key: "engineer", label: "Engineers" }, { key: "all", label: "All" }].map((p) => (
+          {[{ key: "business", label: "Business" }, { key: "architect", label: "Architect" }, { key: "engineer", label: "Engineer" }, { key: "all", label: "All" }].map((p) => (
             <button key={p.key} onClick={() => setRolePreset(p.key as any)} className="button sm" style={{ background: rolePreset === p.key ? "var(--primary)" : "var(--surface)", color: rolePreset === p.key ? "#fff" : "var(--text)" }}>{p.label}</button>
           ))}
           <span style={{ marginInlineStart: 8, color: "var(--text-secondary)", fontSize: 12 }}>Max Level</span>
           {LEVEL_LABELS.map((lab, i) => (
             <button key={lab} onClick={() => setMaxLevel(i)} className="button sm" style={{ background: maxLevel === i ? "var(--primary)" : "var(--surface)", color: maxLevel === i ? "#fff" : "var(--text)" }}>{lab}</button>
           ))}
+        </div>
+        {/* Role mapping hint */}
+        <div style={{ fontSize: 12, color: "var(--text-secondary)", textAlign: "center" }}>
+          {rolePreset === "business" && (
+            <span>
+              Business: Business L0–L2 (value streams → capabilities → processes/KPIs), Solution L0–L1, Deployment L0
+            </span>
+          )}
+          {rolePreset === "architect" && (
+            <span>
+              Architect: Business L0–L1 (capability map, info domains, OKR traceability), Solution L0–L2, Deployment L0–L1
+            </span>
+          )}
+          {rolePreset === "engineer" && (
+            <span>
+              Engineer: Business L0–L1 (domain context), Solution L0–L2 (components/APIs/flows), Deployment L0–L2 (platform, ops)
+            </span>
+          )}
+          {rolePreset === "all" && (
+            <span>
+              All: Combined view across layers with deepest available detail
+            </span>
+          )}
         </div>
       </div>
       <div style={{ height: 520, borderRadius: 12, overflow: "hidden", background: "#fff" }}>
