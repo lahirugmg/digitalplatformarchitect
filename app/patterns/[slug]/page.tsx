@@ -7,6 +7,8 @@ import { MicroserviceDiagram } from "@/components/diagrams/MicroserviceDiagram";
 import { HexagonalDiagram } from "@/components/diagrams/HexagonalDiagram";
 import { MonolithicDiagram } from "@/components/diagrams/MonolithicDiagram";
 import { SecurityDiagram } from "@/components/diagrams/blocks/SecurityDiagram";
+import { OAuth2Diagram } from "@/components/diagrams/OAuth2Diagram";
+import { APISecurityDiagram } from "@/components/diagrams/APISecurityDiagram";
 import { connections } from "@/lib/connections";
 import { blocks } from "@/lib/blocks";
 
@@ -49,6 +51,10 @@ export default function PatternPage({ params }: Props) {
               return <MonolithicDiagram />;
             case "zero-trust-security":
               return <SecurityDiagram />;
+            case "oauth2-patterns":
+              return <OAuth2Diagram />;
+            case "api-security-gateway":
+              return <APISecurityDiagram />;
             default:
               return null;
           }

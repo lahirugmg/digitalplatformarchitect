@@ -32,7 +32,7 @@ export default function ExplorePage() {
   return (
     <section className="stack gap-lg">
       <div className="stack gap-sm">
-        <h1 className="title">Architecture Explorer</h1>
+        <h1 className="page-title">Architecture Explorer</h1>
         <p className="lede">Discover how platform building blocks and architectural patterns work together to create resilient, scalable digital platforms.</p>
         
         {/* Overview Stats */}

@@ -11,7 +11,7 @@ export const metadata = {
 export default function BlocksIndexPage() {
   return (
     <section className="stack gap-lg">
-      <h1 className="title">Platform Building Blocks</h1>
+      <h1 className="page-title">Platform Building Blocks</h1>
       <p className="lede">
         Core capabilities every enterprise platform considers. Each page covers
         responsibilities, capabilities, patterns, KPIs, and reference tech.

@@ -37,7 +37,7 @@ export default function PatternsIndexPage() {
   return (
     <section className="stack gap-xl">
       <div className="stack gap-sm">
-        <h1 className="title">Architecture Styles & Patterns</h1>
+        <h1 className="page-title">Architecture Styles & Patterns</h1>
         <p className="lede">
           Explore common architecture styles and patterns, their trade-offs, and when
           to use them. Visual diagrams help you understand structure and relationships.
