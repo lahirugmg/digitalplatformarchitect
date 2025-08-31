@@ -194,6 +194,7 @@ footer.footer {
 /* Hero title uses a solid dark blue */
 .hero .title {
   color: var(--blue-deep);
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
 }
 
 .lede {
@@ -316,6 +317,18 @@ footer.footer {
   text-align: center;
   text-wrap: balance;
 }
+
+/* Inline highlight tokens for key concepts */
+.hl {
+  padding: 0.1rem 0.35rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.hl-blocks { background: var(--orange-light); border-color: var(--orange); }
+.hl-patterns { background: var(--primary-light); border-color: var(--primary); }
+.hl-solutions { background: var(--green-light); border-color: var(--green); }
 
 .title::after {
   content: '';
