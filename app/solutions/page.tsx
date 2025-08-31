@@ -122,6 +122,93 @@ export default function SolutionsPage() {
           </div>
         </section>
 
+        <section id="security-architecture" className="solutions-section">
+          <div className="section-card security-card">
+            <div className="section-header">
+              <div className="section-icon">🔐</div>
+              <h2>Security Architecture</h2>
+            </div>
+            <div className="section-content">
+              <p className="section-description">
+                Comprehensive security framework that protects applications, data, and infrastructure
+                across all layers of the platform.
+              </p>
+              
+              <div className="content-grid">
+                <div className="content-block">
+                  <h3>Security Layers</h3>
+                  <ul className="feature-list">
+                    <li><span className="bullet">👤</span> Identity & Access Management (OAuth2, OIDC, SAML)</li>
+                    <li><span className="bullet">🛡️</span> Threat Protection (WAF, rate limiting, DDoS)</li>
+                    <li><span className="bullet">🔒</span> Data Encryption (at rest, in transit, in use)</li>
+                    <li><span className="bullet">📊</span> Security Monitoring & Logging</li>
+                    <li><span className="bullet">🚫</span> Zero-Trust Architecture</li>
+                    <li><span className="bullet">📋</span> Compliance & Governance</li>
+                  </ul>
+                </div>
+                
+                <div className="content-block">
+                  <h3>Security Patterns</h3>
+                  <div className="security-patterns">
+                    <div className="security-pattern">
+                      <div className="pattern-name">Defense in Depth</div>
+                      <div className="pattern-desc">Multiple security layers working together</div>
+                    </div>
+                    <div className="security-pattern">
+                      <div className="pattern-name">Least Privilege</div>
+                      <div className="pattern-desc">Minimum access required for tasks</div>
+                    </div>
+                    <div className="security-pattern">
+                      <div className="pattern-name">Fail-Safe Defaults</div>
+                      <div className="pattern-desc">Secure by default, explicit allow</div>
+                    </div>
+                    <div className="security-pattern">
+                      <div className="pattern-name">Secure by Design</div>
+                      <div className="pattern-desc">Security built into architecture</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="security-framework">
+                <h3>Security Framework Components</h3>
+                <div className="framework-grid">
+                  <div className="framework-item">
+                    <div className="framework-icon">🔐</div>
+                    <h4>Authentication</h4>
+                    <p>Verify user identities and manage sessions</p>
+                  </div>
+                  <div className="framework-item">
+                    <div className="framework-icon">🛡️</div>
+                    <h4>Authorization</h4>
+                    <p>Control access to resources and operations</p>
+                  </div>
+                  <div className="framework-item">
+                    <div className="framework-icon">🔒</div>
+                    <h4>Confidentiality</h4>
+                    <p>Protect sensitive data from unauthorized access</p>
+                  </div>
+                  <div className="framework-item">
+                    <div className="framework-icon">✅</div>
+                    <h4>Integrity</h4>
+                    <p>Ensure data accuracy and prevent tampering</p>
+                  </div>
+                  <div className="framework-item">
+                    <div className="framework-icon">📊</div>
+                    <h4>Auditability</h4>
+                    <p>Track and log security-relevant events</p>
+                  </div>
+                  <div className="framework-item">
+                    <div className="framework-icon">🚨</div>
+                    <h4>Incident Response</h4>
+                    <p>Detect, respond to, and recover from breaches</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="deployment-architecture" className="solutions-section">
           <div className="section-card deployment-card">
             <div className="section-header">
@@ -189,14 +276,14 @@ export default function SolutionsPage() {
                 </div>
                 
                 <div className="consideration-item">
-                  <div className="consideration-icon">🛡️</div>
-                  <h3>Security Architecture</h3>
-                  <p>Comprehensive security across all layers and components.</p>
+                  <div className="consideration-icon">�</div>
+                  <h3>Observability & Monitoring</h3>
+                  <p>Comprehensive visibility into system health, performance, and behavior.</p>
                   <ul className="consideration-details">
-                    <li><strong>Identity:</strong> OAuth2, OIDC, SAML</li>
-                    <li><strong>Protection:</strong> WAF, rate limiting, schema enforcement</li>
-                    <li><strong>Compliance:</strong> GDPR, HIPAA, PCI</li>
-                    <li><strong>Zero-trust:</strong> Across users, devices, workloads, data</li>
+                    <li><strong>Metrics:</strong> Application and infrastructure monitoring</li>
+                    <li><strong>Logging:</strong> Centralized log aggregation and analysis</li>
+                    <li><strong>Tracing:</strong> Distributed request tracking</li>
+                    <li><strong>Alerting:</strong> Proactive issue detection and notification</li>
                   </ul>
                 </div>
                 
@@ -261,24 +348,6 @@ export default function SolutionsPage() {
             
             <div className="connection-insight">
               <p>Each step builds on the last, ensuring traceability from business value to technical execution.</p>
-            </div>
-          </div>
-        </section>
-
-        <section id="conclusion" className="solutions-section">
-          <div className="conclusion-card">
-            <div className="conclusion-content">
-              <h2>Conclusion</h2>
-              <p>
-                Great architecture speaks to the right audience at the right level. By combining patterns
-                with building blocks, and progressing from Business L0 through Deployment L3, organizations
-                create platforms that are understandable, secure, operable—and deliver measurable value.
-              </p>
-              
-              <div className="conclusion-actions">
-                <Link href="/patterns" className="button primary">Explore Patterns</Link>
-                <Link href="/blocks" className="button secondary">Browse Building Blocks</Link>
-              </div>
             </div>
           </div>
         </section>
