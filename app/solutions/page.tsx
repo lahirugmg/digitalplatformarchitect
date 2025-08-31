@@ -19,6 +19,7 @@ export default function SolutionsPage() {
             perspectives connect so stakeholders, architects, and engineers collaborate effectively.
           </p>
           <nav className="solutions-toc" aria-label="Solutions navigation">
+            <a href="#explore-architecture" className="toc-link">Explore Layers</a>
             <a href="#audience-roles" className="toc-link">Audience & Roles</a>
             <a href="#business-architecture" className="toc-link">Business Architecture</a>
             <a href="#solution-architecture" className="toc-link">Solution Architecture</a>
@@ -37,7 +38,7 @@ export default function SolutionsPage() {
               <h2>Explore Architecture Layers</h2>
             </div>
             <div className="section-content">
-              <ArchitectureExplorer />
+              <ArchitectureExplorer defaultRole="architect" />
             </div>
           </div>
         </section>

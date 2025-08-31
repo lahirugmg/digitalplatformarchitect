@@ -153,8 +153,8 @@ function collapseToLevel(root: ArchNode, maxLevel: number) {
 }
 function toggleNode(n: any) { if (n.children) { n._children = n.children; n.children = null; } else { n.children = n._children; n._children = null; } }
 
-export function ArchitectureExplorer({ data }: { data?: ArchNode }) {
-  const [rolePreset, setRolePreset] = useState<RolePreset>("business");
+export function ArchitectureExplorer({ data, defaultRole = "business" }: { data?: ArchNode; defaultRole?: RolePreset }) {
+  const [rolePreset, setRolePreset] = useState<RolePreset>(defaultRole);
   const [maxLevel, setMaxLevel] = useState<number>(2);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const gRef = useRef<SVGGElement | null>(null);
