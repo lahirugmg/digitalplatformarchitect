@@ -4,11 +4,11 @@ export default function ArchitectureStoryPage() {
   return (
     <div className="container">
       <article className="prose story-article">
-        <header className="story-header">
-          <h1>From Patterns to Platform: An Architecture Journey</h1>
-          <p className="story-subtitle">
-            How business architecture, solution architecture, and technical architecture 
-            collaborate to transform patterns into real-world digital platforms
+        <header className="page-hero stack gap-sm">
+          <h1 className="page-title">From Patterns to Platform: An Architecture Journey</h1>
+          <p className="lede">
+            How business architecture, solution architecture, and technical architecture
+            collaborate to transform patterns into real-world digital platforms.
           </p>
           <nav className="story-toc" aria-label="Story navigation">
             <a href="#business-challenge" className="toc-link">Challenge</a>

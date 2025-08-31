@@ -9,9 +9,9 @@ export default function SolutionsPage() {
   return (
     <div className="container">
       <article className="solutions-article">
-        <header className="solutions-header">
-          <h1>Solutions: From Patterns to Platforms</h1>
-          <p className="solutions-subtitle">
+        <header className="page-hero stack gap-sm">
+          <h1 className="page-title">Solutions: From Patterns to Platforms</h1>
+          <p className="lede">
             Turning architecture patterns into real-world digital platforms requires more than just
             building blocks. It needs the right views—business, solution, and deployment—presented at
             the right level of detail (L0–L3) for each audience. This section shows how these

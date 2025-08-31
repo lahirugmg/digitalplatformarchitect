@@ -12,9 +12,9 @@ export default function BlocksIndexPage() {
   return (
     <div className="container">
       <article className="blocks-article">
-        <header className="blocks-header">
-          <h1>Platform Building Blocks</h1>
-          <p className="blocks-subtitle">
+        <header className="page-hero stack gap-sm">
+          <h1 className="page-title">Platform Building Blocks</h1>
+          <p className="lede">
             Core capabilities every enterprise platform considers. Each page covers responsibilities,
             capabilities, patterns, KPIs, and reference tech.
           </p>

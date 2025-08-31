@@ -37,9 +37,9 @@ export default function PatternsIndexPage() {
   return (
     <div className="container">
       <article className="patterns-article">
-        <header className="patterns-header">
-          <h1>Architecture Styles & Patterns</h1>
-          <p className="patterns-subtitle">
+        <header className="page-hero stack gap-sm">
+          <h1 className="page-title">Architecture Styles & Patterns</h1>
+          <p className="lede">
             Explore common architecture styles and patterns, their trade-offs, and when to use them.
             Visual diagrams help you understand structure and relationships.
           </p>
