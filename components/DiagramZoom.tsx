@@ -11,6 +11,8 @@ export function DiagramZoom({ title, Diagram }: Props) {
   const [open, setOpen] = useState(false);
   const [scale, setScale] = useState(1);
   const stageRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const dragState = useRef<{ dragging: boolean; startX: number; startY: number; scrollLeft: number; scrollTop: number }>({ dragging: false, startX: 0, startY: 0, scrollLeft: 0, scrollTop: 0 });
 
   useEffect(() => {
     if (!open) return;
@@ -56,8 +58,38 @@ export function DiagramZoom({ title, Diagram }: Props) {
                 <button className="close-btn" onClick={() => setOpen(false)} aria-label="Close">✕</button>
               </div>
             </div>
-            <div className="diagram-modal-body" ref={stageRef}>
-              <div className="zoom-stage" style={{ transform: `scale(${scale})` }}>
+            <div
+              className="diagram-modal-body"
+              ref={bodyRef}
+              style={{ cursor: dragState.current.dragging ? "grabbing" : "grab" }}
+              onPointerDown={(e) => {
+                const el = bodyRef.current;
+                if (!el) return;
+                dragState.current.dragging = true;
+                dragState.current.startX = e.clientX;
+                dragState.current.startY = e.clientY;
+                dragState.current.scrollLeft = el.scrollLeft;
+                dragState.current.scrollTop = el.scrollTop;
+                (e.target as Element).setPointerCapture?.(e.pointerId);
+              }}
+              onPointerMove={(e) => {
+                if (!dragState.current.dragging) return;
+                const el = bodyRef.current;
+                if (!el) return;
+                const dx = e.clientX - dragState.current.startX;
+                const dy = e.clientY - dragState.current.startY;
+                el.scrollLeft = dragState.current.scrollLeft - dx;
+                el.scrollTop = dragState.current.scrollTop - dy;
+              }}
+              onPointerUp={(e) => {
+                dragState.current.dragging = false;
+                (e.target as Element).releasePointerCapture?.(e.pointerId);
+              }}
+              onPointerLeave={() => {
+                dragState.current.dragging = false;
+              }}
+            >
+              <div className="zoom-stage" ref={stageRef} style={{ transform: `scale(${scale})` }}>
                 <Diagram />
               </div>
             </div>
@@ -67,4 +99,3 @@ export function DiagramZoom({ title, Diagram }: Props) {
     </div>
   );
 }
-
