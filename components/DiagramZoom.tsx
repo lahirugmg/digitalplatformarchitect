@@ -13,6 +13,23 @@ export function DiagramZoom({ title, Diagram }: Props) {
   const stageRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   const dragState = useRef<{ dragging: boolean; startX: number; startY: number; scrollLeft: number; scrollTop: number }>({ dragging: false, startX: 0, startY: 0, scrollLeft: 0, scrollTop: 0 });
+  const [baseSize, setBaseSize] = useState<{ w: number; h: number }>({ w: 1200, h: 800 });
+
+  useEffect(() => {
+    if (!open) return;
+    // Reset zoom and measure base size of the SVG content
+    setScale(1);
+    const rAF = requestAnimationFrame(() => {
+      const svg = stageRef.current?.querySelector('svg');
+      if (svg) {
+        const rect = svg.getBoundingClientRect();
+        if (rect.width && rect.height) {
+          setBaseSize({ w: Math.round(rect.width), h: Math.round(rect.height) });
+        }
+      }
+    });
+    return () => cancelAnimationFrame(rAF);
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -88,9 +105,32 @@ export function DiagramZoom({ title, Diagram }: Props) {
               onPointerLeave={() => {
                 dragState.current.dragging = false;
               }}
+              onDoubleClick={(e) => {
+                // Double-click to zoom in towards clicked point
+                const el = bodyRef.current;
+                if (!el) return;
+                const newScale = Math.min(2.5, +(scale + 0.25).toFixed(2));
+                const rect = el.getBoundingClientRect();
+                const offsetX = e.clientX - rect.left + el.scrollLeft;
+                const offsetY = e.clientY - rect.top + el.scrollTop;
+                const ratio = newScale / scale;
+                // Keep the clicked point under cursor after zoom
+                el.scrollLeft = offsetX * ratio - (e.clientX - rect.left);
+                el.scrollTop = offsetY * ratio - (e.clientY - rect.top);
+                setScale(newScale);
+              }}
             >
-              <div className="zoom-stage" ref={stageRef} style={{ transform: `scale(${scale})` }}>
-                <Diagram />
+              <div
+                className="zoom-canvas"
+                style={{ width: baseSize.w * scale, height: baseSize.h * scale, position: 'relative' }}
+              >
+                <div
+                  className="zoom-stage"
+                  ref={stageRef}
+                  style={{ transform: `scale(${scale})`, transformOrigin: 'top left', width: baseSize.w, height: baseSize.h }}
+                >
+                  <Diagram />
+                </div>
               </div>
             </div>
           </div>
