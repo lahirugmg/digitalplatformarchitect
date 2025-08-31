@@ -778,6 +778,88 @@ html {
   font-size: 0.875rem;
 }
 
+/* Block Cards with Diagrams */
+.blocks-grid-with-diagrams {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.block-card-with-diagram {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition: all 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.block-card-with-diagram:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.block-diagram-container {
+  background: var(--surface-alt);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+}
+
+.block-diagram {
+  width: 100%;
+  max-width: 240px;
+}
+
+.block-diagram svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.block-content {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.block-content h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.block-content p {
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .blocks-grid-with-diagrams {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .block-diagram-container {
+    padding: 1rem;
+    min-height: 140px;
+  }
+  
+  .block-content {
+    padding: 1.25rem;
+  }
+}
+
 /* Pattern Card Styles */
 .pattern-card {
   position: relative;
