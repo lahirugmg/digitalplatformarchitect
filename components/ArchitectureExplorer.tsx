@@ -176,14 +176,14 @@ export function ArchitectureExplorer({ data }: { data?: ArchNode }) {
     const height = svgRef.current?.clientHeight ?? 600;
     g.selectAll("*").remove();
 
-    const zoom = d3.zoom<SVGSVGElement, unknown>().scaleExtent([0.4, 2.5]).on("zoom", (event: any) => {
+    const zoom = d3.zoom().scaleExtent([0.4, 2.5]).on("zoom", (event: any) => {
       g.attr("transform", event.transform.toString());
     });
     svg.call(zoom as any);
 
-    const root = d3.hierarchy(prepared);
-    const tree = d3.tree<ArchNode>().size([height - 40, width - 220]);
-    const rootPoint = tree(root) as d3.HierarchyPointNode<ArchNode>;
+    const root = d3.hierarchy(prepared as any);
+    const tree = d3.tree().size([height - 40, width - 220]);
+    const rootPoint = tree(root) as any;
 
     g.selectAll("path.link")
       .data(rootPoint.links())
@@ -193,7 +193,7 @@ export function ArchitectureExplorer({ data }: { data?: ArchNode }) {
       .attr("fill", "none")
       .attr("stroke", "#D1D5DB")
       .attr("stroke-width", 2)
-      .attr("d", d3.linkHorizontal<any, [number, number]>().x((d: any) => d.y).y((d: any) => d.x));
+      .attr("d", (d3.linkHorizontal() as any).x((d: any) => d.y).y((d: any) => d.x));
 
     const node = g.selectAll("g.node")
       .data(rootPoint.descendants())
@@ -203,7 +203,7 @@ export function ArchitectureExplorer({ data }: { data?: ArchNode }) {
       .attr("transform", (d: any) => `translate(${d.y},${d.x})`)
       .on("click", (_: any, d: any) => { toggleNode(d.data); setMaxLevel((m) => m + 0); });
 
-    node.append("circle").attr("r", 16).attr("fill", (d: any) => COLORS[d.data.type]).attr("stroke", "white").attr("stroke-width", 2).attr("opacity", (d: any) => (d.data.level <= maxLevel ? 1 : 0.6));
+    node.append("circle").attr("r", 16).attr("fill", (d: any) => COLORS[(d.data.type as NodeType)]).attr("stroke", "white").attr("stroke-width", 2).attr("opacity", (d: any) => (d.data.level <= maxLevel ? 1 : 0.6));
     node
       .append("text")
       .attr("dy", 5)
