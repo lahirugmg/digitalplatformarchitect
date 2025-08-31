@@ -11,9 +11,9 @@ import { APISecurityDiagram } from "@/components/diagrams/APISecurityDiagram";
 import { DataEncryptionDiagram } from "@/components/diagrams/DataEncryptionDiagram";
 
 export const metadata = {
-  title: "Architectural Patterns",
+  title: "Architecture Styles & Patterns",
   description:
-    "Software architectural patterns: layered, microservices, event-driven, client-server, plugin-based, hexagonal, and more."
+    "Architecture styles and patterns: layered, microservices, event-driven, client-server, plugin-based, hexagonal, and more."
 };
 
 // Map pattern slugs to their corresponding diagrams
@@ -37,9 +37,9 @@ export default function PatternsIndexPage() {
   return (
     <section className="stack gap-xl">
       <div className="stack gap-sm">
-        <h1 className="title">Software Architectural Patterns</h1>
+        <h1 className="title">Architecture Styles & Patterns</h1>
         <p className="lede">
-          Explore common software architecture styles, their trade-offs, and when
+          Explore common architecture styles and patterns, their trade-offs, and when
           to use them. Visual diagrams help you understand structure and relationships.
         </p>
       </div>
