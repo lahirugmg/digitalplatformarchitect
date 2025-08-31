@@ -7,147 +7,282 @@ export const metadata = {
 
 export default function SolutionsPage() {
   return (
-    <section className="prose stack gap-lg">
-      <header className="stack gap-sm">
-        <h1>Solutions: From Patterns to Platforms</h1>
-        <p>
-          Turning architecture patterns into real-world digital platforms requires more than just
-          building blocks. It needs the right views—business, solution, and deployment—presented at
-          the right level of detail (L0–L3) for each audience. This section shows how these
-          perspectives connect so stakeholders, architects, and engineers collaborate effectively.
-        </p>
-        <nav className="story-toc" aria-label="Solutions navigation">
-          <a href="#overview" className="toc-link">Overview</a>
-          <a href="#business-architecture" className="toc-link">Business Architecture</a>
-          <a href="#solution-architecture" className="toc-link">Solution Architecture</a>
-          <a href="#deployment-architecture" className="toc-link">Deployment Architecture</a>
-          <a href="#other-considerations" className="toc-link">Other Considerations</a>
-          <a href="#how-it-connects" className="toc-link">How It Connects</a>
-          <a href="#conclusion" className="toc-link">Conclusion</a>
-        </nav>
-      </header>
+    <div className="container">
+      <article className="solutions-article">
+        <header className="solutions-header">
+          <h1>Solutions: From Patterns to Platforms</h1>
+          <p className="solutions-subtitle">
+            Turning architecture patterns into real-world digital platforms requires more than just
+            building blocks. It needs the right views—business, solution, and deployment—presented at
+            the right level of detail (L0–L3) for each audience. This section shows how these
+            perspectives connect so stakeholders, architects, and engineers collaborate effectively.
+          </p>
+          <nav className="solutions-toc" aria-label="Solutions navigation">
+            <a href="#business-architecture" className="toc-link">Business Architecture</a>
+            <a href="#solution-architecture" className="toc-link">Solution Architecture</a>
+            <a href="#security-architecture" className="toc-link">Security Architecture</a>
+            <a href="#deployment-architecture" className="toc-link">Deployment Architecture</a>
+            <a href="#other-considerations" className="toc-link">Other Considerations</a>
+            <a href="#how-it-connects" className="toc-link">How It Connects</a>
+          </nav>
+        </header>
 
-      <section id="overview" className="stack gap-md">
-        <h2>General Overview</h2>
-        <h3>Three Complementary Views</h3>
-        <ul>
-          <li><strong>Business Architecture</strong> – Why the platform exists: value, stakeholders, capabilities, goals.</li>
-          <li><strong>Solution Architecture</strong> – How it works: key components, flows, integration styles.</li>
-          <li><strong>Deployment Architecture</strong> – Where it runs: runtime infrastructure, environments, operations.</li>
-        </ul>
-        <h3>Levels of Detail (L0–L3)</h3>
-        <ul>
-          <li><strong>L0 (Conceptual)</strong>: Big picture; no technologies or protocols.</li>
-          <li><strong>L1 (Logical/High‑Level Physical)</strong>: Introduces platforms and key flows.</li>
-          <li><strong>L2 (Detailed Logical/Physical)</strong>: Protocols, security flows, integration specifics.</li>
-          <li><strong>L3 (Deep Dive)</strong>: Specialized details (CI/CD, compliance, runbooks).</li>
-        </ul>
-      </section>
+        <section id="business-architecture" className="solutions-section">
+          <div className="section-card business-card">
+            <div className="section-header">
+              <div className="section-icon">🏢</div>
+              <h2>Business Architecture</h2>
+            </div>
+            <div className="section-content">
+              <p className="section-description">
+                Focuses on intent and outcomes, not technical implementation. It clarifies the value a
+                platform must deliver and aligns technical decisions with business goals.
+              </p>
+              
+              <div className="content-grid">
+                <div className="content-block">
+                  <h3>Key Elements</h3>
+                  <ul className="feature-list">
+                    <li><span className="bullet">🎯</span> Goals and KPIs (time‑to‑market, customer experience, compliance)</li>
+                    <li><span className="bullet">👥</span> Stakeholders and user groups</li>
+                    <li><span className="bullet">⚡</span> Capabilities and journeys that create value</li>
+                    <li><span className="bullet">🔧</span> Existing systems and constraints</li>
+                    <li><span className="bullet">🛡️</span> Non‑functional drivers (regulatory, privacy, SLAs)</li>
+                  </ul>
+                </div>
+                
+                <div className="content-block">
+                  <h3>Example Progression</h3>
+                  <div className="progression-steps">
+                    <div className="step-item">
+                      <div className="step-number">L0</div>
+                      <div className="step-content">
+                        <strong>Conceptual Level</strong>
+                        <p>High‑level business units, interactions, goals (no technology references)</p>
+                      </div>
+                    </div>
+                    <div className="step-item">
+                      <div className="step-number">L1</div>
+                      <div className="step-content">
+                        <strong>High-Level Physical</strong>
+                        <p>Introduce core systems (CRM, ERP, IdP) and high‑level interactions</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <section id="business-architecture" className="stack gap-md">
-        <h2>Business Architecture</h2>
-        <p>
-          Focuses on intent and outcomes, not technical implementation. It clarifies the value a
-          platform must deliver and aligns technical decisions with business goals.
-        </p>
-        <h3>Key Elements</h3>
-        <ul>
-          <li>Goals and KPIs (time‑to‑market, customer experience, compliance)</li>
-          <li>Stakeholders and user groups</li>
-          <li>Capabilities and journeys that create value</li>
-          <li>Existing systems and constraints</li>
-          <li>Non‑functional drivers (regulatory, privacy, SLAs)</li>
-        </ul>
-        <h3>Example Progression</h3>
-        <ul>
-          <li><strong>L0</strong>: High‑level business units, interactions, goals (no technology references).</li>
-          <li><strong>L1</strong>: Introduce core systems (CRM, ERP, IdP) and high‑level interactions.</li>
-        </ul>
-      </section>
+        <section id="solution-architecture" className="solutions-section">
+          <div className="section-card solution-card">
+            <div className="section-header">
+              <div className="section-icon">🔧</div>
+              <h2>Solution Architecture</h2>
+            </div>
+            <div className="section-content">
+              <p className="section-description">
+                Bridges business intent with technical design—showing how applications, services, and
+                integrations come together to solve business problems.
+              </p>
+              
+              <div className="content-grid">
+                <div className="content-block">
+                  <h3>Key Elements</h3>
+                  <ul className="feature-list">
+                    <li><span className="bullet">👥</span> Major business entities (customers, orders, payments)</li>
+                    <li><span className="bullet">⚙️</span> Core solution components (API gateway, identity, integration layer)</li>
+                    <li><span className="bullet">🔄</span> Integration patterns (REST vs. events, sync vs. async)</li>
+                    <li><span className="bullet">📋</span> Standards and protocols (HTTP, OAuth2, OIDC, SAML)</li>
+                    <li><span className="bullet">🛡️</span> Cross‑cutting concerns (security, governance, observability)</li>
+                    <li><span className="bullet">☁️</span> Runtime choices (cloud, on‑premises, hybrid)</li>
+                  </ul>
+                </div>
+                
+                <div className="content-block">
+                  <h3>Architecture Layers</h3>
+                  <div className="layer-diagram">
+                    <div className="layer">
+                      <div className="layer-name">Presentation</div>
+                      <div className="layer-desc">APIs, Web Apps, Mobile Apps</div>
+                    </div>
+                    <div className="layer">
+                      <div className="layer-name">Application</div>
+                      <div className="layer-desc">Microservices, Business Logic</div>
+                    </div>
+                    <div className="layer">
+                      <div className="layer-name">Data</div>
+                      <div className="layer-desc">Databases, Caches, Event Stores</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <section id="solution-architecture" className="stack gap-md">
-        <h2>Solution Architecture</h2>
-        <p>
-          Bridges business intent with technical design—showing how applications, services, and
-          integrations come together to solve business problems.
-        </p>
-        <h3>Key Elements</h3>
-        <ul>
-          <li>Major business entities (customers, orders, payments)</li>
-          <li>Core solution components (API gateway, identity, integration layer, microservices, data stores, event bus)</li>
-          <li>Integration and architectural patterns (REST vs. events, synchronous vs. asynchronous)</li>
-          <li>Standards and protocols (HTTP, JMS, OAuth2, OIDC, SAML, JSON, XML, gRPC)</li>
-          <li>Cross‑cutting concerns (security, governance, observability)</li>
-          <li>High‑level runtime choices (cloud, on‑premises, hybrid)</li>
-        </ul>
-      </section>
+        <section id="deployment-architecture" className="solutions-section">
+          <div className="section-card deployment-card">
+            <div className="section-header">
+              <div className="section-icon">🚀</div>
+              <h2>Deployment Architecture</h2>
+            </div>
+            <div className="section-content">
+              <p className="section-description">
+                Describes operational reality—how the platform is hosted, scaled, and secured in different
+                environments. Essential for DevOps and operations teams.
+              </p>
+              
+              <div className="content-grid">
+                <div className="content-block">
+                  <h3>Infrastructure Elements</h3>
+                  <ul className="feature-list">
+                    <li><span className="bullet">🌐</span> Environments (dev, test, stage, prod)</li>
+                    <li><span className="bullet">🏗️</span> Topology (clusters, nodes, namespaces)</li>
+                    <li><span className="bullet">🔒</span> Network zones (DMZ, private subnets, VPNs)</li>
+                    <li><span className="bullet">⚙️</span> Platform services (ingress, service mesh, secrets)</li>
+                    <li><span className="bullet">🔄</span> HA/DR (replicas, failover, backups)</li>
+                    <li><span className="bullet">🛡️</span> Security controls (WAF, mTLS, firewalls)</li>
+                  </ul>
+                </div>
+                
+                <div className="content-block">
+                  <h3>Operational Excellence</h3>
+                  <div className="metrics-grid">
+                    <div className="metric-item">
+                      <div className="metric-value">99.9%</div>
+                      <div className="metric-label">Uptime SLA</div>
+                    </div>
+                    <div className="metric-item">
+                      <div className="metric-value">&lt;200ms</div>
+                      <div className="metric-label">Response Time</div>
+                    </div>
+                    <div className="metric-item">
+                      <div className="metric-value">24/7</div>
+                      <div className="metric-label">Monitoring</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <section id="deployment-architecture" className="stack gap-md">
-        <h2>Deployment Architecture</h2>
-        <p>
-          Describes operational reality—how the platform is hosted, scaled, and secured in different
-          environments. Essential for DevOps and operations teams.
-        </p>
-        <h3>Key Elements</h3>
-        <ul>
-          <li>Environments (dev, test, stage, prod)</li>
-          <li>Topology (clusters, nodes, namespaces, scaling policies)</li>
-          <li>Network zones (DMZ, private subnets, VPNs, peering)</li>
-          <li>Platform services (ingress/LB, service mesh, secrets, registries)</li>
-          <li>HA/DR (replicas, failover, backups, RPO/RTO)</li>
-          <li>Security controls (WAF, mTLS, firewall rules, key vaults)</li>
-          <li>Color‑coded lines for clarity (e.g., blue for HTTP, brown for DBs)</li>
-        </ul>
-      </section>
+        <section id="other-considerations" className="solutions-section">
+          <div className="section-card considerations-card">
+            <div className="section-header">
+              <div className="section-icon">🔍</div>
+              <h2>Other Architectural Considerations</h2>
+            </div>
+            <div className="section-content">
+              <div className="considerations-grid">
+                <div className="consideration-item">
+                  <div className="consideration-icon">🔄</div>
+                  <h3>CI/CD Flow</h3>
+                  <p>Define how code moves from commit to production with tools, stages, and automations.</p>
+                  <ul className="consideration-details">
+                    <li><strong>Tools:</strong> GitHub, GitLab, Jenkins, Azure DevOps</li>
+                    <li><strong>Stages:</strong> Build, test, deploy</li>
+                    <li><strong>Automations:</strong> Quality checks, container builds, rollbacks</li>
+                  </ul>
+                </div>
+                
+                <div className="consideration-item">
+                  <div className="consideration-icon">🛡️</div>
+                  <h3>Security Architecture</h3>
+                  <p>Comprehensive security across all layers and components.</p>
+                  <ul className="consideration-details">
+                    <li><strong>Identity:</strong> OAuth2, OIDC, SAML</li>
+                    <li><strong>Protection:</strong> WAF, rate limiting, schema enforcement</li>
+                    <li><strong>Compliance:</strong> GDPR, HIPAA, PCI</li>
+                    <li><strong>Zero-trust:</strong> Across users, devices, workloads, data</li>
+                  </ul>
+                </div>
+                
+                <div className="consideration-item">
+                  <div className="consideration-icon">🏥</div>
+                  <h3>Domain-Specific Views</h3>
+                  <p>Industry-specific diagrams and considerations for specialized domains.</p>
+                  <div className="domain-examples">
+                    <span className="domain-tag">Healthcare</span>
+                    <span className="domain-tag">Banking</span>
+                    <span className="domain-tag">Telecom</span>
+                    <span className="domain-tag">Retail</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      <section id="other-considerations" className="stack gap-md">
-        <h2>Other Architectural Considerations</h2>
-        <h3>CI/CD Flow</h3>
-        <p>Define how code moves from commit to production with tools, stages, and automations.</p>
-        <ul>
-          <li>Tools (GitHub, GitLab, Jenkins, Azure DevOps)</li>
-          <li>Stages (build, test, deploy)</li>
-          <li>Automations (quality checks, container builds, rollbacks)</li>
-        </ul>
-        <h3>Security Architecture</h3>
-        <ul>
-          <li>Identity & access management (OAuth2, OIDC, SAML)</li>
-          <li>Threat protection (WAF, rate limiting, schema enforcement)</li>
-          <li>Compliance mapping (GDPR, HIPAA, PCI)</li>
-          <li>Zero‑trust across users, devices, workloads, data</li>
-        </ul>
-        <h3>Domain‑Specific Views</h3>
-        <p>
-          Industry diagrams can zoom into healthcare, banking, or telecom—providing detailed process
-          and integration flows that extend the solution view.
-        </p>
-      </section>
+        <section id="how-it-connects" className="solutions-section">
+          <div className="connection-flow">
+            <h2>How It All Connects</h2>
+            <div className="flow-diagram">
+              <div className="flow-step">
+                <div className="step-number">1</div>
+                <div className="step-content">
+                  <h3>Start with Business (L0/L1)</h3>
+                  <p>Define goals, value, capabilities, and stakeholder needs</p>
+                </div>
+              </div>
+              
+              <div className="flow-arrow">→</div>
+              
+              <div className="flow-step">
+                <div className="step-number">2</div>
+                <div className="step-content">
+                  <h3>Move to Solution (L1/L2)</h3>
+                  <p>Show how patterns and building blocks create the solution</p>
+                </div>
+              </div>
+              
+              <div className="flow-arrow">→</div>
+              
+              <div className="flow-step">
+                <div className="step-number">3</div>
+                <div className="step-content">
+                  <h3>Refine with Details (L2)</h3>
+                  <p>Add standards, security, and integration specifics</p>
+                </div>
+              </div>
+              
+              <div className="flow-arrow">→</div>
+              
+              <div className="flow-step">
+                <div className="step-number">4</div>
+                <div className="step-content">
+                  <h3>Finalize Deployment (L2/L3)</h3>
+                  <p>Document operations, scaling, and security measures</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="connection-insight">
+              <p>Each step builds on the last, ensuring traceability from business value to technical execution.</p>
+            </div>
+          </div>
+        </section>
 
-      <section id="how-it-connects" className="stack gap-md">
-        <h2>How It All Connects</h2>
-        <ol>
-          <li><strong>Start with Business (L0/L1)</strong>: Define goals, value, capabilities.</li>
-          <li><strong>Move to Solution (L1/L2)</strong>: Show how patterns and building blocks create the solution.</li>
-          <li><strong>Refine with protocols & flows (L2)</strong>: Add standards, security, integration details.</li>
-          <li><strong>Finalize with Deployment (L2/L3)</strong>: Document how it’s operated, scaled, and secured.</li>
-        </ol>
-        <p>Each step builds on the last, ensuring traceability from business value to technical execution.</p>
-      </section>
-
-      <section id="conclusion" className="stack gap-md">
-        <h2>Conclusion</h2>
-        <p>
-          Great architecture speaks to the right audience at the right level. By combining patterns
-          with building blocks, and progressing from Business L0 through Deployment L3, organizations
-          create platforms that are understandable, secure, operable—and deliver measurable value.
-        </p>
-        <div>
-          <Link href="/patterns" className="button accent" aria-label="Explore patterns">Explore Patterns</Link>
-          <span style={{ marginInline: '.5rem' }} />
-          <Link href="/blocks" className="button" aria-label="Browse building blocks">Browse Building Blocks</Link>
-        </div>
-      </section>
-    </section>
+        <section id="conclusion" className="solutions-section">
+          <div className="conclusion-card">
+            <div className="conclusion-content">
+              <h2>Conclusion</h2>
+              <p>
+                Great architecture speaks to the right audience at the right level. By combining patterns
+                with building blocks, and progressing from Business L0 through Deployment L3, organizations
+                create platforms that are understandable, secure, operable—and deliver measurable value.
+              </p>
+              
+              <div className="conclusion-actions">
+                <Link href="/patterns" className="button primary">Explore Patterns</Link>
+                <Link href="/blocks" className="button secondary">Browse Building Blocks</Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      </article>
+    </div>
   );
 }
-

@@ -5,20 +5,68 @@ import Link from "next/link";
 import { blockList } from "@/lib/blocks";
 import { patternList } from "@/lib/patterns";
 import { connections } from "@/lib/connections";
+import { EventDrivenDiagram } from "@/components/diagrams/EventDrivenDiagram";
+import { MicroserviceDiagram } from "@/components/diagrams/MicroserviceDiagram";
+import { LayeredArchitectureDiagram } from "@/components/diagrams/LayeredArchitectureDiagram";
+import { HexagonalDiagram } from "@/components/diagrams/HexagonalDiagram";
+import { APIDiagram } from "@/components/diagrams/blocks/APIDiagram";
+import { IAMDiagram } from "@/components/diagrams/blocks/IAMDiagram";
+import { ObservabilityDiagram } from "@/components/diagrams/blocks/ObservabilityDiagram";
+import { DataPlatformDiagram } from "@/components/diagrams/blocks/DataPlatformDiagram";
 
 /* Lightweight interactive explorer: filter blocks & patterns and view relationships */
 export default function ExplorePage() {
   const [query, setQuery] = useState("");
   const [show, setShow] = useState<"blocks"|"patterns"|"relationships">("relationships");
+  const [relMode, setRelMode] = useState<"list"|"matrix">("list");
+  const [patternCats, setPatternCats] = useState<string[]>([]);
+  const [blockFamilies, setBlockFamilies] = useState<string[]>([]);
 
   const q = query.toLowerCase().trim();
 
-  const filteredBlocks = useMemo(() => blockList.filter(b =>
-    [b.title, b.summary, ...(b.keywords||[])].some(t => t.toLowerCase().includes(q))
-  ), [q]);
-  const filteredPatterns = useMemo(() => patternList.filter(p =>
-    [p.title, p.summary, ...(p.keywords||[])].some(t => t.toLowerCase().includes(q))
-  ), [q]);
+  const PATTERN_CATS: Record<string, string> = {
+    "layered-architecture": "Structural",
+    "hexagonal-architecture": "Structural",
+    "clean-architecture": "Structural",
+    "onion-architecture": "Structural",
+    "plugin-based": "Structural",
+    "microservice-architecture": "Distribution",
+    "service-oriented-architecture": "Distribution",
+    "event-driven-architecture": "Distribution",
+    "space-based-architecture": "Distribution",
+    "cqrs": "Data",
+    "data-mesh": "Data",
+    "pipes-and-filters": "Data",
+    "broker-architecture": "Data",
+    "blackboard-architecture": "Data",
+  };
+
+  const BLOCK_FAMILIES: Record<string, string> = {
+    "api-management": "API",
+    "identity-access-management": "Security",
+    "security-services": "Security",
+    "observability-operations": "Observability",
+    "cloud-native-platform-services": "Platform",
+    "data-platform": "Data",
+    "internal-developer-platform": "Platform",
+    "enterprise-integration": "Integration",
+    "event-driven-architecture": "Integration",
+    "collaboration-knowledge-platforms": "Collaboration",
+  };
+
+  const filteredBlocks = useMemo(() => blockList.filter(b => {
+    const text = [b.title, b.summary, ...(b.keywords||[])].some(t => t.toLowerCase().includes(q));
+    const fam = BLOCK_FAMILIES[b.slug] || "Other";
+    const famOk = blockFamilies.length === 0 || blockFamilies.includes(fam);
+    return text && famOk;
+  }), [q, blockFamilies]);
+
+  const filteredPatterns = useMemo(() => patternList.filter(p => {
+    const text = [p.title, p.summary, ...(p.keywords||[])].some(t => t.toLowerCase().includes(q));
+    const cat = PATTERN_CATS[p.slug] || "Other";
+    const catOk = patternCats.length === 0 || patternCats.includes(cat);
+    return text && catOk;
+  }), [q, patternCats]);
 
   const filteredConnections = useMemo(() => connections.filter(c => {
     if (!q) return true;
@@ -31,12 +79,13 @@ export default function ExplorePage() {
 
   return (
     <section className="stack gap-lg">
-      <div className="stack gap-sm">
+      <header className="page-hero stack gap-sm">
         <h1 className="page-title">Architecture Explorer</h1>
         <p className="lede">Discover how platform building blocks and architectural patterns work together to create resilient, scalable digital platforms.</p>
+      </header>
         
-        {/* Overview Stats */}
-        <div className="explorer-stats">
+      {/* Overview Stats */}
+      <div className="explorer-stats">
           <div className="stat-card">
             <div className="stat-number">{patternList.length}</div>
             <div className="stat-label">Architecture Patterns</div>
@@ -53,7 +102,19 @@ export default function ExplorePage() {
             <div className="stat-desc">Connections between patterns and blocks</div>
           </div>
         </div>
-        <div className="explorer-bar">
+        {/* Filters */}
+        <div className="chips" aria-label="Pattern categories">
+          {["Structural","Distribution","Data"].map(cat => (
+            <button key={cat} className={`chip ${patternCats.includes(cat)?'active':''}`} onClick={() => setPatternCats(prev => prev.includes(cat)? prev.filter(c=>c!==cat):[...prev, cat])}>{cat}</button>
+          ))}
+        </div>
+        <div className="chips" aria-label="Block families">
+          {["API","Security","Observability","Platform","Data","Integration","Collaboration"].map(fam => (
+            <button key={fam} className={`chip ${blockFamilies.includes(fam)?'active':''}`} onClick={() => setBlockFamilies(prev => prev.includes(fam)? prev.filter(f=>f!==fam):[...prev, fam])}>{fam}</button>
+          ))}
+        </div>
+
+      <div className="explorer-bar">
           <input
             aria-label="Search"
             placeholder="Search blocks, patterns, capabilities..."
@@ -72,28 +133,94 @@ export default function ExplorePage() {
             ))}
           </div>
         </div>
-      </div>
 
       {show === "relationships" && (
-        <div className="connections-table compact">
-          <div className="table-header">
-            <div>Building Block</div>
-            <div>Patterns</div>
-            <div>How it Helps</div>
+        <div className="stack gap-md">
+          <h2 className="section-title centered blue">Relationships</h2>
+          <div className="subtoggle-group" role="tablist" aria-label="Relationship view">
+            {(["list","matrix"] as const).map(mode => (
+              <button key={mode} role="tab" aria-selected={relMode===mode} className={relMode===mode?"active":undefined} onClick={()=>setRelMode(mode)}>
+                {mode === "list" ? "List" : "Matrix"}
+              </button>
+            ))}
           </div>
-          {filteredConnections.map(c => (
-            <div key={c.block.slug} className="table-row">
-              <div><Link href={`/blocks/${c.block.slug}`}>{c.block.name}</Link></div>
-              <div>{c.patternSlugs.map(ps => {
-                const p = patternList.find(pp => pp.slug === ps);
-                if (!p) return null;
-                return <Link key={p.slug} href={`/patterns/${p.slug}`}>{p.title}</Link>;
-              }).reduce<(JSX.Element|string)[]>((acc, el, i, arr)=>{acc.push(el!); if(i<arr.length-1) acc.push(', '); return acc;}, [])}</div>
-              <div>{c.description}</div>
+          {relMode === "list" ? (
+            <div className="connections-table compact">
+              <div className="table-header">
+                <div>Building Block</div>
+                <div>Patterns</div>
+                <div>How it Helps</div>
+              </div>
+              {filteredConnections.map(c => (
+                <div key={c.block.slug} className="table-row">
+                  <div><Link href={`/blocks/${c.block.slug}`}>{c.block.name}</Link></div>
+                  <div>{c.patternSlugs.map(ps => {
+                    const p = patternList.find(pp => pp.slug === ps);
+                    if (!p) return null;
+                    return <Link key={p.slug} href={`/patterns/${p.slug}`}>{p.title}</Link>;
+                  }).reduce<(JSX.Element|string)[]>((acc, el, i, arr)=>{acc.push(el!); if(i<arr.length-1) acc.push(', '); return acc;}, [])}</div>
+                  <div>{c.description}</div>
+                </div>
+              ))}
+              {filteredConnections.length === 0 && (
+                <div className="table-row"><div>No matches</div><div></div><div></div></div>
+              )}
             </div>
-          ))}
-          {filteredConnections.length === 0 && (
-            <div className="table-row"><div>No matches</div><div></div><div></div></div>
+          ) : (
+            <div className="matrix-scroll">
+              <div style={{display:'flex', justifyContent:'flex-end', padding:'.5rem'}}>
+                <button className="button" onClick={() => {
+                  const header = ["Block/Pattern", ...patternList.map(p=>p.title)];
+                  const rows = blockList.map(b => {
+                    const conn = connections.find(c => c.block.slug === b.slug);
+                    const set = new Set(conn?.patternSlugs ?? []);
+                    const fam = BLOCK_FAMILIES[b.slug] || 'Other';
+                    if (blockFamilies.length>0 && !blockFamilies.includes(fam)) return null;
+                    const cells = patternList.map(p => {
+                      const cat = PATTERN_CATS[p.slug] || 'Other';
+                      if (patternCats.length>0 && !patternCats.includes(cat)) return 0;
+                      return set.has(p.slug)?1:0;
+                    });
+                    return [b.title, ...cells];
+                  }).filter(Boolean) as (string|number)[][];
+                  const csv = [header, ...rows].map(r => r.map(x => typeof x === 'string' && (x as string).includes(',')? `"${x}"` : String(x)).join(',')).join('\n');
+                  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a'); a.href = url; a.download = 'relationships-matrix.csv'; a.click(); URL.revokeObjectURL(url);
+                }}>Export CSV</button>
+              </div>
+              <table className="matrix-table" role="grid" aria-label="Blocks by Patterns matrix">
+                <thead>
+                  <tr>
+                    <th>Block ↓ / Pattern →</th>
+                    {patternList.map(p => {
+                      const cat = PATTERN_CATS[p.slug] || 'Other';
+                      if (patternCats.length>0 && !patternCats.includes(cat)) return null;
+                      return (<th key={p.slug}><Link href={`/patterns/${p.slug}`}>{p.title}</Link></th>);
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {blockList.map(b => {
+                    const conn = connections.find(c => c.block.slug === b.slug);
+                    const set = new Set(conn?.patternSlugs ?? []);
+                    const fam = BLOCK_FAMILIES[b.slug] || 'Other';
+                    const visible = (blockFamilies.length===0 || blockFamilies.includes(fam)) && (!q || b.title.toLowerCase().includes(q));
+                    if (!visible) return null;
+                    return (
+                      <tr key={b.slug}>
+                        <th scope="row"><Link href={`/blocks/${b.slug}`}>{b.title}</Link></th>
+                        {patternList.map(p => {
+                          const cat = PATTERN_CATS[p.slug] || 'Other';
+                          if (patternCats.length>0 && !patternCats.includes(cat)) return null;
+                          return (<td key={p.slug} className={set.has(p.slug)?'hit':''}>{set.has(p.slug)?'●':''}</td>);
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       )}
@@ -101,7 +228,7 @@ export default function ExplorePage() {
       {show === "blocks" && (
         <div className="stack gap-md">
           <div className="section-intro">
-            <h2>Platform Building Blocks</h2>
+            <h2 className="section-title centered blue">Platform Building Blocks</h2>
             <p>Core infrastructure components that provide essential capabilities for modern digital platforms. Each block represents a foundational service that supports specific architectural patterns and business requirements.</p>
           </div>
           
@@ -135,7 +262,7 @@ export default function ExplorePage() {
       {show === "patterns" && (
         <div className="stack gap-md">
           <div className="section-intro">
-            <h2>Architecture Patterns</h2>
+            <h2 className="section-title centered blue">Architecture Patterns</h2>
             <p>Proven architectural approaches that solve recurring design problems. Each pattern provides a structured way to organize systems, defining how components interact, communicate, and evolve over time.</p>
             
             <div className="pattern-categories">
@@ -189,7 +316,7 @@ export default function ExplorePage() {
       )}
 
       <div className="explorer-guide stack gap-md" style={{marginTop:'2rem'}}>
-        <h2>Understanding Platform Architecture</h2>
+        <h2 className="section-title centered blue">Understanding Platform Architecture</h2>
         
         <div className="guide-grid">
           <div className="guide-card">

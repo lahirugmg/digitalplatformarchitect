@@ -36,17 +36,17 @@ export default function PatternsIndexPage() {
 
   return (
     <section className="stack gap-xl">
-      <div className="stack gap-sm">
+      <header className="page-hero stack gap-sm">
         <h1 className="page-title">Architecture Styles & Patterns</h1>
         <p className="lede">
-          Explore common architecture styles and patterns, their trade-offs, and when
-          to use them. Visual diagrams help you understand structure and relationships.
+          Explore common architecture styles and patterns, their trade-offs, and when to use them.
+          Visual diagrams help you understand structure and relationships.
         </p>
-      </div>
+      </header>
 
       {/* Featured Patterns with Diagrams */}
       <section className="stack gap-md">
-        <h2 className="section-title">Featured Patterns with Visual Diagrams</h2>
+        <h2 className="section-title centered blue">Featured Patterns with Visual Diagrams</h2>
         <div className="patterns-with-diagrams">
           {patternsWithDiagrams.map((p) => {
             const DiagramComponent = patternDiagrams[p.slug];
@@ -85,7 +85,7 @@ export default function PatternsIndexPage() {
       {/* Other Patterns */}
       {patternsWithoutDiagrams.length > 0 && (
         <section className="stack gap-md">
-          <h2 className="section-title">Additional Architecture Patterns</h2>
+          <h2 className="section-title centered blue">Additional Architecture Patterns</h2>
           <div className="card-grid">
             {patternsWithoutDiagrams.map((p) => (
               <Link key={p.slug} href={`/patterns/${p.slug}`} className="card enhanced-card">
@@ -116,7 +116,7 @@ export default function PatternsIndexPage() {
 
       {/* Learning Guide */}
       <section className="stack gap-md" style={{marginTop: '2rem'}}>
-        <h2 className="section-title">Understanding Architectural Patterns</h2>
+        <h2 className="section-title centered blue">Understanding Architectural Patterns</h2>
         <div className="guide-grid">
           <div className="guide-card">
             <h3>🏗️ Structural Patterns</h3>
@@ -149,4 +149,3 @@ export default function PatternsIndexPage() {
     </section>
   );
 }
-
