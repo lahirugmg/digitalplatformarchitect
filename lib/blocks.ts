@@ -410,47 +410,103 @@ export const blocks: Record<string, Block> = {
     slug: "observability-operations",
     title: "Observability & Operations",
     summary:
-      "Telemetry, tracing, logging, SLOs, and incident response to run platforms reliably.",
+      "Digital platform observability and monitoring with comprehensive telemetry, distributed tracing, and multi-layer visibility for reliable operations.",
     keywords: [
       "opentelemetry",
-      "grafana",
-      "prometheus",
-      "chaos testing",
-      "slos"
+      "ebpf",
+      "datadog",
+      "distributed tracing",
+      "slos",
+      "metrics",
+      "logging"
     ],
     sections: [
       { kind: "text", title: "What it is", body:
-        "End-to-end visibility and operations: instrumentation, tracing, metrics, logs, alerting, SLOs, and incident management." },
-      { kind: "list", title: "Responsibilities", items: [
-        "Standardized telemetry and propagation",
-        "Dashboards, alerts, on-call and runbooks",
-        "SLO/SLI definition and reporting",
-        "Incident and problem management"
+        "Comprehensive observability platform providing end-to-end visibility across network, application, service, and infrastructure layers. Combines signals collection, intelligent correlation, and operational guardrails to ensure reliable platform operations." },
+      { kind: "list", title: "Observability Signals", items: [
+        "Metrics: Time-series data for KPIs, performance, and resource utilization",
+        "Logs: Structured application and system events with correlation",
+        "Traces: Distributed request flow across microservices",
+        "Profiles: Application performance profiling and resource analysis",
+        "Events: Business and system events for correlation and alerting"
       ]},
-      { kind: "list", title: "Core capabilities", items: [
-        "OpenTelemetry instrumentation and collectors",
-        "Distributed tracing and sampling",
-        "Metrics TSDB and log pipelines",
-        "SLO tooling and synthetic monitoring"
+      { kind: "list", title: "Data Collection Architecture", items: [
+        "eBPF agents on nodes for network-level TCP Layer 4 observability",
+        "OpenTelemetry (OTel) SDK/auto-instrumentation in applications",
+        "OTel Collector or DataDog Agent on each node/sidecar",
+        "Custom collectors for legacy systems and specialized protocols",
+        "Synthetic monitoring and real user monitoring (RUM)"
+      ]},
+      { kind: "list", title: "Backend & Analytics", items: [
+        "DataDog Metrics, APM, RUM, Synthetics, Security monitoring",
+        "ELK Stack for log aggregation and search",
+        "Prometheus/Grafana for metrics and alerting",
+        "Jaeger/Tempo for distributed tracing storage",
+        "Time-series databases with retention policies"
+      ]},
+      { kind: "list", title: "Network-Level Observability", items: [
+        "TCP Layer 4 monitoring using eBPF technology",
+        "Network traffic analysis across Identity Server, Gateway, and microservices",
+        "Connection tracking, bandwidth utilization, and latency monitoring",
+        "Network security monitoring and anomaly detection",
+        "CNI health monitoring and kube-proxy error tracking"
+      ]},
+      { kind: "list", title: "Application-Level Observability", items: [
+        "API statistics: error rates, HTTP response codes, latency",
+        "Gateway and Identity Provider metrics publishing",
+        "Application performance monitoring (APM)",
+        "Business metrics and user journey tracking",
+        "Code-level insights and performance bottleneck identification"
+      ]},
+      { kind: "list", title: "Service-Level Observability", items: [
+        "Distributed tracing: Gateway → Identity Server → Microservice → DB",
+        "W3C traceparent/tracestate propagation with B3 fallback",
+        "Span attributes: api.name, api.operation, tenant, auth.method, user.flow",
+        "Tail-based and dynamic sampling for performance optimization",
+        "Trace-log correlation with trace_id/span_id injection"
+      ]},
+      { kind: "list", title: "Runtime & Infrastructure Observability", items: [
+        "Kubernetes: Node pressure, pod restarts, OOMKilled, HPA/VPA behavior",
+        "JVM monitoring: Heap usage, GC pause time, thread pools, JIT stats",
+        "Database connections, slow queries, and performance metrics",
+        "Cache hit/miss ratios, evictions, and memory utilization",
+        "Message queue lag, requeue rates, and broker health"
+      ]},
+      { kind: "list", title: "Correlation & Context", items: [
+        "Service, environment, version, region, and tenant correlation",
+        "API name, user flow, and release tag tracking",
+        "Cross-layer correlation between network, application, and infrastructure",
+        "Business context integration with technical metrics",
+        "Anomaly detection with contextual analysis"
+      ]},
+      { kind: "list", title: "Operational Guardrails", items: [
+        "PII scrubbing and data privacy protection",
+        "Intelligent sampling strategies and cost optimization",
+        "Multi-tier data retention policies",
+        "SLOs and error budget management",
+        "Alert fatigue reduction and noise filtering"
       ]},
       { kind: "list", title: "Architecture patterns", items: [
-        "RED/USE metrics",
-        "Centralized vs. federated observability",
-        "Event-driven alerting and correlation",
-        "Chaos and resilience testing"
+        "RED metrics (Rate, Errors, Duration) and USE metrics (Utilization, Saturation, Errors)",
+        "Centralized vs. federated observability models",
+        "Event-driven alerting and correlation engines",
+        "Chaos engineering and resilience testing",
+        "Service mesh observability with sidecar telemetry"
       ]},
       { kind: "list", title: "Tech examples", items: [
-        "Grafana/Prometheus/Tempo/Loki",
-        "OpenTelemetry",
-        "Jaeger",
-        "Splunk",
-        "Datadog/New Relic"
+        "DataDog (APM, Infrastructure, Logs, RUM, Synthetics)",
+        "OpenTelemetry ecosystem (Collectors, SDKs, Auto-instrumentation)",
+        "eBPF tools (Cilium, Falco, Pixie)",
+        "ELK Stack (Elasticsearch, Logstash, Kibana)",
+        "Prometheus, Grafana, Tempo, Loki",
+        "Jaeger, Zipkin for distributed tracing"
       ]},
       { kind: "list", title: "KPIs/SLIs", items: [
-        "MTTD/MTTR",
-        "SLO compliance",
-        "Alert noise vs. signal",
-        "Trace/log coverage"
+        "MTTD (Mean Time to Detection) and MTTR (Mean Time to Recovery)",
+        "SLO compliance and error budget consumption",
+        "Alert precision: signal-to-noise ratio",
+        "Observability coverage: trace, log, and metric completeness",
+        "Platform reliability: uptime, availability, and performance SLAs"
       ]}
     ]
   },
