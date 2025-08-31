@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 type Props = {
   title: string;
-  Diagram: React.ComponentType;
+  children: React.ReactElement;
 };
 
-export function DiagramZoom({ title, Diagram }: Props) {
+export function DiagramZoom({ title, children }: Props) {
   const [open, setOpen] = useState(false);
   const [scale, setScale] = useState(1);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -55,7 +55,7 @@ export function DiagramZoom({ title, Diagram }: Props) {
   return (
     <div className="diagram-shell">
       <div className="diagram-inner">
-        <Diagram />
+        {children}
       </div>
       <button className="zoom-btn" aria-label={`Magnify ${title}`} onClick={() => setOpen(true)}>
         🔍 Magnify
@@ -129,7 +129,7 @@ export function DiagramZoom({ title, Diagram }: Props) {
                   ref={stageRef}
                   style={{ transform: `scale(${scale})`, transformOrigin: 'top left', width: baseSize.w, height: baseSize.h }}
                 >
-                  <Diagram />
+                  {React.isValidElement(children) ? React.cloneElement(children) : children}
                 </div>
               </div>
             </div>

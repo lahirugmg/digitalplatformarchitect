@@ -5,6 +5,8 @@ import { patternList } from "@/lib/patterns";
 import { PatternCard } from "@/components/PatternCard";
 import { ConnectionsExplorer } from "@/components/ConnectionsExplorer";
 import { DigitalPlatformDiagram } from "@/components/diagrams/DigitalPlatformDiagram";
+import { DiagramZoom } from "@/components/DiagramZoom";
+import { ArchitectureExplorer } from "@/components/ArchitectureExplorer";
 
 function ArchitectureJourneyStep({ 
   stepNumber, 
@@ -58,9 +60,17 @@ export default function HomePage() {
         <div className="stack gap-sm">
           <h2 className="section-title">Digital Platform Building Blocks</h2>
         </div>
-        <div className="diagram-container">
+        <DiagramZoom title="Digital Platform Building Blocks">
           <DigitalPlatformDiagram />
+        </DiagramZoom>
+      </section>
+
+      <section className="patterns-showcase">
+        <div className="stack gap-sm" style={{marginBottom: '1rem'}}>
+          <h2 className="section-title centered blue">Zoomable Architecture Levels (L0–L3)</h2>
+          <p className="section-description">Start at L0 conceptual view, then zoom into L1/L2/L3 to reveal products, protocols, and deployments.</p>
         </div>
+        <ArchitectureExplorer />
       </section>
 
       <section className="patterns-showcase">
