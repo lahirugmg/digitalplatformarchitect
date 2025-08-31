@@ -53,7 +53,7 @@ export function DigitalPlatformDiagram() {
 
       {/* Main Title */}
       <text x="800" y="40" textAnchor="middle" fill={c.text} style={{ font: "700 20px system-ui" }}>Digital Platform Building Blocks</text>
-      <text x="800" y="60" textAnchor="middle" fill={c.subtle} style={{ font: "500 14px system-ui" }}>Event-Driven Architecture with Comprehensive Security & Observability</text>
+      <text x="800" y="60" textAnchor="middle" fill={c.subtle} style={{ font: "500 14px system-ui" }}>Core Software Platform Capabilities for Enterprise Architecture</text>
 
       {/* External Interface Layer */}
       <rect x="60" y="90" width="1480" height="80" fill={c.api} stroke={c.border} rx="15" ry="15" opacity="0.25" />
