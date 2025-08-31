@@ -13,7 +13,8 @@ function ArchitectureJourneyStep({
   keyPoints, 
   ctaText, 
   ctaLink,
-  phase 
+  phase,
+  icon 
 }: {
   stepNumber: number;
   title: string;
@@ -22,11 +23,13 @@ function ArchitectureJourneyStep({
   ctaText: string;
   ctaLink: string;
   phase: string;
+  icon?: string;
 }) {
   return (
     <div className="journey-step-sleek">
       <div className="step-indicator">
         <div className="step-number-sleek">{stepNumber}</div>
+        {icon && <div className="step-icon-sleek">{icon}</div>}
         <div className="step-phase">{phase}</div>
       </div>
       <div className="step-content-sleek">
@@ -92,6 +95,7 @@ export default function HomePage() {
             stepNumber={1}
             title="Business Architecture"
             phase="Foundation"
+            icon="🏢"
             description="Understand organizational requirements, map business capabilities, and define strategic principles that guide all architectural decisions."
             keyPoints={["Capability Mapping", "Value Streams", "Business Alignment", "Strategic Goals"]}
             ctaText="Explore Business Context"
@@ -102,6 +106,7 @@ export default function HomePage() {
             stepNumber={2}
             title="Solution Architecture"
             phase="Design"
+            icon="🎯"
             description="Select and combine architecture patterns to create cohesive solutions that meet business requirements and technical constraints."
             keyPoints={["Pattern Selection", "System Boundaries", "Integration Design", "Quality Attributes"]}
             ctaText="Discover Patterns"
@@ -112,6 +117,7 @@ export default function HomePage() {
             stepNumber={3}
             title="Security Architecture"
             phase="Security"
+            icon="🔒"
             description="Design comprehensive security controls covering access management, threat protection, data encryption, and regulatory compliance requirements."
             keyPoints={["Identity Management", "OAuth2/SAML/JWT", "Threat Protection", "GDPR/HIPAA Compliance"]}
             ctaText="Security Patterns"
@@ -122,6 +128,7 @@ export default function HomePage() {
             stepNumber={4}
             title="Platform Building Blocks"
             phase="Implementation"
+            icon="🧱"
             description="Implement patterns using concrete technologies and platform capabilities that provide the foundation for scalable systems."
             keyPoints={["Messaging Platforms", "API Management", "Identity Systems", "Observability"]}
             ctaText="Explore Building Blocks"
@@ -132,6 +139,7 @@ export default function HomePage() {
             stepNumber={5}
             title="Deployment Architecture"
             phase="Operations"
+            icon="🚀"
             description="Define deployment strategies, infrastructure requirements, and operational models for production-ready platforms."
             keyPoints={["Infrastructure as Code", "Container Orchestration", "CI/CD Pipelines", "Monitoring"]}
             ctaText="View Blueprints"

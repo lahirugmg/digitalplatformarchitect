@@ -20,14 +20,21 @@ export default function AboutPage() {
               product thinking, platform capabilities, integration patterns, data,
               and governance.
             </p>
-            <p>
-              The site starts simple and grows over time. Expect iterative content
-              releases, reference models, and practical templates.
-            </p>
-          </div>
+          <p>
+            The site starts simple and grows over time. Expect iterative content
+            releases, reference models, and practical templates.
+          </p>
+          <p>
+            Have suggestions or want to collaborate? Connect or message me on LinkedIn:
+            {" "}
+            <a href="https://www.linkedin.com/in/lahirugmg/" target="_blank" rel="noopener noreferrer">
+              linkedin.com/in/lahirugmg
+            </a>
+            .
+          </p>
         </div>
+      </div>
       </article>
     </div>
   );
 }
-

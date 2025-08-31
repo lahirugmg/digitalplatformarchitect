@@ -2065,6 +2065,12 @@ html {
   z-index: 1;
 }
 
+.step-icon-sleek {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
 .journey-step-sleek:nth-child(2) .step-number-sleek {
   background: linear-gradient(135deg, var(--orange), var(--primary));
 }
