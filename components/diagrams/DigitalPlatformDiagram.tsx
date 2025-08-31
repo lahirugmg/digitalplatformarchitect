@@ -201,30 +201,35 @@ export function DigitalPlatformDiagram() {
       <rect x="800" y="430" width="740" height="100" fill={c.devops} stroke={c.border} rx="15" ry="15" opacity="0.25" />
       <text x="820" y="455" fill={c.text} style={{ font: fontTitle }}>🚀 Developer Platform & Operations</text>
 
-      <rect x="860" y="475" width="120" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
-      <text x="920" y="490" textAnchor="middle" fill={c.text} style={{ font }}>CI/CD Pipeline</text>
-      <text x="920" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>GitLab/Jenkins</text>
-      <text x="920" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>GitOps</text>
+      <rect x="860" y="475" width="105" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
+      <text x="912" y="490" textAnchor="middle" fill={c.text} style={{ font }}>CI/CD Pipeline</text>
+      <text x="912" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>GitLab/Jenkins</text>
+      <text x="912" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>GitOps</text>
 
-      <rect x="1000" y="475" width="120" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
-      <text x="1060" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Container Platform</text>
-      <text x="1060" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Kubernetes</text>
-      <text x="1060" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Orchestration</text>
+      <rect x="985" y="475" width="105" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
+      <text x="1037" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Container Platform</text>
+      <text x="1037" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Kubernetes</text>
+      <text x="1037" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Orchestration</text>
 
-      <rect x="1140" y="475" width="120" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
-      <text x="1200" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Service Mesh</text>
-      <text x="1200" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Istio</text>
-      <text x="1200" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Traffic Mgmt</text>
+      <rect x="1110" y="475" width="105" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
+      <text x="1162" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Service Mesh</text>
+      <text x="1162" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Istio</text>
+      <text x="1162" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Traffic Mgmt</text>
 
-      <rect x="1280" y="475" width="120" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
-      <text x="1340" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Observability</text>
-      <text x="1340" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>OpenTelemetry</text>
-      <text x="1340" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Monitoring</text>
+      <rect x="1235" y="475" width="105" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
+      <text x="1287" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Observability</text>
+      <text x="1287" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>OpenTelemetry</text>
+      <text x="1287" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Monitoring</text>
 
-      <rect x="1420" y="475" width="100" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
-      <text x="1470" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Service Catalog</text>
-      <text x="1470" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Backstage</text>
-      <text x="1470" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Self-Service</text>
+      <rect x="1360" y="475" width="105" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
+      <text x="1412" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Service Catalog</text>
+      <text x="1412" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Backstage</text>
+      <text x="1412" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Self-Service</text>
+
+      <rect x="1485" y="475" width="105" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
+      <text x="1537" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Internal Dev Platform</text>
+      <text x="1537" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>WSO2 Choreo</text>
+      <text x="1537" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Low-Code Platform</text>
 
       {/* Security & Governance Layer */}
       <rect x="60" y="550" width="1480" height="100" fill={c.security} stroke={c.border} rx="15" ry="15" opacity="0.25" />
@@ -332,13 +337,14 @@ export function DigitalPlatformDiagram() {
 
       {/* Technology Stack */}
       <text x="1050" y="820" fill={c.text} style={{ font: fontTitle }}>⚙️ Reference Technology Stack</text>
-      <text x="1050" y="840" fill={c.subtle} style={{ font: fontSub }}>• API: Kong Gateway, Swagger/OpenAPI, GraphQL Federation</text>
-      <text x="1050" y="855" fill={c.subtle} style={{ font: fontSub }}>• Messaging: Apache Kafka, RabbitMQ, Apache Pulsar, Redis</text>
-      <text x="1050" y="870" fill={c.subtle} style={{ font: fontSub }}>• Runtime: Kubernetes, Istio Service Mesh, Envoy Proxy</text>
-      <text x="1050" y="885" fill={c.subtle} style={{ font: fontSub }}>• Data: Snowflake, Apache Iceberg, Databricks, MLflow</text>
-      <text x="1050" y="900" fill={c.subtle} style={{ font: fontSub }}>• Security: Keycloak, HashiCorp Vault, Open Policy Agent</text>
-      <text x="1050" y="915" fill={c.subtle} style={{ font: fontSub }}>• Observability: OpenTelemetry, Prometheus, Grafana, Jaeger</text>
-      <text x="1050" y="930" fill={c.subtle} style={{ font: fontSub }}>• DevOps: GitLab, ArgoCD, Backstage, Terraform, Helm</text>
+      <text x="1050" y="835" fill={c.subtle} style={{ font: fontSub }}>• API: WSO2 API Manager, WSO2 Micro Gateway, Kong, OpenAPI</text>
+      <text x="1050" y="848" fill={c.subtle} style={{ font: fontSub }}>• Integration: WSO2 Micro Integrator, WSO2 Streaming Integrator</text>
+      <text x="1050" y="861" fill={c.subtle} style={{ font: fontSub }}>• Identity: WSO2 Identity Server, WSO2 Asgardeo, Keycloak</text>
+      <text x="1050" y="874" fill={c.subtle} style={{ font: fontSub }}>• Analytics: WSO2 Stream Processor, Apache Kafka, Apache Flink</text>
+      <text x="1050" y="887" fill={c.subtle} style={{ font: fontSub }}>• Data: Snowflake, Apache Iceberg, Databricks, MLflow</text>
+      <text x="1050" y="900" fill={c.subtle} style={{ font: fontSub }}>• Internal Dev Platform: WSO2 Choreo, Backstage, Platform.sh</text>
+      <text x="1050" y="913" fill={c.subtle} style={{ font: fontSub }}>• Runtime: Kubernetes, Istio Service Mesh, Envoy Proxy</text>
+      <text x="1050" y="926" fill={c.subtle} style={{ font: fontSub }}>• DevOps: GitLab, ArgoCD, Terraform, Helm</text>
     </svg>
   );
 }
