@@ -2239,7 +2239,7 @@ html {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--primary); /* solid color */
+  background: #9ca3af; /* light grey color */
   color: white;
   display: flex;
   align-items: center;
@@ -2257,11 +2257,13 @@ html {
   filter: none; /* remove shaded effect */
 }
 
-.journey-step-sleek:nth-child(2) .step-number-sleek { background: var(--orange); }
+.journey-step-sleek:nth-child(2) .step-number-sleek { background: #9ca3af; }
 
-.journey-step-sleek:nth-child(3) .step-number-sleek { background: var(--green); }
+.journey-step-sleek:nth-child(3) .step-number-sleek { background: #9ca3af; }
 
-.journey-step-sleek:nth-child(4) .step-number-sleek { background: var(--purple); }
+.journey-step-sleek:nth-child(4) .step-number-sleek { background: #9ca3af; }
+
+.journey-step-sleek:nth-child(5) .step-number-sleek { background: #9ca3af; }
 
 .step-phase {
   font-size: 0.75rem;

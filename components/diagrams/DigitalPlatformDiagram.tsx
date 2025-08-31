@@ -21,7 +21,7 @@ export function DigitalPlatformDiagram() {
   const fontMini = "500 9px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
 
   return (
-    <svg viewBox="0 0 1600 1000" role="img" aria-labelledby="digital-platform-title digital-platform-desc" preserveAspectRatio="xMidYMid meet">
+    <svg viewBox="0 0 1600 1200" role="img" aria-labelledby="digital-platform-title digital-platform-desc" preserveAspectRatio="xMidYMid meet">
       <title id="digital-platform-title">Digital Platform Architecture</title>
       <desc id="digital-platform-desc">Comprehensive view of digital platform building blocks including API management, messaging, microservices, data platforms, developer tools, and security layers with their interconnections.</desc>
       
@@ -48,8 +48,8 @@ export function DigitalPlatformDiagram() {
       </defs>
 
       {/* Background with subtle gradient */}
-      <rect width="1600" height="1000" fill="url(#platformGradient)" />
-      <rect width="1600" height="1000" fill="url(#grid)" />
+      <rect width="1600" height="1200" fill="url(#platformGradient)" />
+      <rect width="1600" height="1200" fill="url(#grid)" />
 
       {/* Main Title */}
       <text x="800" y="40" textAnchor="middle" fill={c.text} style={{ font: "700 20px system-ui" }}>Digital Platform Building Blocks</text>
@@ -282,69 +282,68 @@ export function DigitalPlatformDiagram() {
 
 
       {/* Information Panel */}
-      <rect x="60" y="680" width="1480" height="280" fill={c.surface} stroke={c.border} rx="15" ry="15" opacity="0.8" />
+      <rect x="60" y="680" width="1480" height="460" fill={c.surface} stroke={c.border} rx="15" ry="15" opacity="0.8" />
       
-      {/* Key Capabilities */}
-      <text x="80" y="710" fill={c.text} style={{ font: fontTitle }}>🎯 Key Platform Capabilities</text>
-      <text x="80" y="735" fill={c.subtle} style={{ font: fontSub }}>• Event-driven microservices with CQRS and Event Sourcing patterns</text>
-      <text x="80" y="750" fill={c.subtle} style={{ font: fontSub }}>• Real-time stream processing with complex event processing (CEP)</text>
-      <text x="80" y="765" fill={c.subtle} style={{ font: fontSub }}>• Zero-trust security model with comprehensive identity management</text>
-      <text x="80" y="780" fill={c.subtle} style={{ font: fontSub }}>• Self-service developer platform with GitOps and service catalog</text>
+      {/* Quick Reference (condensed to reduce crowding) */}
+      <text x="80" y="710" fill={c.text} style={{ font: fontTitle }}>📘 Quick Reference</text>
 
-      {/* Business Benefits */}
-      <text x="500" y="710" fill={c.text} style={{ font: fontTitle }}>📈 Business Benefits</text>
-      <text x="500" y="735" fill={c.subtle} style={{ font: fontSub }}>• 10x faster feature delivery with autonomous teams</text>
-      <text x="500" y="750" fill={c.subtle} style={{ font: fontSub }}>• 99.99% availability through resilient architecture</text>
-      <text x="500" y="765" fill={c.subtle} style={{ font: fontSub }}>• Real-time insights and ML-driven decision making</text>
-      <text x="500" y="780" fill={c.subtle} style={{ font: fontSub }}>• Automatic scaling and cost optimization</text>
+      {/* Left column: Component Types (legend) */}
+      <text x="80" y="735" fill={c.text} style={{ font: fontSub }}>🏗️ Component Types</text>
+      <rect x="80" y="745" width="12" height="10" fill={c.api} rx="2" />
+      <text x="100" y="753" fill={c.subtle} style={{ font: fontMini }}>API & Edge</text>
+      <rect x="80" y="760" width="12" height="10" fill={c.messaging} rx="2" />
+      <text x="100" y="768" fill={c.subtle} style={{ font: fontMini }}>Messaging/Streaming</text>
+      <rect x="80" y="775" width="12" height="10" fill={c.integration} rx="2" />
+      <text x="100" y="783" fill={c.subtle} style={{ font: fontMini }}>Integration</text>
+      <rect x="80" y="790" width="12" height="10" fill={c.microservices} rx="2" />
+      <text x="100" y="798" fill={c.subtle} style={{ font: fontMini }}>Microservices</text>
+      <rect x="80" y="805" width="12" height="10" fill={c.data} rx="2" />
+      <text x="100" y="813" fill={c.subtle} style={{ font: fontMini }}>Data Platform</text>
+      <rect x="80" y="820" width="12" height="10" fill={c.devops} rx="2" />
+      <text x="100" y="828" fill={c.subtle} style={{ font: fontMini }}>Dev Platform</text>
+      <rect x="80" y="835" width="12" height="10" fill={c.security} rx="2" />
+      <text x="100" y="843" fill={c.subtle} style={{ font: fontMini }}>Security</text>
 
-      {/* Technical Patterns */}
-      <text x="900" y="710" fill={c.text} style={{ font: fontTitle }}>🔧 Architecture Patterns</text>
-      <text x="900" y="735" fill={c.subtle} style={{ font: fontSub }}>• Domain-Driven Design (DDD) with bounded contexts</text>
-      <text x="900" y="750" fill={c.subtle} style={{ font: fontSub }}>• Saga pattern for distributed transactions</text>
-      <text x="900" y="765" fill={c.subtle} style={{ font: fontSub }}>• Circuit breaker and bulkhead patterns for resilience</text>
-      <text x="900" y="780" fill={c.subtle} style={{ font: fontSub }}>• API-first design with contract-driven development</text>
+      {/* Center column: Key Capabilities */}
+      <text x="560" y="735" fill={c.text} style={{ font: fontSub }}>🎯 Key Capabilities</text>
+      <text x="560" y="755" fill={c.subtle} style={{ font: fontSub }}>• Event-driven with CQRS where needed</text>
+      <text x="560" y="770" fill={c.subtle} style={{ font: fontSub }}>• Zero-trust identity & policy</text>
+      <text x="560" y="785" fill={c.subtle} style={{ font: fontSub }}>• Self-service DevEx & GitOps</text>
+      <text x="560" y="800" fill={c.subtle} style={{ font: fontSub }}>• Observability & SLOs</text>
 
-      {/* Platform Layers */}
-      <text x="80" y="820" fill={c.text} style={{ font: fontTitle }}>🏗️ Platform Layers Overview</text>
-      <text x="80" y="840" fill={c.subtle} style={{ font: fontSub }}>Each layer provides specific capabilities and can be implemented independently</text>
-      <text x="80" y="855" fill={c.subtle} style={{ font: fontSub }}>while working together to form a cohesive digital platform architecture</text>
-      <text x="80" y="870" fill={c.subtle} style={{ font: fontSub }}>supporting event-driven, microservices-based applications.</text>
+      {/* Right column: Audience & Roles (condensed) */}
+      <text x="1050" y="735" fill={c.text} style={{ font: fontSub }}>👥 Audience & Roles</text>
+      <text x="1050" y="755" fill={c.subtle} style={{ font: fontMini }}>🏢 Business — domain interactions, value/KPIs (L0/L1)</text>
+      <text x="1050" y="770" fill={c.subtle} style={{ font: fontMini }}>✅ ARB — standards, security, NFRs (L1/L2)</text>
+      <text x="1050" y="785" fill={c.subtle} style={{ font: fontMini }}>🎯 Eng. Leaders — fit, trade‑offs, risks (L1/L2)</text>
+      <text x="1050" y="800" fill={c.subtle} style={{ font: fontMini }}>🛠️ Engineers — interfaces, flows (L2/L3)</text>
+      <text x="1050" y="815" fill={c.subtle} style={{ font: fontMini }}>⚙️ Ops — topology, SLOs, runbooks (L2/L3)</text>
 
-      {/* Component Legend */}
-      <text x="500" y="820" fill={c.text} style={{ font: fontTitle }}>🏗️ Component Types</text>
-      
-      <rect x="500" y="835" width="16" height="12" fill={c.api} rx="2" />
-      <text x="525" y="845" fill={c.subtle} style={{ font: fontSub }}>External Interface & API Management</text>
-      
-      <rect x="500" y="855" width="16" height="12" fill={c.messaging} rx="2" />
-      <text x="525" y="865" fill={c.subtle} style={{ font: fontSub }}>Message Brokers & Event Streaming</text>
-      
-      <rect x="500" y="875" width="16" height="12" fill={c.integration} rx="2" />
-      <text x="525" y="885" fill={c.subtle} style={{ font: fontSub }}>Integration & Orchestration</text>
+      {/* Audience & Roles */}
+      <text x="80" y="910" fill={c.text} style={{ font: fontTitle }}>👥 Audience & Roles</text>
 
-      <rect x="750" y="835" width="16" height="12" fill={c.microservices} rx="2" />
-      <text x="775" y="845" fill={c.subtle} style={{ font: fontSub }}>Domain Microservices</text>
-      
-      <rect x="750" y="855" width="16" height="12" fill={c.data} rx="2" />
-      <text x="775" y="865" fill={c.subtle} style={{ font: fontSub }}>Data Platform & Analytics</text>
-      
-      <rect x="750" y="875" width="16" height="12" fill={c.devops} rx="2" />
-      <text x="775" y="885" fill={c.subtle} style={{ font: fontSub }}>Developer Platform & Operations</text>
-      
-      <rect x="750" y="895" width="16" height="12" fill={c.security} rx="2" />
-      <text x="775" y="905" fill={c.subtle} style={{ font: fontSub }}>Security & Governance</text>
+      {/* Column 1: Business + ARB */}
+      <text x="80" y="935" fill={c.text} style={{ font: fontSub }}>🏢 Business Stakeholders</text>
+      <text x="80" y="950" fill={c.subtle} style={{ font: fontSub }}>• Understand app interactions within their domain</text>
+      <text x="80" y="965" fill={c.subtle} style={{ font: fontSub }}>• Focus on value, capabilities, KPIs (L0/L1)</text>
 
-      {/* Technology Stack */}
-      <text x="1050" y="820" fill={c.text} style={{ font: fontTitle }}>⚙️ Reference Technology Stack</text>
-      <text x="1050" y="835" fill={c.subtle} style={{ font: fontSub }}>• API: WSO2 API Manager, WSO2 Micro Gateway, Kong, OpenAPI</text>
-      <text x="1050" y="848" fill={c.subtle} style={{ font: fontSub }}>• Integration: WSO2 Micro Integrator, WSO2 Streaming Integrator</text>
-      <text x="1050" y="861" fill={c.subtle} style={{ font: fontSub }}>• Identity: WSO2 Identity Server, WSO2 Asgardeo, Keycloak</text>
-      <text x="1050" y="874" fill={c.subtle} style={{ font: fontSub }}>• Analytics: WSO2 Stream Processor, Apache Kafka, Apache Flink</text>
-      <text x="1050" y="887" fill={c.subtle} style={{ font: fontSub }}>• Data: Snowflake, Apache Iceberg, Databricks, MLflow</text>
-      <text x="1050" y="900" fill={c.subtle} style={{ font: fontSub }}>• Internal Dev Platform: WSO2 Choreo, Backstage, Platform.sh</text>
-      <text x="1050" y="913" fill={c.subtle} style={{ font: fontSub }}>• Runtime: Kubernetes, Istio Service Mesh, Envoy Proxy</text>
-      <text x="1050" y="926" fill={c.subtle} style={{ font: fontSub }}>• DevOps: GitLab, ArgoCD, Terraform, Helm</text>
+      <text x="80" y="990" fill={c.text} style={{ font: fontSub }}>✅ Architecture Review Board / Design Authority</text>
+      <text x="80" y="1005" fill={c.subtle} style={{ font: fontSub }}>• Validate conformance to standards & guidelines</text>
+      <text x="80" y="1020" fill={c.subtle} style={{ font: fontSub }}>• Review patterns, security, governance, NFRs (L1/L2)</text>
+
+      {/* Column 2: Leaders + Engineers */}
+      <text x="560" y="935" fill={c.text} style={{ font: fontSub }}>🎯 Software Engineering Leaders</text>
+      <text x="560" y="950" fill={c.subtle} style={{ font: fontSub }}>• Assess solution fit, trade‑offs, and risks</text>
+      <text x="560" y="965" fill={c.subtle} style={{ font: fontSub }}>• Plan dependencies, staffing (Solution L1/L2)</text>
+
+      <text x="560" y="990" fill={c.text} style={{ font: fontSub }}>🛠️ Software Engineers</text>
+      <text x="560" y="1005" fill={c.subtle} style={{ font: fontSub }}>• Build or evolve apps with clear interfaces & flows</text>
+      <text x="560" y="1020" fill={c.subtle} style={{ font: fontSub }}>• Use contracts, sequences, templates (L2/L3)</text>
+
+      {/* Column 3: Operations */}
+      <text x="1050" y="935" fill={c.text} style={{ font: fontSub }}>⚙️ Operations Engineers</text>
+      <text x="1050" y="950" fill={c.subtle} style={{ font: fontSub }}>• Understand runtime topology to resolve issues</text>
+      <text x="1050" y="965" fill={c.subtle} style={{ font: fontSub }}>• Use envs, SLOs, telemetry, networking, runbooks (L2/L3)</text>
     </svg>
   );
 }

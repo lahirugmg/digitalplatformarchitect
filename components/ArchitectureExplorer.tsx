@@ -52,8 +52,8 @@ const SAMPLE: ArchNode = {
       ]
     },
     {
-      name: "Solution Architecture (L1→L2)",
-      level: 1,
+      name: "Solution Architecture (L0→L2)",
+      level: 0,
       type: "solution",
       children: [
         {
@@ -181,19 +181,47 @@ export function ArchitectureExplorer({ data = SAMPLE }: { data?: ArchNode }) {
       .on("click", (_: any, d: any) => { toggleNode(d.data); setMaxLevel((m) => m + 0); });
 
     node.append("circle").attr("r", 16).attr("fill", (d: any) => COLORS[d.data.type]).attr("stroke", "white").attr("stroke-width", 2).attr("opacity", (d: any) => (d.data.level <= maxLevel ? 1 : 0.6));
-    node.append("text").attr("dy", 4).attr("x", 22).attr("font-size", 13).attr("font-family", "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial").text((d: any) => d.data.name).attr("fill", "#111827").attr("opacity", (d: any) => (d.data.level <= maxLevel ? 1 : 0.8));
+    node
+      .append("text")
+      .attr("dy", 5)
+      .attr("x", 24)
+      .attr("font-size", 15)
+      .attr("font-family", "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial")
+      .text((d: any) => d.data.name)
+      .attr("fill", "#111827")
+      .attr("opacity", (d: any) => (d.data.level <= maxLevel ? 1 : 0.85));
 
-    const initial = d3.zoomIdentity.translate(40, height / 2 - 40).scale(1);
-    svg.transition().duration(300).call(zoom.transform as any, initial);
-    svg.on("dblclick.zoom", null);
-    svg.on("dblclick", () => { svg.transition().duration(300).call(zoom.transform as any, initial); });
+    // Fit-to-view: compute bounding box of rendered content and center it with margin
+    try {
+      const margin = 40;
+      const gNode = gRef.current as SVGGElement | null;
+      if (gNode) {
+        const bbox = gNode.getBBox();
+        const scale = Math.min(
+          2.5,
+          Math.max(
+            0.4,
+            Math.min(
+              (width - margin * 2) / Math.max(1, bbox.width),
+              (height - margin * 2) / Math.max(1, bbox.height)
+            )
+          )
+        );
+        const tx = (width - scale * bbox.width) / 2 - scale * bbox.x;
+        const ty = margin - scale * bbox.y; // bias slightly to top for better visibility
+        const fitted = d3.zoomIdentity.translate(tx, ty).scale(scale);
+        svg.transition().duration(300).call(zoom.transform as any, fitted);
+        svg.on("dblclick.zoom", null);
+        svg.on("dblclick", () => { svg.transition().duration(300).call(zoom.transform as any, fitted); });
+      }
+    } catch {}
   }, [prepared, maxLevel]);
 
   return (
     <div className="stack gap-sm" style={{ border: "1px solid var(--border)", borderRadius: 12, padding: 12, background: "var(--surface)" }}>
       <div className="stack gap-sm" style={{ alignItems: "center" }}>
         <div>
-          <strong>Zoomable Architecture Levels (L0–L3)</strong>
+          <strong>Explore Architecture Layers</strong>
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {[{ key: "business", label: "Business" }, { key: "architect", label: "Architects" }, { key: "engineer", label: "Engineers" }, { key: "all", label: "All" }].map((p) => (
@@ -213,4 +241,3 @@ export function ArchitectureExplorer({ data = SAMPLE }: { data?: ArchNode }) {
     </div>
   );
 }
-

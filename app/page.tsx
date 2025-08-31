@@ -67,7 +67,7 @@ export default function HomePage() {
 
       <section className="patterns-showcase">
         <div className="stack gap-sm" style={{marginBottom: '1rem'}}>
-          <h2 className="section-title centered blue">Zoomable Architecture Levels (L0–L3)</h2>
+          <h2 className="section-title centered blue">Explore Architecture Layers</h2>
           <p className="section-description">Start at L0 conceptual view, then zoom into L1/L2/L3 to reveal products, protocols, and deployments.</p>
         </div>
         <ArchitectureExplorer />
