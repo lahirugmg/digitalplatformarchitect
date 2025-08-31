@@ -11,198 +11,334 @@ export function DigitalPlatformDiagram() {
     data: "var(--purple-light)",
     devops: "var(--cyan-light)",
     security: "var(--red-light)",
+    messaging: "var(--yellow-light)",
+    streaming: "var(--teal-light)",
   } as const;
 
   const font = "600 12px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
   const fontSub = "500 10px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
-  const fontTitle = "600 14px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
+  const fontTitle = "700 15px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
+  const fontMini = "500 9px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
 
   return (
-    <svg viewBox="0 0 1200 800" role="img" aria-labelledby="digital-platform-title digital-platform-desc" preserveAspectRatio="xMidYMid meet">
+    <svg viewBox="0 0 1600 1000" role="img" aria-labelledby="digital-platform-title digital-platform-desc" preserveAspectRatio="xMidYMid meet">
       <title id="digital-platform-title">Digital Platform Architecture</title>
-      <desc id="digital-platform-desc">Core building blocks of a digital platform including API management, integration, microservices, data lake, developer platform, and identity management.</desc>
+      <desc id="digital-platform-desc">Comprehensive view of digital platform building blocks including API management, messaging, microservices, data platforms, developer tools, and security layers with their interconnections.</desc>
       
       <defs>
         <marker id="arrow-dp" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto-start-reverse">
           <path d="M0,0 L8,4 L0,8 z" fill={c.subtle} />
         </marker>
-        <pattern id="grid" patternUnits="userSpaceOnUse" width="20" height="20">
-          <path d="M 20 0 L 0 0 0 20" fill="none" stroke={c.border} strokeWidth="0.5" opacity="0.3"/>
+        <marker id="arrow-event" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill={c.messaging} />
+        </marker>
+        <marker id="arrow-stream" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill={c.streaming} />
+        </marker>
+        <marker id="arrow-security" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill={c.security} />
+        </marker>
+        <pattern id="grid" patternUnits="userSpaceOnUse" width="25" height="25">
+          <path d="M 25 0 L 0 0 0 25" fill="none" stroke={c.border} strokeWidth="0.5" opacity="0.2"/>
         </pattern>
+        <linearGradient id="platformGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor={c.primary} stopOpacity="0.1"/>
+          <stop offset="100%" stopColor={c.primary} stopOpacity="0.05"/>
+        </linearGradient>
       </defs>
 
-      {/* Background grid */}
-      <rect width="1200" height="800" fill="url(#grid)" />
+      {/* Background with subtle gradient */}
+      <rect width="1600" height="1000" fill="url(#platformGradient)" />
+      <rect width="1600" height="1000" fill="url(#grid)" />
 
-      {/* Title */}
-      <text x="600" y="35" textAnchor="middle" fill={c.text} style={{ font: "700 18px system-ui" }}>Digital Platform Building Blocks</text>
+      {/* Main Title */}
+      <text x="800" y="40" textAnchor="middle" fill={c.text} style={{ font: "700 20px system-ui" }}>Digital Platform Building Blocks</text>
+      <text x="800" y="60" textAnchor="middle" fill={c.subtle} style={{ font: "500 14px system-ui" }}>Event-Driven Architecture with Comprehensive Security & Observability</text>
 
-      {/* API Management Layer */}
-      <rect x="50" y="70" width="1100" height="120" fill={c.api} stroke={c.border} rx="12" ry="12" opacity="0.3" />
-      <text x="70" y="95" fill={c.text} style={{ font: fontTitle }}>API Management</text>
+      {/* External Interface Layer */}
+      <rect x="60" y="90" width="1480" height="80" fill={c.api} stroke={c.border} rx="15" ry="15" opacity="0.25" />
+      <text x="80" y="115" fill={c.text} style={{ font: fontTitle }}>🌐 External Interface & API Management</text>
       
-      <rect x="100" y="110" width="180" height="60" fill={c.api} stroke={c.border} rx="8" ry="8" />
-      <text x="190" y="130" textAnchor="middle" fill={c.text} style={{ font }}>API Gateway</text>
-      <text x="190" y="145" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Routing & Security</text>
-      <text x="190" y="158" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Rate Limiting</text>
+      <rect x="120" y="125" width="150" height="35" fill={c.api} stroke={c.border} rx="8" ry="8" />
+      <text x="195" y="140" textAnchor="middle" fill={c.text} style={{ font }}>API Gateway</text>
+      <text x="195" y="152" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Traffic Control</text>
 
-      <rect x="320" y="110" width="180" height="60" fill={c.api} stroke={c.border} rx="8" ry="8" />
-      <text x="410" y="130" textAnchor="middle" fill={c.text} style={{ font }}>Developer Portal</text>
-      <text x="410" y="145" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>API Discovery</text>
-      <text x="410" y="158" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Documentation</text>
+      <rect x="290" y="125" width="150" height="35" fill={c.api} stroke={c.border} rx="8" ry="8" />
+      <text x="365" y="140" textAnchor="middle" fill={c.text} style={{ font }}>Load Balancer</text>
+      <text x="365" y="152" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>HA & Scaling</text>
 
-      <rect x="540" y="110" width="180" height="60" fill={c.api} stroke={c.border} rx="8" ry="8" />
-      <text x="630" y="130" textAnchor="middle" fill={c.text} style={{ font }}>API Analytics</text>
-      <text x="630" y="145" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Usage Monitoring</text>
-      <text x="630" y="158" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Performance</text>
+      <rect x="460" y="125" width="150" height="35" fill={c.api} stroke={c.border} rx="8" ry="8" />
+      <text x="535" y="140" textAnchor="middle" fill={c.text} style={{ font }}>Developer Portal</text>
+      <text x="535" y="152" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>API Discovery</text>
 
-      {/* Enterprise Integration Layer */}
-      <rect x="50" y="210" width="550" height="120" fill={c.integration} stroke={c.border} rx="12" ry="12" opacity="0.3" />
-      <text x="70" y="235" fill={c.text} style={{ font: fontTitle }}>Enterprise Integration</text>
+      <rect x="630" y="125" width="150" height="35" fill={c.api} stroke={c.border} rx="8" ry="8" />
+      <text x="705" y="140" textAnchor="middle" fill={c.text} style={{ font }}>API Analytics</text>
+      <text x="705" y="152" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Usage Metrics</text>
 
-      <rect x="100" y="250" width="180" height="60" fill={c.integration} stroke={c.border} rx="8" ry="8" />
-      <text x="190" y="270" textAnchor="middle" fill={c.text} style={{ font }}>ESB/EIP</text>
-      <text x="190" y="285" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Message Routing</text>
-      <text x="190" y="298" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Data Transformation</text>
+      <rect x="800" y="125" width="150" height="35" fill={c.api} stroke={c.border} rx="8" ry="8" />
+      <text x="875" y="140" textAnchor="middle" fill={c.text} style={{ font }}>CDN/Edge</text>
+      <text x="875" y="152" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Global Distribution</text>
 
-      <rect x="320" y="250" width="180" height="60" fill={c.integration} stroke={c.border} rx="8" ry="8" />
-      <text x="410" y="270" textAnchor="middle" fill={c.text} style={{ font }}>Message Queue</text>
-      <text x="410" y="285" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Event Streaming</text>
-      <text x="410" y="298" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Async Processing</text>
+      <rect x="970" y="125" width="150" height="35" fill={c.api} stroke={c.border} rx="8" ry="8" />
+      <text x="1045" y="140" textAnchor="middle" fill={c.text} style={{ font }}>Rate Limiting</text>
+      <text x="1045" y="152" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Throttling</text>
 
-      {/* Microservices Layer */}
-      <rect x="620" y="210" width="530" height="120" fill={c.microservices} stroke={c.border} rx="12" ry="12" opacity="0.3" />
-      <text x="640" y="235" fill={c.text} style={{ font: fontTitle }}>Microservices</text>
+      {/* Event Backbone Layer */}
+      <rect x="60" y="190" width="1480" height="100" fill={c.messaging} stroke={c.border} rx="15" ry="15" opacity="0.25" />
+      <text x="80" y="215" fill={c.text} style={{ font: fontTitle }}>⚡ Event Backbone & Messaging</text>
 
-      <rect x="670" y="250" width="120" height="60" fill={c.microservices} stroke={c.border} rx="8" ry="8" />
-      <text x="730" y="270" textAnchor="middle" fill={c.text} style={{ font }}>Service A</text>
-      <text x="730" y="285" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Business Logic</text>
+      <rect x="120" y="235" width="160" height="45" fill={c.messaging} stroke={c.border} rx="8" ry="8" />
+      <text x="200" y="250" textAnchor="middle" fill={c.text} style={{ font }}>Message Broker</text>
+      <text x="200" y="262" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>RabbitMQ</text>
+      <text x="200" y="272" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Pub/Sub, Queues</text>
 
-      <rect x="810" y="250" width="120" height="60" fill={c.microservices} stroke={c.border} rx="8" ry="8" />
-      <text x="870" y="270" textAnchor="middle" fill={c.text} style={{ font }}>Service B</text>
-      <text x="870" y="285" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Domain Logic</text>
+      <rect x="300" y="235" width="160" height="45" fill={c.streaming} stroke={c.border} rx="8" ry="8" />
+      <text x="380" y="250" textAnchor="middle" fill={c.text} style={{ font }}>Event Streaming</text>
+      <text x="380" y="262" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Apache Kafka</text>
+      <text x="380" y="272" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>High Throughput</text>
 
-      <rect x="950" y="250" width="120" height="60" fill={c.microservices} stroke={c.border} rx="8" ry="8" />
-      <text x="1010" y="270" textAnchor="middle" fill={c.text} style={{ font }}>Service C</text>
-      <text x="1010" y="285" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Processing</text>
+      <rect x="480" y="235" width="160" height="45" fill={c.messaging} stroke={c.border} rx="8" ry="8" />
+      <text x="560" y="250" textAnchor="middle" fill={c.text} style={{ font }}>Event Store</text>
+      <text x="560" y="262" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>EventStore DB</text>
+      <text x="560" y="272" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Event Sourcing</text>
 
-      {/* Data Lake Layer */}
-      <rect x="50" y="350" width="550" height="120" fill={c.data} stroke={c.border} rx="12" ry="12" opacity="0.3" />
-      <text x="70" y="375" fill={c.text} style={{ font: fontTitle }}>Data Lake & Analytics</text>
+      <rect x="660" y="235" width="160" height="45" fill={c.streaming} stroke={c.border} rx="8" ry="8" />
+      <text x="740" y="250" textAnchor="middle" fill={c.text} style={{ font }}>Stream Processing</text>
+      <text x="740" y="262" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Apache Flink</text>
+      <text x="740" y="272" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Real-time CEP</text>
 
-      <rect x="100" y="390" width="140" height="60" fill={c.data} stroke={c.border} rx="8" ry="8" />
-      <text x="170" y="410" textAnchor="middle" fill={c.text} style={{ font }}>Data Ingestion</text>
-      <text x="170" y="425" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>ETL/ELT</text>
-      <text x="170" y="438" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Real-time</text>
+      <rect x="840" y="235" width="160" height="45" fill={c.messaging} stroke={c.border} rx="8" ry="8" />
+      <text x="920" y="250" textAnchor="middle" fill={c.text} style={{ font }}>Schema Registry</text>
+      <text x="920" y="262" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Confluent</text>
+      <text x="920" y="272" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Event Contracts</text>
 
-      <rect x="260" y="390" width="140" height="60" fill={c.data} stroke={c.border} rx="8" ry="8" />
-      <text x="330" y="410" textAnchor="middle" fill={c.text} style={{ font }}>Data Storage</text>
-      <text x="330" y="425" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Data Warehouse</text>
-      <text x="330" y="438" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Object Storage</text>
+      <rect x="1020" y="235" width="160" height="45" fill={c.streaming} stroke={c.border} rx="8" ry="8" />
+      <text x="1100" y="250" textAnchor="middle" fill={c.text} style={{ font }}>Dead Letter Queue</text>
+      <text x="1100" y="262" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Error Handling</text>
+      <text x="1100" y="272" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Retry Logic</text>
 
-      <rect x="420" y="390" width="140" height="60" fill={c.data} stroke={c.border} rx="8" ry="8" />
-      <text x="490" y="410" textAnchor="middle" fill={c.text} style={{ font }}>Analytics</text>
-      <text x="490" y="425" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>BI Tools</text>
-      <text x="490" y="438" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>ML/AI</text>
+      <rect x="1200" y="235" width="160" height="45" fill={c.messaging} stroke={c.border} rx="8" ry="8" />
+      <text x="1280" y="250" textAnchor="middle" fill={c.text} style={{ font }}>Event Gateway</text>
+      <text x="1280" y="262" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Event Routing</text>
+      <text x="1280" y="272" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Protocol Bridge</text>
 
-      {/* Internal Developer Platform */}
-      <rect x="620" y="350" width="530" height="120" fill={c.devops} stroke={c.border} rx="12" ry="12" opacity="0.3" />
-      <text x="640" y="375" fill={c.text} style={{ font: fontTitle }}>Internal Developer Platform</text>
+      {/* Business Logic Layer */}
+      <rect x="60" y="310" width="720" height="100" fill={c.integration} stroke={c.border} rx="15" ry="15" opacity="0.25" />
+      <text x="80" y="335" fill={c.text} style={{ font: fontTitle }}>🔄 Integration & Orchestration</text>
 
-      <rect x="670" y="390" width="140" height="60" fill={c.devops} stroke={c.border} rx="8" ry="8" />
-      <text x="740" y="410" textAnchor="middle" fill={c.text} style={{ font }}>CI/CD Pipeline</text>
-      <text x="740" y="425" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Build & Deploy</text>
-      <text x="740" y="438" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Testing</text>
+      <rect x="120" y="355" width="140" height="45" fill={c.integration} stroke={c.border} rx="8" ry="8" />
+      <text x="190" y="370" textAnchor="middle" fill={c.text} style={{ font }}>ESB/EIP</text>
+      <text x="190" y="382" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>WSO2 MI</text>
+      <text x="190" y="392" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Mediation</text>
 
-      <rect x="830" y="390" width="140" height="60" fill={c.devops} stroke={c.border} rx="8" ry="8" />
-      <text x="900" y="410" textAnchor="middle" fill={c.text} style={{ font }}>Infrastructure</text>
-      <text x="900" y="425" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Kubernetes</text>
-      <text x="900" y="438" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Service Mesh</text>
+      <rect x="280" y="355" width="140" height="45" fill={c.integration} stroke={c.border} rx="8" ry="8" />
+      <text x="350" y="370" textAnchor="middle" fill={c.text} style={{ font }}>Connectors</text>
+      <text x="350" y="382" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Legacy APIs</text>
+      <text x="350" y="392" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>SOAP/REST</text>
 
-      <rect x="990" y="390" width="140" height="60" fill={c.devops} stroke={c.border} rx="8" ry="8" />
-      <text x="1060" y="410" textAnchor="middle" fill={c.text} style={{ font }}>Observability</text>
-      <text x="1060" y="425" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Monitoring</text>
-      <text x="1060" y="438" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Logging</text>
+      <rect x="440" y="355" width="140" height="45" fill={c.integration} stroke={c.border} rx="8" ry="8" />
+      <text x="510" y="370" textAnchor="middle" fill={c.text} style={{ font }}>Workflow Engine</text>
+      <text x="510" y="382" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Camunda</text>
+      <text x="510" y="392" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>BPMN</text>
 
-      {/* Identity and Access Management */}
-      <rect x="50" y="490" width="1100" height="120" fill={c.security} stroke={c.border} rx="12" ry="12" opacity="0.3" />
-      <text x="70" y="515" fill={c.text} style={{ font: fontTitle }}>Identity & Access Management</text>
+      <rect x="600" y="355" width="140" height="45" fill={c.integration} stroke={c.border} rx="8" ry="8" />
+      <text x="670" y="370" textAnchor="middle" fill={c.text} style={{ font }}>Data Transform</text>
+      <text x="670" y="382" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>ETL/ELT</text>
+      <text x="670" y="392" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Data Mapping</text>
 
-      <rect x="100" y="530" width="160" height="60" fill={c.security} stroke={c.border} rx="8" ry="8" />
-      <text x="180" y="550" textAnchor="middle" fill={c.text} style={{ font }}>Identity Provider</text>
-      <text x="180" y="565" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>OIDC/SAML</text>
-      <text x="180" y="578" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>OAuth 2.0</text>
+      <rect x="800" y="310" width="740" height="100" fill={c.microservices} stroke={c.border} rx="15" ry="15" opacity="0.25" />
+      <text x="820" y="335" fill={c.text} style={{ font: fontTitle }}>🏗️ Microservices & Domain Services</text>
 
-      <rect x="300" y="530" width="160" height="60" fill={c.security} stroke={c.border} rx="8" ry="8" />
-      <text x="380" y="550" textAnchor="middle" fill={c.text} style={{ font }}>Authorization</text>
-      <text x="380" y="565" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>RBAC/ABAC</text>
-      <text x="380" y="578" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Policy Engine</text>
+      <rect x="860" y="355" width="110" height="45" fill={c.microservices} stroke={c.border} rx="8" ry="8" />
+      <text x="915" y="370" textAnchor="middle" fill={c.text} style={{ font }}>User Service</text>
+      <text x="915" y="382" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Identity Domain</text>
+      <text x="915" y="392" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>CQRS</text>
 
-      <rect x="500" y="530" width="160" height="60" fill={c.security} stroke={c.border} rx="8" ry="8" />
-      <text x="580" y="550" textAnchor="middle" fill={c.text} style={{ font }}>Multi-Factor Auth</text>
-      <text x="580" y="565" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>TOTP/SMS</text>
-      <text x="580" y="578" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Biometrics</text>
+      <rect x="990" y="355" width="110" height="45" fill={c.microservices} stroke={c.border} rx="8" ry="8" />
+      <text x="1045" y="370" textAnchor="middle" fill={c.text} style={{ font }}>Order Service</text>
+      <text x="1045" y="382" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Business Logic</text>
+      <text x="1045" y="392" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Event Sourcing</text>
 
-      <rect x="700" y="530" width="160" height="60" fill={c.security} stroke={c.border} rx="8" ry="8" />
-      <text x="780" y="550" textAnchor="middle" fill={c.text} style={{ font }}>Security Gateway</text>
-      <text x="780" y="565" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>WAF</text>
-      <text x="780" y="578" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>DDoS Protection</text>
+      <rect x="1120" y="355" width="110" height="45" fill={c.microservices} stroke={c.border} rx="8" ry="8" />
+      <text x="1175" y="370" textAnchor="middle" fill={c.text} style={{ font }}>Payment Service</text>
+      <text x="1175" y="382" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Financial</text>
+      <text x="1175" y="392" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Saga Pattern</text>
 
-      <rect x="900" y="530" width="160" height="60" fill={c.security} stroke={c.border} rx="8" ry="8" />
-      <text x="980" y="550" textAnchor="middle" fill={c.text} style={{ font }}>Audit & Compliance</text>
-      <text x="980" y="565" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Access Logs</text>
-      <text x="980" y="578" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Compliance Reports</text>
+      <rect x="1250" y="355" width="110" height="45" fill={c.microservices} stroke={c.border} rx="8" ry="8" />
+      <text x="1305" y="370" textAnchor="middle" fill={c.text} style={{ font }}>Analytics Service</text>
+      <text x="1305" y="382" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>ML/AI</text>
+      <text x="1305" y="392" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Batch Processing</text>
 
-      {/* Connections between layers */}
-      <line x1="190" y1="190" x2="190" y2="250" stroke={c.subtle} strokeWidth={2} markerEnd="url(#arrow-dp)" />
-      <line x1="410" y1="190" x2="410" y2="250" stroke={c.subtle} strokeWidth={2} markerEnd="url(#arrow-dp)" />
-      <line x1="630" y1="190" x2="730" y2="250" stroke={c.subtle} strokeWidth={2} markerEnd="url(#arrow-dp)" />
+      <rect x="1380" y="355" width="110" height="45" fill={c.microservices} stroke={c.border} rx="8" ry="8" />
+      <text x="1435" y="370" textAnchor="middle" fill={c.text} style={{ font }}>Notification Service</text>
+      <text x="1435" y="382" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Communication</text>
+      <text x="1435" y="392" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Multi-Channel</text>
 
-      <line x1="190" y1="330" x2="190" y2="390" stroke={c.subtle} strokeWidth={2} markerEnd="url(#arrow-dp)" />
-      <line x1="410" y1="330" x2="410" y2="390" stroke={c.subtle} strokeWidth={2} markerEnd="url(#arrow-dp)" />
-      <line x1="730" y1="330" x2="740" y2="390" stroke={c.subtle} strokeWidth={2} markerEnd="url(#arrow-dp)" />
-      <line x1="870" y1="330" x2="900" y2="390" stroke={c.subtle} strokeWidth={2} markerEnd="url(#arrow-dp)" />
+      {/* Data & Platform Layer */}
+      <rect x="60" y="430" width="720" height="100" fill={c.data} stroke={c.border} rx="15" ry="15" opacity="0.25" />
+      <text x="80" y="455" fill={c.text} style={{ font: fontTitle }}>💾 Data Platform & Analytics</text>
 
-      <line x1="325" y1="470" x2="380" y2="530" stroke={c.subtle} strokeWidth={2} markerEnd="url(#arrow-dp)" />
-      <line x1="885" y1="470" x2="780" y2="530" stroke={c.subtle} strokeWidth={2} markerEnd="url(#arrow-dp)" />
+      <rect x="120" y="475" width="130" height="45" fill={c.data} stroke={c.border} rx="8" ry="8" />
+      <text x="185" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Data Ingestion</text>
+      <text x="185" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Apache NiFi</text>
+      <text x="185" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Real-time ETL</text>
 
-      {/* Cross-layer connections */}
-      <line x1="500" y1="280" x2="670" y2="280" stroke={c.subtle} strokeWidth={1.5} strokeDasharray="5,5" markerEnd="url(#arrow-dp)" />
-      <line x1="560" y1="420" x2="670" y2="420" stroke={c.subtle} strokeWidth={1.5} strokeDasharray="5,5" markerEnd="url(#arrow-dp)" />
+      <rect x="270" y="475" width="130" height="45" fill={c.data} stroke={c.border} rx="8" ry="8" />
+      <text x="335" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Data Lake</text>
+      <text x="335" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Apache Iceberg</text>
+      <text x="335" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Object Storage</text>
 
-      {/* Legend */}
-      <text x="50" y="650" fill={c.text} style={{ font: fontTitle }}>Key Features:</text>
-      <text x="50" y="675" fill={c.subtle} style={{ font: fontSub }}>• Scalable and resilient architecture</text>
-      <text x="50" y="690" fill={c.subtle} style={{ font: fontSub }}>• Event-driven communication</text>
-      <text x="50" y="705" fill={c.subtle} style={{ font: fontSub }}>• Self-service developer experience</text>
+      <rect x="420" y="475" width="130" height="45" fill={c.data} stroke={c.border} rx="8" ry="8" />
+      <text x="485" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Data Warehouse</text>
+      <text x="485" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Snowflake</text>
+      <text x="485" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>OLAP</text>
 
-      <text x="350" y="650" fill={c.text} style={{ font: fontTitle }}>Benefits:</text>
-      <text x="350" y="675" fill={c.subtle} style={{ font: fontSub }}>• Faster time-to-market</text>
-      <text x="350" y="690" fill={c.subtle} style={{ font: fontSub }}>• Independent team scaling</text>
-      <text x="350" y="705" fill={c.subtle} style={{ font: fontSub }}>• Technology diversity</text>
+      <rect x="570" y="475" width="130" height="45" fill={c.data} stroke={c.border} rx="8" ry="8" />
+      <text x="635" y="490" textAnchor="middle" fill={c.text} style={{ font }}>ML Platform</text>
+      <text x="635" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>MLflow</text>
+      <text x="635" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Model Ops</text>
 
-      <text x="600" y="650" fill={c.text} style={{ font: fontTitle }}>Integration Patterns:</text>
-      <text x="600" y="665" fill={c.subtle} style={{ font: fontSub }}>━━━ Direct API calls</text>
-      <text x="600" y="680" fill={c.subtle} style={{ font: fontSub }}>┅┅┅ Event-driven messaging</text>
-      <text x="600" y="695" fill={c.subtle} style={{ font: fontSub }}>▬▬▬ Security & governance</text>
+      <rect x="800" y="430" width="740" height="100" fill={c.devops} stroke={c.border} rx="15" ry="15" opacity="0.25" />
+      <text x="820" y="455" fill={c.text} style={{ font: fontTitle }}>🚀 Developer Platform & Operations</text>
 
-      <rect x="850" y="635" width="14" height="14" fill={c.api} rx="2" />
-      <text x="875" y="647" fill={c.subtle} style={{ font: fontSub }}>API Management</text>
+      <rect x="860" y="475" width="120" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
+      <text x="920" y="490" textAnchor="middle" fill={c.text} style={{ font }}>CI/CD Pipeline</text>
+      <text x="920" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>GitLab/Jenkins</text>
+      <text x="920" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>GitOps</text>
+
+      <rect x="1000" y="475" width="120" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
+      <text x="1060" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Container Platform</text>
+      <text x="1060" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Kubernetes</text>
+      <text x="1060" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Orchestration</text>
+
+      <rect x="1140" y="475" width="120" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
+      <text x="1200" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Service Mesh</text>
+      <text x="1200" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Istio</text>
+      <text x="1200" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Traffic Mgmt</text>
+
+      <rect x="1280" y="475" width="120" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
+      <text x="1340" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Observability</text>
+      <text x="1340" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>OpenTelemetry</text>
+      <text x="1340" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Monitoring</text>
+
+      <rect x="1420" y="475" width="100" height="45" fill={c.devops} stroke={c.border} rx="8" ry="8" />
+      <text x="1470" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Service Catalog</text>
+      <text x="1470" y="502" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Backstage</text>
+      <text x="1470" y="512" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Self-Service</text>
+
+      {/* Security & Governance Layer */}
+      <rect x="60" y="550" width="1480" height="100" fill={c.security} stroke={c.border} rx="15" ry="15" opacity="0.25" />
+      <text x="80" y="575" fill={c.text} style={{ font: fontTitle }}>🔐 Security, Identity & Governance</text>
+
+      <rect x="120" y="595" width="130" height="45" fill={c.security} stroke={c.border} rx="8" ry="8" />
+      <text x="185" y="610" textAnchor="middle" fill={c.text} style={{ font }}>Identity Provider</text>
+      <text x="185" y="622" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Keycloak</text>
+      <text x="185" y="632" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>OIDC/SAML</text>
+
+      <rect x="270" y="595" width="130" height="45" fill={c.security} stroke={c.border} rx="8" ry="8" />
+      <text x="335" y="610" textAnchor="middle" fill={c.text} style={{ font }}>Authorization</text>
+      <text x="335" y="622" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Open Policy Agent</text>
+      <text x="335" y="632" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>RBAC/ABAC</text>
+
+      <rect x="420" y="595" width="130" height="45" fill={c.security} stroke={c.border} rx="8" ry="8" />
+      <text x="485" y="610" textAnchor="middle" fill={c.text} style={{ font }}>Multi-Factor Auth</text>
+      <text x="485" y="622" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Duo/Okta</text>
+      <text x="485" y="632" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>TOTP/WebAuthn</text>
+
+      <rect x="570" y="595" width="130" height="45" fill={c.security} stroke={c.border} rx="8" ry="8" />
+      <text x="635" y="610" textAnchor="middle" fill={c.text} style={{ font }}>Security Gateway</text>
+      <text x="635" y="622" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Cloudflare</text>
+      <text x="635" y="632" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>WAF/DDoS</text>
+
+      <rect x="720" y="595" width="130" height="45" fill={c.security} stroke={c.border} rx="8" ry="8" />
+      <text x="785" y="610" textAnchor="middle" fill={c.text} style={{ font }}>Secrets Management</text>
+      <text x="785" y="622" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>HashiCorp Vault</text>
+      <text x="785" y="632" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Key Management</text>
+
+      <rect x="870" y="595" width="130" height="45" fill={c.security} stroke={c.border} rx="8" ry="8" />
+      <text x="935" y="610" textAnchor="middle" fill={c.text} style={{ font }}>Certificate Mgmt</text>
+      <text x="935" y="622" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Let's Encrypt</text>
+      <text x="935" y="632" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>TLS/mTLS</text>
+
+      <rect x="1020" y="595" width="130" height="45" fill={c.security} stroke={c.border} rx="8" ry="8" />
+      <text x="1085" y="610" textAnchor="middle" fill={c.text} style={{ font }}>Audit & Compliance</text>
+      <text x="1085" y="622" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Splunk</text>
+      <text x="1085" y="632" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>SOC2/GDPR</text>
+
+      <rect x="1170" y="595" width="130" height="45" fill={c.security} stroke={c.border} rx="8" ry="8" />
+      <text x="1235" y="610" textAnchor="middle" fill={c.text} style={{ font }}>Zero Trust Network</text>
+      <text x="1235" y="622" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Palo Alto Prisma</text>
+      <text x="1235" y="632" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Network Security</text>
+
+      <rect x="1320" y="595" width="130" height="45" fill={c.security} stroke={c.border} rx="8" ry="8" />
+      <text x="1385" y="610" textAnchor="middle" fill={c.text} style={{ font }}>Data Protection</text>
+      <text x="1385" y="622" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Encryption at Rest</text>
+      <text x="1385" y="632" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>PII/PHI</text>
+
+
+      {/* Information Panel */}
+      <rect x="60" y="680" width="1480" height="280" fill={c.surface} stroke={c.border} rx="15" ry="15" opacity="0.8" />
       
-      <rect x="850" y="655" width="14" height="14" fill={c.integration} rx="2" />
-      <text x="875" y="667" fill={c.subtle} style={{ font: fontSub }}>Integration</text>
-      
-      <rect x="850" y="675" width="14" height="14" fill={c.microservices} rx="2" />
-      <text x="875" y="687" fill={c.subtle} style={{ font: fontSub }}>Microservices</text>
+      {/* Key Capabilities */}
+      <text x="80" y="710" fill={c.text} style={{ font: fontTitle }}>🎯 Key Platform Capabilities</text>
+      <text x="80" y="735" fill={c.subtle} style={{ font: fontSub }}>• Event-driven microservices with CQRS and Event Sourcing patterns</text>
+      <text x="80" y="750" fill={c.subtle} style={{ font: fontSub }}>• Real-time stream processing with complex event processing (CEP)</text>
+      <text x="80" y="765" fill={c.subtle} style={{ font: fontSub }}>• Zero-trust security model with comprehensive identity management</text>
+      <text x="80" y="780" fill={c.subtle} style={{ font: fontSub }}>• Self-service developer platform with GitOps and service catalog</text>
 
-      <rect x="1000" y="635" width="14" height="14" fill={c.data} rx="2" />
-      <text x="1025" y="647" fill={c.subtle} style={{ font: fontSub }}>Data & Analytics</text>
+      {/* Business Benefits */}
+      <text x="500" y="710" fill={c.text} style={{ font: fontTitle }}>📈 Business Benefits</text>
+      <text x="500" y="735" fill={c.subtle} style={{ font: fontSub }}>• 10x faster feature delivery with autonomous teams</text>
+      <text x="500" y="750" fill={c.subtle} style={{ font: fontSub }}>• 99.99% availability through resilient architecture</text>
+      <text x="500" y="765" fill={c.subtle} style={{ font: fontSub }}>• Real-time insights and ML-driven decision making</text>
+      <text x="500" y="780" fill={c.subtle} style={{ font: fontSub }}>• Automatic scaling and cost optimization</text>
+
+      {/* Technical Patterns */}
+      <text x="900" y="710" fill={c.text} style={{ font: fontTitle }}>🔧 Architecture Patterns</text>
+      <text x="900" y="735" fill={c.subtle} style={{ font: fontSub }}>• Domain-Driven Design (DDD) with bounded contexts</text>
+      <text x="900" y="750" fill={c.subtle} style={{ font: fontSub }}>• Saga pattern for distributed transactions</text>
+      <text x="900" y="765" fill={c.subtle} style={{ font: fontSub }}>• Circuit breaker and bulkhead patterns for resilience</text>
+      <text x="900" y="780" fill={c.subtle} style={{ font: fontSub }}>• API-first design with contract-driven development</text>
+
+      {/* Platform Layers */}
+      <text x="80" y="820" fill={c.text} style={{ font: fontTitle }}>🏗️ Platform Layers Overview</text>
+      <text x="80" y="840" fill={c.subtle} style={{ font: fontSub }}>Each layer provides specific capabilities and can be implemented independently</text>
+      <text x="80" y="855" fill={c.subtle} style={{ font: fontSub }}>while working together to form a cohesive digital platform architecture</text>
+      <text x="80" y="870" fill={c.subtle} style={{ font: fontSub }}>supporting event-driven, microservices-based applications.</text>
+
+      {/* Component Legend */}
+      <text x="500" y="820" fill={c.text} style={{ font: fontTitle }}>🏗️ Component Types</text>
       
-      <rect x="1000" y="655" width="14" height="14" fill={c.devops} rx="2" />
-      <text x="1025" y="667" fill={c.subtle} style={{ font: fontSub }}>Developer Platform</text>
+      <rect x="500" y="835" width="16" height="12" fill={c.api} rx="2" />
+      <text x="525" y="845" fill={c.subtle} style={{ font: fontSub }}>External Interface & API Management</text>
       
-      <rect x="1000" y="675" width="14" height="14" fill={c.security} rx="2" />
-      <text x="1025" y="687" fill={c.subtle} style={{ font: fontSub }}>Identity & Security</text>
+      <rect x="500" y="855" width="16" height="12" fill={c.messaging} rx="2" />
+      <text x="525" y="865" fill={c.subtle} style={{ font: fontSub }}>Message Brokers & Event Streaming</text>
+      
+      <rect x="500" y="875" width="16" height="12" fill={c.integration} rx="2" />
+      <text x="525" y="885" fill={c.subtle} style={{ font: fontSub }}>Integration & Orchestration</text>
+
+      <rect x="750" y="835" width="16" height="12" fill={c.microservices} rx="2" />
+      <text x="775" y="845" fill={c.subtle} style={{ font: fontSub }}>Domain Microservices</text>
+      
+      <rect x="750" y="855" width="16" height="12" fill={c.data} rx="2" />
+      <text x="775" y="865" fill={c.subtle} style={{ font: fontSub }}>Data Platform & Analytics</text>
+      
+      <rect x="750" y="875" width="16" height="12" fill={c.devops} rx="2" />
+      <text x="775" y="885" fill={c.subtle} style={{ font: fontSub }}>Developer Platform & Operations</text>
+      
+      <rect x="750" y="895" width="16" height="12" fill={c.security} rx="2" />
+      <text x="775" y="905" fill={c.subtle} style={{ font: fontSub }}>Security & Governance</text>
+
+      {/* Technology Stack */}
+      <text x="1050" y="820" fill={c.text} style={{ font: fontTitle }}>⚙️ Reference Technology Stack</text>
+      <text x="1050" y="840" fill={c.subtle} style={{ font: fontSub }}>• API: Kong Gateway, Swagger/OpenAPI, GraphQL Federation</text>
+      <text x="1050" y="855" fill={c.subtle} style={{ font: fontSub }}>• Messaging: Apache Kafka, RabbitMQ, Apache Pulsar, Redis</text>
+      <text x="1050" y="870" fill={c.subtle} style={{ font: fontSub }}>• Runtime: Kubernetes, Istio Service Mesh, Envoy Proxy</text>
+      <text x="1050" y="885" fill={c.subtle} style={{ font: fontSub }}>• Data: Snowflake, Apache Iceberg, Databricks, MLflow</text>
+      <text x="1050" y="900" fill={c.subtle} style={{ font: fontSub }}>• Security: Keycloak, HashiCorp Vault, Open Policy Agent</text>
+      <text x="1050" y="915" fill={c.subtle} style={{ font: fontSub }}>• Observability: OpenTelemetry, Prometheus, Grafana, Jaeger</text>
+      <text x="1050" y="930" fill={c.subtle} style={{ font: fontSub }}>• DevOps: GitLab, ArgoCD, Backstage, Terraform, Helm</text>
     </svg>
   );
 }

@@ -54,6 +54,18 @@ export default function HomePage() {
         </p>
       </section>
 
+      <section className="stack gap-lg">
+        <div className="stack gap-sm">
+          <h2 className="section-title">Digital Platform Architecture</h2>
+          <p className="lede" style={{ marginTop: '0' }}>
+            Visual overview of the core building blocks that form a modern digital platform.
+          </p>
+        </div>
+        <div className="diagram-container">
+          <DigitalPlatformDiagram />
+        </div>
+      </section>
+
       <section className="patterns-showcase">
         <div className="patterns-header">
           <h2 className="section-title centered">Architecture Patterns</h2>
@@ -200,18 +212,6 @@ export default function HomePage() {
               </div>
             </Link>
           </div>
-        </div>
-      </section>
-
-      <section className="stack gap-lg">
-        <div className="stack gap-sm">
-          <h2 className="section-title">Digital Platform Architecture</h2>
-          <p className="lede" style={{ marginTop: '0' }}>
-            Visual overview of the core building blocks that form a modern digital platform.
-          </p>
-        </div>
-        <div className="diagram-container">
-          <DigitalPlatformDiagram />
         </div>
       </section>
 

@@ -17,6 +17,14 @@
   --orange: #ff8a3d;
   --orange-hover: #e56f1c;
   --orange-light: #fff4ec;
+  /* Additional light tints for diagrams */
+  --blue-light: #e8f0fe;
+  --green-light: #e6f4ea;
+  --purple-light: #f3e8ff;
+  --cyan-light: #e0f7fa;
+  --red-light: #ffe9e9;
+  --yellow-light: #fff7d6;
+  --teal-light: #e0f7fa;
   /* Additional colors for diagrams */
   --purple: #9333ea;
   --purple-light: #f3e8ff;
