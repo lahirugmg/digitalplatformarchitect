@@ -48,10 +48,7 @@ export default function HomePage() {
     <div className="stack gap-2xl">
       <section className="hero stack gap-lg">
         <h1 className="title">Master Digital Platform Architecture</h1>
-        <p className="lede">
-          Explore proven architecture patterns with visual diagrams, then follow the complete 
-          journey from business needs to production deployment.
-        </p>
+        <p className="lede">Platform architecture from patterns to production — visual guides and blueprints.</p>
       </section>
 
       <section className="stack gap-lg">
