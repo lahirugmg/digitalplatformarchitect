@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArchitectureExplorer } from "@/components/ArchitectureExplorer";
 
 export const metadata = {
   title: "Solutions",
@@ -27,6 +28,19 @@ export default function SolutionsPage() {
             <a href="#how-it-connects" className="toc-link">How It Connects</a>
           </nav>
         </header>
+
+        {/* Explore Architecture Layers at top */}
+        <section id="explore-architecture" className="solutions-section">
+          <div className="section-card">
+            <div className="section-header">
+              <div className="section-icon">🧭</div>
+              <h2>Explore Architecture Layers</h2>
+            </div>
+            <div className="section-content">
+              <ArchitectureExplorer />
+            </div>
+          </div>
+        </section>
 
         <section id="audience-roles" className="solutions-section">
           <div className="section-card roles-card">
