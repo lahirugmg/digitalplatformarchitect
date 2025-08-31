@@ -6,6 +6,7 @@ import { LayeredArchitectureDiagram } from "@/components/diagrams/LayeredArchite
 import { MicroserviceDiagram } from "@/components/diagrams/MicroserviceDiagram";
 import { HexagonalDiagram } from "@/components/diagrams/HexagonalDiagram";
 import { MonolithicDiagram } from "@/components/diagrams/MonolithicDiagram";
+import { SecurityDiagram } from "@/components/diagrams/blocks/SecurityDiagram";
 import { connections } from "@/lib/connections";
 import { blocks } from "@/lib/blocks";
 
@@ -46,6 +47,8 @@ export default function PatternPage({ params }: Props) {
               return <HexagonalDiagram />;
             case "monolithic":
               return <MonolithicDiagram />;
+            case "zero-trust-security":
+              return <SecurityDiagram />;
             default:
               return null;
           }
