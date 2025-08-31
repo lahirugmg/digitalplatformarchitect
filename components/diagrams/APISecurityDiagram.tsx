@@ -1,168 +1,183 @@
 export function APISecurityDiagram() {
+  const c = {
+    text: "var(--text)",
+    subtle: "var(--text-secondary)",
+    border: "var(--border)",
+    surface: "var(--surface)",
+    alt: "var(--surface-alt)",
+    gateway: "var(--primary-light)",
+    security: "#ff6b6b",
+    client: "var(--orange-light)",
+    backend: "var(--green-light)",
+    identity: "var(--purple-light)",
+  } as const;
+
+  const font = "600 14px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
+  const fontSub = "500 12px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
+  const fontTitle = "700 16px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
+
   return (
-    <svg viewBox="0 0 800 600" className="w-full h-auto">
+    <svg viewBox="0 0 900 650" role="img" aria-labelledby="apisecurity-title apisecurity-desc" preserveAspectRatio="xMidYMid meet">
+      <title id="apisecurity-title">API Security Gateway Architecture</title>
+      <desc id="apisecurity-desc">API gateway with security layers including WAF, authentication, rate limiting, and threat protection.</desc>
+      
       <defs>
-        <filter id="shadow">
-          <feDropShadow dx="2" dy="2" stdDeviation="2" floodOpacity="0.3"/>
-        </filter>
-        <marker id="arrowhead" markerWidth="10" markerHeight="7" 
-                refX="9" refY="3.5" orient="auto">
-          <polygon points="0 0, 10 3.5, 0 7" fill="var(--text-muted)" />
+        <marker id="arrow-api" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill={c.subtle} />
         </marker>
+        <marker id="arrow-blocked" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill={c.security} />
+        </marker>
+        <pattern id="grid-api" patternUnits="userSpaceOnUse" width="20" height="20">
+          <path d="M 20 0 L 0 0 0 20" fill="none" stroke={c.border} strokeWidth="0.3" opacity="0.2"/>
+        </pattern>
+        <filter id="shadow-api">
+          <feDropShadow dx="2" dy="2" stdDeviation="3" floodOpacity="0.2"/>
+        </filter>
+        <linearGradient id="gateway-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor={c.gateway} />
+          <stop offset="100%" stopColor="#e3f2fd" />
+        </linearGradient>
       </defs>
-      
-      {/* Background */}
-      <rect width="800" height="600" fill="var(--surface)"/>
-      
-      {/* Title */}
-      <text x="400" y="30" textAnchor="middle" className="text-lg font-bold" fill="var(--text)">
-        API Security Gateway Architecture
-      </text>
-      
+
+      {/* Background grid */}
+      <rect width="900" height="650" fill="url(#grid-api)" />
+
+      {/* Main title */}
+      <rect x="250" y="15" width="400" height="35" fill={c.gateway} stroke="none" rx="17" ry="17" />
+      <text x="450" y="38" textAnchor="middle" fill="#fff" style={{ font: fontTitle }}>🛡️ API Security Gateway</text>
+
+      {/* Internet/Threats Zone */}
+      <rect x="30" y="80" width="150" height="280" fill={c.security} fillOpacity="0.1" 
+            stroke={c.security} strokeWidth="2" rx="10" ry="10" />
+      <text x="105" y="105" textAnchor="middle" fill={c.text} style={{ font }}>🌐 Internet / Threats</text>
+
       {/* External Clients */}
-      <g>
-        <rect x="30" y="80" width="80" height="50" fill="var(--accent)" rx="6" filter="url(#shadow)"/>
-        <text x="70" y="100" textAnchor="middle" fill="white" className="text-xs font-medium">Web App</text>
-        <text x="70" y="115" textAnchor="middle" fill="white" className="text-xs">Client</text>
-        
-        <rect x="30" y="150" width="80" height="50" fill="var(--accent)" rx="6" filter="url(#shadow)"/>
-        <text x="70" y="170" textAnchor="middle" fill="white" className="text-xs font-medium">Mobile App</text>
-        <text x="70" y="185" textAnchor="middle" fill="white" className="text-xs">Client</text>
-        
-        <rect x="30" y="220" width="80" height="50" fill="var(--accent)" rx="6" filter="url(#shadow)"/>
-        <text x="70" y="240" textAnchor="middle" fill="white" className="text-xs font-medium">Partner</text>
-        <text x="70" y="255" textAnchor="middle" fill="white" className="text-xs">System</text>
-        
-        <rect x="30" y="290" width="80" height="50" fill="#ff6b6b" rx="6" filter="url(#shadow)"/>
-        <text x="70" y="310" textAnchor="middle" fill="white" className="text-xs font-medium">Malicious</text>
-        <text x="70" y="325" textAnchor="middle" fill="white" className="text-xs">Traffic</text>
-      </g>
+      <rect x="50" y="120" width="110" height="45" fill={c.client} stroke={c.border} rx="8" ry="8" />
+      <text x="105" y="140" textAnchor="middle" fill="white" style={{ font: fontSub }}>💻 Web Clients</text>
+      <text x="105" y="155" textAnchor="middle" fill="white" style={{ font: fontSub }}>Browsers, SPAs</text>
       
+      <rect x="50" y="175" width="110" height="45" fill={c.client} stroke={c.border} rx="8" ry="8" />
+      <text x="105" y="195" textAnchor="middle" fill="white" style={{ font: fontSub }}>📱 Mobile Apps</text>
+      <text x="105" y="210" textAnchor="middle" fill="white" style={{ font: fontSub }}>iOS, Android</text>
+      
+      <rect x="50" y="230" width="110" height="45" fill={c.client} stroke={c.border} rx="8" ry="8" />
+      <text x="105" y="250" textAnchor="middle" fill="white" style={{ font: fontSub }}>🤝 Partner Systems</text>
+      <text x="105" y="265" textAnchor="middle" fill="white" style={{ font: fontSub }}>B2B Integration</text>
+      
+      <rect x="50" y="285" width="110" height="45" fill={c.security} stroke={c.border} rx="8" ry="8" />
+      <text x="105" y="305" textAnchor="middle" fill="white" style={{ font: fontSub }}>🚨 Malicious Traffic</text>
+      <text x="105" y="320" textAnchor="middle" fill="white" style={{ font: fontSub }}>Bots, Attacks</text>
+
       {/* Load Balancer */}
-      <rect x="160" y="180" width="80" height="60" fill="var(--surface-alt)" 
-            stroke="var(--text-muted)" strokeWidth="2" rx="6"/>
-      <text x="200" y="200" textAnchor="middle" fill="var(--text)" className="text-xs font-medium">Load</text>
-      <text x="200" y="215" textAnchor="middle" fill="var(--text)" className="text-xs font-medium">Balancer</text>
-      <text x="200" y="230" textAnchor="middle" fill="var(--text-muted)" className="text-xs">SSL Term</text>
-      
-      {/* API Gateway - Main Component */}
-      <rect x="300" y="100" width="200" height="280" fill="var(--primary)" fillOpacity="0.1" 
-            stroke="var(--primary)" strokeWidth="3" rx="10" filter="url(#shadow)"/>
-      <text x="400" y="125" textAnchor="middle" fill="var(--primary)" className="font-bold text-lg">
-        API Security Gateway
-      </text>
+      <rect x="220" y="180" width="100" height="80" fill={c.alt} stroke={c.border} strokeWidth="2" rx="10" ry="10" />
+      <text x="270" y="205" textAnchor="middle" fill={c.text} style={{ font }}>⚖️ Load Balancer</text>
+      <text x="270" y="225" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• SSL Termination</text>
+      <text x="270" y="240" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• DDoS Protection</text>
+      <text x="270" y="255" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Health Checks</text>
+
+      {/* API Security Gateway - Main Component */}
+      <rect x="360" y="90" width="220" height="320" fill="url(#gateway-gradient)" fillOpacity="0.2" 
+            stroke={c.gateway} strokeWidth="3" rx="15" ry="15" filter="url(#shadow-api)" />
+      <text x="470" y="120" textAnchor="middle" fill={c.text} style={{ font: fontTitle }}>🔐 API Security Gateway</text>
       
       {/* Security Layers within Gateway */}
-      <rect x="320" y="140" width="160" height="30" fill="#ff6b6b" rx="4"/>
-      <text x="400" y="160" textAnchor="middle" fill="white" className="text-xs font-bold">
-        Web Application Firewall (WAF)
-      </text>
-      
-      <rect x="320" y="180" width="160" height="25" fill="var(--accent)" rx="4"/>
-      <text x="400" y="197" textAnchor="middle" fill="white" className="text-xs font-medium">
-        Authentication & Authorization
-      </text>
-      
-      <rect x="320" y="215" width="160" height="25" fill="var(--secondary)" rx="4"/>
-      <text x="400" y="232" textAnchor="middle" fill="white" className="text-xs font-medium">
-        Rate Limiting & Throttling
-      </text>
-      
-      <rect x="320" y="250" width="160" height="25" fill="#4ecdc4" rx="4"/>
-      <text x="400" y="267" textAnchor="middle" fill="white" className="text-xs font-medium">
-        Request/Response Validation
-      </text>
-      
-      <rect x="320" y="285" width="160" height="25" fill="var(--text)" rx="4"/>
-      <text x="400" y="302" textAnchor="middle" fill="white" className="text-xs font-medium">
-        API Routing & Transformation
-      </text>
-      
-      <rect x="320" y="320" width="160" height="25" fill="var(--surface-alt)" 
-            stroke="var(--text-muted)" strokeWidth="1" rx="4"/>
-      <text x="400" y="337" textAnchor="middle" fill="var(--text)" className="text-xs font-medium">
-        Logging & Monitoring
-      </text>
-      
+      <text x="470" y="145" textAnchor="middle" fill={c.text} style={{ font }}>Security Layers:</text>
+
+      <rect x="375" y="155" width="190" height="35" fill={c.security} stroke={c.border} rx="6" ry="6" />
+      <text x="470" y="175" textAnchor="middle" fill="white" style={{ font: fontSub }}>🔥 Web Application Firewall</text>
+      <text x="470" y="185" textAnchor="middle" fill="white" style={{ font: fontSub }}>OWASP Top 10 Protection</text>
+
+      <rect x="375" y="200" width="190" height="35" fill={c.identity} stroke={c.border} rx="6" ry="6" />
+      <text x="470" y="220" textAnchor="middle" fill="white" style={{ font: fontSub }}>🔑 Authentication & Authorization</text>
+      <text x="470" y="230" textAnchor="middle" fill="white" style={{ font: fontSub }}>OAuth2, JWT, API Keys</text>
+
+      <rect x="375" y="245" width="190" height="35" fill={c.client} stroke={c.border} rx="6" ry="6" />
+      <text x="470" y="265" textAnchor="middle" fill="white" style={{ font: fontSub }}>🚦 Rate Limiting & Throttling</text>
+      <text x="470" y="275" textAnchor="middle" fill="white" style={{ font: fontSub }}>Quota Management, Circuit Breaker</text>
+
+      <rect x="375" y="290" width="190" height="35" fill={c.backend} stroke={c.border} rx="6" ry="6" />
+      <text x="470" y="310" textAnchor="middle" fill="white" style={{ font: fontSub }}>✅ Request/Response Validation</text>
+      <text x="470" y="320" textAnchor="middle" fill="white" style={{ font: fontSub }}>Schema Validation, Data Sanitization</text>
+
+      <rect x="375" y="335" width="190" height="35" fill={c.subtle} stroke={c.border} rx="6" ry="6" />
+      <text x="470" y="355" textAnchor="middle" fill="white" style={{ font: fontSub }}>🔄 Routing & Transformation</text>
+      <text x="470" y="365" textAnchor="middle" fill="white" style={{ font: fontSub }}>Load Balancing, Protocol Translation</text>
+
+      <rect x="375" y="380" width="190" height="25" fill={c.alt} stroke={c.border} rx="6" ry="6" />
+      <text x="470" y="395" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>📊 Logging & Monitoring</text>
+
       {/* Backend Services */}
-      <g>
-        <rect x="580" y="120" width="80" height="50" fill="var(--surface-alt)" 
-              stroke="var(--primary)" strokeWidth="2" rx="6"/>
-        <text x="620" y="140" textAnchor="middle" fill="var(--text)" className="text-xs font-medium">User</text>
-        <text x="620" y="155" textAnchor="middle" fill="var(--text)" className="text-xs font-medium">Service</text>
-        
-        <rect x="580" y="190" width="80" height="50" fill="var(--surface-alt)" 
-              stroke="var(--primary)" strokeWidth="2" rx="6"/>
-        <text x="620" y="210" textAnchor="middle" fill="var(--text)" className="text-xs font-medium">Order</text>
-        <text x="620" y="225" textAnchor="middle" fill="var(--text)" className="text-xs font-medium">Service</text>
-        
-        <rect x="580" y="260" width="80" height="50" fill="var(--surface-alt)" 
-              stroke="var(--primary)" strokeWidth="2" rx="6"/>
-        <text x="620" y="280" textAnchor="middle" fill="var(--text)" className="text-xs font-medium">Payment</text>
-        <text x="620" y="295" textAnchor="middle" fill="var(--text)" className="text-xs font-medium">Service</text>
-        
-        <rect x="580" y="330" width="80" height="50" fill="var(--surface-alt)" 
-              stroke="var(--primary)" strokeWidth="2" rx="6"/>
-        <text x="620" y="350" textAnchor="middle" fill="var(--text)" className="text-xs font-medium">Legacy</text>
-        <text x="620" y="365" textAnchor="middle" fill="var(--text)" className="text-xs font-medium">Systems</text>
-      </g>
+      <rect x="620" y="100" width="220" height="280" fill={c.backend} fillOpacity="0.1" 
+            stroke={c.backend} strokeWidth="2" rx="10" ry="10" />
+      <text x="730" y="125" textAnchor="middle" fill={c.text} style={{ font }}>🏢 Backend Services</text>
       
-      {/* Identity Provider */}
-      <rect x="300" y="420" width="100" height="60" fill="var(--accent)" rx="6" filter="url(#shadow)"/>
-      <text x="350" y="445" textAnchor="middle" fill="white" className="text-xs font-bold">Identity</text>
-      <text x="350" y="460" textAnchor="middle" fill="white" className="text-xs font-bold">Provider</text>
-      <text x="350" y="475" textAnchor="middle" fill="white" className="text-xs">(OAuth2/OIDC)</text>
+      <rect x="640" y="140" width="90" height="50" fill={c.surface} stroke={c.border} rx="8" ry="8" />
+      <text x="685" y="160" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>👥 User Service</text>
+      <text x="685" y="175" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Profile, Auth</text>
       
-      {/* SIEM/Monitoring */}
-      <rect x="450" y="420" width="100" height="60" fill="var(--secondary)" rx="6" filter="url(#shadow)"/>
-      <text x="500" y="440" textAnchor="middle" fill="white" className="text-xs font-bold">SIEM</text>
-      <text x="500" y="455" textAnchor="middle" fill="white" className="text-xs font-bold">Analytics</text>
-      <text x="500" y="470" textAnchor="middle" fill="white" className="text-xs">Security Events</text>
+      <rect x="750" y="140" width="90" height="50" fill={c.surface} stroke={c.border} rx="8" ry="8" />
+      <text x="795" y="160" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>📦 Order Service</text>
+      <text x="795" y="175" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>E-commerce</text>
       
+      <rect x="640" y="200" width="90" height="50" fill={c.surface} stroke={c.border} rx="8" ry="8" />
+      <text x="685" y="220" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>💳 Payment Service</text>
+      <text x="685" y="235" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Billing, Charges</text>
+      
+      <rect x="750" y="200" width="90" height="50" fill={c.surface} stroke={c.border} rx="8" ry="8" />
+      <text x="795" y="220" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>📞 Notification</text>
+      <text x="795" y="235" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Email, SMS</text>
+      
+      <rect x="640" y="260" width="90" height="50" fill={c.surface} stroke={c.border} rx="8" ry="8" />
+      <text x="685" y="280" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>🏛️ Legacy Systems</text>
+      <text x="685" y="295" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Mainframe, SOAP</text>
+
+      <rect x="750" y="260" width="90" height="50" fill={c.surface} stroke={c.border} rx="8" ry="8" />
+      <text x="795" y="280" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>🗄️ Databases</text>
+      <text x="795" y="295" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>SQL, NoSQL</text>
+
+      <rect x="695" y="320" width="90" height="50" fill={c.surface} stroke={c.border} rx="8" ry="8" />
+      <text x="740" y="340" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>☁️ Cloud Services</text>
+      <text x="740" y="355" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>AWS, Azure</text>
+
+      {/* External Security Services */}
+      <rect x="360" y="450" width="100" height="70" fill={c.identity} stroke={c.border} rx="10" ry="10" filter="url(#shadow-api)" />
+      <text x="410" y="475" textAnchor="middle" fill="white" style={{ font }}>🏛️ Identity</text>
+      <text x="410" y="490" textAnchor="middle" fill="white" style={{ font }}>Provider</text>
+      <text x="410" y="505" textAnchor="middle" fill="white" style={{ font: fontSub }}>OAuth2/OIDC</text>
+
+      <rect x="480" y="450" width="100" height="70" fill={c.client} stroke={c.border} rx="10" ry="10" filter="url(#shadow-api)" />
+      <text x="530" y="475" textAnchor="middle" fill="white" style={{ font }}>📊 SIEM</text>
+      <text x="530" y="490" textAnchor="middle" fill="white" style={{ font }}>Analytics</text>
+      <text x="530" y="505" textAnchor="middle" fill="white" style={{ font: fontSub }}>Security Events</text>
+
       {/* Traffic Flow Arrows */}
-      <line x1="110" y1="105" x2="155" y2="200" stroke="var(--text-muted)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)"/>
-      <line x1="110" y1="175" x2="155" y2="210" stroke="var(--text-muted)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)"/>
-      <line x1="110" y1="245" x2="155" y2="220" stroke="var(--text-muted)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)"/>
-      <line x1="110" y1="315" x2="155" y2="230" stroke="#ff6b6b" 
-            strokeWidth="3" markerEnd="url(#arrowhead)"/>
-      
-      <line x1="240" y1="210" x2="295" y2="210" stroke="var(--text-muted)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)"/>
-      
-      <line x1="500" y1="145" x2="575" y2="145" stroke="var(--primary)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)"/>
-      <line x1="500" y1="215" x2="575" y2="215" stroke="var(--primary)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)"/>
-      <line x1="500" y1="285" x2="575" y2="285" stroke="var(--primary)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)"/>
-      <line x1="500" y1="355" x2="575" y2="355" stroke="var(--primary)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)"/>
-      
-      {/* Gateway to Identity Provider */}
-      <line x1="380" y1="380" x2="350" y2="415" stroke="var(--accent)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)" strokeDasharray="5,5"/>
-      
-      {/* Gateway to SIEM */}
-      <line x1="420" y1="380" x2="500" y2="415" stroke="var(--secondary)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)" strokeDasharray="5,5"/>
-      
+      <line x1="160" y1="142" x2="220" y2="200" stroke={c.client} strokeWidth={2.5} markerEnd="url(#arrow-api)" />
+      <line x1="160" y1="197" x2="220" y2="220" stroke={c.client} strokeWidth={2.5} markerEnd="url(#arrow-api)" />
+      <line x1="160" y1="252" x2="220" y2="240" stroke={c.client} strokeWidth={2.5} markerEnd="url(#arrow-api)" />
+
+      {/* Blocked malicious traffic */}
+      <line x1="160" y1="307" x2="200" y2="280" stroke={c.security} strokeWidth={3} strokeDasharray="8,4" markerEnd="url(#arrow-blocked)" />
+      <text x="175" y="300" fill={c.security} style={{ font: fontSub }}>BLOCKED</text>
+
+      <line x1="320" y1="220" x2="360" y2="220" stroke={c.subtle} strokeWidth={2.5} markerEnd="url(#arrow-api)" />
+
+      {/* Gateway to backends */}
+      <line x1="580" y1="165" x2="620" y2="165" stroke={c.gateway} strokeWidth={2.5} markerEnd="url(#arrow-api)" />
+      <line x1="580" y1="225" x2="620" y2="225" stroke={c.gateway} strokeWidth={2.5} markerEnd="url(#arrow-api)" />
+      <line x1="580" y1="285" x2="620" y2="285" stroke={c.gateway} strokeWidth={2.5} markerEnd="url(#arrow-api)" />
+      <line x1="580" y1="345" x2="620" y2="345" stroke={c.gateway} strokeWidth={2.5} markerEnd="url(#arrow-api)" />
+
+      {/* Gateway to external security services */}
+      <line x1="450" y1="410" x2="410" y2="450" stroke={c.identity} strokeWidth={2} strokeDasharray="5,5" markerEnd="url(#arrow-api)" />
+      <line x1="490" y1="410" x2="530" y2="450" stroke={c.client} strokeWidth={2} strokeDasharray="5,5" markerEnd="url(#arrow-api)" />
+
       {/* Security Features */}
-      <rect x="50" y="520" width="700" height="60" fill="var(--surface-alt)" 
-            stroke="var(--primary)" strokeWidth="1" rx="6"/>
-      <text x="60" y="540" className="text-sm font-bold" fill="var(--primary)">Security Capabilities:</text>
-      <text x="60" y="555" className="text-xs" fill="var(--text)">
-        • OWASP Top 10 Protection • DDoS Mitigation • Bot Detection • Certificate Management
-      </text>
-      <text x="60" y="570" className="text-xs" fill="var(--text)">
-        • Real-time Threat Intelligence • Compliance Reporting • Zero-Trust Enforcement
-      </text>
-      
-      {/* Threat Protection Indicator */}
-      <text x="130" y="320" className="text-xs fill-red-600 font-bold">BLOCKED</text>
-      <line x1="110" y1="315" x2="130" y2="315" stroke="#ff6b6b" strokeWidth="4"/>
+      <rect x="50" y="550" width="800" height="85" fill={c.alt} stroke={c.border} rx="10" ry="10" opacity="0.9" />
+      <text x="450" y="575" textAnchor="middle" fill={c.text} style={{ font }}>🛡️ Security Capabilities</text>
+      <text x="450" y="595" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• OWASP Top 10 Protection • DDoS Mitigation • Bot Detection • Certificate Management</text>
+      <text x="450" y="610" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Real-time Threat Intelligence • Compliance Reporting • Zero-Trust Enforcement</text>
+      <text x="450" y="625" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• API Discovery • Vulnerability Scanning • Behavioral Analytics • Forensic Logging</text>
     </svg>
   );
 }

@@ -53,9 +53,9 @@ export default function HomePage() {
 
       <section className="stack gap-lg">
         <div className="stack gap-sm">
-          <h2 className="section-title">Digital Platform Architecture</h2>
+          <h2 className="section-title">Digital Platform Building Blocks</h2>
           <p className="lede" style={{ marginTop: '0' }}>
-            Visual overview of the core building blocks that form a modern digital platform.
+            Event‑Driven Architecture with Comprehensive Security & Observability
           </p>
         </div>
         <div className="diagram-container">

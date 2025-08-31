@@ -1,147 +1,182 @@
 export function ZeroTrustDiagram() {
+  const c = {
+    text: "var(--text)",
+    subtle: "var(--text-secondary)",
+    border: "var(--border)",
+    surface: "var(--surface)",
+    alt: "var(--surface-alt)",
+    identity: "var(--primary-light)",
+    network: "var(--orange-light)", 
+    data: "var(--green-light)",
+    device: "var(--purple-light)",
+    threat: "#ff6b6b",
+  } as const;
+
+  const font = "600 14px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
+  const fontSub = "500 12px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
+  const fontTitle = "700 16px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
+
   return (
-    <svg viewBox="0 0 800 600" className="w-full h-auto">
+    <svg viewBox="0 0 900 650" role="img" aria-labelledby="zerotrust-title zerotrust-desc" preserveAspectRatio="xMidYMid meet">
+      <title id="zerotrust-title">Zero Trust Security Architecture</title>
+      <desc id="zerotrust-desc">Never trust, always verify security model with identity verification, network segmentation, and continuous monitoring.</desc>
+      
       <defs>
+        <marker id="arrow-zt" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto-start-reverse">
+          <path d="M0,0 L8,4 L0,8 z" fill={c.subtle} />
+        </marker>
+        <pattern id="grid-zt" patternUnits="userSpaceOnUse" width="20" height="20">
+          <path d="M 20 0 L 0 0 0 20" fill="none" stroke={c.border} strokeWidth="0.3" opacity="0.2"/>
+        </pattern>
+        <linearGradient id="threat-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor={c.threat} />
+          <stop offset="100%" stopColor="#ff8e8e" />
+        </linearGradient>
         <filter id="shadow">
-          <feDropShadow dx="2" dy="2" stdDeviation="2" floodOpacity="0.3"/>
+          <feDropShadow dx="2" dy="2" stdDeviation="3" floodOpacity="0.2"/>
         </filter>
       </defs>
-      
-      {/* Background */}
-      <rect width="800" height="600" fill="var(--surface)"/>
-      
-      {/* Title */}
-      <text x="400" y="30" textAnchor="middle" className="text-lg font-bold" fill="var(--text)">
-        Zero-Trust Security Architecture
-      </text>
-      
+
+      {/* Background grid */}
+      <rect width="900" height="650" fill="url(#grid-zt)" />
+
+      {/* Main title */}
+      <rect x="300" y="15" width="300" height="35" fill={c.identity} stroke="none" rx="17" ry="17" />
+      <text x="450" y="38" textAnchor="middle" fill="#fff" style={{ font: fontTitle }}>🔒 Zero Trust Security</text>
+
       {/* External Threats */}
-      <rect x="20" y="80" width="120" height="60" fill="#ff6b6b" rx="8" filter="url(#shadow)"/>
-      <text x="80" y="100" textAnchor="middle" fill="white" className="font-medium">External</text>
-      <text x="80" y="120" textAnchor="middle" fill="white" className="font-medium">Threats</text>
+      <rect x="30" y="100" width="150" height="80" fill="url(#threat-gradient)" rx="12" ry="12" filter="url(#shadow)" />
+      <text x="105" y="125" textAnchor="middle" fill="white" style={{ font }}>⚠️ External Threats</text>
+      <text x="105" y="145" textAnchor="middle" fill="white" style={{ font: fontSub }}>• Malicious Actors</text>
+      <text x="105" y="160" textAnchor="middle" fill="white" style={{ font: fontSub }}>• Advanced Persistent Threats</text>
+      <text x="105" y="175" textAnchor="middle" fill="white" style={{ font: fontSub }}>• Zero-day Exploits</text>
+
+      {/* Core Principle */}
+      <rect x="720" y="100" width="150" height="80" fill={c.alt} stroke={c.border} rx="12" ry="12" opacity="0.9" />
+      <text x="795" y="125" textAnchor="middle" fill={c.text} style={{ font }}>🎯 Core Principle</text>
+      <text x="795" y="145" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>"Never Trust,</text>
+      <text x="795" y="160" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Always Verify"</text>
+      <text x="795" y="175" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Assume Breach</text>
+
+      {/* Identity & Access Management Layer */}
+      <rect x="220" y="80" width="450" height="120" fill={c.identity} fillOpacity="0.15" 
+            stroke={c.identity} strokeWidth="2" rx="15" ry="15" />
+      <text x="445" y="105" textAnchor="middle" fill={c.text} style={{ font }}>👤 Identity & Access Management</text>
       
-      {/* Identity Verification Layer */}
-      <rect x="200" y="60" width="400" height="100" fill="var(--accent)" fillOpacity="0.1" 
-            stroke="var(--accent)" strokeWidth="2" rx="8"/>
-      <text x="400" y="85" textAnchor="middle" fill="var(--accent)" className="font-bold">
-        Identity Verification Layer
-      </text>
+      {/* Identity Components */}
+      <rect x="240" y="125" width="90" height="55" fill={c.identity} stroke={c.border} rx="8" ry="8" />
+      <text x="285" y="145" textAnchor="middle" fill="white" style={{ font: fontSub }}>🔐 MFA</text>
+      <text x="285" y="160" textAnchor="middle" fill="white" style={{ font: fontSub }}>Multi-Factor</text>
+      <text x="285" y="175" textAnchor="middle" fill="white" style={{ font: fontSub }}>Authentication</text>
+
+      <rect x="350" y="125" width="90" height="55" fill={c.identity} stroke={c.border} rx="8" ry="8" />
+      <text x="395" y="145" textAnchor="middle" fill="white" style={{ font: fontSub }}>📱 Device Trust</text>
+      <text x="395" y="160" textAnchor="middle" fill="white" style={{ font: fontSub }}>Device Health</text>
+      <text x="395" y="175" textAnchor="middle" fill="white" style={{ font: fontSub }}>& Compliance</text>
+
+      <rect x="460" y="125" width="90" height="55" fill={c.identity} stroke={c.border} rx="8" ry="8" />
+      <text x="505" y="145" textAnchor="middle" fill="white" style={{ font: fontSub }}>⚖️ Risk Engine</text>
+      <text x="505" y="160" textAnchor="middle" fill="white" style={{ font: fontSub }}>Behavioral</text>
+      <text x="505" y="175" textAnchor="middle" fill="white" style={{ font: fontSub }}>Analytics</text>
+
+      <rect x="570" y="125" width="90" height="55" fill={c.identity} stroke={c.border} rx="8" ry="8" />
+      <text x="615" y="145" textAnchor="middle" fill="white" style={{ font: fontSub }}>📋 Policy Engine</text>
+      <text x="615" y="160" textAnchor="middle" fill="white" style={{ font: fontSub }}>Access Control</text>
+      <text x="615" y="175" textAnchor="middle" fill="white" style={{ font: fontSub }}>& Policies</text>
+
+      {/* Network Security Layer */}
+      <rect x="180" y="230" width="540" height="100" fill={c.network} fillOpacity="0.15" 
+            stroke={c.network} strokeWidth="2" rx="15" ry="15" />
+      <text x="450" y="255" textAnchor="middle" fill={c.text} style={{ font }}>🛡️ Network Micro-Segmentation</text>
       
-      {/* MFA Component */}
-      <rect x="220" y="100" width="80" height="40" fill="var(--accent)" rx="4"/>
-      <text x="260" y="125" textAnchor="middle" fill="white" className="text-sm font-medium">MFA</text>
-      
-      {/* Device Trust */}
-      <rect x="320" y="100" width="80" height="40" fill="var(--accent)" rx="4"/>
-      <text x="360" y="115" textAnchor="middle" fill="white" className="text-xs">Device</text>
-      <text x="360" y="130" textAnchor="middle" fill="white" className="text-xs">Trust</text>
-      
-      {/* Risk Assessment */}
-      <rect x="420" y="100" width="80" height="40" fill="var(--accent)" rx="4"/>
-      <text x="460" y="115" textAnchor="middle" fill="white" className="text-xs">Risk</text>
-      <text x="460" y="130" textAnchor="middle" fill="white" className="text-xs">Assessment</text>
-      
-      {/* Policy Engine */}
-      <rect x="520" y="100" width="80" height="40" fill="var(--accent)" rx="4"/>
-      <text x="560" y="115" textAnchor="middle" fill="white" className="text-xs">Policy</text>
-      <text x="560" y="130" textAnchor="middle" fill="white" className="text-xs">Engine</text>
-      
-      {/* Network Segmentation */}
-      <rect x="150" y="200" width="500" height="80" fill="var(--primary)" fillOpacity="0.1" 
-            stroke="var(--primary)" strokeWidth="2" rx="8"/>
-      <text x="400" y="225" textAnchor="middle" fill="var(--primary)" className="font-bold">
-        Network Micro-Segmentation
-      </text>
-      
-      {/* Secure Zones */}
-      <rect x="180" y="245" width="100" height="25" fill="var(--primary)" rx="4"/>
-      <text x="230" y="262" textAnchor="middle" fill="white" className="text-xs">DMZ Zone</text>
-      
-      <rect x="300" y="245" width="100" height="25" fill="var(--primary)" rx="4"/>
-      <text x="350" y="262" textAnchor="middle" fill="white" className="text-xs">App Zone</text>
-      
-      <rect x="420" y="245" width="100" height="25" fill="var(--primary)" rx="4"/>
-      <text x="470" y="262" textAnchor="middle" fill="white" className="text-xs">Data Zone</text>
-      
-      <rect x="540" y="245" width="100" height="25" fill="var(--primary)" rx="4"/>
-      <text x="590" y="262" textAnchor="middle" fill="white" className="text-xs">Admin Zone</text>
-      
-      {/* Resources Layer */}
-      <rect x="100" y="320" width="600" height="120" fill="var(--surface-alt)" 
-            stroke="var(--text-muted)" strokeWidth="1" rx="8"/>
-      <text x="400" y="345" textAnchor="middle" fill="var(--text)" className="font-bold">
-        Protected Resources
-      </text>
+      {/* Network Segments */}
+      <rect x="200" y="275" width="110" height="45" fill={c.network} stroke={c.border} rx="8" ry="8" />
+      <text x="255" y="295" textAnchor="middle" fill="white" style={{ font: fontSub }}>🌐 DMZ Zone</text>
+      <text x="255" y="310" textAnchor="middle" fill="white" style={{ font: fontSub }}>External Access</text>
+
+      <rect x="330" y="275" width="110" height="45" fill={c.network} stroke={c.border} rx="8" ry="8" />
+      <text x="385" y="295" textAnchor="middle" fill="white" style={{ font: fontSub }}>🖥️ App Zone</text>
+      <text x="385" y="310" textAnchor="middle" fill="white" style={{ font: fontSub }}>Application Tier</text>
+
+      <rect x="460" y="275" width="110" height="45" fill={c.network} stroke={c.border} rx="8" ry="8" />
+      <text x="515" y="295" textAnchor="middle" fill="white" style={{ font: fontSub }}>🗄️ Data Zone</text>
+      <text x="515" y="310" textAnchor="middle" fill="white" style={{ font: fontSub }}>Sensitive Data</text>
+
+      <rect x="590" y="275" width="110" height="45" fill={c.network} stroke={c.border} rx="8" ry="8" />
+      <text x="645" y="295" textAnchor="middle" fill="white" style={{ font: fontSub }}>👨‍💼 Admin Zone</text>
+      <text x="645" y="310" textAnchor="middle" fill="white" style={{ font: fontSub }}>Privileged Access</text>
+
+      {/* Protected Resources Layer */}
+      <rect x="120" y="360" width="660" height="140" fill={c.data} fillOpacity="0.15" 
+            stroke={c.data} strokeWidth="2" rx="15" ry="15" />
+      <text x="450" y="385" textAnchor="middle" fill={c.text} style={{ font }}>🛡️ Protected Resources & Assets</text>
       
       {/* Individual Resources */}
-      <rect x="130" y="360" width="80" height="60" fill="var(--surface)" stroke="var(--text-muted)" rx="4"/>
-      <text x="170" y="385" textAnchor="middle" fill="var(--text)" className="text-xs">Web Apps</text>
-      <circle cx="170" cy="405" r="8" fill="#4ecdc4"/>
-      
-      <rect x="230" y="360" width="80" height="60" fill="var(--surface)" stroke="var(--text-muted)" rx="4"/>
-      <text x="270" y="385" textAnchor="middle" fill="var(--text)" className="text-xs">APIs</text>
-      <circle cx="270" cy="405" r="8" fill="#4ecdc4"/>
-      
-      <rect x="330" y="360" width="80" height="60" fill="var(--surface)" stroke="var(--text-muted)" rx="4"/>
-      <text x="370" y="385" textAnchor="middle" fill="var(--text)" className="text-xs">Databases</text>
-      <circle cx="370" cy="405" r="8" fill="#4ecdc4"/>
-      
-      <rect x="430" y="360" width="80" height="60" fill="var(--surface)" stroke="var(--text-muted)" rx="4"/>
-      <text x="470" y="385" textAnchor="middle" fill="var(--text)" className="text-xs">Files</text>
-      <circle cx="470" cy="405" r="8" fill="#4ecdc4"/>
-      
-      <rect x="530" y="360" width="80" height="60" fill="var(--surface)" stroke="var(--text-muted)" rx="4"/>
-      <text x="570" y="385" textAnchor="middle" fill="var(--text)" className="text-xs">Services</text>
-      <circle cx="570" cy="405" r="8" fill="#4ecdc4"/>
-      
-      <rect x="630" y="360" width="80" height="60" fill="var(--surface)" stroke="var(--text-muted)" rx="4"/>
-      <text x="670" y="385" textAnchor="middle" fill="var(--text)" className="text-xs">Devices</text>
-      <circle cx="670" cy="405" r="8" fill="#4ecdc4"/>
-      
-      {/* Monitoring & Analytics */}
-      <rect x="200" y="480" width="400" height="60" fill="var(--secondary)" fillOpacity="0.1" 
-            stroke="var(--secondary)" strokeWidth="2" rx="8"/>
-      <text x="400" y="505" textAnchor="middle" fill="var(--secondary)" className="font-bold">
-        Continuous Monitoring & Analytics
-      </text>
-      <text x="400" y="525" textAnchor="middle" fill="var(--text-muted)" className="text-sm">
-        Real-time risk assessment, behavioral analytics, compliance reporting
-      </text>
-      
+      <rect x="150" y="405" width="90" height="75" fill={c.surface} stroke={c.border} rx="8" ry="8" />
+      <text x="195" y="425" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>🌐 Web Apps</text>
+      <text x="195" y="440" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• SPA/MPA</text>
+      <text x="195" y="455" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Dashboards</text>
+      <text x="195" y="470" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Portals</text>
+
+      <rect x="260" y="405" width="90" height="75" fill={c.surface} stroke={c.border} rx="8" ry="8" />
+      <text x="305" y="425" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>🔌 APIs</text>
+      <text x="305" y="440" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• REST/GraphQL</text>
+      <text x="305" y="455" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Microservices</text>
+      <text x="305" y="470" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Webhooks</text>
+
+      <rect x="370" y="405" width="90" height="75" fill={c.surface} stroke={c.border} rx="8" ry="8" />
+      <text x="415" y="425" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>🗃️ Databases</text>
+      <text x="415" y="440" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• SQL/NoSQL</text>
+      <text x="415" y="455" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Data Lakes</text>
+      <text x="415" y="470" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Warehouses</text>
+
+      <rect x="480" y="405" width="90" height="75" fill={c.surface} stroke={c.border} rx="8" ry="8" />
+      <text x="525" y="425" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>📁 File Systems</text>
+      <text x="525" y="440" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Object Storage</text>
+      <text x="525" y="455" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• NAS/SAN</text>
+      <text x="525" y="470" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Document Mgmt</text>
+
+      <rect x="590" y="405" width="90" height="75" fill={c.surface} stroke={c.border} rx="8" ry="8" />
+      <text x="635" y="425" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>⚙️ Services</text>
+      <text x="635" y="440" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Cloud Services</text>
+      <text x="635" y="455" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Legacy Systems</text>
+      <text x="635" y="470" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Third-party</text>
+
+      <rect x="700" y="405" width="90" height="75" fill={c.surface} stroke={c.border} rx="8" ry="8" />
+      <text x="745" y="425" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>📱 Devices</text>
+      <text x="745" y="440" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Laptops/Mobile</text>
+      <text x="745" y="455" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• IoT Devices</text>
+      <text x="745" y="470" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Servers</text>
+
+      {/* Continuous Monitoring Layer */}
+      <rect x="200" y="530" width="500" height="80" fill={c.device} fillOpacity="0.15" 
+            stroke={c.device} strokeWidth="2" rx="15" ry="15" />
+      <text x="450" y="555" textAnchor="middle" fill={c.text} style={{ font }}>📊 Continuous Monitoring & Analytics</text>
+      <text x="450" y="575" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Real-time threat detection • Behavioral analytics • Compliance monitoring</text>
+      <text x="450" y="590" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Risk scoring • Incident response • Security orchestration</text>
+
       {/* Flow Arrows */}
-      <defs>
-        <marker id="arrowhead" markerWidth="10" markerHeight="7" 
-                refX="9" refY="3.5" orient="auto">
-          <polygon points="0 0, 10 3.5, 0 7" fill="var(--text-muted)" />
-        </marker>
-      </defs>
+      <line x1="180" y1="140" x2="220" y2="140" stroke={c.subtle} strokeWidth={2.5} markerEnd="url(#arrow-zt)" />
+      <line x1="450" y1="200" x2="450" y2="230" stroke={c.subtle} strokeWidth={2.5} markerEnd="url(#arrow-zt)" />
+      <line x1="450" y1="330" x2="450" y2="360" stroke={c.subtle} strokeWidth={2.5} markerEnd="url(#arrow-zt)" />
+      <line x1="450" y1="500" x2="450" y2="530" stroke={c.subtle} strokeWidth={2.5} markerEnd="url(#arrow-zt)" />
+
+      {/* Key Principles sidebar */}
+      <rect x="30" y="250" width="130" height="220" fill={c.alt} stroke={c.border} rx="10" ry="10" opacity="0.9" />
+      <text x="95" y="275" textAnchor="middle" fill={c.text} style={{ font }}>🎯 Key Principles</text>
       
-      {/* External threat to verification */}
-      <line x1="140" y1="110" x2="190" y2="110" stroke="var(--text-muted)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)"/>
-      
-      {/* Verification to segmentation */}
-      <line x1="400" y1="160" x2="400" y2="190" stroke="var(--text-muted)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)"/>
-      
-      {/* Segmentation to resources */}
-      <line x1="400" y1="280" x2="400" y2="310" stroke="var(--text-muted)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)"/>
-      
-      {/* Resources to monitoring */}
-      <line x1="400" y1="440" x2="400" y2="470" stroke="var(--text-muted)" 
-            strokeWidth="2" markerEnd="url(#arrowhead)"/>
-      
-      {/* Principle callouts */}
-      <text x="680" y="120" fill="var(--accent)" className="text-xs font-medium">Never Trust</text>
-      <text x="680" y="135" fill="var(--accent)" className="text-xs font-medium">Always Verify</text>
-      
-      <text x="680" y="260" fill="var(--primary)" className="text-xs font-medium">Least Privilege</text>
-      <text x="680" y="275" fill="var(--primary)" className="text-xs font-medium">Access</text>
-      
-      <text x="680" y="410" fill="var(--surface-alt)" className="text-xs font-medium" stroke="var(--text)" strokeWidth="0.5">Assume Breach</text>
-      <text x="680" y="425" fill="var(--surface-alt)" className="text-xs font-medium" stroke="var(--text)" strokeWidth="0.5">Minimize Impact</text>
-      
+      <text x="95" y="300" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>✅ Verify Explicitly</text>
+      <text x="95" y="320" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>🔒 Least Privilege</text>
+      <text x="95" y="340" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>💣 Assume Breach</text>
+      <text x="95" y="360" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>📈 Continuous Monitor</text>
+      <text x="95" y="380" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>🔄 Dynamic Policies</text>
+      <text x="95" y="400" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>🎛️ Context Aware</text>
+      <text x="95" y="420" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>🛡️ Defense in Depth</text>
+      <text x="95" y="440" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>📍 Data-centric</text>
+      <text x="95" y="460" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>🚫 Never Trust</text>
+
+      {/* Bottom summary */}
+      <text x="450" y="635" textAnchor="middle" fill={c.text} style={{ font }}>Benefits: Enhanced security posture • Reduced attack surface • Improved compliance • Better visibility</text>
     </svg>
   );
 }
