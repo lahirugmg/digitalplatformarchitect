@@ -78,11 +78,12 @@ export default function ExplorePage() {
   }), [q]);
 
   return (
-    <section className="stack gap-lg">
-      <header className="page-hero stack gap-sm">
-        <h1 className="page-title">Architecture Explorer</h1>
-        <p className="lede">Discover how platform building blocks and architectural patterns work together to create resilient, scalable digital platforms.</p>
-      </header>
+    <div className="container">
+      <article className="article">
+        <header className="page-hero stack gap-sm">
+          <h1 className="page-title">Architecture Explorer</h1>
+          <p className="lede">Discover how platform building blocks and architectural patterns work together to create resilient, scalable digital platforms.</p>
+        </header>
         
       {/* Overview Stats */}
       <div className="explorer-stats">
@@ -367,7 +368,8 @@ export default function ExplorePage() {
             </div>
           </div>
         </div>
-      </div>
-    </section>
+        </div>
+      </article>
+    </div>
   );
 }

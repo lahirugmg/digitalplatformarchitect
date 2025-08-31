@@ -546,6 +546,68 @@ a:focus-visible {
 
 .diagram svg { width: 100%; height: auto; display: block; }
 
+/* Hover magnify shell for diagrams */
+.diagram-shell { position: relative; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); overflow: hidden; }
+.diagram-shell .diagram-inner { padding: 1rem; transition: transform .2s ease; }
+.diagram-shell:hover .diagram-inner { transform: scale(1.03); }
+.diagram-shell:hover { box-shadow: var(--shadow-md); border-color: var(--primary); }
+.zoom-btn { position: absolute; top: .5rem; right: .5rem; background: var(--primary); color: #fff; border: 0; border-radius: var(--radius-md); padding: .35rem .6rem; font: inherit; font-size: .8rem; cursor: pointer; box-shadow: var(--shadow-sm); }
+.zoom-btn:hover { background: var(--primary-hover); }
+
+/* Modal zoom */
+.diagram-modal { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; }
+.diagram-modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.5); backdrop-filter: blur(2px); }
+.diagram-modal-content { position: relative; background: var(--surface); width: min(1100px, 94vw); height: min(80vh, 780px); border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-lg); display: grid; grid-template-rows: auto 1fr; overflow: hidden; }
+.diagram-modal-header { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .75rem 1rem; border-bottom: 1px solid var(--border); background: var(--surface-alt); }
+.diagram-modal-header h3 { margin: 0; font-size: 1rem; color: var(--text); }
+.zoom-controls { display: inline-flex; align-items: center; gap: .5rem; }
+.zoom-controls button { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .25rem .5rem; cursor: pointer; }
+.zoom-controls button:hover { background: var(--surface-hover); }
+.zoom-controls .zoom-level { min-width: 3ch; text-align: center; color: var(--text-secondary); }
+.zoom-controls .close-btn { margin-left: .25rem; background: var(--orange); border-color: var(--orange); color: #fff; }
+.zoom-controls .close-btn:hover { background: var(--orange-hover); border-color: var(--orange-hover); }
+.diagram-modal-body { overflow: auto; padding: 1rem; }
+.zoom-stage { transform-origin: top left; width: fit-content; height: fit-content; }
+.zoom-stage svg { width: 1200px; height: auto; max-width: none; }
+
+/* Diagram container with hover magnification */
+.diagram-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  transition: all 0.3s ease;
+  cursor: zoom-in;
+}
+
+.diagram-container:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-lg);
+  z-index: 10;
+}
+
+.diagram-container svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.diagram-container:hover svg {
+  transform: scale(1.1);
+}
+
+/* Responsive diagram container */
+@media (max-width: 768px) {
+  .diagram-container:hover {
+    transform: none;
+    box-shadow: var(--shadow-md);
+  }
+  
+  .diagram-container:hover svg {
+    transform: scale(1.02);
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .container {
@@ -888,6 +950,13 @@ html {
   align-items: center;
   justify-content: center;
   min-height: 160px;
+  transition: all 0.2s ease;
+  cursor: zoom-in;
+}
+
+.block-diagram-container:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-md);
 }
 
 .block-diagram {
@@ -930,6 +999,11 @@ html {
   .block-diagram-container {
     padding: 1rem;
     min-height: 140px;
+  }
+  
+  .block-diagram-container:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
   }
   
   .block-content {
