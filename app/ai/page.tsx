@@ -4,7 +4,7 @@ export const metadata = {
 };
 
 import { DiagramZoom } from "@/components/DiagramZoom";
-import { AICapabilitiesDiagram } from "@/components/diagrams/AICapabilitiesDiagram";
+import { AIFocusedCapabilitiesDiagram } from "@/components/diagrams/AIFocusedCapabilitiesDiagram";
 
 export default function AITransformPage() {
   return (
@@ -18,9 +18,9 @@ export default function AITransformPage() {
         </header>
 
         <section className="stack gap-sm">
-          <h2 className="section-title">AI Capabilities Overview</h2>
-          <DiagramZoom title="AI Capabilities">
-            <AICapabilitiesDiagram />
+          <h2 className="section-title">AI + Digital Platform: Capabilities</h2>
+          <DiagramZoom title="AI + Digital Platform: Capabilities">
+            <AIFocusedCapabilitiesDiagram />
           </DiagramZoom>
         </section>
 
