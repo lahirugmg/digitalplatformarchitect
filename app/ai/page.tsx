@@ -99,14 +99,60 @@ export default function AITransformPage() {
 
         <section>
           <h2>Real‑World Scenarios</h2>
+          
+          <h3>Intelligent Customer Service Platform</h3>
+          <p>A retail company deploys AI-powered customer service that accesses order history, inventory, and payment systems:</p>
           <ul>
-            <li><strong>API Discovery with AI</strong>: A developer asks, “How do I integrate payments?” An AI assistant in the API portal suggests the right API, generates a working client, and ensures security policies are enforced.</li>
-            <li><strong>RAG with Governance</strong>: A data platform ingests documents with lineage and consent. The AI model retrieves context through APIs, with identity enforcing purpose limitation.</li>
-            <li><strong>Multi‑Agent Workflows</strong>: Agents communicate over the event bus, invoke tools via managed APIs, and authenticate with scoped tokens.</li>
+            <li><strong>AI Assistant</strong>: LLM with RAG capabilities answers customer questions using real-time product and order data</li>
+            <li><strong>Integration Layer</strong>: API gateway provides secure, rate-limited access to order management and inventory systems</li>
+            <li><strong>Observability</strong>: Monitors response quality, customer satisfaction, and escalation patterns in real-time</li>
           </ul>
+          <p><em>Result: 70% reduction in human agent workload, 40% faster resolution times</em></p>
+
+          <h3>Smart API Development Platform</h3>
+          <p>An enterprise accelerates API development with AI-powered assistance:</p>
+          <ul>
+            <li><strong>Design Phase</strong>: Natural language API specification generation with OpenAPI output and security recommendations</li>
+            <li><strong>Development</strong>: Automated scaffold generation for multiple frameworks with AI-generated test suites</li>
+            <li><strong>Quality Gates</strong>: Automated security scanning, performance testing, and compliance validation</li>
+          </ul>
+          <p><em>Result: 50% faster development cycles, 80% reduction in security vulnerabilities</em></p>
+
+          <h3>Multi-Agent E-commerce Optimization</h3>
+          <p>An online marketplace uses specialized AI agents for pricing, inventory, and customer experience:</p>
+          <ul>
+            <li><strong>Agent Coordination</strong>: Kafka-based event bus enables real-time communication between pricing, inventory, and marketing agents</li>
+            <li><strong>Data Foundation</strong>: Unified data platform with feature stores powers ML models across all agents</li>
+            <li><strong>Governance</strong>: Centralized decision framework resolves conflicts between competing agent recommendations</li>
+          </ul>
+          <p><em>Result: 15% increase in profit margins, 25% improvement in customer lifetime value</em></p>
+
           <p>
-            These scenarios show AI isn’t a bolt‑on—it’s woven into the fabric of platform design.
+            These scenarios demonstrate AI isn't a bolt‑on—it requires thoughtful integration of data, security, observability, and governance from the ground up.
           </p>
+        </section>
+
+        <hr />
+
+        <section>
+          <h2>Key Technologies & Tools</h2>
+          <p>Building AI-integrated platforms requires a thoughtful technology stack:</p>
+          
+          <h3>AI Infrastructure</h3>
+          <ul>
+            <li><strong>Vector Databases</strong>: Pinecone, Weaviate, Qdrant for RAG and semantic search</li>
+            <li><strong>Model Serving</strong>: Ray Serve, NVIDIA Triton, AWS Bedrock for scalable inference</li>
+            <li><strong>Agent Frameworks</strong>: LangChain, CrewAI, AutoGen for multi-agent development</li>
+            <li><strong>Development Tools</strong>: GitHub Copilot, Claude, Vercel AI SDK for AI-powered coding</li>
+          </ul>
+
+          <h3>Platform Integration</h3>
+          <ul>
+            <li><strong>Streaming</strong>: Apache Kafka, Pulsar for real-time AI pipelines</li>
+            <li><strong>API Management</strong>: Kong, Istio with AI-specific rate limiting</li>
+            <li><strong>Observability</strong>: MLflow, Neptune for AI model lifecycle management</li>
+            <li><strong>Data</strong>: Feature stores (Feast, Tecton) and data lineage tools</li>
+          </ul>
         </section>
 
         <hr />
@@ -114,7 +160,10 @@ export default function AITransformPage() {
         <section>
           <h2>Why It Matters</h2>
           <p>
-            Companies that embrace this dual lens—<em>AI for Code</em> and <em>Code for AI</em>—will build faster, safer, and more resilient digital platforms. They’ll empower teams with AI‑driven productivity while ensuring AI workloads themselves run with governance, observability, and trust.
+            Companies that embrace this dual lens—<em>AI for Code</em> and <em>Code for AI</em>—will build faster, safer, and more resilient digital platforms. They'll empower teams with AI‑driven productivity while ensuring AI workloads themselves run with governance, observability, and trust.
+          </p>
+          <p>
+            The convergence of AI and platform engineering represents a fundamental shift in how we build digital systems. Organizations that master both perspectives gain competitive advantages through accelerated development cycles and more intelligent, reliable systems.
           </p>
           <p><strong>The message is simple:</strong></p>
           <p>👉 Use AI to build better platforms. Use platforms to ship better AI.</p>
