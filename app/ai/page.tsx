@@ -58,7 +58,9 @@ export default function AITransformPage() {
             <li><strong>Observability</strong>: LLMs summarize incidents, propose fixes, draft postmortems, and predict potential failures from telemetry patterns</li>
           </ul>
           
-          <p><strong>Impact</strong>: 40-60% faster delivery cycles, proactive issue prevention, and dramatically improved developer experience.</p>
+          <div className="stat-card">
+            <strong>Impact:</strong> 40-60% faster delivery cycles • proactive issue prevention • dramatically improved developer experience
+          </div>
         </section>
 
         <hr />
@@ -107,7 +109,9 @@ export default function AITransformPage() {
             <li><strong>Integration Layer</strong>: API gateway provides secure, rate-limited access to order management and inventory systems</li>
             <li><strong>Observability</strong>: Monitors response quality, customer satisfaction, and escalation patterns in real-time</li>
           </ul>
-          <p><em>Result: 70% reduction in human agent workload, 40% faster resolution times</em></p>
+          <div className="stat-card">
+            <strong>Impact:</strong> 70% reduction in human agent workload • 40% faster resolution times
+          </div>
 
           <h3>Smart API Development Platform</h3>
           <p>An enterprise accelerates API development with AI-powered assistance:</p>
@@ -116,7 +120,9 @@ export default function AITransformPage() {
             <li><strong>Development</strong>: Automated scaffold generation for multiple frameworks with AI-generated test suites</li>
             <li><strong>Quality Gates</strong>: Automated security scanning, performance testing, and compliance validation</li>
           </ul>
-          <p><em>Result: 50% faster development cycles, 80% reduction in security vulnerabilities</em></p>
+          <div className="stat-card">
+            <strong>Impact:</strong> 50% faster development cycles • 80% reduction in security vulnerabilities
+          </div>
 
           <h3>Multi-Agent E-commerce Optimization</h3>
           <p>An online marketplace uses specialized AI agents for pricing, inventory, and customer experience:</p>
@@ -125,7 +131,9 @@ export default function AITransformPage() {
             <li><strong>Data Foundation</strong>: Unified data platform with feature stores powers ML models across all agents</li>
             <li><strong>Governance</strong>: Centralized decision framework resolves conflicts between competing agent recommendations</li>
           </ul>
-          <p><em>Result: 15% increase in profit margins, 25% improvement in customer lifetime value</em></p>
+          <div className="stat-card">
+            <strong>Impact:</strong> 15% increase in profit margins • 25% improvement in customer lifetime value
+          </div>
 
           <p>
             These scenarios demonstrate AI isn't a bolt‑on—it requires thoughtful integration of data, security, observability, and governance from the ground up.
