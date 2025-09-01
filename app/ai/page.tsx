@@ -3,6 +3,9 @@ export const metadata = {
   description: "AI for Code and Code for AI — how AI accelerates platform delivery and how platforms power AI with governance and scale."
 };
 
+import { DiagramZoom } from "@/components/DiagramZoom";
+import { AICapabilitiesDiagram } from "@/components/diagrams/AICapabilitiesDiagram";
+
 export default function AITransformPage() {
   return (
     <div className="container">
@@ -13,6 +16,13 @@ export default function AITransformPage() {
             Digital platforms connect systems, expose APIs, move data, and empower developers. A new force is reshaping how these platforms are built and how they power the next generation of applications: Artificial Intelligence (AI).
           </p>
         </header>
+
+        <section className="stack gap-sm">
+          <h2 className="section-title">AI Capabilities Overview</h2>
+          <DiagramZoom title="AI Capabilities">
+            <AICapabilitiesDiagram />
+          </DiagramZoom>
+        </section>
 
         <section>
           <p>
@@ -91,4 +101,3 @@ export default function AITransformPage() {
     </div>
   );
 }
-
