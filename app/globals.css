@@ -549,6 +549,7 @@ a:focus-visible {
 /* Hover magnify shell for diagrams */
 .diagram-shell { position: relative; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); overflow: hidden; }
 .diagram-shell .diagram-inner { padding: 1rem; transition: transform .2s ease; }
+.diagram-shell svg { width: 100%; height: auto; display: block; }
 .diagram-shell:hover .diagram-inner { transform: scale(1.03); }
 .diagram-shell:hover { box-shadow: var(--shadow-md); border-color: var(--primary); }
 .zoom-btn { position: absolute; top: .5rem; right: .5rem; background: var(--primary); color: #fff; border: 0; border-radius: var(--radius-md); padding: .35rem .6rem; font: inherit; font-size: .8rem; cursor: pointer; box-shadow: var(--shadow-sm); }

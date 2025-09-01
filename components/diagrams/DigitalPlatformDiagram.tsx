@@ -21,7 +21,7 @@ export function DigitalPlatformDiagram() {
   const fontMini = "500 9px system-ui, -apple-system, Segoe UI, Roboto, sans-serif";
 
   return (
-    <svg viewBox="0 0 1600 1200" role="img" aria-labelledby="digital-platform-title digital-platform-desc" preserveAspectRatio="xMidYMid meet">
+    <svg viewBox="0 0 1600 900" role="img" aria-labelledby="digital-platform-title digital-platform-desc" preserveAspectRatio="xMidYMid meet">
       <title id="digital-platform-title">Digital Platform Architecture</title>
       <desc id="digital-platform-desc">Comprehensive view of digital platform building blocks including API management, messaging, microservices, data platforms, developer tools, and security layers with their interconnections.</desc>
       
@@ -48,8 +48,8 @@ export function DigitalPlatformDiagram() {
       </defs>
 
       {/* Background with subtle gradient */}
-      <rect width="1600" height="1200" fill="url(#platformGradient)" />
-      <rect width="1600" height="1200" fill="url(#grid)" />
+      <rect width="1600" height="900" fill="url(#platformGradient)" />
+      <rect width="1600" height="900" fill="url(#grid)" />
 
       {/* Main Title */}
       <text x="800" y="40" textAnchor="middle" fill={c.text} style={{ font: "700 20px system-ui" }}>Digital Platform Building Blocks</text>
@@ -282,7 +282,8 @@ export function DigitalPlatformDiagram() {
 
 
       {/* Information Panel */}
-      <rect x="60" y="680" width="1480" height="460" fill={c.surface} stroke={c.border} rx="15" ry="15" opacity="0.8" />
+      {/* Reduced height to eliminate excess bottom whitespace */}
+      <rect x="60" y="680" width="1480" height="220" fill={c.surface} stroke={c.border} rx="15" ry="15" opacity="0.8" />
       
       {/* Quick Reference (condensed to reduce crowding) */}
       <text x="80" y="710" fill={c.text} style={{ font: fontTitle }}>📘 Quick Reference</text>
@@ -319,31 +320,7 @@ export function DigitalPlatformDiagram() {
       <text x="1050" y="800" fill={c.subtle} style={{ font: fontMini }}>🛠️ Engineers — interfaces, flows (L2/L3)</text>
       <text x="1050" y="815" fill={c.subtle} style={{ font: fontMini }}>⚙️ Ops — topology, SLOs, runbooks (L2/L3)</text>
 
-      {/* Audience & Roles */}
-      <text x="80" y="910" fill={c.text} style={{ font: fontTitle }}>👥 Audience & Roles</text>
-
-      {/* Column 1: Business + ARB */}
-      <text x="80" y="935" fill={c.text} style={{ font: fontSub }}>🏢 Business Stakeholders</text>
-      <text x="80" y="950" fill={c.subtle} style={{ font: fontSub }}>• Understand app interactions within their domain</text>
-      <text x="80" y="965" fill={c.subtle} style={{ font: fontSub }}>• Focus on value, capabilities, KPIs (L0/L1)</text>
-
-      <text x="80" y="990" fill={c.text} style={{ font: fontSub }}>✅ Architecture Review Board / Design Authority</text>
-      <text x="80" y="1005" fill={c.subtle} style={{ font: fontSub }}>• Validate conformance to standards & guidelines</text>
-      <text x="80" y="1020" fill={c.subtle} style={{ font: fontSub }}>• Review patterns, security, governance, NFRs (L1/L2)</text>
-
-      {/* Column 2: Leaders + Engineers */}
-      <text x="560" y="935" fill={c.text} style={{ font: fontSub }}>🎯 Software Engineering Leaders</text>
-      <text x="560" y="950" fill={c.subtle} style={{ font: fontSub }}>• Assess solution fit, trade‑offs, and risks</text>
-      <text x="560" y="965" fill={c.subtle} style={{ font: fontSub }}>• Plan dependencies, staffing (Solution L1/L2)</text>
-
-      <text x="560" y="990" fill={c.text} style={{ font: fontSub }}>🛠️ Software Engineers</text>
-      <text x="560" y="1005" fill={c.subtle} style={{ font: fontSub }}>• Build or evolve apps with clear interfaces & flows</text>
-      <text x="560" y="1020" fill={c.subtle} style={{ font: fontSub }}>• Use contracts, sequences, templates (L2/L3)</text>
-
-      {/* Column 3: Operations */}
-      <text x="1050" y="935" fill={c.text} style={{ font: fontSub }}>⚙️ Operations Engineers</text>
-      <text x="1050" y="950" fill={c.subtle} style={{ font: fontSub }}>• Understand runtime topology to resolve issues</text>
-      <text x="1050" y="965" fill={c.subtle} style={{ font: fontSub }}>• Use envs, SLOs, telemetry, networking, runbooks (L2/L3)</text>
+      {/* Removed detailed Audience & Roles section to avoid redundancy with condensed list and Solutions page */}
     </svg>
   );
 }
