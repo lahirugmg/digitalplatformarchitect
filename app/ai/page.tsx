@@ -40,16 +40,25 @@ export default function AITransformPage() {
         <section>
           <h2>AI for Code: Smarter Platforms</h2>
           <p>
-            AI isn’t just about chatbots and copilots—it’s becoming a key teammate for architects and developers. Imagine asking a natural‑language prompt like “connect SAP orders to Salesforce CRM and enrich with inventory data,” and an AI assistant generates the integration flow, tests, and error handling.
+            AI isn't just about chatbots and copilots—it's becoming a key teammate for architects and developers. Imagine asking a natural‑language prompt like "connect SAP orders to Salesforce CRM and enrich with inventory data," and an AI assistant generates the integration flow, tests, and error handling.
           </p>
-          <h3>Examples</h3>
+          
+          <h3>Design & Architecture</h3>
           <ul>
-            <li><strong>Messaging & Streaming</strong>: AI suggests optimal topic partitions or retention policies, and even generates stream‑processing jobs from plain English.</li>
-            <li><strong>API Management</strong>: Conversational discovery helps developers find the right APIs instantly, while AI creates client SDKs and tests.</li>
-            <li><strong>Data Platforms</strong>: Natural‑language SQL and AI‑driven data‑quality checks accelerate analytics.</li>
-            <li><strong>Observability</strong>: LLMs summarize incidents, propose fixes, and draft postmortems.</li>
+            <li><strong>Pattern Recognition</strong>: AI analyzes existing integrations to suggest proven architectural patterns for new use cases</li>
+            <li><strong>Risk Assessment</strong>: Identifies potential bottlenecks, security vulnerabilities, and scalability concerns during design phase</li>
+            <li><strong>Trade-off Analysis</strong>: Compares architectural approaches with detailed pros, cons, and cost implications</li>
           </ul>
-          <p><strong>Result</strong>: faster delivery, smarter operations, and better developer experience.</p>
+
+          <h3>Development & Operations</h3>
+          <ul>
+            <li><strong>Messaging & Streaming</strong>: AI suggests optimal topic partitions, retention policies, and generates stream‑processing jobs from plain English descriptions</li>
+            <li><strong>API Management</strong>: Conversational discovery helps developers find the right APIs instantly, while AI creates client SDKs, tests, and documentation</li>
+            <li><strong>Data Platforms</strong>: Natural‑language SQL generation, AI‑driven data‑quality checks, and automated pipeline optimization</li>
+            <li><strong>Observability</strong>: LLMs summarize incidents, propose fixes, draft postmortems, and predict potential failures from telemetry patterns</li>
+          </ul>
+          
+          <p><strong>Impact</strong>: 40-60% faster delivery cycles, proactive issue prevention, and dramatically improved developer experience.</p>
         </section>
 
         <hr />
@@ -59,17 +68,30 @@ export default function AITransformPage() {
           <p>
             On the flip side, building reliable AI systems requires the very same building blocks of digital platforms. Think of your platform as the operating system for AI.
           </p>
+          
+          <h3>Core AI Infrastructure</h3>
           <ul>
-            <li><strong>Messaging & Streaming</strong>: Real‑time pipelines for streaming inference and multi‑agent coordination.</li>
-            <li><strong>Enterprise Integration</strong>: Orchestrates system calls for AI agents, securely connecting ERP, CRM, or payment systems.</li>
-            <li><strong>API Management</strong>: Publishes AI tools as APIs with policies, quotas, and security.</li>
-            <li><strong>Data Platform</strong>: Powers retrieval‑augmented generation (RAG), vector stores, and feature pipelines.</li>
-            <li><strong>Identity & Access Management</strong>: Enforces consent, scopes, and authentication for human and machine users.</li>
-            <li><strong>Internal Developer Platform</strong>: Golden paths to deploy inference services, agents, and sandboxes quickly.</li>
-            <li><strong>Observability</strong>: Monitors AI prompts, responses, costs, and quality—making AI not just powerful, but reliable.</li>
+            <li><strong>Data Platform</strong>: Powers retrieval‑augmented generation (RAG) with vector databases, manages training datasets with lineage tracking, and handles data consent for AI workloads</li>
+            <li><strong>Messaging & Streaming</strong>: Enables real‑time inference pipelines, coordinates multi‑agent workflows, and supports streaming data for continuous learning</li>
+            <li><strong>API Management</strong>: Exposes AI models as managed APIs with rate limiting, versioning, A/B testing, and seamless deployment capabilities</li>
           </ul>
+
+          <h3>Enterprise Integration & Security</h3>
+          <ul>
+            <li><strong>Enterprise Integration</strong>: Orchestrates secure system calls for AI agents, connecting ERP, CRM, and payment systems through standardized patterns</li>
+            <li><strong>Identity & Access Management</strong>: Enforces fine-grained access controls, manages consent and data scopes, and provides secure authentication for both human users and AI agents</li>
+            <li><strong>Internal Developer Platform</strong>: Golden paths to deploy inference services, agent frameworks, and AI experimentation sandboxes quickly</li>
+          </ul>
+
+          <h3>Operations & Governance</h3>
+          <ul>
+            <li><strong>Observability</strong>: Comprehensive monitoring of AI prompts, responses, costs, and quality metrics—making AI not just powerful, but reliable and transparent</li>
+            <li><strong>Model Lifecycle</strong>: Version control, gradual rollouts, rollback capabilities, and automated testing for AI models</li>
+            <li><strong>Compliance</strong>: Audit trails for AI decisions, data lineage tracking, and regulatory compliance reporting</li>
+          </ul>
+          
           <p>
-            In other words, the same platform layers that power digital business today are the backbone of tomorrow’s AI systems.
+            The same platform layers that power digital business today become the backbone of tomorrow's AI systems—enhanced with AI-specific capabilities like vector search, model versioning, and intelligent orchestration.
           </p>
         </section>
 
