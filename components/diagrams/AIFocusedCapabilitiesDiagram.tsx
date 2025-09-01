@@ -36,6 +36,9 @@ export function AIFocusedCapabilitiesDiagram() {
       {/* Title */}
       <text x="800" y="48" textAnchor="middle" fill={c.text} style={{ font: "700 20px system-ui" }}>AI + Digital Platform: Capabilities</text>
       <text x="800" y="70" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Focused building blocks with AI for Code, Code for AI, use cases, and KPIs</text>
+      {/* Explanatory lines */}
+      <text x="800" y="86" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>AI for Code — how AI makes it faster and smarter to design, build, and operate digital platforms.</text>
+      <text x="800" y="98" textAnchor="middle" fill={c.subtle} style={{ font: fontMini }}>Code for AI — how architecture building blocks provide the foundation for AI systems to run safely and at scale.</text>
 
       {/* Layout constants (manually applied) */}
       {/* Card size: 720w x 260h, gap 40 */}
