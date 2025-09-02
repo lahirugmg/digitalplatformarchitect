@@ -1,77 +1,90 @@
+import { DiagramBase, diagramStyles, diagramFonts, commonStyles } from '../DiagramBase';
+
 export function CloudNativeDiagram() {
   return (
-    <svg viewBox="0 0 240 160" role="img" aria-label="Cloud-Native Platform Services overview">
-      <style>{`
-        .label { fill: var(--text); font: 600 11px system-ui; }
-        .subtle { fill: var(--text-secondary); font: 500 9px system-ui; }
-        .box { fill: var(--surface); stroke: var(--border); rx: 6; ry: 6; }
-        .k8s { fill: var(--primary-light); stroke: var(--primary); rx: 8; ry: 8; }
-        .workload { fill: var(--orange-light); stroke: var(--orange); rx: 4; ry: 4; }
-        .edge { stroke: var(--text-secondary); stroke-width: 1.5; marker-end: url(#arrow); }
-        .mesh { stroke-dasharray: 2,2; stroke: var(--primary); }
-      `}</style>
+    <DiagramBase
+      viewBox="0 0 320 200"
+      title="Cloud-Native Platform"
+      description="Comprehensive cloud-native architecture with Kubernetes orchestration, service mesh, and platform services"
+      width={320}
+      height={200}
+    >
+      <style>{commonStyles}</style>
 
-      <defs>
-        <marker id="arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
-          <path d="M0,0 L8,4 L0,8 z" fill="var(--text-secondary)" />
-        </marker>
-      </defs>
+      {/* Background grid */}
+      <rect width="320" height="200" fill="url(#grid-light)" />
 
-      {/* Kubernetes Cluster */}
-      <rect x="70" y="50" width="100" height="60" className="k8s" />
-      <text x="120" y="68" textAnchor="middle" className="label">Kubernetes</text>
-      <text x="120" y="80" textAnchor="middle" className="label">Cluster</text>
+      {/* Title */}
+      <rect x="90" y="10" width="140" height="25" fill="url(#primary-gradient)" rx="12" />
+      <text x="160" y="26" className="diagram-text" fill="white" style={{ font: diagramFonts.heading }}>☸️ Cloud-Native Platform</text>
 
-      {/* Workloads */}
-      <rect x="80" y="85" width="25" height="18" className="workload" />
-      <text x="92" y="96" textAnchor="middle" className="subtle">Pod</text>
+      {/* External Layer */}
+      <text x="30" y="60" className="diagram-text-secondary">External</text>
+      
+      <rect x="15" y="70" width="45" height="22" className="diagram-node" />
+      <text x="37" y="81" className="diagram-text-label">👥 Users</text>
 
-      <rect x="110" y="85" width="25" height="18" className="workload" />
-      <text x="122" y="96" textAnchor="middle" className="subtle">Pod</text>
+      <rect x="15" y="100" width="45" height="22" className="diagram-node" />
+      <text x="37" y="111" className="diagram-text-label">🔗 APIs</text>
 
-      <rect x="140" y="85" width="25" height="18" className="workload" />
-      <text x="152" y="96" textAnchor="middle" className="subtle">Pod</text>
+      <rect x="15" y="130" width="45" height="22" className="diagram-node" />
+      <text x="37" y="141" className="diagram-text-label">💾 Storage</text>
 
-      {/* External Services */}
-      <rect x="20" y="30" width="35" height="18" className="box" />
-      <text x="37" y="41" textAnchor="middle" className="subtle">Users</text>
+      {/* Kubernetes Core */}
+      <rect x="80" y="60" width="120" height="80" className="diagram-node diagram-node-primary" filter="url(#drop-shadow)" />
+      <text x="140" y="80" className="diagram-text-heading">☸️ Kubernetes Cluster</text>
+      
+      {/* Workloads inside K8s */}
+      <rect x="90" y="95" width="28" height="20" className="diagram-node diagram-node-warning" />
+      <text x="104" y="107" className="diagram-text-secondary" style={{ font: diagramFonts.micro }}>Pod A</text>
 
-      <rect x="20" y="70" width="35" height="18" className="box" />
-      <text x="37" y="81" textAnchor="middle" className="subtle">APIs</text>
+      <rect x="125" y="95" width="28" height="20" className="diagram-node diagram-node-warning" />
+      <text x="139" y="107" className="diagram-text-secondary" style={{ font: diagramFonts.micro }}>Pod B</text>
 
-      <rect x="20" y="110" width="35" height="18" className="box" />
-      <text x="37" y="121" textAnchor="middle" className="subtle">Storage</text>
+      <rect x="160" y="95" width="28" height="20" className="diagram-node diagram-node-warning" />
+      <text x="174" y="107" className="diagram-text-secondary" style={{ font: diagramFonts.micro }}>Pod C</text>
+
+      {/* Service Mesh overlay */}
+      <line x1="104" y1="122" x2="139" y2="122" stroke={diagramStyles.primary} strokeWidth="2" strokeDasharray="3,2" />
+      <line x1="139" y1="122" x2="174" y2="122" stroke={diagramStyles.primary} strokeWidth="2" strokeDasharray="3,2" />
+      <text x="140" y="135" className="diagram-text-secondary" style={{ font: diagramFonts.micro }}>🔗 Service Mesh</text>
 
       {/* Platform Services */}
-      <rect x="185" y="25" width="40" height="18" className="box" />
-      <text x="205" y="36" textAnchor="middle" className="subtle">GitOps</text>
+      <text x="250" y="60" className="diagram-text-secondary">Platform</text>
+      
+      <rect x="220" y="70" width="50" height="20" className="diagram-node diagram-node-accent" />
+      <text x="245" y="82" className="diagram-text-label">⚡ GitOps</text>
 
-      <rect x="185" y="50" width="40" height="18" className="box" />
-      <text x="205" y="61" textAnchor="middle" className="subtle">Mesh</text>
+      <rect x="220" y="100" width="50" height="20" className="diagram-node diagram-node-accent" />
+      <text x="245" y="112" className="diagram-text-label">🌐 Ingress</text>
 
-      <rect x="185" y="75" width="40" height="18" className="box" />
-      <text x="205" y="86" textAnchor="middle" className="subtle">Ingress</text>
+      <rect x="220" y="130" width="50" height="20" className="diagram-node diagram-node-accent" />
+      <text x="245" y="142" className="diagram-text-label">🛡️ Policy</text>
 
-      <rect x="185" y="100" width="40" height="18" className="box" />
-      <text x="205" y="111" textAnchor="middle" className="subtle">Policy</text>
+      {/* Observability Layer */}
+      <rect x="280" y="70" width="30" height="50" className="diagram-node diagram-node-success" />
+      <text x="295" y="82" className="diagram-text-secondary" style={{ font: diagramFonts.micro }}>📊</text>
+      <text x="295" y="95" className="diagram-text-secondary" style={{ font: diagramFonts.micro }}>Obs</text>
+      <text x="295" y="108" className="diagram-text-secondary" style={{ font: diagramFonts.micro }}>↗️</text>
 
-      {/* Traffic flow */}
-      <line x1="55" y1="39" x2="70" y2="60" className="edge" />
-      <line x1="55" y1="79" x2="70" y2="80" className="edge" />
-      <line x1="55" y1="119" x2="70" y2="100" className="edge" />
+      {/* Traffic Flow */}
+      <path d="M 60 81 Q 70 75 80 85" className="diagram-edge" />
+      <path d="M 60 111 Q 70 105 80 105" className="diagram-edge" />
+      <path d="M 60 141 Q 70 125 80 115" className="diagram-edge" />
 
-      {/* Service mesh */}
-      <line x1="105" y1="94" x2="122" y2="94" className="mesh" />
-      <line x1="135" y1="94" x2="152" y2="94" className="mesh" />
+      {/* Platform Integration */}
+      <path d="M 200 85 Q 210 80 220 80" className="diagram-edge diagram-edge-primary" />
+      <path d="M 200 105 Q 210 105 220 110" className="diagram-edge diagram-edge-primary" />
+      <path d="M 200 125 Q 210 130 220 140" className="diagram-edge diagram-edge-primary" />
 
-      {/* Platform integration */}
-      <line x1="170" y1="60" x2="185" y2="34" className="edge" />
-      <line x1="170" y1="70" x2="185" y2="59" className="edge" />
-      <line x1="170" y1="80" x2="185" y2="84" className="edge" />
-      <line x1="170" y1="90" x2="185" y2="109" className="edge" />
+      {/* Observability Integration */}
+      <line x1="200" y1="100" x2="280" y2="95" className="diagram-edge diagram-edge-accent diagram-edge-dashed" />
 
-      {/* Features */}
-      <text x="120" y="145" textAnchor="middle" className="subtle">Auto-scaling • mTLS • Zero Downtime</text>
-    </svg>
+      {/* Key Features */}
+      <rect x="40" y="170" width="240" height="20" fill={diagramStyles.surface} stroke={diagramStyles.border} rx="10" opacity="0.9" />
+      <text x="160" y="182" className="diagram-text-secondary" style={{ font: diagramFonts.caption }}>
+        🔄 Auto-scaling • 🔐 mTLS • ⚡ Zero Downtime • 🎯 Blue-Green • 📈 HPA/VPA
+      </text>
+    </DiagramBase>
   );
 }

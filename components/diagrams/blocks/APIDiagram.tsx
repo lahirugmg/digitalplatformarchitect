@@ -1,61 +1,83 @@
+import { DiagramBase, diagramStyles, diagramFonts, commonStyles } from '../DiagramBase';
+import { Node, Edge, TitleBar, SectionLabel } from '../DiagramElements';
+
 export function APIDiagram() {
   return (
-    <svg viewBox="0 0 240 160" role="img" aria-label="API Management overview">
-      <style>{`
-        .label { fill: var(--text); font: 600 11px system-ui; }
-        .subtle { fill: var(--text-secondary); font: 500 9px system-ui; }
-        .box { fill: var(--surface); stroke: var(--border); rx: 6; ry: 6; }
-        .gateway { fill: var(--primary-light); stroke: var(--primary); rx: 6; ry: 6; }
-        .edge { stroke: var(--text-secondary); stroke-width: 1.5; marker-end: url(#arrow); }
-        .policy { fill: var(--orange-light); stroke: var(--orange); rx: 3; ry: 3; }
-      `}</style>
+    <DiagramBase
+      viewBox="0 0 340 220"
+      title="API Management Platform"
+      description="Comprehensive API management with gateway, policies, security, and backend service orchestration"
+      width={340}
+      height={220}
+    >
+      <style>{commonStyles}</style>
 
-      <defs>
-        <marker id="arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
-          <path d="M0,0 L8,4 L0,8 z" fill="var(--text-secondary)" />
-        </marker>
-      </defs>
+      {/* Background grid */}
+      <rect width="340" height="220" fill="url(#grid-light)" />
 
-      {/* Clients */}
-      <rect x="20" y="30" width="40" height="20" className="box" />
-      <text x="40" y="42" textAnchor="middle" className="subtle">Mobile</text>
+  {/* Title */}
+  <TitleBar x={100} y={10} width={140} text="🌐 API Management" />
 
-      <rect x="20" y="70" width="40" height="20" className="box" />
-      <text x="40" y="82" textAnchor="middle" className="subtle">Web</text>
+      {/* Client Layer */}
+  <SectionLabel x={30} y={60} text="Clients" />
+  <Node x={15} y={70} width={50} height={22} lines={["📱 Mobile"]} />
+  <Node x={15} y={100} width={50} height={22} lines={["🌐 Web App"]} />
+  <Node x={15} y={130} width={50} height={22} lines={["🔗 API Client"]} />
+  <Node x={15} y={160} width={50} height={22} lines={["🤖 Bot/CLI"]} />
 
-      <rect x="20" y="110" width="40" height="20" className="box" />
-      <text x="40" y="122" textAnchor="middle" className="subtle">API</text>
+      {/* API Gateway Core */}
+      <rect x="90" y="90" width="80" height="50" className="diagram-node diagram-node-primary" filter="url(#drop-shadow)" />
+      <text x="130" y="110" className="diagram-text-heading">🚪 API Gateway</text>
+      <text x="130" y="125" className="diagram-text-secondary" style={{ font: diagramFonts.caption }}>Kong • Envoy • NGINX</text>
 
-      {/* API Gateway */}
-      <rect x="90" y="60" width="60" height="40" className="gateway" />
-      <text x="120" y="78" textAnchor="middle" className="label">API</text>
-      <text x="120" y="90" textAnchor="middle" className="label">Gateway</text>
+      {/* Policy Layer */}
+  <Node x={100} y={50} width={60} height={18} lines={["📋 Policies"]} variant="warning" />
+      
+      {/* Policy Details */}
+  <Node x={85} y={25} width={25} height={15} lines={["Auth"]} variant="secondary" lineFont="micro" />
+  <Node x={115} y={25} width={25} height={15} lines={["Rate"]} variant="secondary" lineFont="micro" />
+  <Node x={145} y={25} width={25} height={15} lines={["CORS"]} variant="secondary" lineFont="micro" />
 
-      {/* Policies */}
-      <rect x="100" y="45" width="40" height="12" className="policy" />
-      <text x="120" y="53" textAnchor="middle" className="subtle">Policies</text>
+      {/* Management Layer */}
+  <Node x={200} y={50} width={70} height={18} lines={["⚙️ Management"]} variant="accent" />
 
       {/* Backend Services */}
-      <rect x="180" y="45" width="40" height="20" className="box" />
-      <text x="200" y="57" textAnchor="middle" className="subtle">Service A</text>
+  <SectionLabel x={280} y={90} text="Services" />
+  <Node x={280} y={100} width={45} height={20} lines={["User API"]} variant="success" lineFont="caption" />
+  <Node x={280} y={125} width={45} height={20} lines={["Order API"]} variant="success" lineFont="caption" />
+  <Node x={280} y={150} width={45} height={20} lines={["Payment API"]} variant="success" lineFont="caption" />
 
-      <rect x="180" y="80" width="40" height="20" className="box" />
-      <text x="200" y="92" textAnchor="middle" className="subtle">Service B</text>
+      {/* External Services */}
+  <Node x={210} y={100} width={55} height={20} lines={["🔒 OAuth2"]} lineFont="caption" />
+  <Node x={210} y={130} width={55} height={20} lines={["📊 Analytics"]} lineFont="caption" />
 
-      <rect x="180" y="115" width="40" height="20" className="box" />
-      <text x="200" y="127" textAnchor="middle" className="subtle">Service C</text>
+      {/* Traffic Flow - Client to Gateway */}
+  <Edge d="M 65 81 Q 75 75 90 95" />
+  <Edge d="M 65 111 Q 75 105 90 115" />
+  <Edge d="M 65 141 Q 75 135 90 125" />
+  <Edge d="M 65 171 Q 75 155 90 135" />
 
-      {/* Connections */}
-      <line x1="60" y1="40" x2="90" y2="70" className="edge" />
-      <line x1="60" y1="80" x2="90" y2="80" className="edge" />
-      <line x1="60" y1="120" x2="90" y2="90" className="edge" />
+      {/* Policy Integration */}
+  <Edge x1={130} y1={68} x2={130} y2={90} variant="primary" />
+  <Edge d="M 130 50 Q 120 40 97 40" dashed />
+  <Edge d="M 130 50 Q 130 40 127 40" dashed />
+  <Edge d="M 130 50 Q 140 40 157 40" dashed />
 
-      <line x1="150" y1="70" x2="180" y2="55" className="edge" />
-      <line x1="150" y1="80" x2="180" y2="90" className="edge" />
-      <line x1="150" y1="90" x2="180" y2="125" className="edge" />
+      {/* Management Integration */}
+  <Edge x1={170} y1={115} x2={200} y2={59} variant="accent" dashed />
 
-      {/* Features */}
-      <text x="120" y="150" textAnchor="middle" className="subtle">Auth • Rate Limiting • Analytics</text>
-    </svg>
+      {/* Gateway to Services */}
+  <Edge d="M 170 105 Q 190 100 210 110" variant="primary" />
+  <Edge d="M 170 115 Q 190 125 210 140" variant="primary" />
+  <Edge d="M 170 125 Q 240 135 280 110" variant="primary" />
+  <Edge d="M 170 125 Q 240 135 280 135" variant="primary" />
+  <Edge d="M 170 125 Q 240 145 280 160" variant="primary" />
+
+      {/* Key Features */}
+      <rect x="50" y="195" width="240" height="20" fill={diagramStyles.surface} stroke={diagramStyles.border} rx="10" opacity="0.9" />
+      <text x="170" y="207" className="diagram-text-secondary" style={{ font: diagramFonts.caption }}>
+        🔐 Authentication • ⚡ Rate Limiting • 📊 Analytics • 🔄 Load Balancing • 🛡️ Security
+      </text>
+    </DiagramBase>
   );
 }
