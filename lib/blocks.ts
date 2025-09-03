@@ -146,58 +146,139 @@ export const blocks: Record<string, Block> = {
     slug: "api-management",
     title: "API Management",
     summary:
-      "Design, publish, secure, and observe APIs as products across the enterprise.",
-    keywords: ["api gateway", "policies", "rate limiting", "portal"],
+      "Complete API lifecycle management platform enabling secure exposure, governance, and monetization of digital services across the enterprise.",
+    keywords: ["api gateway", "developer portal", "policies", "rate limiting", "monetization", "analytics"],
     sections: [
       {
         kind: "text",
-        title: "What it is",
+        title: "What it delivers",
         body:
-          "API management provides the control plane and runtime for exposing services with policies for security, reliability, and consumption management."
+          "A comprehensive platform that transforms your services into managed API products. From design to retirement, every API gets professional-grade security, monitoring, and developer experience - enabling innovation while maintaining control."
       },
       {
         kind: "list",
-        title: "Responsibilities",
+        title: "API Design & Lifecycle Management",
         items: [
-          "Gateway runtime and policy enforcement",
-          "Developer portal and access workflows",
-          "Versioning, lifecycle, and monetization (if needed)",
-          "Analytics and consumer insights"
+          "Graphical and declarative API design with OpenAPI/AsyncAPI support",
+          "Version management with backward compatibility validation",
+          "Lifecycle states: draft → published → deprecated → retired",
+          "Contract-first development with mock servers and testing",
+          "Automated CI/CD integration with quality gates"
         ]
       },
       {
         kind: "list",
-        title: "Core capabilities",
+        title: "Gateway & Traffic Management",
         items: [
-          "Authentication and authorization policies",
-          "Rate limiting, quotas, and caching",
-          "Schema/contract governance and testing",
-          "Multi-environment publishing and CI/CD"
+          "High-performance request routing and intelligent load balancing",
+          "Dynamic rate limiting and throttling with burst protection",
+          "Response caching and compression for optimal performance",
+          "Circuit breakers and failover for resilience",
+          "Multi-region deployment with global traffic management"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Security & Policy Enforcement",
+        items: [
+          "OAuth2, JWT, API keys, and mutual TLS authentication",
+          "Fine-grained RBAC and scope-based access control",
+          "Request/response transformation and validation",
+          "Threat protection: SQL injection, XXE, DDoS mitigation",
+          "Compliance frameworks: PCI-DSS, GDPR, SOX support"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Developer Experience & Discovery",
+        items: [
+          "Self-service developer portals with interactive documentation",
+          "API catalog with search, filtering, and recommendations",
+          "Sandbox environments and try-it-now capabilities",
+          "SDK generation and code samples in multiple languages",
+          "Subscription workflows with automated approval processes"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Monetization & Business Models",
+        items: [
+          "Flexible subscription tiers and usage-based pricing",
+          "Pay-per-call, freemium, and enterprise licensing options",
+          "Billing integration with Stripe, PayPal, and enterprise systems",
+          "Usage analytics and revenue optimization insights",
+          "Partner marketplace and revenue sharing capabilities"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Analytics & Business Intelligence",
+        items: [
+          "Real-time dashboards with API performance metrics",
+          "Consumer behavior analytics and adoption tracking",
+          "Error analysis with root cause identification",
+          "Predictive analytics for capacity planning",
+          "Custom reports and automated alerting",
+          "AI-powered insights for API optimization"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Governance & Enterprise Scale",
+        items: [
+          "Multi-tenant architecture with organizational isolation",
+          "Centralized governance with delegated workspace management",
+          "Policy templates and standardization frameworks",
+          "Audit trails and compliance reporting",
+          "Role-based administration and approval workflows",
+          "Enterprise SSO and directory integration"
+        ]
+      },
+      {
+        kind: "list",
+        title: "AI & Advanced Integration",
+        items: [
+          "AI gateway for LLM API management and cost control",
+          "Intelligent request routing and performance optimization",
+          "Automated API documentation generation",
+          "Anomaly detection and predictive maintenance",
+          "Event streaming integration for real-time APIs",
+          "Kubernetes operators and cloud-native deployment"
         ]
       },
       {
         kind: "list",
         title: "Architecture patterns",
         items: [
-          "Gateway per domain vs. centralized",
-          "Backend-for-frontend (BFF)",
-          "Zero-trust with service mesh",
-          "Event-driven APIs (Webhooks, AsyncAPI)"
+          "Microgateway and distributed deployment models",
+          "Backend-for-frontend (BFF) and API aggregation",
+          "Zero-trust architecture with service mesh integration",
+          "Event-driven APIs with webhooks and streaming",
+          "Multi-cloud and hybrid deployment strategies"
         ]
       },
       {
         kind: "list",
-        title: "Tech examples",
-        items: ["WSO2 API Manager", "WSO2 Cloud API Management solution Bijira", "Kong", "Apigee", "Ambassador", "Azure API Management", "Tyk"]
+        title: "Technology stack",
+        items: [
+          "WSO2 API Manager (comprehensive open-source platform)",
+          "WSO2 Choreo (cloud-native API management)",
+          "Kong Gateway (high-performance runtime)",
+          "Google Apigee (enterprise-grade with AI)",
+          "Azure API Management (cloud-integrated)",
+          "Tyk (developer-focused with GraphQL support)"
+        ]
       },
       {
         kind: "list",
-        title: "KPIs/SLIs",
+        title: "Success metrics",
         items: [
-          "API latency and error rate",
-          "Consumer growth and retention",
-          "Policy violations and blocked calls",
-          "Time-to-first-call"
+          "Developer adoption: time-to-first-successful-call < 15 minutes",
+          "API performance: P99 latency targets and 99.9% uptime",
+          "Business impact: revenue per API and partner onboarding velocity",
+          "Security posture: zero security incidents and policy compliance",
+          "Developer satisfaction: NPS scores and portal engagement",
+          "Operational efficiency: deployment frequency and change success rate"
         ]
       }
     ]
