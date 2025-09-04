@@ -6,6 +6,7 @@ import { MicroserviceDiagram } from "@/components/diagrams/MicroserviceDiagram";
 import { HexagonalDiagram } from "@/components/diagrams/HexagonalDiagram";
 import { MonolithicDiagram } from "@/components/diagrams/MonolithicDiagram";
 import { ZeroTrustDiagram } from "@/components/diagrams/ZeroTrustDiagram";
+import { CellBasedDiagram } from "@/components/diagrams/CellBasedDiagram";
 import { OAuth2Diagram } from "@/components/diagrams/OAuth2Diagram";
 import { APISecurityDiagram } from "@/components/diagrams/APISecurityDiagram";
 import { DataEncryptionDiagram } from "@/components/diagrams/DataEncryptionDiagram";
@@ -21,6 +22,7 @@ const patternDiagrams: Record<string, React.ComponentType> = {
   "event-driven-architecture": EventDrivenDiagram,
   "layered-architecture": LayeredArchitectureDiagram,
   "microservice-architecture": MicroserviceDiagram,
+  "cell-based-architecture": CellBasedDiagram,
   "hexagonal-architecture": HexagonalDiagram,
   "monolithic": MonolithicDiagram,
   "zero-trust-security": ZeroTrustDiagram,

@@ -44,7 +44,7 @@ export function EventDrivenDiagram() {
 
       {/* Main title */}
       <rect x="350" y="15" width="300" height="30" fill="url(#gradient-accent)" stroke="none" rx="15" ry="15" />
-      <text x="500" y="35" textAnchor="middle" fill="#fff" style={{ font: fontTitle }}>Event-Driven Architecture</text>
+      <text x="500" y="35" textAnchor="middle" fill={c.text} style={{ font: fontTitle }}>Event-Driven Architecture</text>
 
       {/* Section titles */}
       <text x="240" y="70" textAnchor="middle" fill={c.text} style={{ font: fontTitle }}>📨 Message-Based Events</text>

@@ -9,6 +9,7 @@ import { MonolithicDiagram } from "@/components/diagrams/MonolithicDiagram";
 import { SecurityDiagram } from "@/components/diagrams/blocks/SecurityDiagram";
 import { OAuth2Diagram } from "@/components/diagrams/OAuth2Diagram";
 import { APISecurityDiagram } from "@/components/diagrams/APISecurityDiagram";
+import { CellBasedDiagram } from "@/components/diagrams/CellBasedDiagram";
 import { connections } from "@/lib/connections";
 import { blocks } from "@/lib/blocks";
 
@@ -45,6 +46,8 @@ export default function PatternPage({ params }: Props) {
               return <LayeredArchitectureDiagram />;
             case "microservice-architecture":
               return <MicroserviceDiagram />;
+            case "cell-based-architecture":
+              return <CellBasedDiagram />;
             case "hexagonal-architecture":
               return <HexagonalDiagram />;
             case "monolithic":
