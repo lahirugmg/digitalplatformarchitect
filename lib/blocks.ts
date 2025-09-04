@@ -146,58 +146,132 @@ export const blocks: Record<string, Block> = {
     slug: "api-management",
     title: "API Management",
     summary:
-      "Design, publish, secure, and observe APIs as products across the enterprise.",
-    keywords: ["api gateway", "policies", "rate limiting", "portal"],
+      "Design, publish, secure, and observe APIs as products across the enterprise with comprehensive lifecycle management, developer experience, and operational excellence.",
+    keywords: ["api gateway", "policies", "rate limiting", "portal", "openapi", "developer experience", "api security", "lifecycle"],
     sections: [
       {
         kind: "text",
         title: "What it is",
         body:
-          "API management provides the control plane and runtime for exposing services with policies for security, reliability, and consumption management."
+          "API management is a comprehensive platform capability that enables API-first digital transformation by providing the control plane, runtime, and developer experience for designing, publishing, securing, and operating APIs as products. It encompasses the full API lifecycle from design and development through deployment, consumption, and retirement, with enterprise-grade security, governance, and observability."
       },
       {
         kind: "list",
-        title: "Responsibilities",
+        title: "Core Responsibilities",
         items: [
-          "Gateway runtime and policy enforcement",
-          "Developer portal and access workflows",
-          "Versioning, lifecycle, and monetization (if needed)",
-          "Analytics and consumer insights"
+          "API gateway runtime with policy enforcement and traffic management",
+          "Developer portal with self-service onboarding and documentation",
+          "API lifecycle management: design, versioning, deployment, deprecation",
+          "Security policy orchestration and threat protection",
+          "Analytics, monitoring, and consumer insights",
+          "API governance, compliance, and quality assurance"
         ]
       },
       {
         kind: "list",
-        title: "Core capabilities",
+        title: "Core Capabilities",
         items: [
-          "Authentication and authorization policies",
-          "Rate limiting, quotas, and caching",
-          "Schema/contract governance and testing",
-          "Multi-environment publishing and CI/CD"
+          "Contract-first design with OpenAPI, GraphQL, and AsyncAPI standards",
+          "Authentication, authorization, and fine-grained access control (OAuth2, OIDC, mTLS)",
+          "Rate limiting, quotas, throttling, and traffic shaping",
+          "Response caching, transformation, and content negotiation",
+          "Multi-environment publishing with CI/CD pipeline integration",
+          "Schema validation, contract testing, and breaking change detection"
         ]
       },
       {
         kind: "list",
-        title: "Architecture patterns",
+        title: "Security & Governance",
         items: [
-          "Gateway per domain vs. centralized",
-          "Backend-for-frontend (BFF)",
-          "Zero-trust with service mesh",
-          "Event-driven APIs (Webhooks, AsyncAPI)"
+          "Zero-trust security with mutual TLS and service-to-service authentication",
+          "API threat protection: injection attacks, DDoS, bot mitigation",
+          "Data privacy enforcement with PII detection and masking",
+          "API security scanning and vulnerability assessment",
+          "Compliance frameworks: PCI DSS, GDPR, SOX, HIPAA",
+          "Policy-as-code with version control and audit trails"
         ]
       },
       {
         kind: "list",
-        title: "Tech examples",
-        items: ["WSO2 API Manager", "WSO2 Cloud API Management solution Bijira", "Kong", "Apigee", "Ambassador", "Azure API Management", "Tyk"]
+        title: "Developer Experience & Portal",
+        items: [
+          "Interactive API documentation with try-it-out functionality",
+          "SDK generation and code samples in multiple languages",
+          "Self-service API key management and subscription workflows",
+          "API discovery and catalog with search and filtering",
+          "Developer onboarding journeys and getting-started guides",
+          "Community features: forums, feedback, and support integration"
+        ]
       },
       {
         kind: "list",
-        title: "KPIs/SLIs",
+        title: "API Lifecycle Management",
         items: [
-          "API latency and error rate",
-          "Consumer growth and retention",
-          "Policy violations and blocked calls",
-          "Time-to-first-call"
+          "Design-first approach with collaborative API specification",
+          "Automated testing: contract, integration, performance, and security",
+          "Versioning strategies: backward compatibility and deprecation policies",
+          "Blue-green and canary deployment patterns for APIs",
+          "API retirement workflows with consumer migration support",
+          "Change management with impact analysis and stakeholder notifications"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Architecture Patterns",
+        items: [
+          "Centralized vs. distributed gateway patterns",
+          "Backend-for-Frontend (BFF) with client-specific APIs",
+          "API composition and aggregation patterns",
+          "Event-driven APIs with webhooks and AsyncAPI",
+          "Service mesh integration for zero-trust networking",
+          "Multi-cloud and hybrid API deployment strategies"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Integration Patterns",
+        items: [
+          "REST API with HATEOAS and resource-based design",
+          "GraphQL APIs with schema federation and subscriptions",
+          "gRPC services with Protocol Buffers and streaming",
+          "WebSocket and Server-Sent Events for real-time APIs",
+          "Async messaging integration with queues and topics",
+          "Legacy system adaptation with protocol translation"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Monitoring & Observability",
+        items: [
+          "Distributed tracing across API calls with OpenTelemetry",
+          "Real-time metrics: throughput, latency, error rates, and SLA compliance",
+          "API usage analytics and consumer behavior insights",
+          "Performance monitoring with APM integration",
+          "Alert management for SLA breaches and anomaly detection",
+          "Business metrics correlation with technical performance data"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Tech Examples",
+        items: [
+          "Enterprise: WSO2 API Manager, Apigee, Azure API Management, IBM API Connect",
+          "Cloud-native: Kong Gateway, Ambassador, Istio Gateway, AWS API Gateway",
+          "Open source: Tyk, Gravitee, KrakenD, Zuul",
+          "Service mesh: Istio, Linkerd, Consul Connect",
+          "Documentation: Swagger UI, Redoc, Postman, Insomnia"
+        ]
+      },
+      {
+        kind: "list",
+        title: "KPIs/SLIs/SLOs",
+        items: [
+          "API performance: P50/P95/P99 latency, throughput, and availability (99.9%+)",
+          "Developer experience: time-to-first-call, API adoption rate, developer satisfaction",
+          "Security metrics: threat detection rate, policy violation counts, vulnerability MTTR",
+          "Business impact: API revenue attribution, consumer growth, and retention rates",
+          "Operational excellence: deployment frequency, change failure rate, MTTR",
+          "Governance compliance: API standards adherence, documentation coverage, test coverage"
         ]
       }
     ]
