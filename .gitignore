@@ -27,5 +27,5 @@ pnpm-debug.log*
 .env.production.local
 
 # Content
-content/
+# content/
 
