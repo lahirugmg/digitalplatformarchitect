@@ -45,7 +45,7 @@ export function APISecurityDiagram() {
 
       {/* Main title */}
       <rect x="250" y="15" width="400" height="35" fill={c.gateway} stroke="none" rx="17" ry="17" />
-      <text x="450" y="38" textAnchor="middle" fill="#fff" style={{ font: fontTitle }}>🛡️ API Security Gateway</text>
+      <text x="450" y="38" textAnchor="middle" fill={c.text} style={{ font: fontTitle }}>🛡️ API Security Gateway</text>
 
       {/* Internet/Threats Zone */}
       <rect x="30" y="80" width="150" height="280" fill={c.security} fillOpacity="0.1" 
@@ -54,20 +54,20 @@ export function APISecurityDiagram() {
 
       {/* External Clients */}
       <rect x="50" y="120" width="110" height="45" fill={c.client} stroke={c.border} rx="8" ry="8" />
-      <text x="105" y="140" textAnchor="middle" fill="white" style={{ font: fontSub }}>💻 Web Clients</text>
-      <text x="105" y="155" textAnchor="middle" fill="white" style={{ font: fontSub }}>Browsers, SPAs</text>
+      <text x="105" y="140" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>💻 Web Clients</text>
+      <text x="105" y="155" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Browsers, SPAs</text>
       
       <rect x="50" y="175" width="110" height="45" fill={c.client} stroke={c.border} rx="8" ry="8" />
-      <text x="105" y="195" textAnchor="middle" fill="white" style={{ font: fontSub }}>📱 Mobile Apps</text>
-      <text x="105" y="210" textAnchor="middle" fill="white" style={{ font: fontSub }}>iOS, Android</text>
+      <text x="105" y="195" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>📱 Mobile Apps</text>
+      <text x="105" y="210" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>iOS, Android</text>
       
       <rect x="50" y="230" width="110" height="45" fill={c.client} stroke={c.border} rx="8" ry="8" />
-      <text x="105" y="250" textAnchor="middle" fill="white" style={{ font: fontSub }}>🤝 Partner Systems</text>
-      <text x="105" y="265" textAnchor="middle" fill="white" style={{ font: fontSub }}>B2B Integration</text>
+      <text x="105" y="250" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>🤝 Partner Systems</text>
+      <text x="105" y="265" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>B2B Integration</text>
       
       <rect x="50" y="285" width="110" height="45" fill={c.security} stroke={c.border} rx="8" ry="8" />
-      <text x="105" y="305" textAnchor="middle" fill="white" style={{ font: fontSub }}>🚨 Malicious Traffic</text>
-      <text x="105" y="320" textAnchor="middle" fill="white" style={{ font: fontSub }}>Bots, Attacks</text>
+      <text x="105" y="305" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>🚨 Malicious Traffic</text>
+      <text x="105" y="320" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Bots, Attacks</text>
 
       {/* Load Balancer */}
       <rect x="220" y="180" width="100" height="80" fill={c.alt} stroke={c.border} strokeWidth="2" rx="10" ry="10" />
@@ -85,24 +85,24 @@ export function APISecurityDiagram() {
       <text x="470" y="145" textAnchor="middle" fill={c.text} style={{ font }}>Security Layers:</text>
 
       <rect x="375" y="155" width="190" height="35" fill={c.security} stroke={c.border} rx="6" ry="6" />
-      <text x="470" y="175" textAnchor="middle" fill="white" style={{ font: fontSub }}>🔥 Web Application Firewall</text>
-      <text x="470" y="185" textAnchor="middle" fill="white" style={{ font: fontSub }}>OWASP Top 10 Protection</text>
+      <text x="470" y="175" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>🔥 Web Application Firewall</text>
+      <text x="470" y="185" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>OWASP Top 10 Protection</text>
 
       <rect x="375" y="200" width="190" height="35" fill={c.identity} stroke={c.border} rx="6" ry="6" />
-      <text x="470" y="220" textAnchor="middle" fill="white" style={{ font: fontSub }}>🔑 Authentication & Authorization</text>
-      <text x="470" y="230" textAnchor="middle" fill="white" style={{ font: fontSub }}>OAuth2, JWT, API Keys</text>
+      <text x="470" y="220" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>🔑 Authentication & Authorization</text>
+      <text x="470" y="230" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>OAuth2, JWT, API Keys</text>
 
       <rect x="375" y="245" width="190" height="35" fill={c.client} stroke={c.border} rx="6" ry="6" />
-      <text x="470" y="265" textAnchor="middle" fill="white" style={{ font: fontSub }}>🚦 Rate Limiting & Throttling</text>
-      <text x="470" y="275" textAnchor="middle" fill="white" style={{ font: fontSub }}>Quota Management, Circuit Breaker</text>
+      <text x="470" y="265" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>🚦 Rate Limiting & Throttling</text>
+      <text x="470" y="275" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Quota Management, Circuit Breaker</text>
 
       <rect x="375" y="290" width="190" height="35" fill={c.backend} stroke={c.border} rx="6" ry="6" />
-      <text x="470" y="310" textAnchor="middle" fill="white" style={{ font: fontSub }}>✅ Request/Response Validation</text>
-      <text x="470" y="320" textAnchor="middle" fill="white" style={{ font: fontSub }}>Schema Validation, Data Sanitization</text>
+      <text x="470" y="310" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>✅ Request/Response Validation</text>
+      <text x="470" y="320" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Schema Validation, Data Sanitization</text>
 
       <rect x="375" y="335" width="190" height="35" fill={c.subtle} stroke={c.border} rx="6" ry="6" />
-      <text x="470" y="355" textAnchor="middle" fill="white" style={{ font: fontSub }}>🔄 Routing & Transformation</text>
-      <text x="470" y="365" textAnchor="middle" fill="white" style={{ font: fontSub }}>Load Balancing, Protocol Translation</text>
+      <text x="470" y="355" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>🔄 Routing & Transformation</text>
+      <text x="470" y="365" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Load Balancing, Protocol Translation</text>
 
       <rect x="375" y="380" width="190" height="25" fill={c.alt} stroke={c.border} rx="6" ry="6" />
       <text x="470" y="395" textAnchor="middle" fill={c.text} style={{ font: fontSub }}>📊 Logging & Monitoring</text>
@@ -142,14 +142,14 @@ export function APISecurityDiagram() {
 
       {/* External Security Services */}
       <rect x="360" y="450" width="100" height="70" fill={c.identity} stroke={c.border} rx="10" ry="10" filter="url(#shadow-api)" />
-      <text x="410" y="475" textAnchor="middle" fill="white" style={{ font }}>🏛️ Identity</text>
-      <text x="410" y="490" textAnchor="middle" fill="white" style={{ font }}>Provider</text>
-      <text x="410" y="505" textAnchor="middle" fill="white" style={{ font: fontSub }}>OAuth2/OIDC</text>
+      <text x="410" y="475" textAnchor="middle" fill={c.text} style={{ font }}>🏛️ Identity</text>
+      <text x="410" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Provider</text>
+      <text x="410" y="505" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>OAuth2/OIDC</text>
 
       <rect x="480" y="450" width="100" height="70" fill={c.client} stroke={c.border} rx="10" ry="10" filter="url(#shadow-api)" />
-      <text x="530" y="475" textAnchor="middle" fill="white" style={{ font }}>📊 SIEM</text>
-      <text x="530" y="490" textAnchor="middle" fill="white" style={{ font }}>Analytics</text>
-      <text x="530" y="505" textAnchor="middle" fill="white" style={{ font: fontSub }}>Security Events</text>
+      <text x="530" y="475" textAnchor="middle" fill={c.text} style={{ font }}>📊 SIEM</text>
+      <text x="530" y="490" textAnchor="middle" fill={c.text} style={{ font }}>Analytics</text>
+      <text x="530" y="505" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Security Events</text>
 
       {/* Traffic Flow Arrows */}
       <line x1="160" y1="142" x2="220" y2="200" stroke={c.client} strokeWidth={2.5} markerEnd="url(#arrow-api)" />

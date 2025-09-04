@@ -38,7 +38,7 @@ export function MonolithicDiagram() {
 
       {/* Main title */}
       <rect x="300" y="15" width="300" height="35" fill={c.monolith} stroke="none" rx="17" ry="17" />
-      <text x="450" y="38" textAnchor="middle" fill="#fff" style={{ font: fontTitle }}>🏢 Monolithic Architecture</text>
+      <text x="450" y="38" textAnchor="middle" fill={c.text} style={{ font: fontTitle }}>🏢 Monolithic Architecture</text>
 
       {/* External Load Balancer */}
       <rect x="350" y="70" width="200" height="40" fill={c.infra} stroke={c.border} rx="8" ry="8" />

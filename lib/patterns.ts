@@ -11,6 +11,68 @@ export type Pattern = {
 };
 
 export const patterns: Record<string, Pattern> = {
+  "cell-based-architecture": {
+    slug: "cell-based-architecture",
+    title: "Cell‑Based Architecture",
+    aka: ["CBA", "cell architecture"],
+    summary:
+      "A decentralized, cloud‑native reference architecture where independently deployable ‘cells’ act as self‑contained units exposing APIs/events, each with its own gateway and control, enabling enterprise‑level agility, modularity, and governance.",
+    keywords: [
+      "cell",
+      "decentralized",
+      "cloud native",
+      "governance",
+      "DDD",
+      "API",
+      "events",
+      "composability",
+      "control plane",
+      "gateway"
+    ],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "A reference architecture that organizes systems into self‑contained units called cells. Each cell encapsulates a cohesive set of capabilities (microservices, integrations, data, policies) and exposes well‑defined APIs, events, and streams via a cell gateway. Cells are managed with strong governance and can be composed into end‑to‑end solutions across private, public, or hybrid clouds." },
+      { kind: "list", title: "Core properties", items: [
+        "Scalability: elastic components and infrastructure awareness",
+        "Modularity: versioned, replicable units with clear interfaces (DDD‑aligned)",
+        "Composability: uniform, recursive composition via APIs, events, and streams",
+        "Governance: managed, observable, policy‑enforced execution"
+      ]},
+      { kind: "list", title: "Cell building blocks", items: [
+        "Cell gateway: unified ingress/egress for APIs, events, and streams",
+        "Local control plane: policy, routing, discovery, and observability",
+        "Internal components: microservices/functions/integrations + storage",
+        "Well‑defined interfaces: REST/gRPC, messaging, and event streams",
+        "Security: identity, authZ policies, isolation and quotas"
+      ]},
+      { kind: "list", title: "Cell types", items: [
+        "Logic: business services, functions, microgateways",
+        "Integration: mediation/micro‑ESB, adapters, lightweight caches",
+        "Legacy: COTS and existing systems wrapped as cells",
+        "External: SaaS/partner‑owned cells",
+        "Data: databases, brokers, files as data cells",
+        "Security: IDP and user stores",
+        "Channel: web/mobile/IoT apps (end‑user channels)"
+      ]},
+      { kind: "list", title: "Benefits", items: [
+        "Enterprise agility via decentralized teams and bounded contexts",
+        "Reuse and faster delivery through composable capabilities",
+        "Consistent governance, security, and observability per cell",
+        "Hybrid/multi‑cloud portability with clear interfaces"
+      ]},
+      { kind: "list", title: "Trade-offs", items: [
+        "Higher platform complexity (gateways/control planes and policies)",
+        "Needs strong standards for interfaces and lifecycles",
+        "Operational overhead vs. centralized/layered approaches"
+      ]},
+      { kind: "list", title: "When to use", items: [
+        "Enterprises evolving beyond layered/SOA to decentralized models",
+        "Multiple autonomous teams delivering domain‑aligned capabilities",
+        "Hybrid/multi‑cloud deployments needing strong governance",
+        "Desire to compose new apps from existing cell capabilities"
+      ]}
+    ]
+  },
   "layered-architecture": {
     slug: "layered-architecture",
     title: "Layered Architecture",
@@ -735,13 +797,13 @@ export const patterns: Record<string, Pattern> = {
 export const patternList = [
   patterns["layered-architecture"],
   patterns["microservice-architecture"],
+  patterns["cell-based-architecture"],
   patterns["event-driven-architecture"],
   patterns["client-server"],
   patterns["plugin-based"],
   patterns["hexagonal-architecture"],
   // security patterns
   patterns["zero-trust-security"],
-  patterns["oauth2-patterns"],
   patterns["api-security-gateway"],
   patterns["data-encryption-patterns"],
   // extras

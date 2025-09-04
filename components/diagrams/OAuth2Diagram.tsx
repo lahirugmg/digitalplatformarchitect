@@ -41,32 +41,32 @@ export function OAuth2Diagram() {
 
       {/* Main title */}
       <rect x="250" y="15" width="400" height="35" fill={c.auth} stroke="none" rx="17" ry="17" />
-      <text x="450" y="38" textAnchor="middle" fill="#fff" style={{ font: fontTitle }}>🔐 OAuth 2.0 + PKCE Flow</text>
+      <text x="450" y="38" textAnchor="middle" fill={c.text} style={{ font: fontTitle }}>🔐 OAuth 2.0 + PKCE Flow</text>
 
       {/* Actors/Components */}
       <rect x="50" y="90" width="130" height="80" fill={c.user} stroke={c.border} rx="12" ry="12" filter="url(#shadow-oauth)" />
-      <text x="115" y="115" textAnchor="middle" fill="white" style={{ font }}>👤 User</text>
-      <text x="115" y="135" textAnchor="middle" fill="white" style={{ font: fontSub }}>Resource Owner</text>
-      <text x="115" y="150" textAnchor="middle" fill="white" style={{ font: fontSub }}>• Authenticates</text>
-      <text x="115" y="165" textAnchor="middle" fill="white" style={{ font: fontSub }}>• Grants permission</text>
+      <text x="115" y="115" textAnchor="middle" fill={c.text} style={{ font }}>👤 User</text>
+      <text x="115" y="135" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Resource Owner</text>
+      <text x="115" y="150" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Authenticates</text>
+      <text x="115" y="165" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Grants permission</text>
       
       <rect x="250" y="90" width="130" height="80" fill={c.client} stroke={c.border} rx="12" ry="12" filter="url(#shadow-oauth)" />
-      <text x="315" y="115" textAnchor="middle" fill="white" style={{ font }}>📱 Client App</text>
-      <text x="315" y="135" textAnchor="middle" fill="white" style={{ font: fontSub }}>SPA / Mobile App</text>
-      <text x="315" y="150" textAnchor="middle" fill="white" style={{ font: fontSub }}>• Uses PKCE</text>
-      <text x="315" y="165" textAnchor="middle" fill="white" style={{ font: fontSub }}>• Public client</text>
+      <text x="315" y="115" textAnchor="middle" fill={c.text} style={{ font }}>📱 Client App</text>
+      <text x="315" y="135" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>SPA / Mobile App</text>
+      <text x="315" y="150" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Uses PKCE</text>
+      <text x="315" y="165" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Public client</text>
       
       <rect x="450" y="90" width="130" height="80" fill={c.auth} stroke={c.border} rx="12" ry="12" filter="url(#shadow-oauth)" />
-      <text x="515" y="115" textAnchor="middle" fill="white" style={{ font }}>🏛️ Auth Server</text>
-      <text x="515" y="135" textAnchor="middle" fill="white" style={{ font: fontSub }}>Identity Provider</text>
-      <text x="515" y="150" textAnchor="middle" fill="white" style={{ font: fontSub }}>• Issues tokens</text>
-      <text x="515" y="165" textAnchor="middle" fill="white" style={{ font: fontSub }}>• Validates PKCE</text>
+      <text x="515" y="115" textAnchor="middle" fill={c.text} style={{ font }}>🏛️ Auth Server</text>
+      <text x="515" y="135" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Identity Provider</text>
+      <text x="515" y="150" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Issues tokens</text>
+      <text x="515" y="165" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Validates PKCE</text>
       
       <rect x="650" y="90" width="130" height="80" fill={c.resource} stroke={c.border} rx="12" ry="12" filter="url(#shadow-oauth)" />
-      <text x="715" y="115" textAnchor="middle" fill="white" style={{ font }}>🔌 Resource API</text>
-      <text x="715" y="135" textAnchor="middle" fill="white" style={{ font: fontSub }}>Protected Resources</text>
-      <text x="715" y="150" textAnchor="middle" fill="white" style={{ font: fontSub }}>• Validates tokens</text>
-      <text x="715" y="165" textAnchor="middle" fill="white" style={{ font: fontSub }}>• Returns data</text>
+      <text x="715" y="115" textAnchor="middle" fill={c.text} style={{ font }}>🔌 Resource API</text>
+      <text x="715" y="135" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>Protected Resources</text>
+      <text x="715" y="150" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Validates tokens</text>
+      <text x="715" y="165" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>• Returns data</text>
 
       {/* Flow Steps Container */}
       <rect x="30" y="190" width="840" height="340" fill={c.surface} stroke={c.border} rx="15" ry="15" opacity="0.3" />

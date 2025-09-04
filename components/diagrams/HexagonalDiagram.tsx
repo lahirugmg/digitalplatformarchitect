@@ -50,7 +50,7 @@ export function HexagonalDiagram() {
 
       {/* Main title */}
       <rect x="300" y="15" width="300" height="35" fill={c.core} stroke="none" rx="17" ry="17" />
-      <text x="450" y="38" textAnchor="middle" fill="#fff" style={{ font: fontTitle }}>🏛️ Hexagonal Architecture</text>
+      <text x="450" y="38" textAnchor="middle" fill={c.text} style={{ font: fontTitle }}>🏛️ Hexagonal Architecture</text>
 
       {/* Core Domain Hexagon */}
       <path d={hexPath(450, 380, 120)} fill="url(#core-gradient)" stroke={c.border} strokeWidth="3" />
