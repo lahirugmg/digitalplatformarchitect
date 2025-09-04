@@ -39,12 +39,11 @@ export function LayeredArchitectureDiagram() {
 
       {/* Main title */}
       <rect x="300" y="15" width="300" height="35" fill="url(#layer-gradient)" stroke="none" rx="17" ry="17" />
-      <text x="450" y="38" textAnchor="middle" fill="#fff" style={{ font: fontTitle }}>Layered Architecture</text>
+      <text x="450" y="38" textAnchor="middle" fill={c.text} style={{ font: fontTitle }}>Layered Architecture</text>
 
       {/* User/Client indication */}
       <text x="450" y="80" textAnchor="middle" fill={c.subtle} style={{ font: fontSub }}>👤 Users / External Clients</text>
-      <line x1="350" y1="90" x2="450" y2="105" stroke={c.subtle} strokeWidth={2} markerEnd="url(#arrow-layered)" />
-      <line x1="550" y1="90" x2="450" y2="105" stroke={c.subtle} strokeWidth={2} markerEnd="url(#arrow-layered)" />
+      <line x1="450" y1="90" x2="450" y2="105" stroke={c.subtle} strokeWidth={2} markerEnd="url(#arrow-layered)" />
 
       {/* Presentation Layer */}
       <rect x="100" y="110" width="700" height="85" fill={c.presentation} stroke={c.border} rx="15" ry="15" />
