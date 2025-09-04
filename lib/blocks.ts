@@ -146,14 +146,14 @@ export const blocks: Record<string, Block> = {
     slug: "api-management",
     title: "API Management",
     summary:
-      "Design, publish, secure, and observe APIs as products across the enterprise with comprehensive lifecycle management, developer experience, and operational excellence.",
-    keywords: ["api gateway", "policies", "rate limiting", "portal", "openapi", "developer experience", "api security", "lifecycle"],
+      "Complete API lifecycle management platform enabling secure exposure, governance, and monetization of digital services across the enterprise with comprehensive developer experience and operational excellence.",
+    keywords: ["api gateway", "developer portal", "policies", "rate limiting", "monetization", "analytics", "openapi", "developer experience", "api security", "lifecycle"],
     sections: [
       {
         kind: "text",
-        title: "What it is",
+        title: "What it delivers",
         body:
-          "API management is a comprehensive platform capability that enables API-first digital transformation by providing the control plane, runtime, and developer experience for designing, publishing, securing, and operating APIs as products. It encompasses the full API lifecycle from design and development through deployment, consumption, and retirement, with enterprise-grade security, governance, and observability."
+          "A comprehensive platform that transforms your services into managed API products. API management enables API-first digital transformation by providing the control plane, runtime, and developer experience for designing, publishing, securing, and operating APIs as products. From design to retirement, every API gets professional-grade security, monitoring, and developer experience - enabling innovation while maintaining control."
       },
       {
         kind: "list",
@@ -169,25 +169,42 @@ export const blocks: Record<string, Block> = {
       },
       {
         kind: "list",
-        title: "Core Capabilities",
+        title: "API Design & Lifecycle Management",
         items: [
           "Contract-first design with OpenAPI, GraphQL, and AsyncAPI standards",
-          "Authentication, authorization, and fine-grained access control (OAuth2, OIDC, mTLS)",
-          "Rate limiting, quotas, throttling, and traffic shaping",
-          "Response caching, transformation, and content negotiation",
-          "Multi-environment publishing with CI/CD pipeline integration",
+          "Graphical and declarative API design with OpenAPI/AsyncAPI support",
+          "Version management with backward compatibility validation",
+          "Lifecycle states: draft → published → deprecated → retired",
+          "Contract-first development with mock servers and testing",
+          "Automated CI/CD integration with quality gates",
           "Schema validation, contract testing, and breaking change detection"
         ]
       },
       {
         kind: "list",
-        title: "Security & Governance",
+        title: "Gateway & Traffic Management",
+        items: [
+          "High-performance request routing and intelligent load balancing",
+          "Authentication, authorization, and fine-grained access control (OAuth2, OIDC, mTLS)",
+          "Rate limiting, quotas, throttling, and traffic shaping",
+          "Response caching, transformation, and content negotiation",
+          "Dynamic rate limiting and throttling with burst protection",
+          "Circuit breakers and failover for resilience",
+          "Multi-region deployment with global traffic management"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Security & Policy Enforcement",
         items: [
           "Zero-trust security with mutual TLS and service-to-service authentication",
+          "OAuth2, JWT, API keys, and mutual TLS authentication",
+          "Fine-grained RBAC and scope-based access control",
           "API threat protection: injection attacks, DDoS, bot mitigation",
+          "Request/response transformation and validation",
           "Data privacy enforcement with PII detection and masking",
-          "API security scanning and vulnerability assessment",
-          "Compliance frameworks: PCI DSS, GDPR, SOX, HIPAA",
+          "Threat protection: SQL injection, XXE, DDoS mitigation",
+          "Compliance frameworks: PCI-DSS, GDPR, SOX, HIPAA support",
           "Policy-as-code with version control and audit trails"
         ]
       },
@@ -195,8 +212,11 @@ export const blocks: Record<string, Block> = {
         kind: "list",
         title: "Developer Experience & Portal",
         items: [
+          "Self-service developer portals with interactive documentation",
+          "API catalog with search, filtering, and recommendations",
           "Interactive API documentation with try-it-out functionality",
           "SDK generation and code samples in multiple languages",
+          "Sandbox environments and try-it-now capabilities",
           "Self-service API key management and subscription workflows",
           "API discovery and catalog with search and filtering",
           "Developer onboarding journeys and getting-started guides",
@@ -205,14 +225,53 @@ export const blocks: Record<string, Block> = {
       },
       {
         kind: "list",
-        title: "API Lifecycle Management",
+        title: "Monetization & Business Models",
         items: [
-          "Design-first approach with collaborative API specification",
-          "Automated testing: contract, integration, performance, and security",
-          "Versioning strategies: backward compatibility and deprecation policies",
-          "Blue-green and canary deployment patterns for APIs",
-          "API retirement workflows with consumer migration support",
-          "Change management with impact analysis and stakeholder notifications"
+          "Flexible subscription tiers and usage-based pricing",
+          "Pay-per-call, freemium, and enterprise licensing options",
+          "Billing integration with Stripe, PayPal, and enterprise systems",
+          "Usage analytics and revenue optimization insights",
+          "Partner marketplace and revenue sharing capabilities"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Analytics & Business Intelligence",
+        items: [
+          "Real-time dashboards with API performance metrics",
+          "Consumer behavior analytics and adoption tracking",
+          "API usage analytics and consumer behavior insights",
+          "Error analysis with root cause identification",
+          "Predictive analytics for capacity planning",
+          "Custom reports and automated alerting",
+          "AI-powered insights for API optimization",
+          "Business metrics correlation with technical performance data"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Governance & Enterprise Scale",
+        items: [
+          "Multi-tenant architecture with organizational isolation",
+          "Centralized governance with delegated workspace management",
+          "Policy templates and standardization frameworks",
+          "Audit trails and compliance reporting",
+          "Role-based administration and approval workflows",
+          "Enterprise SSO and directory integration"
+        ]
+      },
+      {
+        kind: "list",
+        title: "MCP Hub & Server Management",
+        items: [
+          "Model Context Protocol (MCP) server registry and discovery",
+          "MCP hub for centralized protocol server management",
+          "Dynamic MCP server routing and load balancing",
+          "Protocol version negotiation and compatibility management",
+          "MCP server health monitoring and automatic failover",
+          "Resource and tool exposure management across MCP servers",
+          "Context sharing and state management between MCP sessions",
+          "MCP server authentication and authorization policies"
         ]
       },
       {
@@ -224,7 +283,9 @@ export const blocks: Record<string, Block> = {
           "API composition and aggregation patterns",
           "Event-driven APIs with webhooks and AsyncAPI",
           "Service mesh integration for zero-trust networking",
-          "Multi-cloud and hybrid API deployment strategies"
+          "Multi-cloud and hybrid API deployment strategies",
+          "Microgateway and distributed deployment models",
+          "Zero-trust architecture with service mesh integration"
         ]
       },
       {
@@ -236,7 +297,20 @@ export const blocks: Record<string, Block> = {
           "gRPC services with Protocol Buffers and streaming",
           "WebSocket and Server-Sent Events for real-time APIs",
           "Async messaging integration with queues and topics",
-          "Legacy system adaptation with protocol translation"
+          "Legacy system adaptation with protocol translation",
+          "Event-driven APIs with webhooks and streaming"
+        ]
+      },
+      {
+        kind: "list",
+        title: "AI & Advanced Integration",
+        items: [
+          "AI gateway for LLM API management and cost control",
+          "Intelligent request routing and performance optimization",
+          "Automated API documentation generation",
+          "Anomaly detection and predictive maintenance",
+          "Event streaming integration for real-time APIs",
+          "Kubernetes operators and cloud-native deployment"
         ]
       },
       {
@@ -245,10 +319,8 @@ export const blocks: Record<string, Block> = {
         items: [
           "Distributed tracing across API calls with OpenTelemetry",
           "Real-time metrics: throughput, latency, error rates, and SLA compliance",
-          "API usage analytics and consumer behavior insights",
           "Performance monitoring with APM integration",
-          "Alert management for SLA breaches and anomaly detection",
-          "Business metrics correlation with technical performance data"
+          "Alert management for SLA breaches and anomaly detection"
         ]
       },
       {
@@ -257,6 +329,7 @@ export const blocks: Record<string, Block> = {
         items: [
           "Enterprise: WSO2 API Manager, Apigee, Azure API Management, IBM API Connect",
           "Cloud-native: Kong Gateway, Ambassador, Istio Gateway, AWS API Gateway",
+          "WSO2 Choreo (cloud-native API management)",
           "Open source: Tyk, Gravitee, KrakenD, Zuul",
           "Service mesh: Istio, Linkerd, Consul Connect",
           "Documentation: Swagger UI, Redoc, Postman, Insomnia"
@@ -266,12 +339,14 @@ export const blocks: Record<string, Block> = {
         kind: "list",
         title: "KPIs/SLIs/SLOs",
         items: [
+          "Developer adoption: time-to-first-successful-call < 15 minutes",
           "API performance: P50/P95/P99 latency, throughput, and availability (99.9%+)",
+          "Business impact: revenue per API and partner onboarding velocity",
           "Developer experience: time-to-first-call, API adoption rate, developer satisfaction",
           "Security metrics: threat detection rate, policy violation counts, vulnerability MTTR",
-          "Business impact: API revenue attribution, consumer growth, and retention rates",
-          "Operational excellence: deployment frequency, change failure rate, MTTR",
-          "Governance compliance: API standards adherence, documentation coverage, test coverage"
+          "Security posture: zero security incidents and policy compliance",
+          "Governance compliance: API standards adherence, documentation coverage, test coverage",
+          "Operational efficiency: deployment frequency and change success rate"
         ]
       }
     ]

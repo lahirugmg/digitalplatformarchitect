@@ -25,9 +25,9 @@ export const connections: Connection[] = [
   },
   {
     block: { name: "API Management", slug: "api-management" },
-    patterns: "Microservices, Clean Architecture",
-    patternSlugs: ["microservice-architecture", "clean-architecture"],
-    description: "Securely exposes APIs, enforces policies, and manages discoverability.",
+    patterns: "Microservices, Clean Architecture, MCP Servers",
+    patternSlugs: ["microservice-architecture", "clean-architecture", "bijira-mcp-servers"],
+    description: "Securely exposes APIs, enforces policies, manages discoverability, and enables AI agent integration.",
   },
   {
     block: { name: "Identity & Access Management", slug: "identity-access-management" },
