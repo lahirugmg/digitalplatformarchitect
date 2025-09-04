@@ -236,6 +236,20 @@ export const blocks: Record<string, Block> = {
       },
       {
         kind: "list",
+        title: "MCP Hub & Server Management",
+        items: [
+          "Model Context Protocol (MCP) server registry and discovery",
+          "MCP hub for centralized protocol server management",
+          "Dynamic MCP server routing and load balancing",
+          "Protocol version negotiation and compatibility management",
+          "MCP server health monitoring and automatic failover",
+          "Resource and tool exposure management across MCP servers",
+          "Context sharing and state management between MCP sessions",
+          "MCP server authentication and authorization policies"
+        ]
+      },
+      {
+        kind: "list",
         title: "AI & Advanced Integration",
         items: [
           "AI gateway for LLM API management and cost control",
