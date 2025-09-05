@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { patternList } from "@/lib/patterns";
-import { blockList } from "@/lib/blocks";
-import { connections } from "@/lib/connections";
+// (explore stats removed)
 import { EventDrivenDiagram } from "@/components/diagrams/EventDrivenDiagram";
 import { LayeredArchitectureDiagram } from "@/components/diagrams/LayeredArchitectureDiagram";
 import { MicroserviceDiagram } from "@/components/diagrams/MicroserviceDiagram";
@@ -49,30 +48,13 @@ export default function PatternsIndexPage() {
           </p>
         </header>
 
-        {/* Overview Stats (moved from Explore) */}
-        <div className="explorer-stats">
-          <div className="stat-card">
-            <div className="stat-number">{patternList.length}</div>
-            <div className="stat-label">Architecture Patterns</div>
-            <div className="stat-desc">Proven approaches for system design</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-number">{blockList.length}</div>
-            <div className="stat-label">Platform Components</div>
-            <div className="stat-desc">Core building blocks for digital platforms</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-number">{connections.length}</div>
-            <div className="stat-label">Relationships</div>
-            <div className="stat-desc">Connections between patterns and blocks</div>
-          </div>
-        </div>
+        {/* Overview stats removed per request */}
 
         {/* Featured Patterns with Diagrams */}
         <section className="patterns-section">
           <div className="section-header">
             <div className="section-icon">📐</div>
-            <h2>Featured Patterns with Visual Diagrams</h2>
+            <h2>Featured Patterns</h2>
           </div>
           <div className="patterns-with-diagrams">
             {patternsWithDiagrams.map((p) => {
