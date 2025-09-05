@@ -2,8 +2,8 @@ import Link from "next/link";
 import { ArchitectureExplorer } from "@/components/ArchitectureExplorer";
 
 export const metadata = {
-  title: "Solutions",
-  description: "From patterns to platforms: business, solution, and deployment views with the right level of detail (L0–L3)."
+  title: "Solutions & Discovery",
+  description: "From patterns to platforms: business, solution, security, and deployment views, plus a structured technical discovery checklist."
 };
 
 export default function SolutionsPage() {
@@ -11,14 +11,14 @@ export default function SolutionsPage() {
     <div className="container">
       <article className="solutions-article">
         <header className="page-hero stack gap-sm">
-          <h1 className="page-title">Solutions: From Patterns to Platforms</h1>
+          <h1 className="page-title">Solutions & Discovery</h1>
           <p className="lede">
             Turning architecture patterns into real-world digital platforms requires more than just
             building blocks. It needs the right views—business, solution, and deployment—presented at
             the right level of detail (L0–L3) for each audience. This section shows how these
             perspectives connect so stakeholders, architects, and engineers collaborate effectively.
           </p>
-          <nav className="solutions-toc" aria-label="Solutions navigation">
+          <nav className="solutions-toc" aria-label="Solutions & Discovery navigation">
             <a href="#explore-architecture" className="toc-link">Explore Layers</a>
             <a href="#audience-roles" className="toc-link">Audience & Roles</a>
             <a href="#business-architecture" className="toc-link">Business Architecture</a>
@@ -27,6 +27,7 @@ export default function SolutionsPage() {
             <a href="#deployment-architecture" className="toc-link">Deployment Architecture</a>
             <a href="#other-considerations" className="toc-link">Other Considerations</a>
             <a href="#how-it-connects" className="toc-link">How It Connects</a>
+            <a href="#technical-discovery" className="toc-link">Technical Discovery</a>
           </nav>
         </header>
 
@@ -39,6 +40,112 @@ export default function SolutionsPage() {
             </div>
             <div className="section-content">
               <ArchitectureExplorer defaultRole="architect" />
+            </div>
+          </div>
+        </section>
+
+        {/* Technical Discovery (merged) */}
+        <section id="technical-discovery" className="solutions-section">
+          <div className="section-card">
+            <div className="section-header">
+              <div className="section-icon">🧩</div>
+              <h2>Technical Discovery of Business Requirements</h2>
+            </div>
+            <div className="section-content">
+              <p className="section-description">
+                A structured checklist to guide discovery conversations across business goals, landscape, API management, integration, security, performance, deployment, and delivery.
+              </p>
+              <div className="content-grid">
+                <div className="content-block">
+                  <h3 id="business-objectives">1. Business Objectives</h3>
+                  <ul className="feature-list">
+                    <li>Core business needs and goals — objectives and success criteria</li>
+                    <li>Stakeholders and end‑users — personas, roles, decision makers</li>
+                    <li>Pain points and gaps — where the current solution/platform fails</li>
+                    <li>Future priorities and roadmap — 12–36 month outlook</li>
+                    <li>Existing business systems — CRM, HR, data sources, strategic vendors</li>
+                    <li>High‑level architecture — diagrams, written requirements, solution overviews</li>
+                  </ul>
+                </div>
+                <div className="content-block">
+                  <h3 id="technical-landscape">2. Current Technical Landscape</h3>
+                  <ul className="feature-list">
+                    <li>Platforms and tools — API Mgmt, Integration, Identity in place?</li>
+                    <li>Connected systems and channels — web, mobile, portals, POS, IoT</li>
+                    <li>Deployment & infrastructure — K8s/VMs; on‑prem vs. cloud</li>
+                    <li>CI/CD approach — build, deploy, testing workflows and tools</li>
+                  </ul>
+                </div>
+                <div className="content-block">
+                  <h3 id="api-management">3. API Management Requirements</h3>
+                  <ul className="feature-list">
+                    <li>Internal vs. external APIs — partner/public/internal</li>
+                    <li>Developer portal/marketplace — discovery, onboarding, try‑it, monetization</li>
+                    <li>Gateway architecture — centralized, domain, micro‑gateway, hybrid</li>
+                    <li>Async protocols — MQTT, WS, SSE, AMQP, Kafka/AsyncAPI</li>
+                    <li>Policies & standards — rate limits, throttling, caching, quotas, style guides</li>
+                  </ul>
+                </div>
+                <div className="content-block">
+                  <h3 id="enterprise-integration">4. Integration Requirements</h3>
+                  <ul className="feature-list">
+                    <li>Patterns — mapping/transformation, routing, protocol bridging</li>
+                    <li>Back‑ends & connectors — SAP/Oracle, Salesforce/Workday, legacy, DBs, SaaS</li>
+                    <li>Integration tech — ESB, iPaaS, custom code</li>
+                    <li>Message formats — JSON, XML, EDI, CSV, Avro/Protobuf</li>
+                    <li>Development tech — REST/SOAP/GraphQL; Java/.NET/Python; SQL/NoSQL</li>
+                    <li>Protocols — HTTP/HTTPS, AMQP, MQTT</li>
+                    <li>Lifecycle — versioning, promotion, testing, release processes</li>
+                    <li>Monitoring & troubleshooting — tracking, logs, traces, alerts</li>
+                  </ul>
+                </div>
+                <div className="content-block">
+                  <h3 id="security-identity">5. Security & Identity</h3>
+                  <ul className="feature-list">
+                    <li>AuthN/AuthZ — OAuth2, OIDC, SAML; workload identity</li>
+                    <li>SSO & MFA — SAML, OIDC, FIDO/WebAuthn, social/federated</li>
+                    <li>Token & key management — expiry, rotation, secrets, PKI/mTLS</li>
+                    <li>API security — keys, encryption, threat protection, egress controls</li>
+                    <li>Threats & protections — injection, XML threats, DDoS, bots</li>
+                  </ul>
+                </div>
+                <div className="content-block">
+                  <h3 id="sizing-performance">6. Sizing & Performance</h3>
+                  <ul className="feature-list">
+                    <li>Transaction volumes — current/expected TPS</li>
+                    <li>Payload size & throughput — typical sizes, concurrency</li>
+                    <li>Asset counts — number of APIs/integration flows</li>
+                    <li>Latency & SLOs — response targets (p95/p99), error budgets</li>
+                    <li>Seasonality — peak periods (Black Friday, month‑end)</li>
+                    <li>Active users — MAU/DAU; IAM scale</li>
+                  </ul>
+                </div>
+                <div className="content-block">
+                  <h3 id="cloud-onprem">7. Cloud vs. On‑Prem</h3>
+                  <ul className="feature-list">
+                    <li>Deployment preference — SaaS, private cloud, on‑prem, hybrid</li>
+                    <li>Cloud strategy — providers/services; multi‑cloud plans</li>
+                  </ul>
+                </div>
+                <div className="content-block">
+                  <h3 id="team-implementation">8. Team & Implementation</h3>
+                  <ul className="feature-list">
+                    <li>Roles & responsibilities — leads, developers, architects, DevOps/Platform</li>
+                    <li>Timeline & resources — team size, duration, milestones</li>
+                    <li>Executive sponsorship — C‑level involvement</li>
+                    <li>Past experience — prior platform/product work</li>
+                    <li>Approach — in‑house vs partner; low‑code vs pro‑code; skills</li>
+                  </ul>
+                </div>
+                <div className="content-block">
+                  <h3 id="additional">9. Additional Considerations</h3>
+                  <ul className="feature-list">
+                    <li>Compliance & governance — GDPR, HIPAA, PCI‑DSS; data sovereignty</li>
+                    <li>Observability — analytics, logging, tracing, alerting, KPIs/SLOs</li>
+                    <li>Scale & HA — SLAs, redundancy, load balancing, DR/BCP, failover</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </section>

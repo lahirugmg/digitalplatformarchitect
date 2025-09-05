@@ -111,12 +111,12 @@ export default function AuthorPage({ params }: Props) {
               )}
               {author.social.twitter && (
                 <a 
-                  href={`https://twitter.com/${author.social.twitter}`}
+                  href={`https://x.com/${author.social.twitter}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="social-link"
                 >
-                  Twitter
+                  X
                 </a>
               )}
               {author.social.github && (

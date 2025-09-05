@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "sync:medium": "node scripts/sync-medium.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.1",

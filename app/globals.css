@@ -4073,16 +4073,101 @@ html {
   margin: 3rem 0;
 }
 
+/* Modern readable article typography */
 .article-prose {
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.article-prose > * + * {
+  margin-top: 1rem;
+}
+
+.article-prose h1,
+.article-prose h2,
+.article-prose h3,
+.article-prose h4,
+.article-prose h5,
+.article-prose h6 {
+  color: var(--text);
+  line-height: 1.25;
+  margin: 2rem 0 0.75rem;
+  font-weight: 700;
+}
+
+.article-prose h1 { font-size: 2rem; }
+.article-prose h2 { font-size: 1.5rem; }
+.article-prose h3 { font-size: 1.25rem; }
+.article-prose h4 { font-size: 1.125rem; }
+
+.article-prose p { color: var(--text); }
+.article-prose strong { font-weight: 700; }
+.article-prose em { font-style: italic; }
+
+.article-prose a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.article-prose a:hover { color: var(--primary-hover); }
+
+.article-prose ul,
+.article-prose ol {
+  padding-left: 1.25rem;
+}
+.article-prose li {
+  margin: 0.25rem 0;
+}
+
+.article-prose blockquote {
+  margin: 1.25rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--primary);
+  background: var(--surface-alt);
+  color: var(--text-secondary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.article-prose code {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.35rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9em;
+}
+
+.article-prose pre {
   background: var(--surface-alt);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  padding: 1.5rem;
-  font-family: 'Courier New', monospace;
-  font-size: 0.875rem;
-  line-height: 1.6;
-  white-space: pre-wrap;
-  overflow-x: auto;
+  padding: 1rem;
+  overflow: auto;
+}
+
+.article-prose pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.article-prose img,
+.article-prose video,
+.article-prose iframe {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.25rem auto;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.article-prose hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
 }
 
 .article-footer-section {

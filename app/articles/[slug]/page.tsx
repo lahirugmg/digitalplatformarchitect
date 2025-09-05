@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getArticleBySlug, getAllArticles } from '@/lib/articles';
 import type { Metadata } from 'next';
+import { marked } from 'marked';
 
 interface Props {
   params: {
@@ -70,6 +71,9 @@ export default function ArticlePage({ params }: Props) {
     notFound();
   }
 
+  // Render Markdown/MDX content to HTML using marked
+  const html = marked.parse(article.content || '');
+
   return (
     <div className="article-container">
       <header className="article-header">
@@ -118,12 +122,12 @@ export default function ArticlePage({ params }: Props) {
               )}
               {article.author.social.twitter && (
                 <a 
-                  href={`https://twitter.com/${article.author.social.twitter}`}
+                  href={`https://x.com/${article.author.social.twitter}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="social-link"
                 >
-                  Twitter
+                  X
                 </a>
               )}
               {article.author.social.github && (
@@ -154,9 +158,10 @@ export default function ArticlePage({ params }: Props) {
       </header>
 
       <main className="article-content">
-        <pre className="article-prose">
-          {article.content}
-        </pre>
+        <div
+          className="article-prose"
+          dangerouslySetInnerHTML={{ __html: html as string }}
+        />
       </main>
 
       <footer className="article-footer-section">

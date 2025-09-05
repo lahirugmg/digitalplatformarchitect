@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { patternList } from "@/lib/patterns";
+import { blockList } from "@/lib/blocks";
+import { connections } from "@/lib/connections";
 import { EventDrivenDiagram } from "@/components/diagrams/EventDrivenDiagram";
 import { LayeredArchitectureDiagram } from "@/components/diagrams/LayeredArchitectureDiagram";
 import { MicroserviceDiagram } from "@/components/diagrams/MicroserviceDiagram";
@@ -46,6 +48,25 @@ export default function PatternsIndexPage() {
             Visual diagrams help you understand structure and relationships.
           </p>
         </header>
+
+        {/* Overview Stats (moved from Explore) */}
+        <div className="explorer-stats">
+          <div className="stat-card">
+            <div className="stat-number">{patternList.length}</div>
+            <div className="stat-label">Architecture Patterns</div>
+            <div className="stat-desc">Proven approaches for system design</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-number">{blockList.length}</div>
+            <div className="stat-label">Platform Components</div>
+            <div className="stat-desc">Core building blocks for digital platforms</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-number">{connections.length}</div>
+            <div className="stat-label">Relationships</div>
+            <div className="stat-desc">Connections between patterns and blocks</div>
+          </div>
+        </div>
 
         {/* Featured Patterns with Diagrams */}
         <section className="patterns-section">
@@ -149,6 +170,17 @@ export default function PatternsIndexPage() {
             <li><strong>Understand trade-offs:</strong> Every pattern comes with benefits and costs</li>
             <li><strong>Start simple:</strong> Begin with proven patterns and evolve as needed</li>
             <li><strong>Combine patterns:</strong> Most real systems use multiple patterns together</li>
+          </ul>
+        </div>
+
+        {/* Exploration Tips (moved from Explore) */}
+        <div className="pattern-selection-tips">
+          <h3>Exploration Tips</h3>
+          <ul>
+            <li><strong>Start with patterns:</strong> Choose the architecture that fits your problem first.</li>
+            <li><strong>Then choose blocks:</strong> Use pattern↔block relationships to pick enabling capabilities.</li>
+            <li><strong>Search and filter:</strong> Focus on the terms that match your constraints.</li>
+            <li><strong>Deep dive:</strong> Open pattern pages for diagrams, trade‑offs, and implementation advice.</li>
           </ul>
         </div>
       </section>
