@@ -16,7 +16,7 @@ export async function GET() {
     { path: '/authors', priority: '0.8', changefreq: 'weekly' },
     { path: '/blocks', priority: '0.8', changefreq: 'monthly' },
     { path: '/patterns', priority: '0.8', changefreq: 'monthly' },
-    { path: '/solutions', priority: '0.7', changefreq: 'monthly' },
+    { path: '/solution', priority: '0.7', changefreq: 'monthly' },
     { path: '/ai', priority: '0.6', changefreq: 'monthly' },
     { path: '/story', priority: '0.7', changefreq: 'monthly' },
     { path: '/about', priority: '0.5', changefreq: 'yearly' },
