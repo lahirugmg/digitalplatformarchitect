@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArchitectureExplorer } from "@/components/ArchitectureExplorer";
 
 export const metadata = {
-  title: "Solutions & Discovery",
+  title: "Solutions",
   description: "From patterns to platforms: business, solution, security, and deployment views, plus a structured technical discovery checklist."
 };
 
@@ -11,14 +11,14 @@ export default function SolutionsPage() {
     <div className="container">
       <article className="solutions-article">
         <header className="page-hero stack gap-sm">
-          <h1 className="page-title">Solutions & Discovery</h1>
+          <h1 className="page-title">Solutions</h1>
           <p className="lede">
             Turning architecture patterns into real-world digital platforms requires more than just
             building blocks. It needs the right views—business, solution, and deployment—presented at
             the right level of detail (L0–L3) for each audience. This section shows how these
             perspectives connect so stakeholders, architects, and engineers collaborate effectively.
           </p>
-          <nav className="solutions-toc" aria-label="Solutions & Discovery navigation">
+          <nav className="solutions-toc" aria-label="Solutions navigation">
             <a href="#explore-architecture" className="toc-link">Explore Layers</a>
             <a href="#audience-roles" className="toc-link">Audience & Roles</a>
             <a href="#business-architecture" className="toc-link">Business Architecture</a>
