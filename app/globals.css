@@ -3447,6 +3447,293 @@ html {
   color: var(--text);
 }
 
+/* API Management Features Styles */
+.api-management-features {
+  margin: 3rem 0;
+  padding: 2rem 0;
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.features-header .section-description {
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  max-width: 70ch;
+  margin: 1rem auto 0;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.feature-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+  box-shadow: var(--shadow-sm);
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-strong);
+}
+
+/* Feature Card Color Variants */
+.feature-card-primary {
+  border-left: 6px solid var(--primary);
+}
+
+.feature-card-primary:hover {
+  border-color: var(--primary);
+  background: linear-gradient(135deg, var(--surface), var(--primary-light));
+}
+
+.feature-card-blue {
+  border-left: 6px solid var(--blue-deep);
+}
+
+.feature-card-blue:hover {
+  border-color: var(--blue-deep);
+  background: linear-gradient(135deg, var(--surface), var(--blue-light));
+}
+
+.feature-card-green {
+  border-left: 6px solid var(--green);
+}
+
+.feature-card-green:hover {
+  border-color: var(--green);
+  background: linear-gradient(135deg, var(--surface), var(--green-light));
+}
+
+.feature-card-orange {
+  border-left: 6px solid var(--orange);
+}
+
+.feature-card-orange:hover {
+  border-color: var(--orange);
+  background: linear-gradient(135deg, var(--surface), var(--orange-light));
+}
+
+.feature-card-purple {
+  border-left: 6px solid var(--purple);
+}
+
+.feature-card-purple:hover {
+  border-color: var(--purple);
+  background: linear-gradient(135deg, var(--surface), var(--purple-light));
+}
+
+.feature-card-teal {
+  border-left: 6px solid #14b8a6;
+}
+
+.feature-card-teal:hover {
+  border-color: #14b8a6;
+  background: linear-gradient(135deg, var(--surface), var(--teal-light));
+}
+
+.feature-card-gray {
+  border-left: 6px solid #6b7280;
+}
+
+.feature-card-gray:hover {
+  border-color: #6b7280;
+  background: linear-gradient(135deg, var(--surface), var(--surface-alt));
+}
+
+.feature-card-header {
+  padding: 2rem 2rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.feature-icon {
+  font-size: 3rem;
+  line-height: 1;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.feature-card-title-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.feature-card-title {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.feature-card-description {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.feature-list-container {
+  flex: 1;
+  padding: 0 2rem 1rem;
+  overflow-y: auto;
+}
+
+.feature-capabilities-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.feature-capability-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  transition: all 0.2s ease;
+}
+
+.feature-capability-item:hover {
+  background: var(--surface-alt);
+  border-radius: var(--radius-sm);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.capability-bullet {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--primary);
+}
+
+.capability-text {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.feature-card-footer {
+  padding: 1rem 2rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background: var(--surface-alt);
+  margin-top: auto;
+}
+
+.feature-count {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive Design for API Management Features */
+@media (max-width: 768px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .feature-card {
+    min-height: 400px;
+  }
+  
+  .feature-card-header {
+    padding: 1.5rem 1.5rem 1rem;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .feature-icon {
+    font-size: 2.5rem;
+  }
+  
+  .feature-card-title {
+    font-size: 1.25rem;
+  }
+  
+  .feature-list-container {
+    padding: 0 1.5rem 1rem;
+  }
+  
+  .feature-capabilities-list {
+    gap: 0.5rem;
+  }
+  
+  .feature-card-footer {
+    padding: 0.75rem 1.5rem 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .api-management-features {
+    margin: 2rem 0;
+    padding: 1rem 0;
+  }
+  
+  .features-header {
+    margin-bottom: 2rem;
+  }
+  
+  .feature-card-header {
+    padding: 1.25rem 1.25rem 0.75rem;
+    gap: 0.75rem;
+  }
+  
+  .feature-icon {
+    font-size: 2rem;
+  }
+  
+  .feature-card-title {
+    font-size: 1.125rem;
+  }
+  
+  .feature-card-description {
+    font-size: 0.875rem;
+  }
+  
+  .feature-list-container {
+    padding: 0 1.25rem 0.75rem;
+  }
+  
+  .feature-card-footer {
+    padding: 0.75rem 1.25rem 1rem;
+  }
+}
+
 /* Responsive Design for Solutions Page */
 @media (max-width: 768px) {
   .solutions-article {

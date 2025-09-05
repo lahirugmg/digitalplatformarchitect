@@ -4,6 +4,7 @@ import { blocks } from "@/lib/blocks";
 import { connections } from "@/lib/connections";
 import { patterns } from "@/lib/patterns";
 import { EnhancedBlockDiagram } from "@/components/EnhancedBlockDiagram";
+import { ApiManagementFeatures } from "@/components/ApiManagementFeatures";
 
 type Props = { params: { slug: string } };
 
@@ -24,6 +25,8 @@ export default function BlockPage({ params }: Props) {
   const block = blocks[params.slug];
   if (!block) return notFound();
 
+  const isApiManagement = block.slug === 'api-management';
+
   return (
     <div className="container">
       <article className="prose stack gap-lg" style={{ maxWidth: '900px', margin: '0 auto' }}>
@@ -40,6 +43,11 @@ export default function BlockPage({ params }: Props) {
             interactive={true}
           />
         </section>
+
+        {/* API Management Features Cards - Only for API Management block */}
+        {isApiManagement && (
+          <ApiManagementFeatures />
+        )}
 
         {/* Cross-link: which architectural patterns this block enables */}
         {(() => {
