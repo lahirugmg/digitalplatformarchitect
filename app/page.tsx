@@ -7,6 +7,7 @@ import { ConnectionsExplorer } from "@/components/ConnectionsExplorer";
 import { DigitalPlatformDiagram } from "@/components/diagrams/DigitalPlatformDiagram";
 import { DiagramZoom } from "@/components/DiagramZoom";
 import { ArchitectureExplorer } from "@/components/ArchitectureExplorer";
+import { getFeaturedArticles } from "@/lib/articles";
 
 function ArchitectureJourneyStep({ 
   stepNumber, 
@@ -49,6 +50,8 @@ function ArchitectureJourneyStep({
 }
 
 export default function HomePage() {
+  const featuredArticles = getFeaturedArticles();
+  
   return (
     <div className="stack gap-2xl">
       <section className="hero stack gap-lg">
@@ -230,6 +233,58 @@ export default function HomePage() {
       <section className="stack gap-lg">
         <ConnectionsExplorer />
       </section>
+
+      {featuredArticles.length > 0 && (
+        <section className="articles-teaser">
+          <div className="articles-header">
+            <h2 className="section-title centered">Latest Articles</h2>
+            <p className="section-description">
+              In-depth articles on platform architecture, best practices, and real-world case studies.
+            </p>
+          </div>
+          <div className="articles-preview-grid">
+            {featuredArticles.map((article) => (
+              <article key={article.slug} className="article-preview-card">
+                <div className="article-meta">
+                  <time dateTime={article.publishedAt} className="article-date">
+                    {new Date(article.publishedAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </time>
+                  <span className="article-reading-time">{article.readingTime} min read</span>
+                </div>
+                
+                <header>
+                  <h3 className="article-title">
+                    <Link href={`/articles/${article.slug}`}>
+                      {article.title}
+                    </Link>
+                  </h3>
+                  <p className="article-summary">{article.summary}</p>
+                </header>
+                
+                <footer className="article-footer">
+                  <div className="article-author">
+                    <span className="author-name">{article.author.name}</span>
+                  </div>
+                  <div className="article-tags">
+                    {article.tags.slice(0, 2).map((tag: string) => (
+                      <span key={tag} className="article-tag-preview">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </footer>
+              </article>
+            ))}
+          </div>
+          <div className="articles-cta">
+            <Link href="/articles" className="button accent">View All Articles</Link>
+          </div>
+        </section>
+      )}
 
       <CTA />
     </div>
