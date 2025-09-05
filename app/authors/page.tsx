@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { getAllAuthors } from '@/lib/articles';
 import type { Metadata } from 'next';
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: 'Authors',
   description: 'Meet the authors sharing their expertise in platform architecture and modern development practices.',
@@ -13,50 +15,48 @@ export const metadata: Metadata = {
 
 function AuthorCard({ author }: { author: any }) {
   return (
-    <Link href={`/authors/${author.id}`} className="author-card">
-      <div className="author-info">
-        <h3 className="author-name">{author.name}</h3>
-        {author.bio && <p className="author-bio">{author.bio}</p>}
-        
-        {author.social && (
-          <div className="author-social">
-            {author.social.linkedin && (
-              <a 
-                href={`https://linkedin.com/in/${author.social.linkedin}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link"
-                onClick={(e) => e.stopPropagation()}
-              >
-                LinkedIn
-              </a>
-            )}
-            {author.social.twitter && (
-              <a 
-                href={`https://twitter.com/${author.social.twitter}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link"
-                onClick={(e) => e.stopPropagation()}
-              >
-                Twitter
-              </a>
-            )}
-            {author.social.github && (
-              <a 
-                href={`https://github.com/${author.social.github}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link"
-                onClick={(e) => e.stopPropagation()}
-              >
-                GitHub
-              </a>
-            )}
-          </div>
-        )}
-      </div>
-    </Link>
+    <div className="author-card">
+      <Link href={`/authors/${author.id}`} className="author-main">
+        <div className="author-info">
+          <h3 className="author-name">{author.name}</h3>
+          {author.bio && <p className="author-bio">{author.bio}</p>}
+        </div>
+      </Link>
+      {author.social && (
+        <div className="author-social">
+          {author.social.linkedin && (
+            <a
+              href={`https://linkedin.com/in/${author.social.linkedin}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-link"
+            >
+              LinkedIn
+            </a>
+          )}
+          {author.social.twitter && (
+            <a
+              href={`https://twitter.com/${author.social.twitter}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-link"
+            >
+              Twitter
+            </a>
+          )}
+          {author.social.github && (
+            <a
+              href={`https://github.com/${author.social.github}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-link"
+            >
+              GitHub
+            </a>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 

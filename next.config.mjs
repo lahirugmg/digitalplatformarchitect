@@ -7,6 +7,8 @@ import remarkGfm from 'remark-gfm';
 const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+  // Avoid build failures due to slow static generation on content-heavy pages
+  staticPageGenerationTimeout: 120,
 };
 
 const withMDX = createMDX({

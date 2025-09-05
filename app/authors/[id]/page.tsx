@@ -16,6 +16,8 @@ export async function generateStaticParams() {
   }));
 }
 
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const articles = getArticlesByAuthor(params.id);
   
