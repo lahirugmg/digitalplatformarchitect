@@ -140,10 +140,12 @@ export function interpolateThroughputByMessageSize(
 
   // Clamp out-of-range message sizes to avoid extrapolation to negative values
   if (messageSize <= messageSizes[0]) {
-    return throughputData[messageSizes[0].toString()][concurrency.toString()];
+    const row = throughputData[messageSizes[0].toString()];
+    return getValueAtConcurrency(row, concurrency);
   }
   if (messageSize >= messageSizes[messageSizes.length - 1]) {
-    return throughputData[messageSizes[messageSizes.length - 1].toString()][concurrency.toString()];
+    const row = throughputData[messageSizes[messageSizes.length - 1].toString()];
+    return getValueAtConcurrency(row, concurrency);
   }
 
   const bounds = findBounds(messageSize, messageSizes);
@@ -184,10 +186,11 @@ export function interpolateThroughputByConcurrency(
 
   // Clamp out-of-range concurrencies to avoid extrapolation artifacts
   if (concurrency <= concurrencies[0]) {
-    return throughputData[concurrencies[0].toString()];
+    return row[concurrencies[0].toString()] ?? getValueAtConcurrency(row, concurrencies[0]);
   }
   if (concurrency >= concurrencies[concurrencies.length - 1]) {
-    return throughputData[concurrencies[concurrencies.length - 1].toString()];
+    const last = concurrencies[concurrencies.length - 1];
+    return row[last.toString()] ?? getValueAtConcurrency(row, last);
   }
 
   const bounds = findBounds(concurrency, concurrencies);
