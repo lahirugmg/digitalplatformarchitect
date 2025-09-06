@@ -52,6 +52,38 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
 }
 
+// Returns a value for a desired concurrency using the data available in a row.
+// If the exact concurrency value is missing or non-positive, it linearly
+// interpolates between the nearest lower and upper available concurrencies.
+function getValueAtConcurrency(
+  row: Record<string, number> | undefined,
+  desiredConcurrency: number
+): number {
+  if (!row) return 0;
+  const keys = Object.keys(row).map((k) => Number(k)).sort((a, b) => a - b);
+  if (keys.length === 0) return 0;
+  const exact = row[desiredConcurrency.toString()];
+  if (typeof exact === 'number' && exact > 0) return exact;
+
+  // Find nearest lower and upper available keys with positive values
+  let lower: number | undefined;
+  let upper: number | undefined;
+  for (const k of keys) {
+    const v = row[k.toString()];
+    if (k <= desiredConcurrency && v > 0) lower = k;
+    if (k >= desiredConcurrency && v > 0) { upper = k; break; }
+  }
+
+  if (lower == null && upper == null) return 0;
+  if (lower == null) return row[upper!.toString()] ?? 0;
+  if (upper == null) return row[lower!.toString()] ?? 0;
+  const y0 = row[lower.toString()] ?? 0;
+  const y1 = row[upper.toString()] ?? 0;
+  if (y0 <= 0 && y1 <= 0) return 0;
+  if (lower === upper) return y0;
+  return linearInterpolate(desiredConcurrency, lower, y0, upper, y1);
+}
+
 /**
  * Finds the two nearest values in a sorted array
  * @param value - Value to find bounds for
@@ -100,7 +132,11 @@ export function interpolateThroughputByMessageSize(
   performanceData: PerformanceData
 ): number {
   const messageSizes = performanceData.messageSizesB;
-  const throughputData = performanceData.throughput[apiType];
+  const throughputData = performanceData.throughput?.[apiType];
+
+  if (!throughputData || Object.keys(throughputData).length === 0) {
+    return 0;
+  }
 
   // Clamp out-of-range message sizes to avoid extrapolation to negative values
   if (messageSize <= messageSizes[0]) {
@@ -113,12 +149,16 @@ export function interpolateThroughputByMessageSize(
   const bounds = findBounds(messageSize, messageSizes);
 
   if (bounds.exact !== undefined) {
-    return throughputData[bounds.exact.toString()][concurrency.toString()];
+    const row = throughputData[bounds.exact.toString()];
+    return getValueAtConcurrency(row, concurrency);
   }
 
   if (bounds.lower !== undefined && bounds.upper !== undefined) {
-    const y0 = throughputData[bounds.lower.toString()][concurrency.toString()];
-    const y1 = throughputData[bounds.upper.toString()][concurrency.toString()];
+    const rowLower = throughputData[bounds.lower.toString()];
+    const rowUpper = throughputData[bounds.upper.toString()];
+    const y0 = getValueAtConcurrency(rowLower, concurrency);
+    const y1 = getValueAtConcurrency(rowUpper, concurrency);
+    if (y0 <= 0 && y1 <= 0) return 0;
     return linearInterpolate(messageSize, bounds.lower, y0, bounds.upper, y1);
   }
 
@@ -126,7 +166,7 @@ export function interpolateThroughputByMessageSize(
   const nearest = messageSizes.reduce((prev: number, curr: number) => 
     Math.abs(curr - messageSize) < Math.abs(prev - messageSize) ? curr : prev
   );
-  return throughputData[nearest.toString()][concurrency.toString()];
+  return getValueAtConcurrency(throughputData[nearest.toString()], concurrency);
 }
 
 /**
@@ -139,7 +179,8 @@ export function interpolateThroughputByConcurrency(
   performanceData: PerformanceData
 ): number {
   const concurrencies = performanceData.concurrency;
-  const throughputData = performanceData.throughput[apiType][messageSize.toString()];
+  const row = performanceData.throughput?.[apiType]?.[messageSize.toString()];
+  if (!row || Object.keys(row).length === 0) return 0;
 
   // Clamp out-of-range concurrencies to avoid extrapolation artifacts
   if (concurrency <= concurrencies[0]) {
@@ -152,12 +193,17 @@ export function interpolateThroughputByConcurrency(
   const bounds = findBounds(concurrency, concurrencies);
 
   if (bounds.exact !== undefined) {
-    return throughputData[bounds.exact.toString()];
+    // If exact value is missing or non-positive, interpolate within the row
+    const exact = row[bounds.exact.toString()];
+    if (typeof exact === 'number' && exact > 0) return exact;
+    return getValueAtConcurrency(row, concurrency);
   }
 
   if (bounds.lower !== undefined && bounds.upper !== undefined) {
-    const y0 = throughputData[bounds.lower.toString()];
-    const y1 = throughputData[bounds.upper.toString()];
+    // If either bound is missing, try nearest available keys in the row
+    const y0 = getValueAtConcurrency(row, bounds.lower);
+    const y1 = getValueAtConcurrency(row, bounds.upper);
+    if (y0 <= 0 && y1 <= 0) return 0;
     return linearInterpolate(concurrency, bounds.lower, y0, bounds.upper, y1);
   }
 
@@ -165,7 +211,7 @@ export function interpolateThroughputByConcurrency(
   const nearest = concurrencies.reduce((prev: number, curr: number) => 
     Math.abs(curr - concurrency) < Math.abs(prev - concurrency) ? curr : prev
   );
-  return throughputData[nearest.toString()];
+  return getValueAtConcurrency(row, nearest);
 }
 
 /**
@@ -184,9 +230,16 @@ export function getInterpolatedThroughput(
   const clampedMessageSize = clamp(messageSize, messageSizes[0], messageSizes[messageSizes.length - 1]);
   const clampedConcurrency = clamp(concurrency, concurrencies[0], concurrencies[concurrencies.length - 1]);
 
+  // If throughput data for apiType is missing, return 0 to indicate no data
+  const apiData = performanceData.throughput?.[apiType];
+  if (!apiData || Object.keys(apiData).length === 0) {
+    return 0;
+  }
+
   // Check if both values are exact matches
   if (messageSizes.includes(clampedMessageSize) && concurrencies.includes(clampedConcurrency)) {
-    return performanceData.throughput[apiType][clampedMessageSize.toString()][clampedConcurrency.toString()];
+    const row = apiData[clampedMessageSize.toString()];
+    return getValueAtConcurrency(row, clampedConcurrency);
   }
 
   // If message size is exact but concurrency needs interpolation
@@ -228,11 +281,16 @@ function bilinearInterpolateThroughput(
   }
 
   // Get the four corner points
-  const throughputData = performanceData.throughput[apiType];
-  const q11 = throughputData[msgBounds.lower.toString()][concBounds.lower.toString()];
-  const q12 = throughputData[msgBounds.lower.toString()][concBounds.upper.toString()];
-  const q21 = throughputData[msgBounds.upper.toString()][concBounds.lower.toString()];
-  const q22 = throughputData[msgBounds.upper.toString()][concBounds.upper.toString()];
+  const throughputData = performanceData.throughput?.[apiType];
+  if (!throughputData) return 0;
+  const rowLower = throughputData[msgBounds.lower.toString()];
+  const rowUpper = throughputData[msgBounds.upper.toString()];
+  const q11 = getValueAtConcurrency(rowLower, concBounds.lower);
+  const q12 = getValueAtConcurrency(rowLower, concBounds.upper);
+  const q21 = getValueAtConcurrency(rowUpper, concBounds.lower);
+  const q22 = getValueAtConcurrency(rowUpper, concBounds.upper);
+  if (q11 <= 0 && q21 <= 0) return 0;
+  if (q12 <= 0 && q22 <= 0) return 0;
 
   // Interpolate along message size axis first
   const r1 = linearInterpolate(messageSize, msgBounds.lower, q11, msgBounds.upper, q21);
@@ -253,7 +311,12 @@ export function getInterpolatedLatency(
 ): { avg: number; p90: number; p99: number } | null {
   const messageSizes = performanceData.messageSizesB;
   const concurrencies = performanceData.concurrency;
-  const latencyData = performanceData.latency[apiType];
+  const latencyRoot = performanceData.latency as any;
+  const latencyData = latencyRoot ? latencyRoot[apiType] : undefined;
+
+  if (!latencyData) {
+    return null;
+  }
 
   // Find the nearest available data point for latency
   const nearestMsgSize = messageSizes.reduce((prev: number, curr: number) => 
@@ -264,7 +327,8 @@ export function getInterpolatedLatency(
     Math.abs(curr - concurrency) < Math.abs(prev - concurrency) ? curr : prev
   );
 
-  const latencyPoint = latencyData[nearestMsgSize.toString()]?.[nearestConcurrency.toString()];
+  const group = latencyData[nearestMsgSize.toString()];
+  const latencyPoint = group ? group[nearestConcurrency.toString()] : undefined;
   
   if (!latencyPoint) {
     return null;

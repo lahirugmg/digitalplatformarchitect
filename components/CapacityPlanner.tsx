@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import wso2apim450 from "../data/wso2-apim-4.5.0-performance.json";
+import wso2mi440 from "../data/wso2-mi-4.4.0-performance.json";
 
 // Simple on-demand Linux hourly pricing (USD) for common instance types
 // Source: Approx. public on-demand pricing (region-dependent). Adjust as needed.
@@ -29,10 +30,24 @@ interface CalculationResults {
   tShirtSize: string;
 }
 
-type DatasetKey = "wso2-apim-4.5.0";
+type DatasetKey = "wso2-apim-4.5.0" | "wso2-mi-4.4.0";
 
 const DATASETS: Record<DatasetKey, { label: string; data: any } > = {
-  "wso2-apim-4.5.0": { label: "WSO2 APIM 4.5.0", data: wso2apim450 },
+  "wso2-apim-4.5.0": { label: "WSO2 API Manager 4.5.0", data: wso2apim450 },
+  "wso2-mi-4.4.0": { label: "WSO2 Micro Integrator 4.4.0", data: wso2mi440 },
+};
+
+const TRAFFIC_OPTIONS: Record<DatasetKey, { value: string; label: string; desc?: string }[]> = {
+  "wso2-apim-4.5.0": [
+    { value: "echo", label: "Pass-through (Echo API)", desc: "Higher throughput, minimal processing" },
+    { value: "mediation", label: "Mediation (Payload Transform)", desc: "Lower throughput due to processing overhead" },
+  ],
+  "wso2-mi-4.4.0": [
+    { value: "directProxy", label: "Direct Proxy", desc: "PassThrough Proxy Service calling backend" },
+    { value: "directApi", label: "Direct API", desc: "PassThrough API Service calling backend" },
+    { value: "cbrTransportHeaderProxy", label: "CBR Transport Header Proxy", desc: "Routes based on HTTP header" },
+    { value: "xsltProxy", label: "XSLT Proxy", desc: "XSLT transformations on request/response" },
+  ],
 };
 
 export default function CapacityPlanner() {
@@ -46,6 +61,14 @@ export default function CapacityPlanner() {
   const [dataset, setDataset] = useState<DatasetKey>("wso2-apim-4.5.0");
 
   const performanceData = DATASETS[dataset].data;
+
+  // Ensure trafficType is valid for the selected dataset
+  useEffect(() => {
+    const valid = TRAFFIC_OPTIONS[dataset].map(o => o.value);
+    if (!valid.includes(trafficType)) {
+      setTrafficType(valid[0]);
+    }
+  }, [dataset]);
 
   // Calculate results
   const results: CalculationResults = useMemo(() => {
@@ -88,6 +111,13 @@ export default function CapacityPlanner() {
   const instanceType = performanceData.hardware.instance;
   const hourly = INSTANCE_HOURLY_COST_USD[instanceType];
   const annualCost = hourly ? results.recommendedNodes * hourly * 24 * 365 : null;
+
+  const hasThroughputData = Boolean(performanceData?.throughput?.[trafficType]) &&
+    Object.keys(performanceData?.throughput?.[trafficType] || {}).length > 0;
+
+  const testConditions = (performanceData as any)?.metadata?.testConditions as
+    | { backendDelay?: string; security?: string }
+    | undefined;
 
   return (
     <div className="capacity-planner">
@@ -193,30 +223,20 @@ export default function CapacityPlanner() {
               <div className="form-group">
                 <label className="form-label">Traffic Type</label>
                 <div className="radio-group">
-                  <label className="radio-option">
-                    <input
-                      type="radio"
-                      value="echo"
-                      checked={trafficType === "echo"}
-                      onChange={(e) => setTrafficType(e.target.value)}
-                    />
-                    <span className="radio-label">
-                      Pass-through (Echo API)
-                      <span className="radio-desc">Higher throughput, minimal processing</span>
-                    </span>
-                  </label>
-                  <label className="radio-option">
-                    <input
-                      type="radio"
-                      value="mediation"
-                      checked={trafficType === "mediation"}
-                      onChange={(e) => setTrafficType(e.target.value)}
-                    />
-                    <span className="radio-label">
-                      Mediation (Payload Transform)
-                      <span className="radio-desc">Lower throughput due to processing overhead</span>
-                    </span>
-                  </label>
+                  {TRAFFIC_OPTIONS[dataset].map((opt) => (
+                    <label key={opt.value} className="radio-option">
+                      <input
+                        type="radio"
+                        value={opt.value}
+                        checked={trafficType === opt.value}
+                        onChange={(e) => setTrafficType(e.target.value)}
+                      />
+                      <span className="radio-label">
+                        {opt.label}
+                        {opt.desc && (<span className="radio-desc">{opt.desc}</span>)}
+                      </span>
+                    </label>
+                  ))}
                 </div>
               </div>
 
@@ -252,6 +272,12 @@ export default function CapacityPlanner() {
             
             {/* Key Metrics */}
             <div className="results-grid">
+              {!hasThroughputData && (
+                <div className="result-card" style={{ gridColumn: "1 / -1" }}>
+                  <div className="result-label">Dataset Incomplete</div>
+                  <div className="result-unit">No throughput data found for the selected dataset and traffic type.</div>
+                </div>
+              )}
               <div className="result-card primary">
                 <div className="result-value">{results.recommendedNodes}</div>
                 <div className="result-label">Recommended Nodes</div>
@@ -328,12 +354,16 @@ export default function CapacityPlanner() {
                 <div className="assumption-item">
                   <strong>Java:</strong> {performanceData.hardware.java}
                 </div>
-                <div className="assumption-item">
-                  <strong>Backend Delay:</strong> {performanceData.metadata.testConditions.backendDelay}
-                </div>
-                <div className="assumption-item">
-                  <strong>Security:</strong> {performanceData.metadata.testConditions.security}
-                </div>
+                {testConditions?.backendDelay && (
+                  <div className="assumption-item">
+                    <strong>Backend Delay:</strong> {testConditions.backendDelay}
+                  </div>
+                )}
+                {testConditions?.security && (
+                  <div className="assumption-item">
+                    <strong>Security:</strong> {testConditions.security}
+                  </div>
+                )}
               </div>
             </div>
           </div>
