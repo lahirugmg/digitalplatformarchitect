@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import wso2apim450 from "@/data/wso2-apim-4.5.0-performance.json";
+import wso2apim450 from "../data/wso2-apim-4.5.0-performance.json";
 import { 
   getInterpolatedThroughput, 
   getInterpolatedLatency, 
