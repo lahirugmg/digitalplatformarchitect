@@ -53,7 +53,27 @@ export default function HomePage() {
   const featuredArticles = getFeaturedArticles();
   
   return (
-    <div className="stack gap-2xl">
+    <div className="home-layout">
+      <aside className="left-rail">
+        <div className="tools-rail">
+          <div className="tools-rail-header">
+            <div className="tools-rail-title">Tools</div>
+            <div className="tools-rail-subtitle">Plan, size, and design</div>
+          </div>
+          <nav className="tools-rail-list">
+            <Link href="/tools/capacity-planner" className="tools-rail-item">
+              <span className="tools-rail-icon">📊</span>
+              <span className="tools-rail-text">
+                <span className="tools-rail-item-title">Capacity Planning Calculator</span>
+                <span className="tools-rail-item-desc">Estimate nodes and throughput</span>
+              </span>
+              <span className="tools-rail-arrow">→</span>
+            </Link>
+          </nav>
+        </div>
+      </aside>
+
+      <div className="home-main stack gap-2xl">
       <section className="hero stack gap-lg">
         <h1 className="title">Master Digital Platform Architecture</h1>
         <p className="lede">Digital platform architects identify the essential technical <Link href="/blocks" className="hl hl-blocks">building blocks</Link> and align them with the right <Link href="/patterns" className="hl hl-patterns">architectural patterns</Link> — creating robust, scalable, future‑ready platforms. The ultimate outcome is delivering <Link href="/solution" className="hl hl-solutions">solutions</Link> that tackle real business challenges and generate measurable value.</p>
@@ -158,6 +178,124 @@ export default function HomePage() {
             ctaText="View Blueprints"
             ctaLink="/blueprints"
           />
+        </div>
+      </section>
+
+      <section className="tools-showcase">
+        <div className="tools-header">
+          <h2 className="section-title">Platform Tools</h2>
+          <p className="section-description">
+            Interactive calculators and planning tools to size, design, and optimize your digital platform architecture.
+          </p>
+        </div>
+        
+        <div className="tools-grid">
+          <Link href="/tools/capacity-planner" className="tool-card featured">
+            <div className="tool-header">
+              <div className="tool-icon">📊</div>
+              <div className="tool-meta">
+                <h3 className="tool-title">Capacity Planning Calculator</h3>
+                <div className="tool-badges">
+                  <span className="tool-badge new">New</span>
+                  <span className="tool-badge popular">Popular</span>
+                </div>
+              </div>
+            </div>
+            
+            <p className="tool-description">
+              Calculate infrastructure requirements, performance characteristics, and scaling needs for your API management platform.
+            </p>
+            
+            <div className="tool-features">
+              <div className="tool-feature">
+                <span className="feature-icon">⚡</span>
+                <span>Performance Sizing</span>
+              </div>
+              <div className="tool-feature">
+                <span className="feature-icon">📈</span>
+                <span>Traffic Modeling</span>
+              </div>
+              <div className="tool-feature">
+                <span className="feature-icon">💰</span>
+                <span>Cost Estimation</span>
+              </div>
+            </div>
+            
+            <div className="tool-cta">
+              <span className="cta-text">Start Planning</span>
+              <span className="cta-arrow">→</span>
+            </div>
+          </Link>
+          
+          <div className="tool-card coming-soon">
+            <div className="tool-header">
+              <div className="tool-icon">🔐</div>
+              <div className="tool-meta">
+                <h3 className="tool-title">Security Assessment Matrix</h3>
+                <div className="tool-badges">
+                  <span className="tool-badge coming-soon">Coming Soon</span>
+                </div>
+              </div>
+            </div>
+            
+            <p className="tool-description">
+              Evaluate security requirements and generate compliance checklists for enterprise platforms.
+            </p>
+            
+            <div className="tool-features">
+              <div className="tool-feature">
+                <span className="feature-icon">🛡️</span>
+                <span>Security Audit</span>
+              </div>
+              <div className="tool-feature">
+                <span className="feature-icon">📋</span>
+                <span>Compliance Check</span>
+              </div>
+              <div className="tool-feature">
+                <span className="feature-icon">🎯</span>
+                <span>Risk Assessment</span>
+              </div>
+            </div>
+            
+            <div className="tool-cta disabled">
+              <span className="cta-text">Coming Soon</span>
+            </div>
+          </div>
+          
+          <div className="tool-card coming-soon">
+            <div className="tool-header">
+              <div className="tool-icon">🏗️</div>
+              <div className="tool-meta">
+                <h3 className="tool-title">Architecture Pattern Selector</h3>
+                <div className="tool-badges">
+                  <span className="tool-badge coming-soon">Coming Soon</span>
+                </div>
+              </div>
+            </div>
+            
+            <p className="tool-description">
+              Interactive wizard to recommend optimal architecture patterns based on your requirements.
+            </p>
+            
+            <div className="tool-features">
+              <div className="tool-feature">
+                <span className="feature-icon">🎯</span>
+                <span>Smart Recommendations</span>
+              </div>
+              <div className="tool-feature">
+                <span className="feature-icon">📊</span>
+                <span>Trade-off Analysis</span>
+              </div>
+              <div className="tool-feature">
+                <span className="feature-icon">📐</span>
+                <span>Pattern Comparison</span>
+              </div>
+            </div>
+            
+            <div className="tool-cta disabled">
+              <span className="cta-text">Coming Soon</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -287,6 +425,7 @@ export default function HomePage() {
       )}
 
       <CTA />
+      </div>
     </div>
   );
 }

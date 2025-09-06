@@ -9,6 +9,15 @@ const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   // Avoid build failures due to slow static generation on content-heavy pages
   staticPageGenerationTimeout: 120,
+  async redirects() {
+    return [
+      {
+        source: '/tools/apim-capacity-planner',
+        destination: '/tools/capacity-planner',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 const withMDX = createMDX({

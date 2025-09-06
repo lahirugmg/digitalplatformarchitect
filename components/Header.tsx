@@ -35,15 +35,19 @@ export function Header() {
           <span>Digital Platform Architect</span>
         </Link>
         <nav className="nav" aria-label="Primary">
-          {links.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className={pathname === l.href ? "active" : undefined}
-            >
-              {l.label}
-            </Link>
-          ))}
+          {links.map((l) => {
+            const isActive = pathname === l.href;
+            
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={isActive ? "active" : undefined}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
         </nav>
       </div>
     </header>
