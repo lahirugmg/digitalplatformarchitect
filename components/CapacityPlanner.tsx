@@ -2,6 +2,16 @@
 
 import { useState, useEffect, useMemo } from "react";
 import wso2apim450 from "../data/wso2-apim-4.5.0-performance.json";
+
+// Simple on-demand Linux hourly pricing (USD) for common instance types
+// Source: Approx. public on-demand pricing (region-dependent). Adjust as needed.
+const INSTANCE_HOURLY_COST_USD: Record<string, number> = {
+  "c5.large": 0.085,
+};
+
+function formatCurrencyUSD(amount: number): string {
+  return amount.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+}
 import { 
   getInterpolatedThroughput, 
   getInterpolatedLatency, 
@@ -73,6 +83,11 @@ export default function CapacityPlanner() {
       tShirtSize
     };
   }, [messageSize, messageSizeUnit, targetTps, concurrentUsers, trafficType, safetyHeadroom, dataset]);
+
+  // Annual cost estimate based on instance type and recommended node count
+  const instanceType = performanceData.hardware.instance;
+  const hourly = INSTANCE_HOURLY_COST_USD[instanceType];
+  const annualCost = hourly ? results.recommendedNodes * hourly * 24 * 365 : null;
 
   return (
     <div className="capacity-planner">
@@ -236,15 +251,15 @@ export default function CapacityPlanner() {
             <h2 className="section-title">Capacity Estimation</h2>
             
             {/* Key Metrics */}
-          <div className="results-grid">
-            <div className="result-card primary">
-              <div className="result-value">{results.recommendedNodes}</div>
-              <div className="result-label">Recommended Nodes</div>
-              <div className="result-unit">
-                Node size: {performanceData.hardware.vCPU} vCPU, {performanceData.hardware.memGiB} GiB
+            <div className="results-grid">
+              <div className="result-card primary">
+                <div className="result-value">{results.recommendedNodes}</div>
+                <div className="result-label">Recommended Nodes</div>
+                <div className="result-unit">
+                  Node size: {performanceData.hardware.vCPU} vCPU, {performanceData.hardware.memGiB} GiB
+                </div>
+                <div className="result-badge">{results.tShirtSize}</div>
               </div>
-              <div className="result-badge">{results.tShirtSize}</div>
-            </div>
               
               <div className="result-card">
                 <div className="result-value">{results.perNodeThroughput.toLocaleString()}</div>
@@ -262,6 +277,15 @@ export default function CapacityPlanner() {
                 <div className="result-value">{(results.recommendedNodes * results.effectiveCapacity).toLocaleString()}</div>
                 <div className="result-label">Total Cluster Capacity</div>
                 <div className="result-unit">TPS</div>
+              </div>
+
+              <div className="result-card">
+                <div className="result-value">{annualCost != null ? formatCurrencyUSD(annualCost) : "—"}</div>
+                <div className="result-label">Estimated Annual Cost</div>
+                <div className="result-unit">
+                  {instanceType}
+                  {hourly ? ` @ $${hourly.toFixed(3)}/hr` : " (price unknown)"}
+                </div>
               </div>
             </div>
 
