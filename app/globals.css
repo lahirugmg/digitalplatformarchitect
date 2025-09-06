@@ -4839,3 +4839,301 @@ html {
     text-align: center;
   }
 }
+
+/* ========== Tools Section ========== */
+.tools-showcase {
+  margin: 3rem 0;
+}
+
+.tools-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tool-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+}
+
+.tool-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.tool-card.featured {
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--surface) 100%);
+  border-color: var(--primary);
+}
+
+.tool-card.coming-soon {
+  background: var(--surface-alt);
+  border-color: var(--border);
+  opacity: 0.8;
+  cursor: default;
+}
+
+.tool-card.coming-soon:hover {
+  transform: none;
+  border-color: var(--border);
+  box-shadow: none;
+}
+
+.tool-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tool-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.tool-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.tool-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.tool-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tool-badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.tool-badge.new {
+  background: var(--orange-light);
+  color: var(--orange);
+  border: 1px solid var(--orange);
+}
+
+.tool-badge.popular {
+  background: var(--blue-light);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.tool-badge.coming-soon {
+  background: var(--surface-hover);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.tool-description {
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0 0 1.5rem 0;
+  flex: 1;
+}
+
+.tool-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.tool-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.feature-icon {
+  font-size: 1rem;
+  width: 1.25rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.tool-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+  color: var(--primary);
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.tool-cta.disabled {
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.cta-text {
+  flex: 1;
+}
+
+.cta-arrow {
+  font-size: 1.25rem;
+  font-weight: 400;
+  transition: transform 0.2s ease;
+}
+
+.tool-card:hover .cta-arrow {
+  transform: translateX(4px);
+}
+
+.tool-card.coming-soon:hover .cta-arrow {
+  transform: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .tools-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .tool-card {
+    padding: 1.25rem;
+    min-height: auto;
+  }
+  
+  .tool-header {
+    gap: 0.75rem;
+  }
+  
+  .tool-icon {
+    font-size: 1.5rem;
+  }
+  
+  .tool-title {
+    font-size: 1rem;
+  }
+  
+  .tool-features {
+    gap: 0.5rem;
+  }
+}
+
+/* ========== Landing Left Tools Rail ========== */
+.home-layout { position: relative; }
+
+.left-rail { position: fixed; top: 96px; left: 0; width: 300px; z-index: 30; }
+
+.tools-rail {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.tools-rail-header {
+  padding: 1rem 1rem 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--surface-alt), var(--surface));
+}
+
+.tools-rail-title {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.tools-rail-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.tools-rail-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+.tools-rail-item {
+  display: grid;
+  grid-template-columns: 28px 1fr 16px;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.75rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+.tools-rail-item:hover {
+  background: var(--surface-hover);
+  transform: translateX(2px);
+}
+
+.tools-rail-icon {
+  font-size: 1.125rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tools-rail-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.tools-rail-item-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.tools-rail-item-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.tools-rail-arrow {
+  color: var(--primary);
+}
+
+@media (max-width: 1024px) {
+  .left-rail {
+    display: none;
+  }
+}
+
+/* Constrain home main content so it stays centered with left rail present */
+.home-main { width: 100%; max-width: min(1200px, calc(100vw - 640px)); margin: 0 auto; }

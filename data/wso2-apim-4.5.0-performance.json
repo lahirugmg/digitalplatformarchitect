@@ -3,7 +3,7 @@
     "version": "4.5.0",
     "testDate": "2023",
     "source": "WSO2 APIM 4.5.0 Performance Test Results",
-    "sourceUrl": "https://performance.wso2.org/wso2-api-manager/4.5.0/",
+    "sourceUrl": "https://apim.docs.wso2.com/en/4.5.0/install-and-setup/setup/deployment-best-practices/performance-tests-results/",
     "testConditions": {
       "backendDelay": "0ms",
       "security": "JWT",

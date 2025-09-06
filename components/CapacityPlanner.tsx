@@ -273,7 +273,7 @@ export default function CapacityPlanner() {
             </p>
             <div className="disclaimer-links">
               <a 
-                href="https://performance.wso2.org/wso2-api-manager/4.5.0/" 
+                href="https://apim.docs.wso2.com/en/4.5.0/install-and-setup/setup/deployment-best-practices/performance-tests-results/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="disclaimer-link"
