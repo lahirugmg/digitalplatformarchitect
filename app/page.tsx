@@ -61,7 +61,7 @@ export default function HomePage() {
             <div className="tools-rail-subtitle">Plan, size, and design</div>
           </div>
           <nav className="tools-rail-list">
-            <Link href="/tools/apim-capacity-planner" className="tools-rail-item">
+            <Link href="/tools/capacity-planner" className="tools-rail-item">
               <span className="tools-rail-icon">📊</span>
               <span className="tools-rail-text">
                 <span className="tools-rail-item-title">Capacity Planning Calculator</span>
@@ -190,7 +190,7 @@ export default function HomePage() {
         </div>
         
         <div className="tools-grid">
-          <Link href="/tools/apim-capacity-planner" className="tool-card featured">
+          <Link href="/tools/capacity-planner" className="tool-card featured">
             <div className="tool-header">
               <div className="tool-icon">📊</div>
               <div className="tool-meta">
