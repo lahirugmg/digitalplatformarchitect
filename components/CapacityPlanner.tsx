@@ -51,14 +51,11 @@ const TRAFFIC_OPTIONS: Record<DatasetKey, { value: string; label: string; desc?:
     { value: "xsltProxy", label: "XSLT Proxy", desc: "XSLT transformations on request/response" },
   ],
   "wso2-ballerina-integrator-2025q3": [
-    { value: "pt_http_h1c_h1c", label: "Passthrough HTTP (h1c → h1c)" },
-    { value: "pt_https_h1_h1", label: "Passthrough HTTPS (h1 → h1)" },
-    { value: "json2xml_http", label: "JSON → XML HTTP" },
-    { value: "json2xml_https", label: "JSON → XML HTTPS" },
-    { value: "pt_h2_h2", label: "Passthrough HTTP/2 (h2 → h2)" },
-    { value: "pt_h2_h1", label: "Passthrough HTTP/2 (h2 → h1)" },
-    { value: "pt_h2_h1c", label: "Passthrough HTTP/2 (h2 → h1c)" },
-    { value: "h2_downgrade", label: "HTTP/2 client & server downgrade" }
+    { value: "pt_http_h1c_h1c", label: "Passthrough HTTP (h1c → h1c)", desc: "An HTTP Service that forwards all requests to an HTTP back-end service." },
+    { value: "json2xml_http", label: "JSON → XML HTTP", desc: "An HTTP Service that transforms JSON requests to XML and forwards them to an HTTP back-end service." },
+    { value: "pt_https_h1_h1", label: "Passthrough HTTPS (h1 → h1)", desc: "An HTTPS Service that forwards all requests to an HTTPS back-end service." },
+    { value: "json2xml_https", label: "JSON → XML HTTPS", desc: "An HTTPS Service that transforms JSON requests to XML and forwards them to an HTTPS back-end service." },
+    { value: "h2_downgrade", label: "HTTP/2 client & server downgrade", desc: "An HTTP/2 (with TLS) server accepts requests from an HTTP/1.1 (with TLS) client and the HTTP/2 (with TLS) client sends requests to an HTTP/1.1 (with TLS) back-end service; both upstream and downstream are downgraded to HTTP/1.1 (with TLS)." }
   ],
 };
 
@@ -74,6 +71,8 @@ export default function CapacityPlanner() {
 
   const performanceData = DATASETS[dataset].data;
   const datasetLabel = DATASETS[dataset].label;
+  const trafficOptions = TRAFFIC_OPTIONS[dataset];
+  const selectedTrafficMeta = trafficOptions.find((o) => o.value === trafficType);
 
   // Ensure trafficType is valid for the selected dataset
   useEffect(() => {
@@ -237,23 +236,21 @@ export default function CapacityPlanner() {
 
               {/* Traffic Type */}
               <div className="form-group">
-                <label className="form-label">Traffic Type</label>
-                <div className="radio-group">
-                  {TRAFFIC_OPTIONS[dataset].map((opt) => (
-                    <label key={opt.value} className="radio-option">
-                      <input
-                        type="radio"
-                        value={opt.value}
-                        checked={trafficType === opt.value}
-                        onChange={(e) => setTrafficType(e.target.value)}
-                      />
-                      <span className="radio-label">
-                        {opt.label}
-                        {opt.desc && (<span className="radio-desc">{opt.desc}</span>)}
-                      </span>
-                    </label>
+                <label className="form-label">
+                  Traffic Type
+                  {selectedTrafficMeta?.desc && (
+                    <span className="form-hint">{selectedTrafficMeta.desc}</span>
+                  )}
+                </label>
+                <select
+                  className="form-select"
+                  value={trafficType}
+                  onChange={(e) => setTrafficType(e.target.value)}
+                >
+                  {trafficOptions.map((opt) => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
                   ))}
-                </div>
+                </select>
               </div>
 
               {/* Safety Headroom */}
