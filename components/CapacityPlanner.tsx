@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import wso2apim450 from "../data/wso2-apim-4.5.0-performance.json";
 import wso2mi440 from "../data/wso2-mi-4.4.0-performance.json";
+import wso2bi2025q3 from "../data/wso2-ballerina-integrator-2025q3.json";
 
 // Simple on-demand Linux hourly pricing (USD) for common instance types
 // Source: Approx. public on-demand pricing (region-dependent). Adjust as needed.
@@ -30,11 +31,12 @@ interface CalculationResults {
   tShirtSize: string;
 }
 
-type DatasetKey = "wso2-apim-4.5.0" | "wso2-mi-4.4.0";
+type DatasetKey = "wso2-apim-4.5.0" | "wso2-mi-4.4.0" | "wso2-ballerina-integrator-2025q3";
 
 const DATASETS: Record<DatasetKey, { label: string; data: any } > = {
   "wso2-apim-4.5.0": { label: "WSO2 API Manager 4.5.0", data: wso2apim450 },
   "wso2-mi-4.4.0": { label: "WSO2 Micro Integrator 4.4.0", data: wso2mi440 },
+  "wso2-ballerina-integrator-2025q3": { label: "WSO2 Ballerina Integrator 2025 Q3", data: wso2bi2025q3 },
 };
 
 const TRAFFIC_OPTIONS: Record<DatasetKey, { value: string; label: string; desc?: string }[]> = {
@@ -47,6 +49,16 @@ const TRAFFIC_OPTIONS: Record<DatasetKey, { value: string; label: string; desc?:
     { value: "directApi", label: "Direct API", desc: "PassThrough API Service calling backend" },
     { value: "cbrTransportHeaderProxy", label: "CBR Transport Header Proxy", desc: "Routes based on HTTP header" },
     { value: "xsltProxy", label: "XSLT Proxy", desc: "XSLT transformations on request/response" },
+  ],
+  "wso2-ballerina-integrator-2025q3": [
+    { value: "pt_http_h1c_h1c", label: "Passthrough HTTP (h1c → h1c)" },
+    { value: "pt_https_h1_h1", label: "Passthrough HTTPS (h1 → h1)" },
+    { value: "json2xml_http", label: "JSON → XML HTTP" },
+    { value: "json2xml_https", label: "JSON → XML HTTPS" },
+    { value: "pt_h2_h2", label: "Passthrough HTTP/2 (h2 → h2)" },
+    { value: "pt_h2_h1", label: "Passthrough HTTP/2 (h2 → h1)" },
+    { value: "pt_h2_h1c", label: "Passthrough HTTP/2 (h2 → h1c)" },
+    { value: "h2_downgrade", label: "HTTP/2 client & server downgrade" }
   ],
 };
 
@@ -61,6 +73,7 @@ export default function CapacityPlanner() {
   const [dataset, setDataset] = useState<DatasetKey>("wso2-apim-4.5.0");
 
   const performanceData = DATASETS[dataset].data;
+  const datasetLabel = DATASETS[dataset].label;
 
   // Ensure trafficType is valid for the selected dataset
   useEffect(() => {
@@ -118,6 +131,9 @@ export default function CapacityPlanner() {
   const testConditions = (performanceData as any)?.metadata?.testConditions as
     | { backendDelay?: string; security?: string }
     | undefined;
+
+  const disclaimerText = (performanceData as any)?.notes?.disclaimer ??
+    `Performance results are indicative and may vary by environment and workload. Dataset: ${datasetLabel}.`;
 
   return (
     <div className="capacity-planner">
@@ -371,7 +387,7 @@ export default function CapacityPlanner() {
           <div className="disclaimer-card">
             <h3 className="disclaimer-title">⚠️ Important Disclaimer</h3>
             <p className="disclaimer-text">
-              {performanceData.notes.disclaimer}
+              {disclaimerText}
             </p>
           </div>
         </div>
