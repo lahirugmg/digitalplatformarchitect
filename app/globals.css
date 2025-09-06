@@ -4369,10 +4369,12 @@ html {
 }
 
 /* Capacity Planner Styles */
-.capacity-planner {
-  max-width: 1000px;
-  margin: 0 auto;
-}
+.capacity-planner { max-width: 100%; margin: 0 auto; }
+
+/* Side-by-side panels for planner */
+.planner-panels { display: grid; grid-template-columns: 1.1fr 1fr; gap: 1.5rem; align-items: start; }
+.planner-panels .section-card { margin-bottom: 0; }
+@media (max-width: 1024px) { .planner-panels { grid-template-columns: 1fr; } }
 
 .section-card {
   background: var(--surface);
@@ -5051,7 +5053,7 @@ html {
 /* ========== Landing Left Tools Rail ========== */
 .home-layout { position: relative; }
 
-.left-rail { position: fixed; top: 96px; left: 0; width: 300px; z-index: 30; }
+.left-rail { position: fixed; top: 96px; left: 16px; width: 300px; z-index: 30; }
 
 .tools-rail {
   background: var(--surface);
@@ -5136,4 +5138,5 @@ html {
 }
 
 /* Constrain home main content so it stays centered with left rail present */
-.home-main { width: 100%; max-width: min(1200px, calc(100vw - 640px)); margin: 0 auto; }
+.home-main { width: 100%; max-width: min(1200px, calc(100vw - 640px)); margin: 0 auto; position: relative; left: 16px; }
+@media (max-width: 1024px) { .home-main { left: 0; } }

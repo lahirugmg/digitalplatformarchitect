@@ -9,7 +9,6 @@ const links = [
   { href: "/blocks", label: "Blocks" },
   { href: "/patterns", label: "Patterns" },
   { href: "/solution", label: "Solutions" },
-  { href: "/tools/apim-capacity-planner", label: "Tools" },
   { href: "/ai", label: "AI" },
   { href: "/articles", label: "Articles" },
   { href: "/about", label: "About" }
@@ -37,10 +36,7 @@ export function Header() {
         </Link>
         <nav className="nav" aria-label="Primary">
           {links.map((l) => {
-            // For tools, check if pathname starts with /tools
-            const isActive = l.href === "/tools/apim-capacity-planner" 
-              ? pathname.startsWith("/tools")
-              : pathname === l.href;
+            const isActive = pathname === l.href;
             
             return (
               <Link

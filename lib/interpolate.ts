@@ -48,6 +48,10 @@ export function linearInterpolate(x: number, x0: number, y0: number, x1: number,
   return y0 + ((y1 - y0) * (x - x0)) / (x1 - x0);
 }
 
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
 /**
  * Finds the two nearest values in a sorted array
  * @param value - Value to find bounds for
@@ -98,6 +102,14 @@ export function interpolateThroughputByMessageSize(
   const messageSizes = performanceData.messageSizesB;
   const throughputData = performanceData.throughput[apiType];
 
+  // Clamp out-of-range message sizes to avoid extrapolation to negative values
+  if (messageSize <= messageSizes[0]) {
+    return throughputData[messageSizes[0].toString()][concurrency.toString()];
+  }
+  if (messageSize >= messageSizes[messageSizes.length - 1]) {
+    return throughputData[messageSizes[messageSizes.length - 1].toString()][concurrency.toString()];
+  }
+
   const bounds = findBounds(messageSize, messageSizes);
 
   if (bounds.exact !== undefined) {
@@ -128,6 +140,14 @@ export function interpolateThroughputByConcurrency(
 ): number {
   const concurrencies = performanceData.concurrency;
   const throughputData = performanceData.throughput[apiType][messageSize.toString()];
+
+  // Clamp out-of-range concurrencies to avoid extrapolation artifacts
+  if (concurrency <= concurrencies[0]) {
+    return throughputData[concurrencies[0].toString()];
+  }
+  if (concurrency >= concurrencies[concurrencies.length - 1]) {
+    return throughputData[concurrencies[concurrencies.length - 1].toString()];
+  }
 
   const bounds = findBounds(concurrency, concurrencies);
 
@@ -160,23 +180,27 @@ export function getInterpolatedThroughput(
   const messageSizes = performanceData.messageSizesB;
   const concurrencies = performanceData.concurrency;
 
+  // Clamp inputs to known data range to prevent negative extrapolation
+  const clampedMessageSize = clamp(messageSize, messageSizes[0], messageSizes[messageSizes.length - 1]);
+  const clampedConcurrency = clamp(concurrency, concurrencies[0], concurrencies[concurrencies.length - 1]);
+
   // Check if both values are exact matches
-  if (messageSizes.includes(messageSize) && concurrencies.includes(concurrency)) {
-    return performanceData.throughput[apiType][messageSize.toString()][concurrency.toString()];
+  if (messageSizes.includes(clampedMessageSize) && concurrencies.includes(clampedConcurrency)) {
+    return performanceData.throughput[apiType][clampedMessageSize.toString()][clampedConcurrency.toString()];
   }
 
   // If message size is exact but concurrency needs interpolation
-  if (messageSizes.includes(messageSize)) {
-    return interpolateThroughputByConcurrency(concurrency, messageSize, apiType, performanceData);
+  if (messageSizes.includes(clampedMessageSize)) {
+    return interpolateThroughputByConcurrency(clampedConcurrency, clampedMessageSize, apiType, performanceData);
   }
 
   // If concurrency is exact but message size needs interpolation
-  if (concurrencies.includes(concurrency)) {
-    return interpolateThroughputByMessageSize(messageSize, concurrency, apiType, performanceData);
+  if (concurrencies.includes(clampedConcurrency)) {
+    return interpolateThroughputByMessageSize(clampedMessageSize, clampedConcurrency, apiType, performanceData);
   }
 
   // Both need interpolation - use bilinear interpolation
-  return bilinearInterpolateThroughput(messageSize, concurrency, apiType, performanceData);
+  return bilinearInterpolateThroughput(clampedMessageSize, clampedConcurrency, apiType, performanceData);
 }
 
 /**
@@ -264,7 +288,10 @@ export function calculateRecommendedNodes(
   safetyHeadroom: number
 ): number {
   const effectiveCapacity = perNodeThroughput * (1 - safetyHeadroom / 100);
-  return Math.ceil(targetTps / effectiveCapacity);
+  if (!isFinite(effectiveCapacity) || effectiveCapacity <= 0) {
+    return 1; // Ensure at least one node is recommended
+  }
+  return Math.max(1, Math.ceil(targetTps / effectiveCapacity));
 }
 
 /**

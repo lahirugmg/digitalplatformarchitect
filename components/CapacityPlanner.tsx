@@ -68,7 +68,7 @@ export default function CapacityPlanner() {
   return (
     <div className="capacity-planner">
       <div className="stack gap-xl">
-        
+        <div className="planner-panels">
         {/* Input Controls */}
         <div className="section-card">
           <div className="section-content">
@@ -79,25 +79,40 @@ export default function CapacityPlanner() {
               <div className="form-group">
                 <label className="form-label">
                   Average Message Size
-                  <span className="form-hint">Size of API request/response payload</span>
+                  <span className="form-hint">Size of API request/response payload (Max 100 KiB)</span>
                 </label>
                 <div className="input-group">
+                  {/** Determine dynamic max based on unit: 100 KiB or 102,400 Bytes */}
+                  {/** Note: We clamp values in onChange as well */}
+                  {(() => null)()}
+                  
                   <input
                     type="number"
                     value={messageSize}
-                    onChange={(e) => setMessageSize(Number(e.target.value) || 1)}
+                    max={messageSizeUnit === "KiB" ? 100 : 102400}
+                    onChange={(e) => {
+                      const raw = Number(e.target.value);
+                      const max = messageSizeUnit === "KiB" ? 100 : 102400;
+                      const next = isNaN(raw) || raw < 1 ? 1 : Math.min(raw, max);
+                      setMessageSize(next);
+                    }}
                     min="1"
                     className="form-input"
                     placeholder="1"
                   />
                   <select
                     value={messageSizeUnit}
-                    onChange={(e) => setMessageSizeUnit(e.target.value)}
+                    onChange={(e) => {
+                      const unit = e.target.value;
+                      // If switching to KiB, cap at 100; if Bytes, cap at 102400
+                      const max = unit === "KiB" ? 100 : 102400;
+                      setMessageSizeUnit(unit);
+                      setMessageSize((prev) => Math.min(prev, max));
+                    }}
                     className="form-select"
                   >
                     <option value="Bytes">Bytes</option>
                     <option value="KiB">KiB</option>
-                    <option value="MiB">MiB</option>
                   </select>
                 </div>
               </div>
@@ -192,12 +207,15 @@ export default function CapacityPlanner() {
             <h2 className="section-title">Capacity Estimation</h2>
             
             {/* Key Metrics */}
-            <div className="results-grid">
-              <div className="result-card primary">
-                <div className="result-value">{results.recommendedNodes}</div>
-                <div className="result-label">Recommended Nodes</div>
-                <div className="result-badge">{results.tShirtSize}</div>
+          <div className="results-grid">
+            <div className="result-card primary">
+              <div className="result-value">{results.recommendedNodes}</div>
+              <div className="result-label">Recommended Nodes</div>
+              <div className="result-unit">
+                Node size: {performanceData.hardware.vCPU} vCPU, {performanceData.hardware.memGiB} GiB
               </div>
+              <div className="result-badge">{results.tShirtSize}</div>
+            </div>
               
               <div className="result-card">
                 <div className="result-value">{results.perNodeThroughput.toLocaleString()}</div>
@@ -239,6 +257,7 @@ export default function CapacityPlanner() {
               </div>
             )}
           </div>
+        </div>
         </div>
 
         {/* Assumptions & Disclaimer */}
