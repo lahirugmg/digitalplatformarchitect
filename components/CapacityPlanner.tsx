@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import performanceData from "@/data/wso2-apim-4.5.0-performance.json";
+import wso2apim450 from "@/data/wso2-apim-4.5.0-performance.json";
 import { 
   getInterpolatedThroughput, 
   getInterpolatedLatency, 
@@ -19,6 +19,12 @@ interface CalculationResults {
   tShirtSize: string;
 }
 
+type DatasetKey = "wso2-apim-4.5.0";
+
+const DATASETS: Record<DatasetKey, { label: string; data: any } > = {
+  "wso2-apim-4.5.0": { label: "WSO2 APIM 4.5.0", data: wso2apim450 },
+};
+
 export default function CapacityPlanner() {
   // Form state
   const [messageSize, setMessageSize] = useState<number>(1);
@@ -27,6 +33,9 @@ export default function CapacityPlanner() {
   const [concurrentUsers, setConcurrentUsers] = useState<number>(200);
   const [trafficType, setTrafficType] = useState<string>("echo");
   const [safetyHeadroom, setSafetyHeadroom] = useState<number>(30);
+  const [dataset, setDataset] = useState<DatasetKey>("wso2-apim-4.5.0");
+
+  const performanceData = DATASETS[dataset].data;
 
   // Calculate results
   const results: CalculationResults = useMemo(() => {
@@ -63,7 +72,7 @@ export default function CapacityPlanner() {
       latency,
       tShirtSize
     };
-  }, [messageSize, messageSizeUnit, targetTps, concurrentUsers, trafficType, safetyHeadroom]);
+  }, [messageSize, messageSizeUnit, targetTps, concurrentUsers, trafficType, safetyHeadroom, dataset]);
 
   return (
     <div className="capacity-planner">
@@ -74,6 +83,22 @@ export default function CapacityPlanner() {
           <div className="section-content">
             <h2 className="section-title">Configuration</h2>
             <div className="planner-form">
+              {/* Dataset selection */}
+              <div className="form-group">
+                <label className="form-label">
+                  Dataset
+                  <span className="form-hint">Choose product/version for baseline results</span>
+                </label>
+                <select
+                  className="form-select"
+                  value={dataset}
+                  onChange={(e) => setDataset(e.target.value as DatasetKey)}
+                >
+                  {Object.entries(DATASETS).map(([key, meta]) => (
+                    <option key={key} value={key}>{meta.label}</option>
+                  ))}
+                </select>
+              </div>
               
               {/* Message Size */}
               <div className="form-group">
@@ -189,7 +214,11 @@ export default function CapacityPlanner() {
                 <input
                   type="number"
                   value={safetyHeadroom}
-                  onChange={(e) => setSafetyHeadroom(Number(e.target.value) || 0)}
+                  onChange={(e) => {
+                    const raw = Number(e.target.value);
+                    const next = isNaN(raw) ? 0 : Math.max(0, Math.min(raw, 90));
+                    setSafetyHeadroom(next);
+                  }}
                   min="0"
                   max="90"
                   className="form-input"
@@ -290,24 +319,6 @@ export default function CapacityPlanner() {
             <p className="disclaimer-text">
               {performanceData.notes.disclaimer}
             </p>
-            <div className="disclaimer-links">
-              <a 
-                href="https://apim.docs.wso2.com/en/4.5.0/install-and-setup/setup/deployment-best-practices/performance-tests-results/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="disclaimer-link"
-              >
-                📊 View Complete WSO2 APIM 4.5.0 Test Results
-              </a>
-              <a 
-                href="https://github.com/wso2/performance-apim" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="disclaimer-link"
-              >
-                🔬 WSO2 Performance Repository
-              </a>
-            </div>
           </div>
         </div>
 

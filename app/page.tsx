@@ -64,7 +64,7 @@ export default function HomePage() {
             <Link href="/tools/apim-capacity-planner" className="tools-rail-item">
               <span className="tools-rail-icon">📊</span>
               <span className="tools-rail-text">
-                <span className="tools-rail-item-title">API Mgmt Capacity Planner</span>
+                <span className="tools-rail-item-title">Capacity Planning Calculator</span>
                 <span className="tools-rail-item-desc">Estimate nodes and throughput</span>
               </span>
               <span className="tools-rail-arrow">→</span>
@@ -194,7 +194,7 @@ export default function HomePage() {
             <div className="tool-header">
               <div className="tool-icon">📊</div>
               <div className="tool-meta">
-                <h3 className="tool-title">API Management Capacity Planner</h3>
+                <h3 className="tool-title">Capacity Planning Calculator</h3>
                 <div className="tool-badges">
                   <span className="tool-badge new">New</span>
                   <span className="tool-badge popular">Popular</span>
