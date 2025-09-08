@@ -69,6 +69,14 @@ export default function HomePage() {
               </span>
               <span className="tools-rail-arrow">→</span>
             </Link>
+            <Link href="/tools/architecture-explorer" className="tools-rail-item">
+              <span className="tools-rail-icon">🧭</span>
+              <span className="tools-rail-text">
+                <span className="tools-rail-item-title">Architecture Explorer</span>
+                <span className="tools-rail-item-desc">Interactive Architecture Layers</span>
+              </span>
+              <span className="tools-rail-arrow">→</span>
+            </Link>
           </nav>
         </div>
       </aside>
@@ -223,6 +231,30 @@ export default function HomePage() {
             
             <div className="tool-cta">
               <span className="cta-text">Start Planning</span>
+              <span className="cta-arrow">→</span>
+            </div>
+          </Link>
+          
+          <Link href="/tools/architecture-explorer" className="tool-card">
+            <div className="tool-header">
+              <div className="tool-icon">🧭</div>
+              <div className="tool-meta">
+                <h3 className="tool-title">Architecture Explorer</h3>
+                <div className="tool-badges">
+                  <span className="tool-badge new">New</span>
+                </div>
+              </div>
+            </div>
+            <p className="tool-description">
+              Explore Architecture Layers across Business, Solution, and Deployment views. Toggle roles and levels.
+            </p>
+            <div className="tool-features">
+              <div className="tool-feature"><span className="feature-icon">📐</span><span>Layered Views (L0–L3)</span></div>
+              <div className="tool-feature"><span className="feature-icon">🧩</span><span>Role Presets</span></div>
+              <div className="tool-feature"><span className="feature-icon">🗺️</span><span>Zoom & Pan</span></div>
+            </div>
+            <div className="tool-cta">
+              <span className="cta-text">Open Explorer</span>
               <span className="cta-arrow">→</span>
             </div>
           </Link>
