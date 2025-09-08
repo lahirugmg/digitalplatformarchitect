@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { track } from "@vercel/analytics";
 import questionsData from "@/data/questions.json";
 
 type Question = {
@@ -106,6 +107,12 @@ export function ArchitecturePatternSelector() {
       .slice(0, 3); // Top 3 patterns
 
     setResults(sortedResults);
+    
+    // Track analytics
+    track("view_results", {
+      patterns: sortedResults.map(r => r.pattern).join(","),
+      scores: sortedResults.map(r => r.score).join(",")
+    });
   };
 
   const handleAnswer = (values: string[]) => {
@@ -162,6 +169,9 @@ export function ArchitecturePatternSelector() {
     a.download = 'architecture-pattern-recommendations.md';
     a.click();
     URL.revokeObjectURL(url);
+    
+    // Track analytics
+    track("export_summary");
   };
 
   const generateMarkdownReport = () => {
@@ -203,6 +213,22 @@ export function ArchitecturePatternSelector() {
   const shareResults = () => {
     navigator.clipboard.writeText(window.location.href);
     // You could show a toast notification here
+  };
+
+  const trackPillarLink = (pillarId: string, linkType: 'building-block' | 'blueprint', target: string) => {
+    const eventMap: Record<string, string> = {
+      'api-management': 'open_api_mgmt_link',
+      'enterprise-integration': 'open_integration_link', 
+      'iam': 'open_iam_link',
+      'message-broker': 'open_message_broker_link',
+      'microservices-domain-services': 'open_services_link',
+      'data-platform': 'open_data_platform_link'
+    };
+    
+    const eventName = eventMap[pillarId];
+    if (eventName) {
+      track(eventName, { linkType, target });
+    }
   };
 
   if (state === "intro") {
@@ -256,7 +282,7 @@ export function ArchitecturePatternSelector() {
 
     return (
       <div className="pattern-selector">
-        <div className="progress-bar">
+        <div className="progress-bar" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
           <div className="progress-fill" style={{ width: `${progress}%` }}></div>
         </div>
         <div className="question-section">
@@ -265,11 +291,11 @@ export function ArchitecturePatternSelector() {
               <span className="question-number">
                 Question {currentQuestionIndex + 1} of {questions.length}
               </span>
-              <h2>{question.text}</h2>
+              <h2 id={`question-${question.id}`}>{question.text}</h2>
               <p className="question-pillar">Pillar: {pillars.find(p => p.id === question.pillar)?.name}</p>
             </div>
             
-            <div className="options">
+            <div className="options" role="group" aria-labelledby={`question-${question.id}`}>
               {question.options.map(option => (
                 <label 
                   key={option.value} 
@@ -281,8 +307,9 @@ export function ArchitecturePatternSelector() {
                     value={option.value}
                     checked={selectedAnswers.includes(option.value)}
                     onChange={() => handleOptionSelect(option.value)}
+                    aria-describedby={`option-${option.value}-desc`}
                   />
-                  <span className="option-text">{option.text}</span>
+                  <span className="option-text" id={`option-${option.value}-desc`}>{option.text}</span>
                 </label>
               ))}
             </div>
@@ -350,20 +377,23 @@ export function ArchitecturePatternSelector() {
         </div>
 
         <div className="pillar-tabs">
-          <div className="tab-nav">
+          <div className="tab-nav" role="tablist" aria-label="Platform Pillars">
             {pillars.map(pillar => (
               <button
                 key={pillar.id}
                 className={`tab-btn ${activePillar === pillar.id ? 'active' : ''}`}
                 onClick={() => setActivePillar(pillar.id)}
+                role="tab"
+                aria-selected={activePillar === pillar.id}
+                aria-controls={`panel-${pillar.id}`}
               >
-                <span className="tab-icon">{pillar.icon}</span>
+                <span className="tab-icon" aria-hidden="true">{pillar.icon}</span>
                 <span className="tab-name">{pillar.name}</span>
               </button>
             ))}
           </div>
 
-          <div className="tab-content">
+          <div className="tab-content" role="tabpanel" id={`panel-${activePillar}`} aria-labelledby={`tab-${activePillar}`}>
             <h3>{pillars.find(p => p.id === activePillar)?.name} Recommendations</h3>
             
             {results.map((result, index) => {
@@ -385,7 +415,12 @@ export function ArchitecturePatternSelector() {
                       <ul>
                         {(pillarMappings[activePillar as keyof typeof pillarMappings]?.buildingBlocks || []).map(block => (
                           <li key={block}>
-                            <a href={`/blocks/${block}`} target="_blank" rel="noopener noreferrer">
+                            <a 
+                              href={`/blocks/${block}`} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              onClick={() => trackPillarLink(activePillar, 'building-block', block)}
+                            >
                               {block.charAt(0).toUpperCase() + block.slice(1).replace(/-/g, ' ')}
                             </a>
                           </li>
@@ -398,7 +433,12 @@ export function ArchitecturePatternSelector() {
                       <ul>
                         {(pillarMappings[activePillar as keyof typeof pillarMappings]?.blueprints || []).map(blueprint => (
                           <li key={blueprint}>
-                            <a href={`/blueprints/${blueprint}`} target="_blank" rel="noopener noreferrer">
+                            <a 
+                              href={`/blueprints/${blueprint}`} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              onClick={() => trackPillarLink(activePillar, 'blueprint', blueprint)}
+                            >
                               {blueprint.charAt(0).toUpperCase() + blueprint.slice(1).replace(/-/g, ' ')}
                             </a>
                           </li>
