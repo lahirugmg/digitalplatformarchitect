@@ -77,6 +77,14 @@ export default function HomePage() {
               </span>
               <span className="tools-rail-arrow">→</span>
             </Link>
+            <Link href="/tools/architecture-pattern-selector" className="tools-rail-item">
+              <span className="tools-rail-icon">🎯</span>
+              <span className="tools-rail-text">
+                <span className="tools-rail-item-title">Architecture Pattern Selector</span>
+                <span className="tools-rail-item-desc">Personalized pattern recommendations</span>
+              </span>
+              <span className="tools-rail-arrow">→</span>
+            </Link>
           </nav>
         </div>
       </aside>
@@ -294,40 +302,29 @@ export default function HomePage() {
             </div>
           </div>
           
-          <div className="tool-card coming-soon">
+          <Link href="/tools/architecture-pattern-selector" className="tool-card">
             <div className="tool-header">
-              <div className="tool-icon">🏗️</div>
+              <div className="tool-icon">🎯</div>
               <div className="tool-meta">
                 <h3 className="tool-title">Architecture Pattern Selector</h3>
                 <div className="tool-badges">
-                  <span className="tool-badge coming-soon">Coming Soon</span>
+                  <span className="tool-badge new">New</span>
                 </div>
               </div>
             </div>
-            
             <p className="tool-description">
-              Interactive wizard to recommend optimal architecture patterns based on your requirements.
+              Interactive wizard that recommends optimal architecture patterns based on your requirements, with transparent rationale.
             </p>
-            
             <div className="tool-features">
-              <div className="tool-feature">
-                <span className="feature-icon">🎯</span>
-                <span>Smart Recommendations</span>
-              </div>
-              <div className="tool-feature">
-                <span className="feature-icon">📊</span>
-                <span>Trade-off Analysis</span>
-              </div>
-              <div className="tool-feature">
-                <span className="feature-icon">📐</span>
-                <span>Pattern Comparison</span>
-              </div>
+              <div className="tool-feature"><span className="feature-icon">❓</span><span>Interactive Questions</span></div>
+              <div className="tool-feature"><span className="feature-icon">📊</span><span>Ranked Results</span></div>
+              <div className="tool-feature"><span className="feature-icon">🔗</span><span>Deep Links</span></div>
             </div>
-            
-            <div className="tool-cta disabled">
-              <span className="cta-text">Coming Soon</span>
+            <div className="tool-cta">
+              <span className="cta-text">Launch Selector</span>
+              <span className="cta-arrow">→</span>
             </div>
-          </div>
+          </Link>
         </div>
       </section>
 
