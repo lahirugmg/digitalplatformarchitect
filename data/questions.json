@@ -418,8 +418,6 @@
     "microservices-domain-services": {
       "buildingBlocks": [
         "internal-developer-platform",
-        "devops-ci-cd",
-        "cloud-infrastructure-orchestration",
         "observability-operations"
       ],
       "blueprints": ["microservices-platform"]

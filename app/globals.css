@@ -5147,6 +5147,33 @@ html {
   margin: 0 auto;
 }
 
+/* Architecture Builder Styles */
+.builder { display: grid; gap: 1rem; }
+.builder-toolbar { display: grid; gap: 0.5rem; }
+.builder-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.builder-hint { color: var(--text-secondary); font-size: 0.9rem; }
+.builder-content { display: grid; grid-template-columns: 280px 1fr; gap: 1rem; min-height: 520px; }
+.builder-palette { border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); overflow: hidden; }
+.palette-header { font-weight: 600; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+.palette-items { padding: 0.5rem; display: grid; gap: 0.5rem; }
+.palette-item { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0.5rem 0.75rem; background: var(--surface); cursor: grab; }
+.palette-item:hover { background: var(--surface-hover); }
+.palette-item-title { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+.palette-item-slug { font-size: 0.8rem; color: var(--text-secondary); }
+.builder-canvas { position: relative; border: 2px dashed var(--border); border-radius: var(--radius-md); background: var(--surface-alt); min-height: 520px; overflow: hidden; }
+.builder-edges { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.builder-node { position: absolute; width: 200px; background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius-md); padding: 0.5rem 0.75rem; box-shadow: var(--shadow-sm); cursor: move; user-select: none; }
+.builder-node.selected { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+.builder-node.connecting { border-style: dashed; }
+.builder-node .node-title { font-weight: 600; color: var(--text); }
+.builder-node .node-slug { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
+.builder-node .node-link { font-size: 0.8rem; color: var(--primary); text-decoration: none; }
+.builder-node .node-link:hover { text-decoration: underline; }
+
+@media (max-width: 900px) {
+  .builder-content { grid-template-columns: 1fr; }
+}
+
 /* Accessibility helpers */
 .sr-only {
   position: absolute;

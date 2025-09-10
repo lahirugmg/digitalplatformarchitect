@@ -446,6 +446,30 @@ export const blocks: Record<string, Block> = {
       },
       {
         kind: "list",
+        title: "Delivery: DevOps & CI/CD",
+        items: [
+          "Standard CI pipelines with unit/integration tests and artifacts",
+          "Security & quality gates (SAST/DAST, dependency scan, coverage)",
+          "Automated CD with promotion/approvals/rollback",
+          "Progressive delivery: blue/green, canary, feature flags",
+          "GitOps controllers and declarative environments",
+          "Ephemeral preview environments and env config management"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Runtime: Cloud Infrastructure & Orchestration",
+        items: [
+          "Cluster lifecycle and capacity management",
+          "Scheduling, autoscaling (HPA/VPA), and health management",
+          "Service discovery, routing, ingress/egress and policies",
+          "Storage classes/volumes and data durability",
+          "Network policy, load balancing, multi-AZ/region topologies",
+          "Service mesh integration and runtime policy control"
+        ]
+      },
+      {
+        kind: "list",
         title: "Architecture patterns",
         items: [
           "Backstage or custom portal",
@@ -463,8 +487,10 @@ export const blocks: Record<string, Block> = {
         kind: "list",
         title: "KPIs/SLIs",
         items: [
-          "Lead time for change",
-          "Deployment frequency and change failure rate",
+          "Lead time for change (DORA)",
+          "Deployment frequency and change failure rate (DORA)",
+          "MTTR for incidents and rollbacks",
+          "Pipeline success rate and duration",
           "Time to onboard and time-to-first PR",
           "Developer satisfaction (DevEx surveys)"
         ]
@@ -659,163 +685,321 @@ export const blocks: Record<string, Block> = {
       ]}
     ]
   },
-  "security-services": {
-    slug: "security-services",
-    title: "Security Services",
+  "ai-ml-intelligent-services": {
+    slug: "ai-ml-intelligent-services",
+    title: "AI/ML & Intelligent Services Platform",
     summary:
-      "Secrets, encryption, policy, and threat detection beyond IAM — enabling zero trust.",
-    keywords: ["vault", "KMS", "DLP", "threat detection", "policy"],
+      "Where your data platform feeds into inference, model deployment, and continuous learning pipelines. This building block turns data into intelligence by managing ML models, embeddings, vector databases, and generative AI services.",
+    keywords: ["ai", "ml", "machine learning", "models", "inference", "embeddings", "vector database", "generative ai", "llm"],
     sections: [
-      { kind: "text", title: "What it is", body:
-        "Platform security capabilities including secrets and key management, encryption, scanning, and policy enforcement across the stack." },
-      { kind: "list", title: "Responsibilities", items: [
-        "Secrets lifecycle and dynamic credentials",
-        "Encryption (at-rest/in-transit) and key rotation",
-        "Policy-as-code and admission control",
-        "Vuln scanning and compliance reporting"
-      ]},
-      { kind: "list", title: "Core capabilities", items: [
-        "Vault/KMS/HSM integration",
-        "OPA/Kyverno policies",
-        "SAST/DAST/dependency scanning",
-        "Tokenization and data protection"
-      ]},
-      { kind: "list", title: "Architecture patterns", items: [
-        "Zero trust and short-lived credentials",
-        "Envelope encryption",
-        "Shift-left security with CI/CD gates",
-        "Runtime policy enforcement"
-      ]},
-      { kind: "list", title: "Tech examples", items: [
-        "HashiCorp Vault",
-        "AWS KMS/Azure Key Vault/GCP KMS",
-        "OPA/Kyverno",
-        "Trivy/Grype"
-      ]},
-      { kind: "list", title: "KPIs/SLIs", items: [
-        "Rotation compliance",
-        "Vulnerability MTTR",
-        "Policy violation rate",
-        "Secrets exposure incidents"
-      ]}
+      {
+        kind: "text",
+        title: "What it is",
+        body:
+          "An intelligent services platform that transforms data into actionable intelligence through ML model lifecycle management, real-time inference, and generative AI capabilities. It bridges the gap between data platforms and business applications by providing scalable, production-ready AI services."
+      },
+      {
+        kind: "list",
+        title: "Core Responsibilities",
+        items: [
+          "ML model training, validation, and deployment pipelines",
+          "Real-time and batch inference serving with auto-scaling",
+          "Model registry and versioning with A/B testing capabilities",
+          "Vector databases and embedding management for semantic search",
+          "Generative AI services and LLM integration",
+          "Continuous learning and model retraining automation"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Model Lifecycle Management",
+        items: [
+          "Experiment tracking and model versioning",
+          "Automated training pipelines with hyperparameter tuning",
+          "Model validation and performance monitoring",
+          "Staged deployment with canary releases and rollbacks",
+          "Model registry with metadata and lineage tracking",
+          "Automated retraining triggers based on data drift"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Inference & Serving",
+        items: [
+          "High-performance model serving with GPU/CPU optimization",
+          "Real-time inference APIs with sub-100ms latency",
+          "Batch prediction processing for large datasets",
+          "Auto-scaling based on traffic patterns and resource usage",
+          "Multi-model serving and ensemble predictions",
+          "Edge deployment for low-latency applications"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Vector & Embedding Services",
+        items: [
+          "Vector databases for similarity search and retrieval",
+          "Embedding generation and management pipelines",
+          "Semantic search and recommendation engines",
+          "RAG (Retrieval-Augmented Generation) implementations",
+          "Knowledge graph integration and entity linking",
+          "Multi-modal embeddings for text, images, and audio"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Generative AI & LLM Integration",
+        items: [
+          "LLM deployment and fine-tuning infrastructure",
+          "Prompt engineering and template management",
+          "Multi-provider LLM gateway with cost optimization",
+          "Content generation and summarization services",
+          "Conversational AI and chatbot frameworks",
+          "AI safety and content moderation pipelines"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Data Integration & Feature Engineering",
+        items: [
+          "Feature stores with real-time and batch feature serving",
+          "Data pipeline integration with streaming and batch sources",
+          "Feature engineering and transformation pipelines",
+          "Data quality monitoring and drift detection",
+          "Multi-source data fusion and enrichment",
+          "Privacy-preserving ML with federated learning"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Monitoring & Observability",
+        items: [
+          "Model performance monitoring and alerting",
+          "Data drift and concept drift detection",
+          "Inference latency and throughput monitoring",
+          "Model explainability and bias detection",
+          "Resource utilization and cost tracking",
+          "A/B testing and champion/challenger analysis"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Security & Governance",
+        items: [
+          "Model access control and authentication",
+          "Data privacy and PII protection in ML pipelines",
+          "Model audit trails and compliance reporting",
+          "Adversarial attack detection and defense",
+          "Bias detection and fairness monitoring",
+          "Responsible AI governance and ethics frameworks"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Architecture Patterns",
+        items: [
+          "Microservices architecture for ML model serving",
+          "Event-driven ML pipelines with real-time triggers",
+          "Lambda architecture for batch and stream processing",
+          "Model-as-a-Service (MaaS) with API-first design",
+          "Multi-cloud and hybrid ML deployment strategies",
+          "Edge computing for distributed inference"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Tech Examples",
+        items: [
+          "ML Platforms: MLflow, Kubeflow, SageMaker, Vertex AI",
+          "Model Serving: TensorFlow Serving, TorchServe, Seldon, KServe",
+          "Vector Databases: Pinecone, Weaviate, Qdrant, Chroma",
+          "LLM Infrastructure: Hugging Face, Ollama, vLLM, LangChain",
+          "Feature Stores: Feast, Tecton, Hopsworks",
+          "Monitoring: Evidently, WhyLabs, Neptune, Weights & Biases"
+        ]
+      },
+      {
+        kind: "list",
+        title: "KPIs/SLIs/SLOs",
+        items: [
+          "Model accuracy and performance metrics (precision, recall, F1)",
+          "Inference latency: P50/P95/P99 response times",
+          "Model serving availability and uptime (99.9%+)",
+          "Data freshness and pipeline success rates",
+          "Resource utilization and cost per inference",
+          "Model drift detection and retraining frequency"
+        ]
+      }
     ]
-  }
-  ,
-  "devops-ci-cd": {
-    slug: "devops-ci-cd",
-    title: "DevOps & CI/CD",
+  },
+  "application-services": {
+    slug: "application-services",
+    title: "Application & Services",
     summary:
-      "Automated, reliable, and repeatable software delivery: build, test, security scan, and deploy with confidence through Continuous Integration and Continuous Delivery.",
-    keywords: [
-      "devops",
-      "ci/cd",
-      "pipelines",
-      "gitops",
-      "quality gates",
-      "release automation"
-    ],
+      "The foundational layer that encapsulates the enterprise's business logic and capabilities, regardless of architectural style. This block represents the 'source of truth' for business functionality.",
+    keywords: ["applications", "microservices", "monoliths", "business logic", "saas", "legacy", "services"],
     sections: [
-      { kind: "text", title: "What it is", body:
-        "A delivery engine that turns code changes into production releases safely and frequently. It standardizes pipelines, quality checks, environments, and promotion workflows across teams." },
-      { kind: "list", title: "Responsibilities", items: [
-        "Continuous Integration: builds, unit/integration tests, artifact creation",
-        "Security & Quality gates: SAST/DAST, dependency scanning, coverage",
-        "Continuous Delivery/Deployment: automated promotion, approvals, rollbacks",
-        "Environment provisioning and config management",
-        "Release orchestration and change management"
-      ]},
-      { kind: "list", title: "Core Capabilities", items: [
-        "Pipeline templates and reusable stages",
-        "Secrets and credentials management",
-        "Ephemeral preview environments",
-        "Progressive delivery (blue/green, canary, feature flags)",
-        "GitOps and declarative environments"
-      ]},
-      { kind: "list", title: "Patterns", items: [
-        "Trunk-based development and short-lived branches",
-        "Artifact promotion across environments",
-        "Infrastructure as Code for reproducibility",
-        "GitOps controllers (pull-based deployments)"
-      ]},
-      { kind: "list", title: "Tech Examples", items: [
-        "GitHub Actions, GitLab CI, Jenkins, CircleCI",
-        "Argo CD, FluxCD (GitOps)",
-        "SonarQube, Trivy/Grype, OWASP ZAP",
-        "Helm/Kustomize, Terraform/Pulumi"
-      ]},
-      { kind: "list", title: "KPIs/SLIs", items: [
-        "DORA metrics: lead time for changes, deployment frequency, change failure rate, MTTR",
-        "Pipeline success rate and duration",
-        "Mean time-to-rollback and rollback coverage",
-        "Security findings MTTR and policy compliance"
-      ]}
-    ]
-  }
-  ,
-  "cloud-infrastructure-orchestration": {
-    slug: "cloud-infrastructure-orchestration",
-    title: "Cloud Infrastructure & Orchestration",
-    summary:
-      "Compute, storage, networking, and cluster orchestration (e.g., Kubernetes) that provide the elastic, resilient foundation for running platform workloads.",
-    keywords: [
-      "kubernetes",
-      "orchestration",
-      "clusters",
-      "infrastructure",
-      "networking",
-      "autoscaling"
-    ],
-    sections: [
-      { kind: "text", title: "What it is", body:
-        "The programmable substrate where services run. It automates scheduling, scaling, self-healing, and service networking, exposing a consistent runtime across environments." },
-      { kind: "list", title: "Responsibilities", items: [
-        "Cluster lifecycle and capacity management",
-        "Service scheduling, auto-scaling, and placement",
-        "Service discovery, routing, and ingress/egress",
-        "Storage classes, volumes, and data durability",
-        "Network policy, load balancing, and resilience"
-      ]},
-      { kind: "list", title: "Core Capabilities", items: [
-        "Pod/job orchestration and health management",
-        "Horizontal/vertical autoscaling and PDBs",
-        "Service Mesh integration and policy control",
-        "Node groups, spot/ondemand, and multi-az",
-        "Multi-cluster and multi-region topology"
-      ]},
-      { kind: "list", title: "Patterns", items: [
-        "Desired-state reconciliation loops",
-        "Sidecars and operators (K8s controllers)",
-        "Blue/green and canary rollouts at runtime",
-        "Pod disruption budgets and graceful termination"
-      ]},
-      { kind: "list", title: "Tech Examples", items: [
-        "Kubernetes (EKS/AKS/GKE), OpenShift",
-        "Autoscalers (HPA/VPA/KEDA)",
-        "Service mesh: Istio, Linkerd, Consul",
-        "Storage: EBS/PD, Ceph/Rook, EFS/Filestore",
-        "Networking: CNI (Cilium, Calico)"
-      ]},
-      { kind: "list", title: "KPIs/SLIs", items: [
-        "Cluster and workload availability",
-        "Scheduling latency and bin packing efficiency",
-        "Autoscaling responsiveness",
-        "Resource utilization and cost efficiency",
-        "Upgrade success rate and time"
-      ]}
+      {
+        kind: "text",
+        title: "What it is",
+        body:
+          "The foundational layer that encapsulates the enterprise's business logic and capabilities, regardless of architectural style. It includes microservices built for agility and scale, legacy applications that continue to provide critical business value, monolithic services that may still operate in certain domains, and packaged/third-party SaaS services consumed within the enterprise. This block represents the 'source of truth' for business functionality. It provides the core services that other building blocks — such as API Management, Integration, and Identity — expose, secure, orchestrate, and observe to deliver consistent digital experiences."
+      },
+      {
+        kind: "list",
+        title: "Core Responsibilities",
+        items: [
+          "Business logic implementation and domain expertise",
+          "Data persistence and state management",
+          "Business process orchestration and workflows",
+          "Domain-specific functionality and capabilities",
+          "Integration with external systems and services",
+          "Compliance with business rules and regulations"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Application Architectures",
+        items: [
+          "Microservices: Domain-driven, independently deployable, API-first",
+          "Modular monoliths: Well-structured, cohesive but deployable as single unit",
+          "Legacy applications: Critical business systems requiring modernization",
+          "Serverless functions: Event-driven, stateless compute for specific tasks",
+          "Hybrid architectures: Combining multiple styles based on requirements"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Service Types & Patterns",
+        items: [
+          "Domain services: Core business capabilities (orders, payments, inventory)",
+          "Application services: Cross-cutting functionality (notifications, reporting)",
+          "Infrastructure services: Technical capabilities (caching, queuing)",
+          "Composite services: Orchestrating multiple domain services",
+          "Adapter services: Wrapping legacy systems with modern interfaces",
+          "Proxy services: Mediating access to external systems"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Legacy & Modernization",
+        items: [
+          "Legacy application assessment and categorization",
+          "Strangler fig pattern for gradual modernization",
+          "API-first facades for legacy system integration",
+          "Event-driven modernization with change data capture",
+          "Database modernization and data migration strategies",
+          "Incremental refactoring and bounded context extraction"
+        ]
+      },
+      {
+        kind: "list",
+        title: "SaaS & Third-Party Integration",
+        items: [
+          "SaaS application integration and data synchronization",
+          "Third-party API consumption and rate limiting",
+          "Vendor lock-in mitigation and abstraction layers",
+          "Multi-tenant SaaS configuration and customization",
+          "SaaS security and compliance management",
+          "Cost optimization and usage monitoring"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Development & Deployment",
+        items: [
+          "Domain-driven design and bounded context definition",
+          "API-first development with contract testing",
+          "Continuous integration and deployment pipelines",
+          "Feature flagging and progressive deployment",
+          "Service mesh integration for cross-cutting concerns",
+          "Container orchestration and cloud-native deployment"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Data Management",
+        items: [
+          "Database per service pattern for data ownership",
+          "Event sourcing and CQRS for complex domains",
+          "Distributed transaction management and saga patterns",
+          "Data consistency models and eventual consistency",
+          "Caching strategies and read/write optimization",
+          "Data archival and lifecycle management"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Quality & Reliability",
+        items: [
+          "Circuit breakers and bulkhead patterns for resilience",
+          "Health checks and readiness probes",
+          "Distributed tracing and application performance monitoring",
+          "Load testing and capacity planning",
+          "Error handling and retry mechanisms",
+          "Service-level objectives (SLOs) and error budgets"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Security & Compliance",
+        items: [
+          "Application-level security controls and input validation",
+          "Service-to-service authentication and authorization",
+          "Data encryption at rest and in transit",
+          "Audit logging and compliance reporting",
+          "Vulnerability scanning and security testing",
+          "Privacy by design and data protection"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Architecture Patterns",
+        items: [
+          "Domain-driven design with bounded contexts",
+          "Event-driven architecture with domain events",
+          "CQRS and event sourcing for complex business logic",
+          "Hexagonal architecture for testability and isolation",
+          "Microservices with database per service",
+          "Modular monolith with clear module boundaries"
+        ]
+      },
+      {
+        kind: "list",
+        title: "Tech Examples",
+        items: [
+          "Frameworks: Spring Boot, .NET Core, Node.js, Django, Ruby on Rails",
+          "Runtimes: Java/JVM, .NET, Node.js runtime, Python, Go",
+          "Databases: PostgreSQL, MySQL, MongoDB, Cassandra, Redis",
+          "Messaging: Apache Kafka, RabbitMQ, AWS SQS/SNS, Azure Service Bus",
+          "Containers: Docker, Kubernetes, OpenShift, Cloud Run",
+          "SaaS: Salesforce, Workday, ServiceNow, Microsoft 365"
+        ]
+      },
+      {
+        kind: "list",
+        title: "KPIs/SLIs/SLOs",
+        items: [
+          "Application availability and uptime (99.5%+ for critical services)",
+          "Response time: P50/P95/P99 latency for key business operations",
+          "Throughput: Transactions per second and concurrent user capacity",
+          "Error rates: Business logic errors, system errors, and timeouts",
+          "Development velocity: Lead time for features and deployment frequency",
+          "Business metrics: Conversion rates, user engagement, revenue impact"
+        ]
+      }
     ]
   }
 };
 
 export const blockList = [
+  blocks["application-services"],
   blocks["messaging-streaming-platform"],
   blocks["enterprise-integration"],
   blocks["api-management"],
   blocks["identity-access-management"],
   blocks["internal-developer-platform"],
   blocks["data-platform"],
-  // New building blocks added
-  blocks["devops-ci-cd"],
-  blocks["cloud-infrastructure-orchestration"],
-  blocks["observability-operations"],
-  blocks["security-services"]
+  blocks["ai-ml-intelligent-services"],
+  blocks["observability-operations"]
 ];
