@@ -557,7 +557,7 @@ export const blocks: Record<string, Block> = {
   },
   "observability-operations": {
     slug: "observability-operations",
-    title: "Observability & Operations",
+    title: "Observability & Monitoring",
     summary:
       "Digital platform observability and monitoring with comprehensive telemetry, distributed tracing, and multi-layer visibility for reliable operations.",
     keywords: [
@@ -700,6 +700,110 @@ export const blocks: Record<string, Block> = {
       ]}
     ]
   }
+  ,
+  "devops-ci-cd": {
+    slug: "devops-ci-cd",
+    title: "DevOps & CI/CD",
+    summary:
+      "Automated, reliable, and repeatable software delivery: build, test, security scan, and deploy with confidence through Continuous Integration and Continuous Delivery.",
+    keywords: [
+      "devops",
+      "ci/cd",
+      "pipelines",
+      "gitops",
+      "quality gates",
+      "release automation"
+    ],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "A delivery engine that turns code changes into production releases safely and frequently. It standardizes pipelines, quality checks, environments, and promotion workflows across teams." },
+      { kind: "list", title: "Responsibilities", items: [
+        "Continuous Integration: builds, unit/integration tests, artifact creation",
+        "Security & Quality gates: SAST/DAST, dependency scanning, coverage",
+        "Continuous Delivery/Deployment: automated promotion, approvals, rollbacks",
+        "Environment provisioning and config management",
+        "Release orchestration and change management"
+      ]},
+      { kind: "list", title: "Core Capabilities", items: [
+        "Pipeline templates and reusable stages",
+        "Secrets and credentials management",
+        "Ephemeral preview environments",
+        "Progressive delivery (blue/green, canary, feature flags)",
+        "GitOps and declarative environments"
+      ]},
+      { kind: "list", title: "Patterns", items: [
+        "Trunk-based development and short-lived branches",
+        "Artifact promotion across environments",
+        "Infrastructure as Code for reproducibility",
+        "GitOps controllers (pull-based deployments)"
+      ]},
+      { kind: "list", title: "Tech Examples", items: [
+        "GitHub Actions, GitLab CI, Jenkins, CircleCI",
+        "Argo CD, FluxCD (GitOps)",
+        "SonarQube, Trivy/Grype, OWASP ZAP",
+        "Helm/Kustomize, Terraform/Pulumi"
+      ]},
+      { kind: "list", title: "KPIs/SLIs", items: [
+        "DORA metrics: lead time for changes, deployment frequency, change failure rate, MTTR",
+        "Pipeline success rate and duration",
+        "Mean time-to-rollback and rollback coverage",
+        "Security findings MTTR and policy compliance"
+      ]}
+    ]
+  }
+  ,
+  "cloud-infrastructure-orchestration": {
+    slug: "cloud-infrastructure-orchestration",
+    title: "Cloud Infrastructure & Orchestration",
+    summary:
+      "Compute, storage, networking, and cluster orchestration (e.g., Kubernetes) that provide the elastic, resilient foundation for running platform workloads.",
+    keywords: [
+      "kubernetes",
+      "orchestration",
+      "clusters",
+      "infrastructure",
+      "networking",
+      "autoscaling"
+    ],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "The programmable substrate where services run. It automates scheduling, scaling, self-healing, and service networking, exposing a consistent runtime across environments." },
+      { kind: "list", title: "Responsibilities", items: [
+        "Cluster lifecycle and capacity management",
+        "Service scheduling, auto-scaling, and placement",
+        "Service discovery, routing, and ingress/egress",
+        "Storage classes, volumes, and data durability",
+        "Network policy, load balancing, and resilience"
+      ]},
+      { kind: "list", title: "Core Capabilities", items: [
+        "Pod/job orchestration and health management",
+        "Horizontal/vertical autoscaling and PDBs",
+        "Service Mesh integration and policy control",
+        "Node groups, spot/ondemand, and multi-az",
+        "Multi-cluster and multi-region topology"
+      ]},
+      { kind: "list", title: "Patterns", items: [
+        "Desired-state reconciliation loops",
+        "Sidecars and operators (K8s controllers)",
+        "Blue/green and canary rollouts at runtime",
+        "Pod disruption budgets and graceful termination"
+      ]},
+      { kind: "list", title: "Tech Examples", items: [
+        "Kubernetes (EKS/AKS/GKE), OpenShift",
+        "Autoscalers (HPA/VPA/KEDA)",
+        "Service mesh: Istio, Linkerd, Consul",
+        "Storage: EBS/PD, Ceph/Rook, EFS/Filestore",
+        "Networking: CNI (Cilium, Calico)"
+      ]},
+      { kind: "list", title: "KPIs/SLIs", items: [
+        "Cluster and workload availability",
+        "Scheduling latency and bin packing efficiency",
+        "Autoscaling responsiveness",
+        "Resource utilization and cost efficiency",
+        "Upgrade success rate and time"
+      ]}
+    ]
+  }
 };
 
 export const blockList = [
@@ -709,6 +813,9 @@ export const blockList = [
   blocks["identity-access-management"],
   blocks["internal-developer-platform"],
   blocks["data-platform"],
+  // New building blocks added
+  blocks["devops-ci-cd"],
+  blocks["cloud-infrastructure-orchestration"],
   blocks["observability-operations"],
   blocks["security-services"]
 ];

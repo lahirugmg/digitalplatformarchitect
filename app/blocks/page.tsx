@@ -5,7 +5,7 @@ import { BlockDiagram } from "@/components/BlockDiagram";
 export const metadata = {
   title: "Building Blocks",
   description:
-    "Enterprise platform building blocks: message broker, streaming, integration, API management, IAM, and IDP."
+    "Enterprise platform building blocks: Messaging/Streaming, Integration, API Management, IAM/IDP, Data Platform, DevOps & CI/CD, Cloud Infrastructure & Orchestration, and Observability & Monitoring."
 };
 
 export default function BlocksIndexPage() {

@@ -335,7 +335,7 @@
     "modular-monolith": {
       "name": "Modular Monolith",
       "description": "Single deployable unit with well-defined internal module boundaries",
-      "slug": "modular-monolith"
+      "slug": "monolithic"
     },
     "event-driven-architecture": {
       "name": "Event-Driven Architecture",
@@ -365,7 +365,7 @@
     "serverless": {
       "name": "Serverless Architecture",
       "description": "Function-as-a-Service with automatic scaling and resource management",
-      "slug": "serverless-architecture"
+      "slug": "serverless"
     },
     "cell-based-architecture": {
       "name": "Cell-Based Architecture",
@@ -380,12 +380,12 @@
     "oauth2": {
       "name": "OAuth2 Architecture",
       "description": "Secure authorization framework for API access",
-      "slug": "oauth2"
+      "slug": "oauth2-patterns"
     },
     "zero-trust": {
       "name": "Zero Trust Architecture", 
       "description": "Security model with no implicit trust and continuous verification",
-      "slug": "zero-trust-architecture"
+      "slug": "zero-trust-security"
     },
     "event-sourcing": {
       "name": "Event Sourcing",
@@ -408,7 +408,7 @@
       "blueprints": ["small-ha", "microservices-platform"]
     },
     "iam": {
-      "buildingBlocks": ["iam", "security"],
+      "buildingBlocks": ["identity-access-management", "security-services"],
       "blueprints": ["small-ha"]
     },
     "message-broker": {
@@ -416,7 +416,12 @@
       "blueprints": ["microservices-platform"]
     },
     "microservices-domain-services": {
-      "buildingBlocks": ["cloud-native", "observability"],
+      "buildingBlocks": [
+        "internal-developer-platform",
+        "devops-ci-cd",
+        "cloud-infrastructure-orchestration",
+        "observability-operations"
+      ],
       "blueprints": ["microservices-platform"]
     },
     "data-platform": {

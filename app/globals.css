@@ -5147,6 +5147,19 @@ html {
   margin: 0 auto;
 }
 
+/* Accessibility helpers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .intro-section .card {
   padding: 2rem;
   background: var(--surface);
@@ -5285,6 +5298,23 @@ html {
   margin-bottom: 2rem;
   padding-bottom: 1rem;
   border-bottom: 2px solid var(--border);
+}
+
+.toast {
+  display: inline-block;
+  margin-left: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.confidence {
+  margin: -0.5rem 0 1rem 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
 }
 
 .results-header h2 {

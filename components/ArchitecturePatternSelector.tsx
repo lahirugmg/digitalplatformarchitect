@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { track } from "@vercel/analytics";
 import questionsData from "@/data/questions.json";
 
@@ -21,10 +22,20 @@ type Answer = {
   values: string[];
 };
 
+type Contribution = {
+  questionId: string;
+  question: string;
+  pillar: string;
+  details: { option: string; delta: number }[];
+  totalDelta: number;
+};
+
 type PatternScore = {
   pattern: string;
   score: number;
+  normalizedScore: number;
   pillarScores: Record<string, number>;
+  contributions: Contribution[];
 };
 
 type ComponentState = "intro" | "questionnaire" | "results";
@@ -65,53 +76,109 @@ export function ArchitecturePatternSelector() {
         console.error("Error parsing URL answers:", e);
       }
     }
+    // analytics
+    track("selector_loaded");
   }, []);
 
+  // When moving between questions, prefill previously selected answers
+  useEffect(() => {
+    const q = questions[currentQuestionIndex];
+    if (!q) return;
+    const prev = answers.find(a => a.questionId === q.id);
+    setSelectedAnswers(prev ? prev.values : []);
+    // move focus to the question heading for better keyboard flow
+    const el = document.getElementById(`question-${q.id}`);
+    if (el) el.focus();
+  }, [currentQuestionIndex]);
+
   const calculateResults = (allAnswers: Answer[]) => {
-    const patternScores: Record<string, { total: number; pillarScores: Record<string, number> }> = {};
-    
+    const patternScores: Record<string, { total: number; pillarScores: Record<string, number>; denom: number; contributions: Contribution[] }> = {};
+
     // Initialize pattern scores
     Object.keys(patterns).forEach(pattern => {
-      patternScores[pattern] = { 
-        total: 0, 
-        pillarScores: Object.fromEntries(pillars.map(p => [p.id, 0])) 
+      patternScores[pattern] = {
+        total: 0,
+        pillarScores: Object.fromEntries(pillars.map(p => [p.id, 0])) as Record<string, number>,
+        denom: 0,
+        contributions: []
       };
     });
 
-    // Calculate scores based on answers
+    // Calculate scores and build contributions
     allAnswers.forEach(answer => {
       const question = questions.find(q => q.id === answer.questionId);
       if (!question) return;
 
-      answer.values.forEach(value => {
-        const option = question.options.find(opt => opt.value === value);
-        if (!option) return;
+      // Precompute max possible positive contribution for each pattern for this question
+      const perPatternMax: Record<string, number> = {};
+      Object.keys(patterns).forEach(p => {
+        if (question.type === "single") {
+          let max = 0;
+          question.options.forEach(opt => {
+            const s = opt.patterns[p];
+            if (typeof s === 'number' && s > max) max = s;
+          });
+          perPatternMax[p] = max;
+        } else {
+          let sum = 0;
+          question.options.forEach(opt => {
+            const s = opt.patterns[p];
+            if (typeof s === 'number' && s > 0) sum += s;
+          });
+          perPatternMax[p] = sum;
+        }
+      });
 
-        Object.entries(option.patterns).forEach(([pattern, score]) => {
-          if (patternScores[pattern] && typeof score === 'number') {
-            patternScores[pattern].total += score;
-            patternScores[pattern].pillarScores[question.pillar] += score;
+      // For each pattern, collect contribution from selected options
+      Object.keys(patterns).forEach(p => {
+        const details: { option: string; delta: number }[] = [];
+        let totalDelta = 0;
+        answer.values.forEach(value => {
+          const option = question.options.find(opt => opt.value === value);
+          if (!option) return;
+          const s = option.patterns[p];
+          if (typeof s === 'number' && s !== 0) {
+            totalDelta += s;
+            details.push({ option: option.text, delta: s });
           }
         });
+        if (totalDelta !== 0) {
+          patternScores[p].contributions.push({
+            questionId: question.id,
+            question: question.text,
+            pillar: question.pillar,
+            details,
+            totalDelta
+          });
+        }
+        patternScores[p].total += totalDelta;
+        patternScores[p].pillarScores[question.pillar] += totalDelta;
+        patternScores[p].denom += perPatternMax[p] || 0;
       });
     });
 
-    // Convert to sorted array
+    // Convert to sorted array with normalized scores
     const sortedResults = Object.entries(patternScores)
       .map(([pattern, scores]) => ({
         pattern,
         score: scores.total,
-        pillarScores: scores.pillarScores
+        normalizedScore: scores.denom > 0 ? Number((scores.total / scores.denom).toFixed(3)) : 0,
+        pillarScores: scores.pillarScores,
+        contributions: scores.contributions
       }))
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 3); // Top 3 patterns
+      .sort((a, b) => {
+        if (b.normalizedScore !== a.normalizedScore) return b.normalizedScore - a.normalizedScore;
+        return b.score - a.score;
+      })
+      .slice(0, 3);
 
     setResults(sortedResults);
-    
+
     // Track analytics
     track("view_results", {
       patterns: sortedResults.map(r => r.pattern).join(","),
-      scores: sortedResults.map(r => r.score).join(",")
+      scores: sortedResults.map(r => r.score).join(","),
+      normalized: sortedResults.map(r => r.normalizedScore).join(",")
     });
   };
 
@@ -135,6 +202,9 @@ export function ArchitecturePatternSelector() {
       const answersParam = encodeURIComponent(JSON.stringify(newAnswers));
       window.history.pushState({}, '', `?answers=${answersParam}`);
     }
+
+    // analytics
+    track("answer_question", { id: newAnswer.questionId, values: values.join(",") });
   };
 
   const handleOptionSelect = (value: string) => {
@@ -158,6 +228,7 @@ export function ArchitecturePatternSelector() {
     setSelectedAnswers([]);
     setResults([]);
     window.history.pushState({}, '', window.location.pathname);
+    track("retake");
   };
 
   const exportResults = () => {
@@ -177,22 +248,35 @@ export function ArchitecturePatternSelector() {
   const generateMarkdownReport = () => {
     const topPatterns = results.slice(0, 3);
     let markdown = `# Architecture Pattern Recommendations\n\n`;
-    
-    markdown += `Generated on: ${new Date().toLocaleDateString()}\n\n`;
-    
+
+    // coverage
+    const answered = answers.length;
+    const total = questions.length;
+    markdown += `Generated on: ${new Date().toLocaleDateString()}\\n`;
+    markdown += `Coverage: ${answered}/${total} questions answered\\n\\n`;
+
     markdown += `## Top Recommended Patterns\n\n`;
     
     topPatterns.forEach((result, index) => {
       const pattern = patterns[result.pattern as keyof typeof patterns];
-      markdown += `### ${index + 1}. ${pattern.name} (Score: ${result.score})\n\n`;
-      markdown += `${pattern.description}\n\n`;
+      markdown += `### ${index + 1}. ${pattern.name} (Raw: ${result.score}, Normalized: ${(result.normalizedScore * 100).toFixed(0)}%)\\n\\n`;
+      markdown += `${pattern.description}\\n\\n`;
       
+      if (result.contributions.length) {
+        markdown += `#### Rationale\\n`;
+        result.contributions.forEach(c => {
+          const entries = c.details.map(d => `${d.delta > 0 ? '+' : ''}${d.delta} from \"${d.option}\"`).join('; ');
+          markdown += `- ${c.question}: ${entries}\\n`;
+        });
+        markdown += `\\n`;
+      }
+
       // Add pillar-specific recommendations
       pillars.forEach(pillar => {
         const score = result.pillarScores[pillar.id];
         if (score > 0) {
-          markdown += `**${pillar.name}:** Score ${score}\n`;
-          markdown += getPillarRecommendations(pillar.id, result.pattern) + '\n\n';
+          markdown += `**${pillar.name}:** Score ${score}\\n`;
+          markdown += getPillarRecommendations(pillar.id, result.pattern) + '\\n\\n';
         }
       });
     });
@@ -210,9 +294,12 @@ export function ArchitecturePatternSelector() {
     return recommendations;
   };
 
+  const [copied, setCopied] = useState(false);
   const shareResults = () => {
     navigator.clipboard.writeText(window.location.href);
-    // You could show a toast notification here
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1800);
+    track("share_link");
   };
 
   const trackPillarLink = (pillarId: string, linkType: 'building-block' | 'blueprint', target: string) => {
@@ -266,7 +353,7 @@ export function ArchitecturePatternSelector() {
             </div>
             <button 
               className="btn btn-primary btn-lg"
-              onClick={() => setState("questionnaire")}
+              onClick={() => { setState("questionnaire"); track("start_assessment"); }}
             >
               Start Assessment
             </button>
@@ -280,22 +367,36 @@ export function ArchitecturePatternSelector() {
     const question = questions[currentQuestionIndex];
     const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
 
+    const onSkip = () => {
+      // Move forward without recording an answer for this question
+      if (currentQuestionIndex < questions.length - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        setSelectedAnswers([]);
+        track("skip_question", { id: question.id });
+      } else {
+        calculateResults(answers);
+        setState("results");
+      }
+    };
+
     return (
       <div className="pattern-selector">
-        <div className="progress-bar" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
-          <div className="progress-fill" style={{ width: `${progress}%` }}></div>
-        </div>
-        <div className="question-section">
-          <div className="card">
-            <div className="question-header">
-              <span className="question-number">
-                Question {currentQuestionIndex + 1} of {questions.length}
-              </span>
-              <h2 id={`question-${question.id}`}>{question.text}</h2>
-              <p className="question-pillar">Pillar: {pillars.find(p => p.id === question.pillar)?.name}</p>
+            <div className="progress-bar" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100} aria-valuetext={`Question ${currentQuestionIndex + 1} of ${questions.length}`}>
+              <div className="progress-fill" style={{ width: `${progress}%` }}></div>
             </div>
+            <div className="question-section">
+              <div className="card">
+              <div className="question-header">
+                <span className="question-number">
+                  Question {currentQuestionIndex + 1} of {questions.length}
+                </span>
+              <h2 id={`question-${question.id}`} tabIndex={-1}>{question.text}</h2>
+                <p className="question-pillar">Pillar: {pillars.find(p => p.id === question.pillar)?.name}</p>
+              </div>
+            <div aria-live="polite" className="sr-only">Question {currentQuestionIndex + 1} of {questions.length}</div>
             
-            <div className="options" role="group" aria-labelledby={`question-${question.id}`}>
+            <fieldset className="options" role="group" aria-labelledby={`question-${question.id}`}>
+              <legend className="sr-only">{question.text}</legend>
               {question.options.map(option => (
                 <label 
                   key={option.value} 
@@ -312,7 +413,7 @@ export function ArchitecturePatternSelector() {
                   <span className="option-text" id={`option-${option.value}-desc`}>{option.text}</span>
                 </label>
               ))}
-            </div>
+            </fieldset>
             
             <div className="question-actions">
               {currentQuestionIndex > 0 && (
@@ -323,6 +424,12 @@ export function ArchitecturePatternSelector() {
                   Previous
                 </button>
               )}
+              <button 
+                className="btn btn-outline"
+                onClick={onSkip}
+              >
+                Skip
+              </button>
               <button 
                 className="btn btn-primary"
                 disabled={selectedAnswers.length === 0}
@@ -354,7 +461,28 @@ export function ArchitecturePatternSelector() {
               🔄 Retake
             </button>
           </div>
+          {copied && <div className="toast">Link copied</div>}
         </div>
+
+        {/* Confidence indicator */}
+        {(() => {
+          const answered = answers.length;
+          const total = questions.length;
+          const notSureCount = answers.reduce((acc, a) => {
+            const q = questions.find(q => q.id === a.questionId);
+            const sel = q ? q.options.filter(o => a.values.includes(o.value)) : [];
+            const containsWeak = sel.some(o => /not_sure|minimal/i.test(o.value));
+            return acc + (containsWeak ? 1 : 0);
+          }, 0);
+          const base = total ? answered / total : 0;
+          const confidence = Math.max(0, Math.min(1, base * (1 - (notSureCount / Math.max(1, answered)) * 0.4)));
+          const label = confidence > 0.8 ? 'High' : confidence > 0.5 ? 'Medium' : 'Low';
+          return (
+            <div className="confidence">
+              <span>Confidence: {label} ({Math.round(confidence * 100)}%)</span>
+            </div>
+          );
+        })()}
 
         <div className="top-patterns">
           {results.map((result, index) => {
@@ -364,12 +492,24 @@ export function ArchitecturePatternSelector() {
                 <div className="pattern-rank">#{index + 1}</div>
                 <div className="pattern-info">
                   <h3>
-                    <a href={`/patterns/${pattern.slug}`} target="_blank" rel="noopener noreferrer">
+                    <Link href={`/patterns/${pattern.slug}`} onClick={() => track('open_pattern_link', { slug: pattern.slug })}>
                       {pattern.name}
-                    </a>
+                    </Link>
                   </h3>
                   <p>{pattern.description}</p>
-                  <div className="pattern-score">Score: {result.score}</div>
+                  <div className="pattern-score">Score: {result.score} &middot; Normalized: {(result.normalizedScore * 100).toFixed(0)}%</div>
+                  {result.contributions.length > 0 && (
+                    <div className="contributions">
+                      <h4>Why this recommendation</h4>
+                      <ul>
+                        {result.contributions.slice(0, 4).map((c) => (
+                          <li key={c.questionId}>
+                            <strong>{c.question}</strong>: {c.details.map(d => `${d.delta > 0 ? '+' : ''}${d.delta} from "${d.option}"`).join('; ')}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
             );
@@ -384,6 +524,7 @@ export function ArchitecturePatternSelector() {
                 className={`tab-btn ${activePillar === pillar.id ? 'active' : ''}`}
                 onClick={() => setActivePillar(pillar.id)}
                 role="tab"
+                id={`tab-${pillar.id}`}
                 aria-selected={activePillar === pillar.id}
                 aria-controls={`panel-${pillar.id}`}
               >
