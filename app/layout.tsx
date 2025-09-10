@@ -3,7 +3,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Analytics } from "@vercel/analytics/next";
+// Use the React runtime for Vercel Analytics to avoid server vendor-chunk issues
+import dynamic from "next/dynamic";
+const Analytics = dynamic(() => import("@vercel/analytics/react").then(m => m.Analytics), { ssr: false });
 
 // const inter = Inter({ subsets: ["latin"] });
 
