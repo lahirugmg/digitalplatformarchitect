@@ -12,6 +12,13 @@ const tools = [
     featured: true
   },
   {
+    slug: "architecture-builder",
+    title: "Architecture Builder",
+    description: "Drag and drop Building Blocks onto a canvas, connect them, and sketch your platform architecture.",
+    icon: "🧱",
+    featured: false
+  },
+  {
     slug: "architecture-explorer", 
     title: "Architecture Explorer",
     description: "Interactive exploration of architecture layers across Business, Solution, and Deployment views with role-based perspectives.",

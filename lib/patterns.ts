@@ -73,6 +73,57 @@ export const patterns: Record<string, Pattern> = {
       ]}
     ]
   },
+  "event-sourcing": {
+    slug: "event-sourcing",
+    title: "Event Sourcing",
+    summary:
+      "Persist changes as an immutable sequence of events; rebuild state by replaying events and produce read models via projections.",
+    keywords: ["events", "audit", "replay", "append-only", "projections"],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "Instead of storing only current state, every change is recorded as an event in an append-only log. Current state can be derived by replaying events; read views are built via projections." },
+      { kind: "list", title: "Benefits", items: [
+        "Complete audit trail and time travel",
+        "Natural integration with CQRS and streaming",
+        "Great for complex domain invariants and debugging"
+      ]},
+      { kind: "list", title: "Trade-offs", items: [
+        "Event design and versioning complexity",
+        "Migration and projection rebuild costs",
+        "Eventual consistency for read models"
+      ]},
+      { kind: "list", title: "When to use", items: [
+        "Strong auditability requirements",
+        "Complex workflows with temporal reasoning",
+        "High-throughput event processing with projections"
+      ]}
+    ]
+  },
+  "adapter-pattern": {
+    slug: "adapter-pattern",
+    title: "Adapter Pattern",
+    summary:
+      "Introduce an adapter that translates between incompatible interfaces, enabling legacy integration and boundary isolation.",
+    keywords: ["ports", "adapters", "legacy", "translation", "anti-corruption"],
+    sections: [
+      { kind: "text", title: "What it is", body:
+        "An integration and boundary pattern that wraps a foreign or legacy interface with an adapter matching your internal port, isolating change and translating contracts." },
+      { kind: "list", title: "Benefits", items: [
+        "Decouples domain from vendor protocols",
+        "Enables incremental modernization",
+        "Improves testability via substitution"
+      ]},
+      { kind: "list", title: "Related", items: [
+        "Hexagonal Architecture (ports and adapters)",
+        "Anti-corruption layer (DDD)"
+      ]},
+      { kind: "list", title: "When to use", items: [
+        "Legacy system integration",
+        "Third-party APIs with poor fit",
+        "Protocol translation and boundary protection"
+      ]}
+    ]
+  },
   "layered-architecture": {
     slug: "layered-architecture",
     title: "Layered Architecture",
@@ -811,12 +862,14 @@ export const patternList = [
   patterns["domain-centric-architecture"],
   patterns["clean-architecture"],
   patterns["cqrs"],
+  patterns["event-sourcing"],
   patterns["serverless"],
   patterns["monolithic"],
   patterns["service-oriented-architecture"],
   patterns["space-based-architecture"],
   patterns["data-mesh"],
   patterns["pipes-and-filters"],
+  patterns["adapter-pattern"],
   patterns["broker-architecture"],
   patterns["blackboard-architecture"]
 ];
