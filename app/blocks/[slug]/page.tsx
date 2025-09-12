@@ -5,6 +5,8 @@ import { connections } from "@/lib/connections";
 import { patterns } from "@/lib/patterns";
 import { EnhancedBlockDiagram } from "@/components/EnhancedBlockDiagram";
 import { ApiManagementFeatures } from "@/components/ApiManagementFeatures";
+import dynamic from "next/dynamic";
+const ApimExplorer = dynamic(() => import("@/components/apim/ApimExplorer"), { ssr: false });
 
 type Props = { params: { slug: string } };
 
@@ -35,14 +37,15 @@ export default function BlockPage({ params }: Props) {
           <p className="lede">{block.summary}</p>
         </header>
 
-        {/* Enhanced Interactive Diagram */}
-        <section className="block-diagram-section">
-          <EnhancedBlockDiagram 
-            slug={block.slug} 
-            title={block.title}
-            interactive={true}
-          />
-        </section>
+        {/* Enhanced Block Diagram (general) — hide for API Management */}
+        {!isApiManagement && (
+          <section className="block-diagram-section">
+            <EnhancedBlockDiagram slug={block.slug} title={block.title} interactive={true} />
+          </section>
+        )}
+
+        {/* API Management: deep interactive diagram */}
+        {isApiManagement && <ApimExplorer />}
 
         {/* API Management Features Cards - Only for API Management block */}
         {isApiManagement && (
@@ -94,4 +97,3 @@ export default function BlockPage({ params }: Props) {
     </div>
   );
 }
-
