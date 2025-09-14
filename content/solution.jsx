@@ -341,7 +341,7 @@ export default function ArchitectureExplorer({
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       const a = document.createElement("a");
-      a.download = `architecture-explorer-${Date.now()}.png`;
+      a.download = `architecture-documentation-${Date.now()}.png`;
       a.href = canvas.toDataURL("image/png");
       a.click();
     };
@@ -352,7 +352,7 @@ export default function ArchitectureExplorer({
     <div className="w-full space-y-4">
       <header className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-semibold">Architecture Explorer</h2>
+          <h2 className="text-2xl font-semibold">Architecture Documentation</h2>
           <p className="text-sm text-gray-600">Zoom from L0 to L3. Click nodes to expand/collapse. Wheel to zoom, drag to pan. Double‑click to reset.</p>
         </div>
         <div className="flex items-center gap-2">
@@ -429,7 +429,7 @@ function Legend() {
 export function ExamplePage() {
   return (
     <main className="max-w-6xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-2">Solutions: Interactive Architecture Explorer</h1>
+      <h1 className="text-3xl font-bold mb-2">Solutions: Interactive Architecture Documentation</h1>
       <p className="text-gray-600 mb-6">Explore Business → Solution → Deployment, and zoom from L0 to L3.</p>
       <ArchitectureExplorer />
     </main>
