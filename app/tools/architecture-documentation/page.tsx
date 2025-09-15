@@ -27,7 +27,7 @@ export default function ArchitectureDocumentationToolPage() {
       </div>
 
   <section className="stack gap-lg">
-    <ArchitectureExplorer maxLevelLimit={2} />
+    <ArchitectureExplorer />
   </section>
 
   
