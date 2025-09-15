@@ -1,5 +1,15 @@
 import { ArchitectureExplorer } from "@/components/ArchitectureExplorer";
 import { SolutionL0Diagram } from "@/components/diagrams/SolutionL0Diagram";
+import {
+  BusinessL0Diagram,
+  BusinessL1Diagram,
+  BusinessL2Diagram,
+  SolutionL1Diagram,
+  SolutionL2Diagram,
+  DeploymentL0Diagram,
+  DeploymentL1Diagram,
+  DeploymentL2Diagram,
+} from "@/components/diagrams/samples/ArchitectureSamples";
 
 export const metadata = {
   title: "Architecture Documentation",
@@ -16,11 +26,11 @@ export default function ArchitectureDocumentationToolPage() {
         </p>
       </div>
 
-      <section className="stack gap-lg">
-        <ArchitectureExplorer maxLevelLimit={2} />
-      </section>
+  <section className="stack gap-lg">
+    <ArchitectureExplorer maxLevelLimit={2} />
+  </section>
 
-
+  
       {/* Visual language guidance summary */}
       <section className="stack gap-sm" style={{ marginTop: 8 }}>
         <div className="diagram-header">
@@ -41,7 +51,63 @@ export default function ArchitectureDocumentationToolPage() {
             </ul>
           </div>
         </div>
-      </section>
+  </section>
+
+  {/* Sample diagrams by level and category */}
+  <section className="stack gap-lg" style={{ marginTop: 24 }}>
+    <div className="diagram-header">
+      <h2 className="section-title">Sample Diagrams</h2>
+      <p className="section-description">Illustrative examples for Business, Solution, and Deployment architectures across L0–L2 using the enterprise building blocks.</p>
+    </div>
+
+    {/* L0 row */}
+    <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: 16 }}>
+      <div className="card" style={{ padding: 12 }}>
+        <h3 className="section-title" style={{ fontSize: 16 }}>Business L0</h3>
+        <BusinessL0Diagram />
+      </div>
+      <div className="card" style={{ padding: 12 }}>
+        <h3 className="section-title" style={{ fontSize: 16 }}>Solution L0</h3>
+        <SolutionL0Diagram />
+      </div>
+      <div className="card" style={{ padding: 12 }}>
+        <h3 className="section-title" style={{ fontSize: 16 }}>Deployment L0</h3>
+        <DeploymentL0Diagram />
+      </div>
+    </div>
+
+    {/* L1 row */}
+    <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: 16 }}>
+      <div className="card" style={{ padding: 12 }}>
+        <h3 className="section-title" style={{ fontSize: 16 }}>Business L1</h3>
+        <BusinessL1Diagram />
+      </div>
+      <div className="card" style={{ padding: 12 }}>
+        <h3 className="section-title" style={{ fontSize: 16 }}>Solution L1</h3>
+        <SolutionL1Diagram />
+      </div>
+      <div className="card" style={{ padding: 12 }}>
+        <h3 className="section-title" style={{ fontSize: 16 }}>Deployment L1</h3>
+        <DeploymentL1Diagram />
+      </div>
+    </div>
+
+    {/* L2 row */}
+    <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: 16 }}>
+      <div className="card" style={{ padding: 12 }}>
+        <h3 className="section-title" style={{ fontSize: 16 }}>Business L2</h3>
+        <BusinessL2Diagram />
+      </div>
+      <div className="card" style={{ padding: 12 }}>
+        <h3 className="section-title" style={{ fontSize: 16 }}>Solution L2</h3>
+        <SolutionL2Diagram />
+      </div>
+      <div className="card" style={{ padding: 12 }}>
+        <h3 className="section-title" style={{ fontSize: 16 }}>Deployment L2</h3>
+        <DeploymentL2Diagram />
+      </div>
+    </div>
+  </section>
     </div>
   );
 }
