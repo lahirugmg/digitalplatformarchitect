@@ -86,43 +86,135 @@ function useSpec(): [Spec | null, boolean, string | null] {
 
 // Enhanced position assignment with proper swimlanes
 function assignPositions(nodes: NodeSpec[]): NodeSpec[] {
+  // Base width of a node card used in Node styles below
+  const CARD_WIDTH = 260;
+  const COL_GAP = 160; // horizontal spacing between major groups/columns
+  const INNER_GAP = 24; // horizontal gap between items inside a group row
+  const CONTROL_COLS = 2; // arrange control-plane in 2 columns side-by-side
+  const CONTROL_ROW_HEIGHT = 180; // approximate row height for control-plane grid
+
+  // Compute columns from left → right to guarantee spacing
+  const MARGIN_LEFT = 40;
+  const personasX = MARGIN_LEFT;
+  // Ensure explicit horizontal gap between personas and control-plane columns
+  const controlX = personasX + CARD_WIDTH + COL_GAP;
+  const controlPlaneWidth = CONTROL_COLS * CARD_WIDTH + (CONTROL_COLS - 1) * INNER_GAP;
+  const dataX = controlX + controlPlaneWidth + COL_GAP;
+  // Place Analytics & Monetization (observability) under the Data Plane
+  const observabilityX = dataX;
+  const clientsX = observabilityX + CARD_WIDTH + COL_GAP;
+  const backendsX = clientsX; // share the same column, separated vertically
+
   const groupColumns: Record<string, number> = {
-    personas: 40,
-    'control-plane': 300,
-    'data-plane': 680,
-    clients: 1020,
-    backends: 1020,
-    observability: 600
+    personas: personasX,
+    'control-plane': controlX,
+    'data-plane': dataX,
+    observability: observabilityX,
+    clients: clientsX,
+    backends: backendsX
   };
 
   const groupStartY: Record<string, number> = {
-    personas: 120,
-    'control-plane': 80,
-    'data-plane': 140,
-    clients: 140,
-    backends: 380,
-    observability: 620
+    personas: 100,
+    'control-plane': 60,
+    'data-plane': 100,
+    clients: 100,
+    backends: 320,
+    observability: 520
   };
 
-  const verticalGap = 110;
+  const verticalGap = 60; // tighter vertical spacing between nodes
   const yCursors: Record<string, number> = { ...groupStartY };
 
   const estimateNodeHeight = (node: NodeSpec) => {
-    const featuresHeight = Math.min(node.features?.length ?? 0, 3) * 20;
-    return 90 + featuresHeight;
+    const featuresHeight = Math.min(node.features?.length ?? 0, 3) * 16;
+    return 80 + featuresHeight; // slightly shorter base height
   };
 
-  return nodes.map((node) => {
-    if (node.position) return node;
+  // First pass: assign positions by columns
+  // Track index within control-plane to place side-by-side
+  let controlIndex = 0;
 
+  let laidOut = nodes.map((node) => {
+    if (node.position) return node;
     const group = node.group || node.plane;
-    const x = groupColumns[group] ?? (node.plane === 'control' ? 300 : node.plane === 'data' ? 680 : 100);
-    const currentY = yCursors[group] ?? 80;
-    
+
+    if (group === 'control-plane') {
+      const col = controlIndex % CONTROL_COLS;
+      const row = Math.floor(controlIndex / CONTROL_COLS);
+      const x = controlX + col * (CARD_WIDTH + INNER_GAP);
+      const y = (groupStartY['control-plane'] ?? 60) + row * CONTROL_ROW_HEIGHT;
+      controlIndex += 1;
+      return { ...node, position: { x, y } };
+    }
+
+    const x = groupColumns[group] ?? (node.plane === 'control' ? controlX : node.plane === 'data' ? dataX : personasX);
+    let currentY = yCursors[group] ?? 80;
+    // Ensure observability (Analytics & Monetization) sits under Data Plane
+    if (group === 'observability') {
+      const dataBottom = (yCursors['data-plane'] ?? (groupStartY['data-plane'] || 100));
+      // add a small separation gap below data-plane stack
+      currentY = Math.max(currentY, dataBottom + 40);
+    }
     yCursors[group] = currentY + estimateNodeHeight(node) + verticalGap;
-    
     return { ...node, position: { x, y: currentY } };
   });
+
+  // Simple collision-avoidance pass: if any two nodes overlap, shift the latter group to the right
+  const groupOrder = ['personas', 'control-plane', 'data-plane', 'observability', 'clients', 'backends'];
+  const groupShift: Record<string, number> = { personas: 0, 'control-plane': 0, 'data-plane': 0, observability: 0, clients: 0, backends: 0 };
+
+  const heightFor = (n: NodeSpec) => estimateNodeHeight(n);
+  const overlaps = (a: NodeSpec, b: NodeSpec) => {
+    const ax1 = (a.position!.x) ;
+    const ax2 = ax1 + CARD_WIDTH;
+    const ay1 = (a.position!.y);
+    const ay2 = ay1 + heightFor(a);
+    const bx1 = (b.position!.x);
+    const bx2 = bx1 + CARD_WIDTH;
+    const by1 = (b.position!.y);
+    const by2 = by1 + heightFor(b);
+    const horiz = ax1 < bx2 && ax2 > bx1;
+    const vert = ay1 < by2 && ay2 > by1;
+    return horiz && vert;
+  };
+
+  // Up to 3 passes to resolve overlaps by shifting columns
+  for (let pass = 0; pass < 3; pass++) {
+    let changed = false;
+    for (let i = 0; i < laidOut.length; i++) {
+      for (let j = i + 1; j < laidOut.length; j++) {
+        const a = laidOut[i];
+        const b = laidOut[j];
+        if (!a.position || !b.position) continue;
+        const ga = (a.group || a.plane) as string;
+        const gb = (b.group || b.plane) as string;
+        if (ga === gb) continue; // same column stacks vertically by design
+        if (!overlaps(a, b)) continue;
+
+        // Shift the group that appears later in the intended order
+        const oa = groupOrder.indexOf(ga);
+        const ob = groupOrder.indexOf(gb);
+        const shiftTarget = oa <= ob ? gb : ga;
+        groupShift[shiftTarget] = (groupShift[shiftTarget] || 0) + (CARD_WIDTH + COL_GAP);
+        changed = true;
+      }
+    }
+    if (!changed) break;
+    // Re-apply shifts to positions
+    laidOut = laidOut.map((n) => {
+      if (n.position) {
+        const g = (n.group || n.plane) as string;
+        const dx = groupShift[g] || 0;
+        if (dx !== 0) {
+          return { ...n, position: { x: n.position.x + dx, y: n.position.y } };
+        }
+      }
+      return n;
+    });
+  }
+
+  return laidOut;
 }
 
 // Enhanced graph building with proper filtering and highlighting

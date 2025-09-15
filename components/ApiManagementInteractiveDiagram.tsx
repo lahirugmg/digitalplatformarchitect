@@ -173,7 +173,7 @@ export function ApiManagementInteractiveDiagram() {
             role="img"
             aria-label="Interactive API Management diagram"
             preserveAspectRatio="xMidYMid meet"
-            style={{ maxWidth: "1200px", touchAction: "none", cursor: panning ? "grabbing" : "grab" }}
+            style={{ maxWidth: "1400px", touchAction: "none", cursor: panning ? "grabbing" : "grab" }}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
@@ -346,83 +346,83 @@ export function ApiManagementInteractiveDiagram() {
             <text x="90" y="85" className="section-title">Control Plane</text>
             
             {/* Developer Portal */}
-            <rect x="100" y="110" width="280" height="120" className={`node ${isActive("Subscription", "PolicySelection", "TryOut", "MCPHub") ? "active" : selected.size ? "dim" : ""}`} />
-            <text x="240" y="135" textAnchor="middle" className="title">Developer Portal</text>
+            <rect x="100" y="110" width="260" height="110" className={`node ${isActive("Subscription", "PolicySelection", "TryOut", "MCPHub") ? "active" : selected.size ? "dim" : ""}`} />
+            <text x="230" y="135" textAnchor="middle" className="title">Developer Portal</text>
             <text x="120" y="160" className="small">API Discovery & Consumption</text>
             <text x="120" y="180" className="small">Subscription Management</text>
             <text x="120" y="200" className="small">Testing & Documentation</text>
             
             {/* API Publisher */}
-            <rect x="100" y="250" width="280" height="140" className={`node ${isActive("REST", "GraphQL", "Async", "AI", "MCP", "Docs", "Policies", "Testing") ? "active" : selected.size ? "dim" : ""}`} />
-            <text x="240" y="275" textAnchor="middle" className="title">API Publisher</text>
-            <text x="120" y="300" className="small">API Design & Lifecycle</text>
-            <text x="120" y="320" className="small">Policy Management</text>
-            <text x="120" y="340" className="small">Version Control</text>
-            <text x="120" y="360" className="small">Testing & Analytics</text>
+            <rect x="100" y="240" width="260" height="130" className={`node ${isActive("REST", "GraphQL", "Async", "AI", "MCP", "Docs", "Policies", "Testing") ? "active" : selected.size ? "dim" : ""}`} />
+            <text x="230" y="265" textAnchor="middle" className="title">API Publisher</text>
+            <text x="120" y="285" className="small">API Design & Lifecycle</text>
+            <text x="120" y="305" className="small">Policy Management</text>
+            <text x="120" y="325" className="small">Version Control</text>
+            <text x="120" y="345" className="small">Testing & Analytics</text>
             
             {/* Management Services */}
-            <rect x="100" y="410" width="280" height="100" className="node" />
-            <text x="240" y="435" textAnchor="middle" className="label">Management Services</text>
-            <text x="120" y="455" className="small">Key Management</text>
-            <text x="120" y="475" className="small">User Management</text>
-            <text x="120" y="495" className="small">Analytics & Monitoring</text>
+            <rect x="100" y="390" width="260" height="100" className="node" />
+            <text x="230" y="415" textAnchor="middle" className="label">Management Services</text>
+            <text x="120" y="435" className="small">Key Management</text>
+            <text x="120" y="455" className="small">User Management</text>
+            <text x="120" y="475" className="small">Analytics & Monitoring</text>
             
             {/* Column 2: Gateway Layer */}
-            <rect x="440" y="60" width="280" height="540" fill="url(#dpGradient)" className="section dp" filter="url(#cardShadow)" />
-            <text x="450" y="85" className="section-title">Data Plane</text>
+            <rect x="420" y="60" width="280" height="540" fill="url(#dpGradient)" className="section dp" filter="url(#cardShadow)" />
+            <text x="430" y="85" className="section-title">Data Plane</text>
             
             {/* API Gateway */}
-            <rect x="460" y="150" width="240" height="280" className={`node ${isActive("Lightweight", "Distributed", "Mediation", "Ingress", "Egress") ? "active" : selected.size ? "dim" : ""}`} />
-            <text x="580" y="185" textAnchor="middle" className="title">API Gateway</text>
+            <rect x="440" y="150" width="240" height="280" className={`node ${isActive("Lightweight", "Distributed", "Mediation", "Ingress", "Egress") ? "active" : selected.size ? "dim" : ""}`} />
+            <text x="560" y="185" textAnchor="middle" className="title">API Gateway</text>
             
             {/* Gateway capabilities */}
-            <rect x="480" y="210" width="200" height="80" className="capability-group" />
-            <text x="580" y="230" textAnchor="middle" className="small">Traffic Management</text>
-            <text x="580" y="250" textAnchor="middle" className="small">Security & Auth</text>
-            <text x="580" y="270" textAnchor="middle" className="small">Rate Limiting</text>
+            <rect x="460" y="210" width="200" height="80" className="capability-group" />
+            <text x="560" y="230" textAnchor="middle" className="small">Traffic Management</text>
+            <text x="560" y="250" textAnchor="middle" className="small">Security & Auth</text>
+            <text x="560" y="270" textAnchor="middle" className="small">Rate Limiting</text>
             
-            <rect x="480" y="310" width="200" height="80" className="capability-group" />
-            <text x="580" y="330" textAnchor="middle" className="small">Protocol Translation</text>
-            <text x="580" y="350" textAnchor="middle" className="small">Load Balancing</text>
-            <text x="580" y="370" textAnchor="middle" className="small">Circuit Breaking</text>
+            <rect x="460" y="310" width="200" height="80" className="capability-group" />
+            <text x="560" y="330" textAnchor="middle" className="small">Protocol Translation</text>
+            <text x="560" y="350" textAnchor="middle" className="small">Load Balancing</text>
+            <text x="560" y="370" textAnchor="middle" className="small">Circuit Breaking</text>
             
             {/* Analytics */}
-            <rect x="460" y="460" width="240" height="60" className={`node ${isActive("Analytics", "Monetization") ? "active" : selected.size ? "dim" : ""}`} />
-            <text x="580" y="485" textAnchor="middle" className="label">Analytics & Billing</text>
-            <text x="580" y="505" textAnchor="middle" className="small">Usage Analytics • Monetization</text>
+            <rect x="440" y="460" width="240" height="60" className={`node ${isActive("Analytics", "Monetization") ? "active" : selected.size ? "dim" : ""}`} />
+            <text x="560" y="485" textAnchor="middle" className="label">Analytics & Billing</text>
+            <text x="560" y="505" textAnchor="middle" className="small">Usage Analytics • Monetization</text>
             
             {/* Column 3: Clients & Services */}
-            <rect x="760" y="60" width="280" height="540" className="boundary" />
-            <text x="770" y="85" className="section-title">Clients & Services</text>
+            <rect x="750" y="60" width="280" height="540" className="boundary" />
+            <text x="760" y="85" className="section-title">Clients & Services</text>
             
             {/* External Clients */}
-            <rect x="780" y="110" width="240" height="100" className="node" />
-            <text x="900" y="135" textAnchor="middle" className="label">External Clients</text>
-            <text x="800" y="160" className="small">• Mobile Applications</text>
-            <text x="800" y="180" className="small">• Web Applications</text>
-            <text x="800" y="200" className="small">• Partner APIs</text>
+            <rect x="770" y="110" width="240" height="100" className="node" />
+            <text x="890" y="135" textAnchor="middle" className="label">External Clients</text>
+            <text x="790" y="160" className="small">• Mobile Applications</text>
+            <text x="790" y="180" className="small">• Web Applications</text>
+            <text x="790" y="200" className="small">• Partner APIs</text>
             
             {/* Internal Services */}
-            <rect x="780" y="240" width="240" height="100" className="node" />
-            <text x="900" y="265" textAnchor="middle" className="label">Internal Services</text>
-            <text x="800" y="290" className="small">• Microservices</text>
-            <text x="800" y="310" className="small">• Legacy Systems</text>
-            <text x="800" y="330" className="small">• Databases</text>
+            <rect x="770" y="240" width="240" height="100" className="node" />
+            <text x="890" y="265" textAnchor="middle" className="label">Internal Services</text>
+            <text x="790" y="290" className="small">• Microservices</text>
+            <text x="790" y="310" className="small">• Legacy Systems</text>
+            <text x="790" y="330" className="small">• Databases</text>
             
             {/* External Services */}
-            <rect x="780" y="370" width="240" height="100" className="node" />
-            <text x="900" y="395" textAnchor="middle" className="label">External Services</text>
-            <text x="800" y="420" className="small">• AI/ML Services</text>
-            <text x="800" y="440" className="small">• Third-party APIs</text>
-            <text x="800" y="460" className="small">• Cloud Services</text>
+            <rect x="770" y="370" width="240" height="100" className="node" />
+            <text x="890" y="395" textAnchor="middle" className="label">External Services</text>
+            <text x="790" y="420" className="small">• AI/ML Services</text>
+            <text x="790" y="440" className="small">• Third-party APIs</text>
+            <text x="790" y="460" className="small">• Cloud Services</text>
             
             {/* Main Flow Connections */}
-            <line x1="400" y1="180" x2="460" y2="180" className={`main-flow ${isActive("Subscription", "PolicySelection", "TryOut", "MCPHub") ? "active" : ""}`} />
-            <line x1="400" y1="320" x2="460" y2="320" className={`main-flow ${isActive("REST", "GraphQL", "Async", "AI", "MCP", "Docs", "Policies", "Testing") ? "active" : ""}`} />
+            <line x1="360" y1="165" x2="440" y2="165" className={`main-flow ${isActive("Subscription", "PolicySelection", "TryOut", "MCPHub") ? "active" : ""}`} />
+            <line x1="360" y1="305" x2="440" y2="305" className={`main-flow ${isActive("REST", "GraphQL", "Async", "AI", "MCP", "Docs", "Policies", "Testing") ? "active" : ""}`} />
             
-            <line x1="700" y1="160" x2="780" y2="160" className={`main-flow ${isActive("Ingress") ? "active" : ""}`} />
-            <line x1="700" y1="290" x2="780" y2="290" className={`main-flow ${isActive("Ingress") ? "active" : ""}`} />
-            <line x1="700" y1="420" x2="780" y2="420" className={`main-flow ${isActive("Egress") ? "active" : ""}`} />
+            <line x1="680" y1="160" x2="770" y2="160" className={`main-flow ${isActive("Ingress") ? "active" : ""}`} />
+            <line x1="680" y1="290" x2="770" y2="290" className={`main-flow ${isActive("Ingress") ? "active" : ""}`} />
+            <line x1="680" y1="420" x2="770" y2="420" className={`main-flow ${isActive("Egress") ? "active" : ""}`} />
 
             </g>
           </svg>

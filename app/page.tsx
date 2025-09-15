@@ -72,27 +72,12 @@ export default function HomePage() {
             <Link href="/tools/architecture-explorer" className="tools-rail-item">
               <span className="tools-rail-icon">🧭</span>
               <span className="tools-rail-text">
-                <span className="tools-rail-item-title">Architecture Explorer</span>
-                <span className="tools-rail-item-desc">Interactive Architecture Layers</span>
+                <span className="tools-rail-item-title">Architecture Documentation</span>
+                <span className="tools-rail-item-desc">Interactive Architecture Docs</span>
               </span>
               <span className="tools-rail-arrow">→</span>
             </Link>
-            <Link href="/tools/architecture-pattern-selector" className="tools-rail-item">
-              <span className="tools-rail-icon">🎯</span>
-              <span className="tools-rail-text">
-                <span className="tools-rail-item-title">Architecture Pattern Selector</span>
-                <span className="tools-rail-item-desc">Personalized pattern recommendations</span>
-              </span>
-              <span className="tools-rail-arrow">→</span>
-            </Link>
-            <Link href="/tools/architecture-builder" className="tools-rail-item">
-              <span className="tools-rail-icon">🧱</span>
-              <span className="tools-rail-text">
-                <span className="tools-rail-item-title">Architecture Builder</span>
-                <span className="tools-rail-item-desc">Drag, drop, and connect blocks</span>
-              </span>
-              <span className="tools-rail-arrow">→</span>
-            </Link>
+            {/* Removed Architecture Pattern Selector and Architecture Builder from tools rail */}
           </nav>
         </div>
       </aside>
@@ -255,14 +240,14 @@ export default function HomePage() {
             <div className="tool-header">
               <div className="tool-icon">🧭</div>
               <div className="tool-meta">
-                <h3 className="tool-title">Architecture Explorer</h3>
+                <h3 className="tool-title">Architecture Documentation</h3>
                 <div className="tool-badges">
                   <span className="tool-badge new">New</span>
                 </div>
               </div>
             </div>
             <p className="tool-description">
-              Explore Architecture Layers across Business, Solution, and Deployment views. Toggle roles and levels.
+              Browse documentation across Business, Solution, and Deployment views. Toggle roles and levels.
             </p>
             <div className="tool-features">
               <div className="tool-feature"><span className="feature-icon">📐</span><span>Layered Views (L0–L3)</span></div>
@@ -270,34 +255,12 @@ export default function HomePage() {
               <div className="tool-feature"><span className="feature-icon">🗺️</span><span>Zoom & Pan</span></div>
             </div>
             <div className="tool-cta">
-              <span className="cta-text">Open Explorer</span>
+              <span className="cta-text">Open Documentation</span>
               <span className="cta-arrow">→</span>
             </div>
           </Link>
           
-          <Link href="/tools/architecture-builder" className="tool-card">
-            <div className="tool-header">
-              <div className="tool-icon">🧱</div>
-              <div className="tool-meta">
-                <h3 className="tool-title">Architecture Builder</h3>
-                <div className="tool-badges">
-                  <span className="tool-badge new">New</span>
-                </div>
-              </div>
-            </div>
-            <p className="tool-description">
-              Drag Building Blocks onto a canvas and connect them to sketch your platform architecture.
-            </p>
-            <div className="tool-features">
-              <div className="tool-feature"><span className="feature-icon">🖱️</span><span>Drag & Drop Palette</span></div>
-              <div className="tool-feature"><span className="feature-icon">🔗</span><span>Clickable Connections</span></div>
-              <div className="tool-feature"><span className="feature-icon">📤</span><span>Export JSON</span></div>
-            </div>
-            <div className="tool-cta">
-              <span className="cta-text">Open Builder</span>
-              <span className="cta-arrow">→</span>
-            </div>
-          </Link>
+          {/* Removed Architecture Builder card from tools grid */}
           
           <div className="tool-card coming-soon">
             <div className="tool-header">
@@ -334,29 +297,7 @@ export default function HomePage() {
             </div>
           </div>
           
-          <Link href="/tools/architecture-pattern-selector" className="tool-card">
-            <div className="tool-header">
-              <div className="tool-icon">🎯</div>
-              <div className="tool-meta">
-                <h3 className="tool-title">Architecture Pattern Selector</h3>
-                <div className="tool-badges">
-                  <span className="tool-badge new">New</span>
-                </div>
-              </div>
-            </div>
-            <p className="tool-description">
-              Interactive wizard that recommends optimal architecture patterns based on your requirements, with transparent rationale.
-            </p>
-            <div className="tool-features">
-              <div className="tool-feature"><span className="feature-icon">❓</span><span>Interactive Questions</span></div>
-              <div className="tool-feature"><span className="feature-icon">📊</span><span>Ranked Results</span></div>
-              <div className="tool-feature"><span className="feature-icon">🔗</span><span>Deep Links</span></div>
-            </div>
-            <div className="tool-cta">
-              <span className="cta-text">Launch Selector</span>
-              <span className="cta-arrow">→</span>
-            </div>
-          </Link>
+          {/* Removed Architecture Pattern Selector card from tools grid */}
         </div>
       </section>
 

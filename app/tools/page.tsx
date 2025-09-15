@@ -20,8 +20,8 @@ const tools = [
   },
   {
     slug: "architecture-explorer", 
-    title: "Architecture Explorer",
-    description: "Interactive exploration of architecture layers across Business, Solution, and Deployment views with role-based perspectives.",
+    title: "Architecture Documentation",
+    description: "Interactive documentation of architecture across Business, Solution, and Deployment views with role-based perspectives.",
     icon: "🏗️",
     featured: false
   },
