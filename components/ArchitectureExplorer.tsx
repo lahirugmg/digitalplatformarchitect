@@ -247,7 +247,7 @@ export function ArchitectureExplorer({ data, defaultRole = "business" }: { data?
     <div className="stack gap-sm" style={{ border: "1px solid var(--border)", borderRadius: 12, padding: 12, background: "var(--surface)" }}>
       <div className="stack gap-sm" style={{ alignItems: "center" }}>
         <div>
-          <strong>Explore Architecture Layers</strong>
+          <strong>Explore Architecture Documentation Layers</strong>
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {[{ key: "business", label: "Business" }, { key: "architect", label: "Architect" }, { key: "engineer", label: "Engineer" }, { key: "all", label: "All" }].map((p) => (
@@ -260,11 +260,6 @@ export function ArchitectureExplorer({ data, defaultRole = "business" }: { data?
         </div>
         {/* Role mapping hint */}
         <div style={{ fontSize: 12, color: "var(--text-secondary)", textAlign: "center" }}>
-          {rolePreset === "business" && (
-            <span>
-              Business: Business L0–L2 (value streams → capabilities → processes/KPIs), Solution L0–L1, Deployment L0
-            </span>
-          )}
           {rolePreset === "architect" && (
             <span>
               Architect: Business L0–L1 (capability map, info domains, OKR traceability), Solution L0–L2, Deployment L0–L1

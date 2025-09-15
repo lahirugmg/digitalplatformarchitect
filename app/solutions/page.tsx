@@ -36,7 +36,7 @@ export default function SolutionsPage() {
           <div className="section-card">
             <div className="section-header">
               <div className="section-icon">🧭</div>
-              <h2>Explore Architecture Layers</h2>
+              <h2>Explore Architecture Documentation Layers</h2>
             </div>
             <div className="section-content">
               <ArchitectureExplorer defaultRole="architect" />

@@ -19,7 +19,7 @@ const tools = [
     featured: false
   },
   {
-    slug: "architecture-explorer", 
+    slug: "architecture-documentation",
     title: "Architecture Documentation",
     description: "Interactive documentation of architecture across Business, Solution, and Deployment views with role-based perspectives.",
     icon: "🏗️",
