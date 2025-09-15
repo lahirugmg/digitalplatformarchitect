@@ -260,11 +260,6 @@ export function ArchitectureExplorer({ data, defaultRole = "business" }: { data?
         </div>
         {/* Role mapping hint */}
         <div style={{ fontSize: 12, color: "var(--text-secondary)", textAlign: "center" }}>
-          {rolePreset === "business" && (
-            <span>
-              Business: Business L0–L2 (value streams → capabilities → processes/KPIs), Solution L0–L1, Deployment L0
-            </span>
-          )}
           {rolePreset === "architect" && (
             <span>
               Architect: Business L0–L1 (capability map, info domains, OKR traceability), Solution L0–L2, Deployment L0–L1
