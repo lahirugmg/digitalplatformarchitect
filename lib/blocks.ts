@@ -145,8 +145,7 @@ export const blocks: Record<string, Block> = {
   "api-management": {
     slug: "api-management",
     title: "API Management",
-    summary:
-      "Complete API lifecycle management platform enabling secure exposure, governance, and monetization of digital services across the enterprise with comprehensive developer experience and operational excellence.",
+    summary: "QOS layer for services: designing, publishing, securing, monitoring, and scaling APIs so they're safe and easy to use",
     keywords: ["api gateway", "developer portal", "policies", "rate limiting", "monetization", "analytics", "openapi", "developer experience", "api security", "lifecycle"],
     sections: [
       {

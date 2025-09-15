@@ -32,10 +32,13 @@ export default function BlockPage({ params }: Props) {
   return (
     <div className="container">
       <article className="prose stack gap-lg" style={{ maxWidth: '900px', margin: '0 auto' }}>
-        <header className="block-header">
-          <h1 className="page-title">{block.title}</h1>
-          <p className="lede">{block.summary}</p>
-        </header>
+        {/* Only show header for non-API Management blocks */}
+        {!isApiManagement && (
+          <header className="block-header">
+            <h1 className="page-title">{block.title}</h1>
+            <p className="lede">{block.summary}</p>
+          </header>
+        )}
 
         {/* Enhanced Block Diagram (general) — hide for API Management */}
         {!isApiManagement && (
