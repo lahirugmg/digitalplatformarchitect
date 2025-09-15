@@ -6,15 +6,19 @@ import { IDPDiagram } from "./diagrams/blocks/IDPDiagram";
 import { DataPlatformDiagram } from "./diagrams/blocks/DataPlatformDiagram";
 import { ObservabilityDiagram } from "./diagrams/blocks/ObservabilityDiagram";
 import { SecurityDiagram } from "./diagrams/blocks/SecurityDiagram";
+import { ApplicationServicesDiagram } from "./diagrams/blocks/ApplicationServicesDiagram";
+import { AIMLDiagram } from "./diagrams/blocks/AIMLDiagram";
 
 // Enhanced versions of diagrams for detailed views
 const enhancedBlockDiagrams: Record<string, React.ComponentType> = {
+  "application-services": ApplicationServicesDiagram,
   "messaging-streaming-platform": MessagingDiagram,
   "enterprise-integration": IntegrationDiagram,
   "api-management": APIDiagram,
   "identity-access-management": IAMDiagram,
   "internal-developer-platform": IDPDiagram,
   "data-platform": DataPlatformDiagram,
+  "ai-ml-intelligent-services": AIMLDiagram,
   "observability-operations": ObservabilityDiagram,
   "security-services": SecurityDiagram,
 };
