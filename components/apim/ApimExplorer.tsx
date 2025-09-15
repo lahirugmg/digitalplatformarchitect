@@ -100,7 +100,8 @@ function assignPositions(nodes: NodeSpec[]): NodeSpec[] {
   const controlX = personasX + CARD_WIDTH + COL_GAP;
   const controlPlaneWidth = CONTROL_COLS * CARD_WIDTH + (CONTROL_COLS - 1) * INNER_GAP;
   const dataX = controlX + controlPlaneWidth + COL_GAP;
-  const observabilityX = dataX + CARD_WIDTH + COL_GAP;
+  // Place Analytics & Monetization (observability) under the Data Plane
+  const observabilityX = dataX;
   const clientsX = observabilityX + CARD_WIDTH + COL_GAP;
   const backendsX = clientsX; // share the same column, separated vertically
 
@@ -148,7 +149,13 @@ function assignPositions(nodes: NodeSpec[]): NodeSpec[] {
     }
 
     const x = groupColumns[group] ?? (node.plane === 'control' ? controlX : node.plane === 'data' ? dataX : personasX);
-    const currentY = yCursors[group] ?? 80;
+    let currentY = yCursors[group] ?? 80;
+    // Ensure observability (Analytics & Monetization) sits under Data Plane
+    if (group === 'observability') {
+      const dataBottom = (yCursors['data-plane'] ?? (groupStartY['data-plane'] || 100));
+      // add a small separation gap below data-plane stack
+      currentY = Math.max(currentY, dataBottom + 40);
+    }
     yCursors[group] = currentY + estimateNodeHeight(node) + verticalGap;
     return { ...node, position: { x, y: currentY } };
   });
