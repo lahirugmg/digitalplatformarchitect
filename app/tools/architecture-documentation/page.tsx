@@ -64,11 +64,13 @@ export default function ArchitectureDocumentationToolPage() {
     <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: 16 }}>
       <div className="card" style={{ padding: 12 }}>
         <h3 className="section-title" style={{ fontSize: 16 }}>Business L0</h3>
-        <BusinessL0Diagram />
+        {/* Swapped: render Solution diagram under Business heading */}
+        <SolutionL0Diagram />
       </div>
       <div className="card" style={{ padding: 12 }}>
         <h3 className="section-title" style={{ fontSize: 16 }}>Solution L0</h3>
-        <SolutionL0Diagram />
+        {/* Swapped: render Business diagram under Solution heading */}
+        <BusinessL0Diagram />
       </div>
       <div className="card" style={{ padding: 12 }}>
         <h3 className="section-title" style={{ fontSize: 16 }}>Deployment L0</h3>
