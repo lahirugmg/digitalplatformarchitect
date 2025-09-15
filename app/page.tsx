@@ -69,7 +69,7 @@ export default function HomePage() {
               </span>
               <span className="tools-rail-arrow">→</span>
             </Link>
-            <Link href="/tools/architecture-explorer" className="tools-rail-item">
+            <Link href="/tools/architecture-documentation" className="tools-rail-item">
               <span className="tools-rail-icon">🧭</span>
               <span className="tools-rail-text">
                 <span className="tools-rail-item-title">Architecture Documentation</span>
@@ -99,7 +99,7 @@ export default function HomePage() {
 
       <section className="patterns-showcase">
         <div className="stack gap-sm" style={{marginBottom: '1rem'}}>
-          <h2 className="section-title centered blue">Explore Architecture Layers</h2>
+          <h2 className="section-title centered blue">Explore Architecture Documentation Layers</h2>
           <p className="section-description">Start at L0 conceptual view, then zoom into L1/L2/L3 to reveal products, protocols, and deployments.</p>
         </div>
         <ArchitectureExplorer />
@@ -236,7 +236,7 @@ export default function HomePage() {
             </div>
           </Link>
           
-          <Link href="/tools/architecture-explorer" className="tool-card">
+          <Link href="/tools/architecture-documentation" className="tool-card">
             <div className="tool-header">
               <div className="tool-icon">🧭</div>
               <div className="tool-meta">
