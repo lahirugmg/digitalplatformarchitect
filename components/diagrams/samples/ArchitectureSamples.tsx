@@ -15,8 +15,16 @@ const baseStyles = `
   .small { fill: var(--text-secondary, #334155); font: 500 12px system-ui; }
   .box { fill: var(--surface, #fff); stroke: var(--border, #e5e7eb); stroke-width: 2; rx: 12; ry: 12; }
   .block { fill: var(--surface-variant, #f8fafc); stroke: var(--border, #e5e7eb); stroke-width: 2; rx: 14; ry: 14; }
-  .edge { stroke: var(--text-muted, #6b7280); stroke-width: 2; marker-end: url(#arrow); opacity: .75 }
+  .edge { stroke: var(--text-muted, #6b7280); stroke-width: 2; marker-end: url(#arrow); opacity: .8 }
+  .edge-sync { stroke-dasharray: none; }
+  .edge-async { stroke-dasharray: 6 4; }
+  .edge-batch { stroke-dasharray: 2 6; }
   .cap { font: 700 16px system-ui; fill: var(--text, #0f172a); }
+  .legend { fill: none; stroke: var(--border, #e5e7eb); stroke-width: 1.5; rx: 10; ry: 10; }
+  .legend-title { font: 700 12px system-ui; fill: var(--text-secondary, #334155); }
+  .legend-label { font: 500 11px system-ui; fill: var(--text-secondary, #334155); }
+  .datastore-fill { fill: var(--surface, #fff); }
+  .datastore-stroke { stroke: var(--border, #e5e7eb); stroke-width: 2; }
 `;
 
 export function BusinessL0Diagram(_: Props) {
@@ -30,6 +38,12 @@ export function BusinessL0Diagram(_: Props) {
       {/* Experiences */}
       <rect x="40" y="80" width="240" height="90" className="block" />
       <text x="160" y="126" textAnchor="middle" className="label">Customer & Partner Channels</text>
+      {/* Actor icon inside channels */}
+      <g transform="translate(70,108)">
+        <circle cx="0" cy="0" r="10" fill="none" stroke="#94a3b8" strokeWidth="2" />
+        <line x1="0" y1="10" x2="0" y2="28" stroke="#94a3b8" strokeWidth="2" />
+        <line x1="-12" y1="18" x2="12" y2="18" stroke="#94a3b8" strokeWidth="2" />
+      </g>
 
       {/* Core capabilities */}
       <rect x="330" y="80" width="240" height="90" className="block" />
@@ -52,24 +66,61 @@ export function BusinessL0Diagram(_: Props) {
       <text x="700" y="250" textAnchor="middle" className="small">Enterprise Integration</text>
       <text x="700" y="268" textAnchor="middle" className="small">Messaging & Streaming</text>
 
-      <rect x="225" y="330" width="200" height="80" className="box" />
+      {/* Data Platform as datastore/cylinder shape */}
+      <g aria-label="Data Platform" role="img">
+        {/* top ellipse */}
+        <ellipse cx="325" cy="340" rx="100" ry="12" className="datastore-fill datastore-stroke" />
+        {/* body */}
+        <rect x="225" y="340" width="200" height="56" className="datastore-fill datastore-stroke" />
+        {/* bottom ellipse */}
+        <ellipse cx="325" cy="396" rx="100" ry="12" className="datastore-fill datastore-stroke" />
+      </g>
       <text x="325" y="360" textAnchor="middle" className="small">Data Platform</text>
 
       <rect x="475" y="330" width="200" height="80" className="box" />
       <text x="575" y="360" textAnchor="middle" className="small">AI/ML & Intelligent Services</text>
 
       <rect x="725" y="330" width="140" height="80" className="box" />
-      <text x="795" y="360" textAnchor="middle" className="small">Observability</text>
+      <text x="795" y="355" textAnchor="middle" className="small">Observability</text>
+      <text x="795" y="373" textAnchor="middle" className="small">Metrics/Logs/Traces</text>
 
       {/* Edges */}
-      <line x1="280" y1="125" x2="330" y2="125" className="edge" />
-      <line x1="570" y1="125" x2="620" y2="125" className="edge" />
-      <line x1="160" y1="170" x2="200" y2="220" className="edge" />
-      <line x1="450" y1="170" x2="450" y2="220" className="edge" />
-      <line x1="740" y1="170" x2="700" y2="220" className="edge" />
-      <line x1="325" y1="300" x2="325" y2="330" className="edge" />
-      <line x1="575" y1="300" x2="575" y2="330" className="edge" />
-      <line x1="700" y1="300" x2="725" y2="330" className="edge" />
+      <line x1="280" y1="125" x2="330" y2="125" className="edge edge-sync" />
+      <line x1="570" y1="125" x2="620" y2="125" className="edge edge-sync" />
+      <line x1="160" y1="170" x2="200" y2="220" className="edge edge-async" />
+      <line x1="450" y1="170" x2="450" y2="220" className="edge edge-sync" />
+      <line x1="740" y1="170" x2="700" y2="220" className="edge edge-batch" />
+      <line x1="325" y1="300" x2="325" y2="330" className="edge edge-batch" />
+      <line x1="575" y1="300" x2="575" y2="330" className="edge edge-async" />
+      <line x1="700" y1="300" x2="725" y2="330" className="edge edge-async" />
+
+      {/* Legend */}
+      <g transform="translate(24,372)">
+        <rect x="0" y="0" width="230" height="88" className="legend" />
+        <text x="12" y="18" className="legend-title">Legend</text>
+
+        {/* Shapes */}
+        <rect x="12" y="28" width="24" height="16" className="box" />
+        <text x="42" y="40" className="legend-label">Capability / Platform Block</text>
+
+        <g transform="translate(12,52)">
+          <ellipse cx="12" cy="8" rx="12" ry="4" className="datastore-fill datastore-stroke" />
+          <rect x="0" y="8" width="24" height="12" className="datastore-fill datastore-stroke" />
+          <ellipse cx="12" cy="20" rx="12" ry="4" className="datastore-fill datastore-stroke" />
+        </g>
+        <text x="42" y="66" className="legend-label">Datastore</text>
+
+        {/* Lines */}
+        <line x1="140" y1="34" x2="200" y2="34" className="edge edge-sync" />
+        <text x="204" y="37" className="legend-label" textAnchor="start">Sync</text>
+        <line x1="140" y1="54" x2="200" y2="54" className="edge edge-async" />
+        <text x="204" y="57" className="legend-label" textAnchor="start">Async</text>
+        <line x1="140" y1="74" x2="200" y2="74" className="edge edge-batch" />
+        <text x="204" y="77" className="legend-label" textAnchor="start">Batch</text>
+      </g>
+
+      {/* Glossary (compact) */}
+      <text x="876" y="456" textAnchor="end" className="legend-label">IAM: Identity & Access Management • KPI: Key Performance Indicator</text>
     </svg>
   );
 }
@@ -344,4 +395,3 @@ export function DeploymentL2Diagram(_: Props) {
     </svg>
   );
 }
-
