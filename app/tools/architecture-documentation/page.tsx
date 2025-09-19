@@ -1,4 +1,5 @@
 import { ArchitectureExplorer } from "@/components/ArchitectureExplorer";
+import { DiagramZoom } from "@/components/DiagramZoom";
 import { SolutionL0Diagram } from "@/components/diagrams/SolutionL0Diagram";
 import {
   BusinessL0Diagram,
@@ -64,17 +65,21 @@ export default function ArchitectureDocumentationToolPage() {
     <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: 16 }}>
       <div className="card" style={{ padding: 12 }}>
         <h3 className="section-title" style={{ fontSize: 16 }}>Business L0</h3>
-        {/* Swapped: render Solution diagram under Business heading */}
-        <SolutionL0Diagram />
+        <DiagramZoom title="Business L0" clickToOpen>
+          <SolutionL0Diagram />
+        </DiagramZoom>
       </div>
       <div className="card" style={{ padding: 12 }}>
         <h3 className="section-title" style={{ fontSize: 16 }}>Solution L0</h3>
-        {/* Swapped: render Business diagram under Solution heading */}
-        <BusinessL0Diagram />
+        <DiagramZoom title="Solution L0" clickToOpen>
+          <BusinessL0Diagram />
+        </DiagramZoom>
       </div>
       <div className="card" style={{ padding: 12 }}>
         <h3 className="section-title" style={{ fontSize: 16 }}>Deployment L0</h3>
-        <DeploymentL0Diagram />
+        <DiagramZoom title="Deployment L0" clickToOpen>
+          <DeploymentL0Diagram />
+        </DiagramZoom>
       </div>
     </div>
 
@@ -82,15 +87,21 @@ export default function ArchitectureDocumentationToolPage() {
     <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: 16 }}>
       <div className="card" style={{ padding: 12 }}>
         <h3 className="section-title" style={{ fontSize: 16 }}>Business L1</h3>
-        <BusinessL1Diagram />
+        <DiagramZoom title="Business L1" clickToOpen>
+          <BusinessL1Diagram />
+        </DiagramZoom>
       </div>
       <div className="card" style={{ padding: 12 }}>
         <h3 className="section-title" style={{ fontSize: 16 }}>Solution L1</h3>
-        <SolutionL1Diagram />
+        <DiagramZoom title="Solution L1" clickToOpen>
+          <SolutionL1Diagram />
+        </DiagramZoom>
       </div>
       <div className="card" style={{ padding: 12 }}>
         <h3 className="section-title" style={{ fontSize: 16 }}>Deployment L1</h3>
-        <DeploymentL1Diagram />
+        <DiagramZoom title="Deployment L1" clickToOpen>
+          <DeploymentL1Diagram />
+        </DiagramZoom>
       </div>
     </div>
 
@@ -98,15 +109,21 @@ export default function ArchitectureDocumentationToolPage() {
     <div className="card-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: 16 }}>
       <div className="card" style={{ padding: 12 }}>
         <h3 className="section-title" style={{ fontSize: 16 }}>Business L2</h3>
-        <BusinessL2Diagram />
+        <DiagramZoom title="Business L2" clickToOpen>
+          <BusinessL2Diagram />
+        </DiagramZoom>
       </div>
       <div className="card" style={{ padding: 12 }}>
         <h3 className="section-title" style={{ fontSize: 16 }}>Solution L2</h3>
-        <SolutionL2Diagram />
+        <DiagramZoom title="Solution L2" clickToOpen>
+          <SolutionL2Diagram />
+        </DiagramZoom>
       </div>
       <div className="card" style={{ padding: 12 }}>
         <h3 className="section-title" style={{ fontSize: 16 }}>Deployment L2</h3>
-        <DeploymentL2Diagram />
+        <DiagramZoom title="Deployment L2" clickToOpen>
+          <DeploymentL2Diagram />
+        </DiagramZoom>
       </div>
     </div>
   </section>

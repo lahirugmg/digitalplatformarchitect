@@ -5,15 +5,17 @@ import React, { useEffect, useRef, useState } from "react";
 type Props = {
   title: string;
   children: React.ReactElement;
+  clickToOpen?: boolean; // click preview to open (defaults to true)
 };
 
-export function DiagramZoom({ title, children }: Props) {
+export function DiagramZoom({ title, children, clickToOpen = true }: Props) {
   const [open, setOpen] = useState(false);
   const [scale, setScale] = useState(1);
   const stageRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   const dragState = useRef<{ dragging: boolean; startX: number; startY: number; scrollLeft: number; scrollTop: number }>({ dragging: false, startX: 0, startY: 0, scrollLeft: 0, scrollTop: 0 });
   const [baseSize, setBaseSize] = useState<{ w: number; h: number }>({ w: 1200, h: 800 });
+  const scrollLockRef = useRef<{ overflow: string; paddingRight: string } | null>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -52,14 +54,32 @@ export function DiagramZoom({ title, children }: Props) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  // Prevent background scroll and layout shift while modal is open
+  useEffect(() => {
+    if (open) {
+      const body = document.body as HTMLBodyElement;
+      // Store previous inline styles to restore later
+      scrollLockRef.current = { overflow: body.style.overflow, paddingRight: body.style.paddingRight };
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+      body.style.overflow = 'hidden';
+      if (scrollBarWidth > 0) body.style.paddingRight = `${scrollBarWidth}px`;
+      return () => {
+        // Restore styles
+        body.style.overflow = scrollLockRef.current?.overflow ?? '';
+        body.style.paddingRight = scrollLockRef.current?.paddingRight ?? '';
+      };
+    }
+  }, [open]);
+
   return (
     <div className="diagram-shell">
-      <div className="diagram-inner">
+      <div
+        className="diagram-inner"
+        onClick={() => clickToOpen && setOpen(true)}
+        style={clickToOpen ? { cursor: 'zoom-in' } : undefined}
+      >
         {children}
       </div>
-      <button className="zoom-btn" aria-label={`Magnify ${title}`} onClick={() => setOpen(true)}>
-        🔍 Magnify
-      </button>
 
       {open && (
         <div className="diagram-modal" role="dialog" aria-modal="true" aria-label={`${title} – zoomed view`}>
