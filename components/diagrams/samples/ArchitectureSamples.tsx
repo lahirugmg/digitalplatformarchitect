@@ -136,146 +136,123 @@ const Glossary = ({ x, y, items }: { x: number; y: number; items: GlossaryItem[]
 
 const BusinessL0Legend = ({ x, y }: { x: number; y: number }) => (
   <g transform={`translate(${x}, ${y})`} aria-label="Legend">
-    <rect className="legend-card" x={0} y={0} width={360} height={220} rx={12} />
-    <text className="legend-title" x={20} y={30}>Notation</text>
+    <rect className="legend-card" x={0} y={0} width={340} height={210} rx={12} />
+    <text className="legend-title" x={20} y={28}>Legend</text>
 
-    <path className="value-stream" d="M20 58 H140 L160 78 L140 98 H20 Z" />
-    <text className="legend-label" x={180} y={82}>Value stream / macro process</text>
+    <rect className="experience" x={20} y={52} width={110} height={36} rx={18} />
+    <text className="legend-label" x={150} y={74}>Experience / Channel API</text>
 
-    <rect className="unit" x={20} y={112} width={120} height={34} rx={12} />
-    <text className="legend-label" x={180} y={134}>Business unit lane</text>
+    <polygon className="platform" points={hexPoints(75, 122, 90, 54)} />
+    <text className="legend-label" x={150} y={126}>Platform module (API • AI • Integration)</text>
 
-    <rect className="stakeholder" x={20} y={150} width={120} height={34} rx={18} />
-    <text className="legend-label" x={180} y={172}>Stakeholder group</text>
+    <rect className="service" x={20} y={150} width={110} height={32} rx={12} />
+    <text className="legend-label" x={150} y={170}>Security & operations control</text>
 
-    <line className="policy-line" x1={20} y1={190} x2={140} y2={190} />
-    <text className="legend-label" x={180} y={194}>Policy / constraint link</text>
-
-    <rect className="kpi-callout" x={20} y={198} width={120} height={32} rx={12} />
-    <text className="legend-label" x={180} y={218}>KPI / success measure</text>
+    <g transform="translate(12,180)">
+      <ellipse className="datastore-fill datastore-stroke" cx={38} cy={6} rx={36} ry={6} />
+      <rect className="datastore-fill datastore-stroke" x={2} y={6} width={72} height={20} />
+      <ellipse className="datastore-fill datastore-stroke" cx={38} cy={26} rx={36} ry={6} />
+    </g>
+    <text className="legend-label" x={150} y={200}>Data / knowledge platform</text>
   </g>
 );
 
 export function BusinessL0Diagram(_: Props) {
   const glossary: GlossaryItem[] = [
-    { term: "Mission", description: "Purpose of the commerce business and its promise" },
-    { term: "Value Stream", description: "End-to-end sequence that delivers customer value" },
-    { term: "Policy", description: "Non-negotiable constraint guiding operations" },
-    { term: "KPI", description: "Quantitative measure that signals success" },
+    { term: "Experience API", description: "Channel facade that abstracts domain services" },
+    { term: "AI Agent Hub", description: "Reusable assistants infused into journeys and ops" },
+    { term: "Zero Trust", description: "Security fabric unifying identity, policy, and telemetry" },
   ];
 
   return (
-    <svg viewBox="0 0 1100 940" role="img" aria-label="Unified Commerce Platform — Business Overview L0" style={{ width: "100%", height: "auto" }}>
+    <svg viewBox="0 0 1100 860" role="img" aria-label="Unified Commerce Platform — Solution L0" style={{ width: "100%", height: "auto" }}>
       <style>{baseStyles}</style>
       <ArrowDefs />
 
       <text className="title" x={550} y={48} textAnchor="middle">Unified Commerce Platform — Solution L0</text>
-      <text className="scope" x={550} y={70} textAnchor="middle">Scope: Enterprise commerce business | Version 2024.07</text>
+      <text className="scope" x={550} y={68} textAnchor="middle">Technology platform view • APIs • AI agents • Security</text>
 
-      {/* Mission and goals */}
-      <g aria-label="Mission and goals" transform="translate(80, 100)">
-        <rect className="mission" x={0} y={0} width={420} height={190} rx={18} />
-        <text className="label" x={20} y={36}>Mission</text>
-        <text className="goal-text" x={20} y={60}>Deliver unified, trusted experiences that grow lifetime value.</text>
-        <text className="label" x={20} y={94}>2024 Outcomes</text>
-        <text className="goal-text" x={20} y={118}>
-          <tspan x={20} y={118}>- Digital gross merchandise value +15%</tspan>
-          <tspan x={20} y={138}>- Net Promoter Score >= 65</tspan>
-          <tspan x={20} y={158}>- Order-to-ship time &lt; 18 hours</tspan>
-          <tspan x={20} y={178}>- Repeat purchase rate >= 75%</tspan>
-        </text>
-      </g>
+      <rect className="lane-bg" x={80} y={96} width={940} height={150} rx={24} />
+      <rect className="lane-bg" x={80} y={270} width={940} height={200} rx={24} />
+      <rect className="lane-bg" x={80} y={500} width={940} height={150} rx={24} />
 
-      {/* Stakeholders */}
-      <g aria-label="Stakeholders" transform="translate(740, 96)">
-        <text className="label" x={140} y={20} textAnchor="middle">Stakeholders</text>
-        <g transform="translate(0, 40)">
-          <rect className="stakeholder" x={0} y={0} width={120} height={44} rx={22} />
-          <text className="stakeholder-label" x={60} y={28} textAnchor="middle">Customers</text>
+      <text className="lane-label" x={120} y={120}>Experience & Channel APIs</text>
+      <text className="lane-label" x={120} y={300}>Platform Fabric</text>
+      <text className="lane-label" x={120} y={530}>Security, Identity & Operations</text>
+
+      {[
+        { x: 160, label: "Customer Experience APIs", note: "Web/App BFF · GraphQL" },
+        { x: 440, label: "Partner & Marketplace APIs", note: "Quota tiers · Async events" },
+        { x: 720, label: "Associate Assistants", note: "Task APIs · Operational insights" },
+      ].map(({ x, label, note }) => (
+        <g key={label}>
+          <rect className="experience" x={x} y={140} width={220} height={64} rx={24} />
+          <text className="label" x={x + 110} y={174} textAnchor="middle">{label}</text>
+          <text className="note" x={x + 110} y={194} textAnchor="middle">{note}</text>
         </g>
-        <g transform="translate(160, 40)">
-          <rect className="stakeholder" x={0} y={0} width={120} height={44} rx={22} />
-          <text className="stakeholder-label" x={60} y={28} textAnchor="middle">Partners</text>
+      ))}
+
+      {[
+        { cx: 220, cy: 340, label: "API Gateway", note: "Policy · throttling · monetisation" },
+        { cx: 420, cy: 340, label: "Integration Mesh", note: "Event choreography · service discovery" },
+        { cx: 620, cy: 340, label: "AI Agent Hub", note: "Reasoning, copilots, guardrails" },
+        { cx: 820, cy: 340, label: "Automation & Orchestration", note: "Rules · workflow · RPA" },
+      ].map(({ cx, cy, label, note }) => (
+        <g key={label}>
+          <polygon className="platform" points={hexPoints(cx, cy, 140, 88)} />
+          <text className="label" x={cx} y={cy} textAnchor="middle">{label}</text>
+          <text className="note" x={cx} y={cy + 18} textAnchor="middle">{note}</text>
         </g>
-        <g transform="translate(0, 100)">
-          <rect className="stakeholder" x={0} y={0} width={120} height={44} rx={22} />
-          <text className="stakeholder-label" x={60} y={28} textAnchor="middle">Regulators</text>
+      ))}
+
+      <g transform="translate(260, 380)" aria-label="Data platform">
+        <ellipse className="datastore-fill datastore-stroke" cx={90} cy={10} rx={90} ry={10} />
+        <rect className="datastore-fill datastore-stroke" x={0} y={10} width={180} height={44} />
+        <ellipse className="datastore-fill datastore-stroke" cx={90} cy={54} rx={90} ry={10} />
+      </g>
+      <text className="label" x={350} y={452} textAnchor="middle">Data Lakehouse & Feature Store</text>
+      <text className="note" x={350} y={470} textAnchor="middle">Streaming ingestion · unified profiles · model registry</text>
+
+      <g transform="translate(580, 392)" aria-label="Observability data">
+        <ellipse className="datastore-fill datastore-stroke" cx={70} cy={8} rx={70} ry={8} />
+        <rect className="datastore-fill datastore-stroke" x={0} y={8} width={140} height={32} />
+        <ellipse className="datastore-fill datastore-stroke" cx={70} cy={40} rx={70} ry={8} />
+      </g>
+      <text className="label" x={650} y={452} textAnchor="middle">Telemetry & Knowledge Graph</text>
+      <text className="note" x={650} y={470} textAnchor="middle">Metrics · traces · decision intelligence</text>
+
+      {[
+        { x: 140, label: "Identity & Access", note: "SSO · MFA · policy enforcement" },
+        { x: 380, label: "Zero-Trust Mesh", note: "mTLS · posture management" },
+        { x: 620, label: "Security Automation", note: "Runtime protection · drift guardrails" },
+        { x: 860, label: "Observability & SLOs", note: "Dashboards · alerts · compliance" },
+      ].map(({ x, label, note }) => (
+        <g key={label}>
+          <rect className="service" x={x} y={540} width={200} height={70} rx={18} />
+          <text className="label" x={x + 100} y={572} textAnchor="middle">{label}</text>
+          <text className="note" x={x + 100} y={592} textAnchor="middle">{note}</text>
         </g>
-        <g transform="translate(160, 100)">
-          <rect className="stakeholder" x={0} y={0} width={120} height={44} rx={22} />
-          <text className="stakeholder-label" x={60} y={28} textAnchor="middle">Internal Leaders</text>
-        </g>
-      </g>
+      ))}
 
-      {/* Glossary */}
-      <Glossary x={740} y={210} items={glossary} />
+      <path className="edge edge-sync" d="M270 204 V260" />
+      <path className="edge edge-sync" d="M550 204 V260" />
+      <path className="edge edge-sync" d="M830 204 V260" />
 
-      {/* Internal landscape */}
-      <rect className="lane-bg" x={120} y={360} width={860} height={320} rx={24} />
-      <text className="scope" x={550} y={342} textAnchor="middle">Internal business units organised by value delivery</text>
+      <path className="edge edge-sync" d="M220 296 V320" />
+      <path className="edge edge-sync" d="M420 296 V320" />
+      <path className="edge edge-async" d="M620 296 V320" />
+      <path className="edge edge-async" d="M820 296 V320" />
 
-      {/* Business units */}
-      <rect className="unit" x={150} y={380} width={150} height={60} rx={16} />
-      <text className="unit-title" x={225} y={412} textAnchor="middle">Marketing</text>
-      <text className="note" x={225} y={430} textAnchor="middle">Demand & brand</text>
+      <path className="edge edge-async" d="M350 424 V468" />
+      <path className="edge edge-async" d="M650 424 V468" />
 
-      <rect className="unit" x={320} y={380} width={150} height={60} rx={16} />
-      <text className="unit-title" x={395} y={412} textAnchor="middle">Sales</text>
-      <text className="note" x={395} y={430} textAnchor="middle">Conversion & commit</text>
+      <path className="edge edge-sync" d="M240 510 V540" />
+      <path className="edge edge-sync" d="M480 510 V540" />
+      <path className="edge edge-sync" d="M720 510 V540" />
+      <path className="edge edge-sync" d="M900 510 V540" />
 
-      <rect className="unit" x={490} y={380} width={150} height={60} rx={16} />
-      <text className="unit-title" x={565} y={412} textAnchor="middle">Operations</text>
-      <text className="note" x={565} y={430} textAnchor="middle">Fulfilment & logistics</text>
-
-      <rect className="unit" x={660} y={380} width={150} height={60} rx={16} />
-      <text className="unit-title" x={735} y={412} textAnchor="middle">Finance</text>
-      <text className="note" x={735} y={430} textAnchor="middle">Billing & risk</text>
-
-      <rect className="unit" x={830} y={380} width={150} height={60} rx={16} />
-      <text className="unit-title" x={905} y={412} textAnchor="middle">Support</text>
-      <text className="note" x={905} y={430} textAnchor="middle">Care & loyalty</text>
-
-      {/* Value streams */}
-      <path className="value-stream" d="M160 420 H860 L900 450 L860 480 H160 Z" />
-      <text className="value-stream-label" x={530} y={448} textAnchor="middle">Attract → Consider</text>
-
-      <path className="value-stream-alt" d="M180 480 H860 L900 510 L860 540 H180 Z" />
-      <text className="value-stream-label" x={540} y={508} textAnchor="middle">Commit → Purchase</text>
-
-      <path className="value-stream" d="M200 540 H860 L900 570 L860 600 H200 Z" />
-      <text className="value-stream-label" x={550} y={568} textAnchor="middle">Fulfill → Deliver</text>
-
-      <path className="value-stream-alt" d="M220 600 H860 L900 630 L860 660 H220 Z" />
-      <text className="value-stream-label" x={560} y={628} textAnchor="middle">Support → Grow</text>
-
-      {/* Policies */}
-      <g aria-label="Policies and constraints" transform="translate(60, 760)">
-        <rect className="policy-callout" x={0} y={0} width={260} height={120} rx={18} />
-        <text className="label" x={20} y={30}>Policies & Constraints</text>
-        <text className="policy-text" x={20} y={56}>
-          <tspan x={20} y={56}>- Data privacy: GDPR, CCPA</tspan>
-          <tspan x={20} y={76}>- Responsible commerce & accessibility</tspan>
-          <tspan x={20} y={96}>- Refunds processed within 10 days</tspan>
-        </text>
-      </g>
-
-      {/* KPIs */}
-      <g aria-label="Measures of success" transform="translate(780, 760)">
-        <rect className="kpi-callout" x={0} y={0} width={280} height={120} rx={18} />
-        <text className="label" x={20} y={30}>Measures of Success</text>
-        <text className="kpi-label" x={20} y={56}>
-          <tspan x={20} y={56}>- Stream 1: Engagement index >= 1.3x</tspan>
-          <tspan x={20} y={76}>- Stream 2: Checkout success >= 95%</tspan>
-          <tspan x={20} y={96}>- Stream 3: OTIF >= 96%</tspan>
-          <tspan x={20} y={116}>- Stream 4: NPS >= 65</tspan>
-        </text>
-      </g>
-
-      {/* Policy and measure links */}
-      <line className="policy-line" x1={190} y1={760} x2={260} y2={600} />
-      <line className="measure-line" x1={920} y1={760} x2={820} y2={620} />
-
-      <BusinessL0Legend x={360} y={700} />
+      <BusinessL0Legend x={360} y={640} />
+      <Glossary x={80} y={640} items={glossary} />
     </svg>
   );
 }

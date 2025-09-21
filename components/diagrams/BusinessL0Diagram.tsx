@@ -92,7 +92,7 @@ export const BusinessL0Diagram: FC = () => {
         <text className="mission-title" x={24} y={100}>2024 focus outcomes</text>
         <text className="goal-item" x={24} y={124}>
           <tspan x={24} y={124}>- Digital revenue +15%</tspan>
-          <tspan x={24} y={144}>- NPS >= 65 across channels</tspan>
+          <tspan x={24} y={144}>- NPS &gt;= 65 across channels</tspan>
           <tspan x={24} y={164}>- Order-to-ship &lt; 18 hours</tspan>
         </text>
       </g>
