@@ -1,8 +1,8 @@
 import { ArchitectureExplorer } from "@/components/ArchitectureExplorer";
 import { DiagramZoom } from "@/components/DiagramZoom";
-import { SolutionL0Diagram } from "@/components/diagrams/SolutionL0Diagram";
+import { BusinessL0Diagram as BusinessL0OverviewDiagram } from "@/components/diagrams/BusinessL0Diagram";
 import {
-  BusinessL0Diagram,
+  BusinessL0Diagram as BusinessL0SampleDiagram,
   BusinessL1Diagram,
   BusinessL2Diagram,
   SolutionL1Diagram,
@@ -66,13 +66,13 @@ export default function ArchitectureDocumentationToolPage() {
       <div className="card" style={{ padding: 12 }}>
         <h3 className="section-title" style={{ fontSize: 16 }}>Business L0</h3>
         <DiagramZoom title="Business L0" clickToOpen>
-          <SolutionL0Diagram />
+          <BusinessL0OverviewDiagram />
         </DiagramZoom>
       </div>
       <div className="card" style={{ padding: 12 }}>
         <h3 className="section-title" style={{ fontSize: 16 }}>Solution L0</h3>
         <DiagramZoom title="Solution L0" clickToOpen>
-          <BusinessL0Diagram />
+          <BusinessL0SampleDiagram />
         </DiagramZoom>
       </div>
       <div className="card" style={{ padding: 12 }}>

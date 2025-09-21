@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 type Props = {
   title: string;
@@ -16,22 +17,81 @@ export function DiagramZoom({ title, children, clickToOpen = true }: Props) {
   const dragState = useRef<{ dragging: boolean; startX: number; startY: number; scrollLeft: number; scrollTop: number }>({ dragging: false, startX: 0, startY: 0, scrollLeft: 0, scrollTop: 0 });
   const [baseSize, setBaseSize] = useState<{ w: number; h: number }>({ w: 1200, h: 800 });
   const scrollLockRef = useRef<{ overflow: string; paddingRight: string } | null>(null);
+  const [modalContainer, setModalContainer] = useState<Element | null>(null);
 
   useEffect(() => {
-    if (!open) return;
-    // Reset zoom and measure base size of the SVG content
-    setScale(1);
-    const rAF = requestAnimationFrame(() => {
-      const svg = stageRef.current?.querySelector('svg');
-      if (svg) {
-        const rect = svg.getBoundingClientRect();
-        if (rect.width && rect.height) {
-          setBaseSize({ w: Math.round(rect.width), h: Math.round(rect.height) });
-        }
-      }
-    });
-    return () => cancelAnimationFrame(rAF);
+    if (!open) {
+      setModalContainer(null);
+      return;
+    }
+
+    const container = document.createElement("div");
+    container.setAttribute("data-diagram-modal-root", "");
+    document.body.appendChild(container);
+    setModalContainer(container);
+
+    return () => {
+      container.remove();
+    };
   }, [open]);
+
+  useEffect(() => {
+    if (!open || !modalContainer) return;
+
+    // Reset zoom/pan state before measuring the diagram
+    setScale(1);
+    dragState.current.dragging = false;
+    if (bodyRef.current) {
+      bodyRef.current.scrollLeft = 0;
+      bodyRef.current.scrollTop = 0;
+    }
+
+    const measureSvgNaturalSize = (svg: SVGSVGElement) => {
+      const viewBox = svg.viewBox?.baseVal;
+      if (viewBox?.width && viewBox?.height) {
+        return { w: viewBox.width, h: viewBox.height };
+      }
+
+      const widthAttr = svg.getAttribute('width');
+      const heightAttr = svg.getAttribute('height');
+      const widthFromAttr = widthAttr ? parseFloat(widthAttr) : 0;
+      const heightFromAttr = heightAttr ? parseFloat(heightAttr) : 0;
+      if (widthFromAttr && heightFromAttr) {
+        return { w: widthFromAttr, h: heightFromAttr };
+      }
+
+      try {
+        const box = svg.getBBox?.();
+        if (box?.width && box?.height) {
+          return { w: box.width, h: box.height };
+        }
+      } catch {}
+
+      const rect = svg.getBoundingClientRect();
+      if (rect.width && rect.height) {
+        return { w: rect.width, h: rect.height };
+      }
+
+      return null;
+    };
+
+    let frame = 0;
+    const measure = () => {
+      const svg = stageRef.current?.querySelector('svg');
+      if (!svg) {
+        frame = requestAnimationFrame(measure);
+        return;
+      }
+      const size = measureSvgNaturalSize(svg as SVGSVGElement);
+      if (size?.w && size?.h) {
+        setBaseSize({ w: Math.round(size.w), h: Math.round(size.h) });
+      }
+    };
+
+    frame = requestAnimationFrame(measure);
+
+    return () => cancelAnimationFrame(frame);
+  }, [open, modalContainer]);
 
   useEffect(() => {
     if (!open) return;
@@ -81,7 +141,7 @@ export function DiagramZoom({ title, children, clickToOpen = true }: Props) {
         {children}
       </div>
 
-      {open && (
+      {open && modalContainer && createPortal(
         <div className="diagram-modal" role="dialog" aria-modal="true" aria-label={`${title} – zoomed view`}>
           <div className="diagram-modal-backdrop" onClick={() => setOpen(false)} />
           <div className="diagram-modal-content">
@@ -154,7 +214,8 @@ export function DiagramZoom({ title, children, clickToOpen = true }: Props) {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        modalContainer
       )}
     </div>
   );
