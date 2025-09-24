@@ -165,20 +165,20 @@ export function BusinessL0Diagram(_: Props) {
   ];
 
   return (
-    <svg viewBox="0 0 1100 860" role="img" aria-label="Unified Commerce Platform — Solution L0" style={{ width: "100%", height: "auto" }}>
+    <svg viewBox="0 0 1100 1000" role="img" aria-label="Unified Commerce Platform — Solution L0" style={{ width: "100%", height: "auto" }}>
       <style>{baseStyles}</style>
       <ArrowDefs />
 
       <text className="title" x={550} y={48} textAnchor="middle">Unified Commerce Platform — Solution L0</text>
       <text className="scope" x={550} y={68} textAnchor="middle">Technology platform view • APIs • AI agents • Security</text>
 
-      <rect className="lane-bg" x={80} y={96} width={940} height={150} rx={24} />
-      <rect className="lane-bg" x={80} y={270} width={940} height={200} rx={24} />
-      <rect className="lane-bg" x={80} y={500} width={940} height={150} rx={24} />
+      <rect className="lane-bg" x={80} y={96} width={940} height={160} rx={24} />
+      <rect className="lane-bg" x={80} y={310} width={940} height={220} rx={24} />
+      <rect className="lane-bg" x={80} y={560} width={940} height={160} rx={24} />
 
       <text className="lane-label" x={120} y={120}>Experience & Channel APIs</text>
-      <text className="lane-label" x={120} y={300}>Platform Fabric</text>
-      <text className="lane-label" x={120} y={530}>Security, Identity & Operations</text>
+      <text className="lane-label" x={120} y={340}>Platform Fabric</text>
+      <text className="lane-label" x={120} y={590}>Security, Identity & Operations</text>
 
       {[
         { x: 160, label: "Customer Experience APIs", note: "Web/App BFF · GraphQL" },
@@ -186,40 +186,40 @@ export function BusinessL0Diagram(_: Props) {
         { x: 720, label: "Associate Assistants", note: "Task APIs · Operational insights" },
       ].map(({ x, label, note }) => (
         <g key={label}>
-          <rect className="experience" x={x} y={140} width={220} height={64} rx={24} />
-          <text className="label" x={x + 110} y={174} textAnchor="middle">{label}</text>
-          <text className="note" x={x + 110} y={194} textAnchor="middle">{note}</text>
+          <rect className="experience" x={x} y={145} width={220} height={70} rx={24} />
+          <text className="label" x={x + 110} y={180} textAnchor="middle">{label}</text>
+          <text className="note" x={x + 110} y={200} textAnchor="middle">{note}</text>
         </g>
       ))}
 
       {[
-        { cx: 220, cy: 340, label: "API Gateway", note: "Policy · throttling · monetisation" },
-        { cx: 420, cy: 340, label: "Integration Mesh", note: "Event choreography · service discovery" },
-        { cx: 620, cy: 340, label: "AI Agent Hub", note: "Reasoning, copilots, guardrails" },
-        { cx: 820, cy: 340, label: "Automation & Orchestration", note: "Rules · workflow · RPA" },
+        { cx: 220, cy: 390, label: "API Gateway", note: "Policy · throttling · monetisation" },
+        { cx: 420, cy: 390, label: "Integration Mesh", note: "Event choreography · service discovery" },
+        { cx: 620, cy: 390, label: "AI Agent Hub", note: "Reasoning, copilots, guardrails" },
+        { cx: 820, cy: 390, label: "Automation & Orchestration", note: "Rules · workflow · RPA" },
       ].map(({ cx, cy, label, note }) => (
         <g key={label}>
-          <polygon className="platform" points={hexPoints(cx, cy, 140, 88)} />
+          <polygon className="platform" points={hexPoints(cx, cy, 150, 95)} />
           <text className="label" x={cx} y={cy} textAnchor="middle">{label}</text>
           <text className="note" x={cx} y={cy + 18} textAnchor="middle">{note}</text>
         </g>
       ))}
 
-      <g transform="translate(260, 380)" aria-label="Data platform">
+      <g transform="translate(240, 440)" aria-label="Data platform">
         <ellipse className="datastore-fill datastore-stroke" cx={90} cy={10} rx={90} ry={10} />
         <rect className="datastore-fill datastore-stroke" x={0} y={10} width={180} height={44} />
         <ellipse className="datastore-fill datastore-stroke" cx={90} cy={54} rx={90} ry={10} />
       </g>
-      <text className="label" x={350} y={452} textAnchor="middle">Data Lakehouse & Feature Store</text>
-      <text className="note" x={350} y={470} textAnchor="middle">Streaming ingestion · unified profiles · model registry</text>
+      <text className="label" x={330} y={515} textAnchor="middle">Data Lakehouse & Feature Store</text>
+      <text className="note" x={330} y={533} textAnchor="middle">Streaming ingestion · unified profiles · model registry</text>
 
-      <g transform="translate(580, 392)" aria-label="Observability data">
+      <g transform="translate(600, 440)" aria-label="Observability data">
         <ellipse className="datastore-fill datastore-stroke" cx={70} cy={8} rx={70} ry={8} />
         <rect className="datastore-fill datastore-stroke" x={0} y={8} width={140} height={32} />
         <ellipse className="datastore-fill datastore-stroke" cx={70} cy={40} rx={70} ry={8} />
       </g>
-      <text className="label" x={650} y={452} textAnchor="middle">Telemetry & Knowledge Graph</text>
-      <text className="note" x={650} y={470} textAnchor="middle">Metrics · traces · decision intelligence</text>
+      <text className="label" x={670} y={492} textAnchor="middle">Telemetry & Knowledge Graph</text>
+      <text className="note" x={670} y={510} textAnchor="middle">Metrics · traces · decision intelligence</text>
 
       {[
         { x: 140, label: "Identity & Access", note: "SSO · MFA · policy enforcement" },
@@ -228,31 +228,31 @@ export function BusinessL0Diagram(_: Props) {
         { x: 860, label: "Observability & SLOs", note: "Dashboards · alerts · compliance" },
       ].map(({ x, label, note }) => (
         <g key={label}>
-          <rect className="service" x={x} y={540} width={200} height={70} rx={18} />
-          <text className="label" x={x + 100} y={572} textAnchor="middle">{label}</text>
-          <text className="note" x={x + 100} y={592} textAnchor="middle">{note}</text>
+          <rect className="service" x={x} y={600} width={200} height={80} rx={18} />
+          <text className="label" x={x + 100} y={635} textAnchor="middle">{label}</text>
+          <text className="note" x={x + 100} y={655} textAnchor="middle">{note}</text>
         </g>
       ))}
 
-      <path className="edge edge-sync" d="M270 204 V260" />
-      <path className="edge edge-sync" d="M550 204 V260" />
-      <path className="edge edge-sync" d="M830 204 V260" />
+      <path className="edge edge-sync" d="M270 215 V310" />
+      <path className="edge edge-sync" d="M550 215 V310" />
+      <path className="edge edge-sync" d="M830 215 V310" />
 
-      <path className="edge edge-sync" d="M220 296 V320" />
-      <path className="edge edge-sync" d="M420 296 V320" />
-      <path className="edge edge-async" d="M620 296 V320" />
-      <path className="edge edge-async" d="M820 296 V320" />
+      <path className="edge edge-sync" d="M220 345 V370" />
+      <path className="edge edge-sync" d="M420 345 V370" />
+      <path className="edge edge-async" d="M620 345 V370" />
+      <path className="edge edge-async" d="M820 345 V370" />
 
-      <path className="edge edge-async" d="M350 424 V468" />
-      <path className="edge edge-async" d="M650 424 V468" />
+      <path className="edge edge-async" d="M330 484 V560" />
+      <path className="edge edge-async" d="M670 480 V560" />
 
-      <path className="edge edge-sync" d="M240 510 V540" />
-      <path className="edge edge-sync" d="M480 510 V540" />
-      <path className="edge edge-sync" d="M720 510 V540" />
-      <path className="edge edge-sync" d="M900 510 V540" />
+      <path className="edge edge-sync" d="M240 560 V600" />
+      <path className="edge edge-sync" d="M480 560 V600" />
+      <path className="edge edge-sync" d="M720 560 V600" />
+      <path className="edge edge-sync" d="M960 560 V600" />
 
-      <BusinessL0Legend x={360} y={640} />
-      <Glossary x={80} y={640} items={glossary} />
+      <BusinessL0Legend x={360} y={780} />
+      <Glossary x={80} y={780} items={glossary} />
     </svg>
   );
 }
@@ -266,122 +266,122 @@ export function BusinessL1Diagram(_: Props) {
   ];
 
   return (
-    <svg viewBox="0 0 1100 880" role="img" aria-label="Unified Commerce Platform — Business Architecture L1" style={{ width: "100%", height: "auto" }}>
+    <svg viewBox="0 0 1100 1200" role="img" aria-label="Unified Commerce Platform — Business Architecture L1" style={{ width: "100%", height: "auto" }}>
       <style>{baseStyles}</style>
       <ArrowDefs />
 
       <text className="title" x={550} y={48} textAnchor="middle">Journey-to-Capability Mapping — Business L1</text>
 
-      <rect className="lane-bg" x={60} y={90} width={980} height={90} rx={24} />
-      <rect className="lane-bg" x={60} y={210} width={980} height={140} rx={24} />
-      <rect className="lane-bg" x={60} y={380} width={980} height={140} rx={24} />
+      <rect className="lane-bg" x={60} y={90} width={980} height={110} rx={24} />
+      <rect className="lane-bg" x={60} y={240} width={980} height={190} rx={24} />
+      <rect className="lane-bg" x={60} y={460} width={980} height={200} rx={24} />
 
       <text className="lane-label" x={90} y={140} textAnchor="start">Journey Stages</text>
-      <text className="lane-label" x={90} y={260} textAnchor="start">Business Capabilities</text>
-      <text className="lane-label" x={90} y={430} textAnchor="start">Platform Enablers</text>
+      <text className="lane-label" x={90} y={300} textAnchor="start">Business Capabilities</text>
+      <text className="lane-label" x={90} y={520} textAnchor="start">Platform Enablers</text>
 
       {/* Journey stages */}
-      <rect className="experience" x={220} y={110} width={170} height={56} rx={24} />
-      <text className="label" x={305} y={142} textAnchor="middle">Discover</text>
-      <text className="note" x={305} y={158} textAnchor="middle">Personalized browsing</text>
+      <rect className="experience" x={220} y={115} width={170} height={65} rx={24} />
+      <text className="label" x={305} y={147} textAnchor="middle">Discover</text>
+      <text className="note" x={305} y={163} textAnchor="middle">Personalized browsing</text>
 
-      <rect className="experience" x={420} y={110} width={170} height={56} rx={24} />
-      <text className="label" x={505} y={142} textAnchor="middle">Decide</text>
-      <text className="note" x={505} y={158} textAnchor="middle">Real-time pricing & ATP</text>
+      <rect className="experience" x={420} y={115} width={170} height={65} rx={24} />
+      <text className="label" x={505} y={147} textAnchor="middle">Decide</text>
+      <text className="note" x={505} y={163} textAnchor="middle">Real-time pricing & ATP</text>
 
-      <rect className="experience" x={620} y={110} width={170} height={56} rx={24} />
-      <text className="label" x={705} y={142} textAnchor="middle">Purchase</text>
-      <text className="note" x={705} y={158} textAnchor="middle">Checkout, payment, tax</text>
+      <rect className="experience" x={620} y={115} width={170} height={65} rx={24} />
+      <text className="label" x={705} y={147} textAnchor="middle">Purchase</text>
+      <text className="note" x={705} y={163} textAnchor="middle">Checkout, payment, tax</text>
 
-      <rect className="experience" x={820} y={110} width={170} height={56} rx={24} />
-      <text className="label" x={905} y={142} textAnchor="middle">Fulfill & Support</text>
-      <text className="note" x={905} y={158} textAnchor="middle">Delivery, case management</text>
+      <rect className="experience" x={820} y={115} width={170} height={65} rx={24} />
+      <text className="label" x={905} y={147} textAnchor="middle">Fulfill & Support</text>
+      <text className="note" x={905} y={163} textAnchor="middle">Delivery, case management</text>
 
       {/* Capabilities */}
-      <rect className="capability" x={190} y={230} width={200} height={60} rx={16} />
-      <text className="label" x={290} y={262} textAnchor="middle">Customer Data Platform</text>
-      <text className="note" x={290} y={280} textAnchor="middle">Profiles, consent, segmentation</text>
+      <rect className="capability" x={190} y={265} width={200} height={70} rx={16} />
+      <text className="label" x={290} y={297} textAnchor="middle">Customer Data Platform</text>
+      <text className="note" x={290} y={315} textAnchor="middle">Profiles, consent, segmentation</text>
 
-      <rect className="capability" x={420} y={230} width={200} height={60} rx={16} />
-      <text className="label" x={520} y={262} textAnchor="middle">Offer & Pricing Engine</text>
-      <text className="note" x={520} y={280} textAnchor="middle">Promotion rules, price guardrails</text>
+      <rect className="capability" x={420} y={265} width={200} height={70} rx={16} />
+      <text className="label" x={520} y={297} textAnchor="middle">Offer & Pricing Engine</text>
+      <text className="note" x={520} y={315} textAnchor="middle">Promotion rules, price guardrails</text>
 
-      <rect className="capability" x={650} y={230} width={200} height={60} rx={16} />
-      <text className="label" x={750} y={262} textAnchor="middle">Order Management Service</text>
-      <text className="note" x={750} y={280} textAnchor="middle">Cart, payment orchestration, OMS</text>
+      <rect className="capability" x={650} y={265} width={200} height={70} rx={16} />
+      <text className="label" x={750} y={297} textAnchor="middle">Order Management Service</text>
+      <text className="note" x={750} y={315} textAnchor="middle">Cart, payment orchestration, OMS</text>
 
-      <rect className="capability" x={880} y={230} width={200} height={60} rx={16} />
-      <text className="label" x={980} y={262} textAnchor="middle">Post-Purchase Care</text>
-      <text className="note" x={980} y={280} textAnchor="middle">Returns, cases, knowledge</text>
+      <rect className="capability" x={880} y={265} width={200} height={70} rx={16} />
+      <text className="label" x={980} y={297} textAnchor="middle">Post-Purchase Care</text>
+      <text className="note" x={980} y={315} textAnchor="middle">Returns, cases, knowledge</text>
 
-      <rect className="process" x={190} y={310} width={200} height={56} rx={12} />
-      <text className="label" x={290} y={342} textAnchor="middle">Engagement KPIs</text>
-      <text className="note" x={290} y={360} textAnchor="middle">NPS, dwell time, conversion</text>
+      <rect className="process" x={190} y={370} width={200} height={65} rx={12} />
+      <text className="label" x={290} y={402} textAnchor="middle">Engagement KPIs</text>
+      <text className="note" x={290} y={420} textAnchor="middle">NPS, dwell time, conversion</text>
 
-      <rect className="process" x={420} y={310} width={200} height={56} rx={12} />
-      <text className="label" x={520} y={342} textAnchor="middle">Commerce KPIs</text>
-      <text className="note" x={520} y={360} textAnchor="middle">AOV, cart success, SLA</text>
+      <rect className="process" x={420} y={370} width={200} height={65} rx={12} />
+      <text className="label" x={520} y={402} textAnchor="middle">Commerce KPIs</text>
+      <text className="note" x={520} y={420} textAnchor="middle">AOV, cart success, SLA</text>
 
-      <rect className="process" x={650} y={310} width={200} height={56} rx={12} />
-      <text className="label" x={750} y={342} textAnchor="middle">Fulfillment KPIs</text>
-      <text className="note" x={750} y={360} textAnchor="middle">OTIF, cost-to-serve</text>
+      <rect className="process" x={650} y={370} width={200} height={65} rx={12} />
+      <text className="label" x={750} y={402} textAnchor="middle">Fulfillment KPIs</text>
+      <text className="note" x={750} y={420} textAnchor="middle">OTIF, cost-to-serve</text>
 
-      <rect className="process" x={880} y={310} width={200} height={56} rx={12} />
-      <text className="label" x={980} y={342} textAnchor="middle">Care KPIs</text>
-      <text className="note" x={980} y={360} textAnchor="middle">First-contact resolution</text>
+      <rect className="process" x={880} y={370} width={200} height={65} rx={12} />
+      <text className="label" x={980} y={402} textAnchor="middle">Care KPIs</text>
+      <text className="note" x={980} y={420} textAnchor="middle">First-contact resolution</text>
 
       {/* Platform enablers */}
-      <polygon className="platform" points={hexPoints(290, 440)} />
-      <text className="label" x={290} y={440} textAnchor="middle">Experience BFF</text>
-      <text className="note" x={290} y={458} textAnchor="middle">Node.js / GraphQL federation</text>
+      <polygon className="platform" points={hexPoints(290, 540)} />
+      <text className="label" x={290} y={540} textAnchor="middle">Experience BFF</text>
+      <text className="note" x={290} y={558} textAnchor="middle">Node.js / GraphQL federation</text>
 
-      <polygon className="platform" points={hexPoints(520, 440)} />
-      <text className="label" x={520} y={440} textAnchor="middle">API Gateway</text>
-      <text className="note" x={520} y={458} textAnchor="middle">WSO2 + policy enforcement</text>
+      <polygon className="platform" points={hexPoints(520, 540)} />
+      <text className="label" x={520} y={540} textAnchor="middle">API Gateway</text>
+      <text className="note" x={520} y={558} textAnchor="middle">WSO2 + policy enforcement</text>
 
-      <polygon className="platform" points={hexPoints(750, 440)} />
-      <text className="label" x={750} y={440} textAnchor="middle">Event Mesh</text>
-      <text className="note" x={750} y={458} textAnchor="middle">Kafka topics for inventory, orders</text>
+      <polygon className="platform" points={hexPoints(750, 540)} />
+      <text className="label" x={750} y={540} textAnchor="middle">Event Mesh</text>
+      <text className="note" x={750} y={558} textAnchor="middle">Kafka topics for inventory, orders</text>
 
-      <polygon className="platform planned" points={hexPoints(980, 440)} />
-      <text className="label" x={980} y={440} textAnchor="middle">AI Copilot (Planned)</text>
-      <text className="note" x={980} y={458} textAnchor="middle">Generative assistance for associates</text>
+      <polygon className="platform planned" points={hexPoints(980, 540)} />
+      <text className="label" x={980} y={540} textAnchor="middle">AI Copilot (Planned)</text>
+      <text className="note" x={980} y={558} textAnchor="middle">Generative assistance for associates</text>
 
-      <g transform="translate(120, 410)">
+      <g transform="translate(120, 490)">
         <ellipse className="datastore-fill datastore-stroke" cx={50} cy={10} rx={50} ry={9} />
         <rect className="datastore-fill datastore-stroke" x={0} y={10} width={100} height={40} />
         <ellipse className="datastore-fill datastore-stroke" cx={50} cy={50} rx={50} ry={9} />
       </g>
-      <text className="label" x={170} y={470} textAnchor="middle">Customer Data Platform</text>
+      <text className="label" x={170} y={555} textAnchor="middle">Customer Data Platform</text>
 
       {/* External dependencies */}
-      <rect className="external" x={120} y={520} width={220} height={56} rx={16} />
-      <text className="label" x={230} y={554} textAnchor="middle">AdTech & Social APIs</text>
+      <rect className="external" x={120} y={700} width={220} height={60} rx={16} />
+      <text className="label" x={230} y={736} textAnchor="middle">AdTech & Social APIs</text>
 
-      <rect className="external" x={760} y={520} width={280} height={56} rx={16} />
-      <text className="label" x={900} y={554} textAnchor="middle">Logistics & Tax Providers</text>
+      <rect className="external" x={760} y={700} width={280} height={60} rx={16} />
+      <text className="label" x={900} y={736} textAnchor="middle">Logistics & Tax Providers</text>
 
       {/* Connectors */}
-      <path className="edge edge-sync" d="M305 166 V230" />
-      <path className="edge edge-sync" d="M505 166 V230" />
-      <path className="edge edge-sync" d="M705 166 V230" />
-      <path className="edge edge-sync" d="M905 166 V230" />
+      <path className="edge edge-sync" d="M305 180 V265" />
+      <path className="edge edge-sync" d="M505 180 V265" />
+      <path className="edge edge-sync" d="M705 180 V265" />
+      <path className="edge edge-sync" d="M905 180 V265" />
 
-      <path className="edge edge-sync" d="M290 290 V310" />
-      <path className="edge edge-sync" d="M520 290 V310" />
-      <path className="edge edge-sync" d="M750 290 V310" />
-      <path className="edge edge-sync" d="M980 290 V310" />
+      <path className="edge edge-sync" d="M290 335 V370" />
+      <path className="edge edge-sync" d="M520 335 V370" />
+      <path className="edge edge-sync" d="M750 335 V370" />
+      <path className="edge edge-sync" d="M980 335 V370" />
 
-      <path className="edge edge-sync" d="M290 366 V410" />
-      <path className="edge edge-async" d="M520 366 V410" />
-      <path className="edge edge-async" d="M750 366 V410" />
-      <path className="edge edge-async" d="M980 366 V410" />
+      <path className="edge edge-sync" d="M290 435 V520" />
+      <path className="edge edge-async" d="M520 435 V520" />
+      <path className="edge edge-async" d="M750 435 V520" />
+      <path className="edge edge-async" d="M980 435 V520" />
 
-      <path className="edge edge-batch" d="M230 470 V520" />
-      <path className="edge edge-batch" d="M900 470 V520" />
+      <path className="edge edge-batch" d="M230 560 V700" />
+      <path className="edge edge-batch" d="M900 560 V700" />
 
-      <Legend x={720} y={560} />
-      <Glossary x={60} y={560} items={glossary} />
+      <Legend x={720} y={860} />
+      <Glossary x={60} y={860} items={glossary} />
     </svg>
   );
 }
@@ -395,7 +395,7 @@ export function BusinessL2Diagram(_: Props) {
   ];
 
   return (
-    <svg viewBox="0 0 1100 880" role="img" aria-label="Unified Commerce Platform — Business Architecture L2" style={{ width: "100%", height: "auto" }}>
+    <svg viewBox="0 0 1100 1040" role="img" aria-label="Unified Commerce Platform — Business Architecture L2" style={{ width: "100%", height: "auto" }}>
       <style>{baseStyles}</style>
       <ArrowDefs />
 
@@ -403,13 +403,13 @@ export function BusinessL2Diagram(_: Props) {
 
       {/* Process timeline */}
       <g aria-label="Journey timeline">
-        <rect className="lane-bg" x={80} y={110} width={940} height={120} rx={24} />
-        <rect className="lane-bg" x={80} y={260} width={940} height={120} rx={24} />
-        <rect className="lane-bg" x={80} y={410} width={940} height={120} rx={24} />
+        <rect className="lane-bg" x={80} y={110} width={940} height={130} rx={24} />
+        <rect className="lane-bg" x={80} y={270} width={940} height={130} rx={24} />
+        <rect className="lane-bg" x={80} y={430} width={940} height={130} rx={24} />
 
         <text className="lane-label" x={100} y={102}>Journey checkpoints</text>
-        <text className="lane-label" x={100} y={252}>Supporting services & signals</text>
-        <text className="lane-label" x={100} y={402}>Operations & insight</text>
+        <text className="lane-label" x={100} y={262}>Supporting services & signals</text>
+        <text className="lane-label" x={100} y={422}>Operations & insight</text>
 
         <rect className="process" x={120} y={140} width={150} height={70} rx={18} />
         <text className="label" x={195} y={180} textAnchor="middle">Browse</text>
@@ -502,11 +502,11 @@ export function BusinessL2Diagram(_: Props) {
       <path className="edge edge-async" d="M805 360 V430" />
       <path className="edge edge-sync" d="M1005 360 V430" />
 
-      <path className="edge edge-batch" d="M420 520 Q500 520 540 490" />
-      <path className="edge edge-batch" d="M780 500 H900" />
+      <path className="edge edge-batch" d="M420 580 Q500 580 540 550" />
+      <path className="edge edge-batch" d="M780 660 H900" />
 
-      <Legend x={720} y={560} />
-      <Glossary x={80} y={560} items={glossary} />
+      <Legend x={720} y={860} />
+      <Glossary x={80} y={860} items={glossary} />
     </svg>
   );
 }
@@ -520,7 +520,7 @@ export function SolutionL1Diagram(_: Props) {
   ];
 
   return (
-    <svg viewBox="0 0 1100 880" role="img" aria-label="Unified Commerce Platform — Solution Architecture L1" style={{ width: "100%", height: "auto" }}>
+    <svg viewBox="0 0 1100 1040" role="img" aria-label="Unified Commerce Platform — Solution Architecture L1" style={{ width: "100%", height: "auto" }}>
       <style>{baseStyles}</style>
       <ArrowDefs />
 
@@ -552,65 +552,65 @@ export function SolutionL1Diagram(_: Props) {
       <text className="note" x={550} y={278} textAnchor="middle">CloudFront, AWS WAF, Route53, bot mitigation</text>
 
       {/* BFF/API tier */}
-      <rect className="service-core" x={120} y={330} width={860} height={90} rx={20} />
+      <rect className="service-core" x={120} y={330} width={860} height={100} rx={20} />
       <text className="label" x={550} y={370} textAnchor="middle">API Gateway & BFF Layer</text>
       <text className="note" x={550} y={388} textAnchor="middle">WSO2 API Manager • GraphQL Federation • Rate limiting</text>
 
-      <rect className="capability" x={150} y={350} width={200} height={56} rx={16} />
-      <text className="label" x={250} y={382} textAnchor="middle">Customer BFF</text>
-      <text className="note" x={250} y={400} textAnchor="middle">Session, profile, offers</text>
+      <rect className="capability" x={150} y={355} width={200} height={65} rx={16} />
+      <text className="label" x={250} y={387} textAnchor="middle">Customer BFF</text>
+      <text className="note" x={250} y={405} textAnchor="middle">Session, profile, offers</text>
 
-      <rect className="capability" x={380} y={350} width={200} height={56} rx={16} />
-      <text className="label" x={480} y={382} textAnchor="middle">Commerce BFF</text>
-      <text className="note" x={480} y={400} textAnchor="middle">Cart, inventory, checkout</text>
+      <rect className="capability" x={380} y={355} width={200} height={65} rx={16} />
+      <text className="label" x={480} y={387} textAnchor="middle">Commerce BFF</text>
+      <text className="note" x={480} y={405} textAnchor="middle">Cart, inventory, checkout</text>
 
-      <rect className="capability" x={610} y={350} width={200} height={56} rx={16} />
-      <text className="label" x={710} y={382} textAnchor="middle">Fulfillment BFF</text>
-      <text className="note" x={710} y={400} textAnchor="middle">Order status, slot booking</text>
+      <rect className="capability" x={610} y={355} width={200} height={65} rx={16} />
+      <text className="label" x={710} y={387} textAnchor="middle">Fulfillment BFF</text>
+      <text className="note" x={710} y={405} textAnchor="middle">Order status, slot booking</text>
 
-      <rect className="capability" x={840} y={350} width={120} height={56} rx={16} />
-      <text className="label" x={900} y={382} textAnchor="middle">Partner APIs</text>
-      <text className="note" x={900} y={400} textAnchor="middle">OAuth, quota tiers</text>
+      <rect className="capability" x={840} y={355} width={120} height={65} rx={16} />
+      <text className="label" x={900} y={387} textAnchor="middle">Partner APIs</text>
+      <text className="note" x={900} y={405} textAnchor="middle">OAuth, quota tiers</text>
 
       {/* Core services */}
-      <rect className="lane-bg" x={80} y={440} width={940} height={120} rx={24} />
-      <text className="lane-label" x={110} y={470}>Domain microservices</text>
+      <rect className="lane-bg" x={80} y={450} width={940} height={130} rx={24} />
+      <text className="lane-label" x={110} y={480}>Domain microservices</text>
 
-      <rect className="service-core" x={120} y={470} width={180} height={70} rx={18} />
-      <text className="label" x={210} y={504} textAnchor="middle">Customer 360</text>
-      <text className="note" x={210} y={522} textAnchor="middle">Profiles, consent, loyalty</text>
+      <rect className="service-core" x={120} y={490} width={180} height={80} rx={18} />
+      <text className="label" x={210} y={527} textAnchor="middle">Customer 360</text>
+      <text className="note" x={210} y={545} textAnchor="middle">Profiles, consent, loyalty</text>
 
-      <rect className="service-core" x={320} y={470} width={180} height={70} rx={18} />
-      <text className="label" x={410} y={504} textAnchor="middle">Product Catalog</text>
-      <text className="note" x={410} y={522} textAnchor="middle">Headless PIM, search index</text>
+      <rect className="service-core" x={320} y={490} width={180} height={80} rx={18} />
+      <text className="label" x={410} y={527} textAnchor="middle">Product Catalog</text>
+      <text className="note" x={410} y={545} textAnchor="middle">Headless PIM, search index</text>
 
-      <rect className="service-core" x={520} y={470} width={180} height={70} rx={18} />
-      <text className="label" x={610} y={504} textAnchor="middle">Order Management</text>
-      <text className="note" x={610} y={522} textAnchor="middle">Sagas, payment orchestration</text>
+      <rect className="service-core" x={520} y={490} width={180} height={80} rx={18} />
+      <text className="label" x={610} y={527} textAnchor="middle">Order Management</text>
+      <text className="note" x={610} y={545} textAnchor="middle">Sagas, payment orchestration</text>
 
-      <rect className="service-core" x={720} y={470} width={180} height={70} rx={18} />
-      <text className="label" x={810} y={504} textAnchor="middle">Fulfillment & Logistics</text>
-      <text className="note" x={810} y={522} textAnchor="middle">Warehouse, carrier, slotting</text>
+      <rect className="service-core" x={720} y={490} width={180} height={80} rx={18} />
+      <text className="label" x={810} y={527} textAnchor="middle">Fulfillment & Logistics</text>
+      <text className="note" x={810} y={545} textAnchor="middle">Warehouse, carrier, slotting</text>
 
-      <rect className="external" x={920} y={470} width={100} height={70} rx={16} />
-      <text className="label" x={970} y={504} textAnchor="middle">ERP+</text>
-      <text className="note" x={970} y={522} textAnchor="middle">SAP S/4, MES</text>
+      <rect className="external" x={920} y={490} width={100} height={80} rx={16} />
+      <text className="label" x={970} y={527} textAnchor="middle">ERP+</text>
+      <text className="note" x={970} y={545} textAnchor="middle">SAP S/4, MES</text>
 
       {/* Integration fabric */}
-      <polygon className="platform" points={hexPoints(550, 590)} />
-      <text className="label" x={550} y={590} textAnchor="middle">Event Mesh</text>
-      <text className="note" x={550} y={608} textAnchor="middle">Kafka • Order • Inventory • Alerts</text>
+      <polygon className="platform" points={hexPoints(550, 620)} />
+      <text className="label" x={550} y={620} textAnchor="middle">Event Mesh</text>
+      <text className="note" x={550} y={638} textAnchor="middle">Kafka • Order • Inventory • Alerts</text>
 
-      <polygon className="platform" points={hexPoints(720, 590)} />
-      <text className="label" x={720} y={590} textAnchor="middle">Integration Hub</text>
-      <text className="note" x={720} y={608} textAnchor="middle">MuleSoft flows, SAP connectors</text>
+      <polygon className="platform" points={hexPoints(720, 620)} />
+      <text className="label" x={720} y={620} textAnchor="middle">Integration Hub</text>
+      <text className="note" x={720} y={638} textAnchor="middle">MuleSoft flows, SAP connectors</text>
 
-      <g transform="translate(330, 560)">
+      <g transform="translate(330, 590)">
         <ellipse className="datastore-fill datastore-stroke" cx={60} cy={10} rx={60} ry={10} />
         <rect className="datastore-fill datastore-stroke" x={0} y={10} width={120} height={46} />
         <ellipse className="datastore-fill datastore-stroke" cx={60} cy={56} rx={60} ry={10} />
       </g>
-      <text className="label" x={390} y={626} textAnchor="middle">Unified Data Lake</text>
+      <text className="label" x={390} y={656} textAnchor="middle">Unified Data Lake</text>
 
       {/* Connectors */}
       <path className="edge edge-sync" d="M250 184 V220" />
@@ -620,19 +620,19 @@ export function SolutionL1Diagram(_: Props) {
 
       <path className="edge edge-sync" d="M550 300 V330" />
 
-      <path className="edge edge-sync" d="M250 386 V470" />
-      <path className="edge edge-sync" d="M480 386 V470" />
-      <path className="edge edge-sync" d="M710 386 V470" />
-      <path className="edge edge-sync" d="M900 386 V470" />
+      <path className="edge edge-sync" d="M250 420 V490" />
+      <path className="edge edge-sync" d="M480 420 V490" />
+      <path className="edge edge-sync" d="M710 420 V490" />
+      <path className="edge edge-sync" d="M900 420 V490" />
 
-      <path className="edge edge-async" d="M610 540 V560" />
-      <path className="edge edge-async" d="M810 540 L780 560" />
-      <path className="edge edge-async" d="M410 540 V560" />
+      <path className="edge edge-async" d="M610 570 V590" />
+      <path className="edge edge-async" d="M810 570 L780 590" />
+      <path className="edge edge-async" d="M410 570 V590" />
 
-      <path className="edge edge-batch" d="M970 540 V560" />
+      <path className="edge edge-batch" d="M970 570 V590" />
 
-      <Legend x={720} y={560} />
-      <Glossary x={80} y={560} items={glossary} />
+      <Legend x={720} y={720} />
+      <Glossary x={80} y={720} items={glossary} />
     </svg>
   );
 }
@@ -646,7 +646,7 @@ export function SolutionL2Diagram(_: Props) {
   ];
 
   return (
-    <svg viewBox="0 0 1100 980" role="img" aria-label="Unified Commerce Platform — Solution Architecture L2" style={{ width: "100%", height: "auto" }}>
+    <svg viewBox="0 0 1100 1080" role="img" aria-label="Unified Commerce Platform — Solution Architecture L2" style={{ width: "100%", height: "auto" }}>
       <style>{baseStyles}</style>
       <ArrowDefs />
 
@@ -789,8 +789,8 @@ export function SolutionL2Diagram(_: Props) {
       <path className="edge edge-batch" d="M770 520 V580" />
       <path className="edge edge-batch" d="M900 520 V580" />
 
-      <Legend x={720} y={660} />
-      <Glossary x={80} y={660} items={glossary} />
+      <Legend x={720} y={720} />
+      <Glossary x={80} y={720} items={glossary} />
     </svg>
   );
 }
@@ -864,7 +864,7 @@ export function DeploymentL1Diagram(_: Props) {
   ];
 
   return (
-    <svg viewBox="0 0 1100 940" role="img" aria-label="Unified Commerce Platform — Deployment Architecture L1" style={{ width: "100%", height: "auto" }}>
+    <svg viewBox="0 0 1100 1040" role="img" aria-label="Unified Commerce Platform — Deployment Architecture L1" style={{ width: "100%", height: "auto" }}>
       <style>{baseStyles}</style>
       <ArrowDefs />
 
@@ -945,8 +945,8 @@ export function DeploymentL1Diagram(_: Props) {
 
       <path className="edge edge-batch" d="M530 570 V600" />
 
-      <Legend x={720} y={620} />
-      <Glossary x={100} y={620} items={glossary} />
+      <Legend x={720} y={660} />
+      <Glossary x={100} y={660} items={glossary} />
     </svg>
   );
 }
@@ -960,7 +960,7 @@ export function DeploymentL2Diagram(_: Props) {
   ];
 
   return (
-    <svg viewBox="0 0 1100 940" role="img" aria-label="Unified Commerce Platform — Deployment Architecture L2" style={{ width: "100%", height: "auto" }}>
+    <svg viewBox="0 0 1100 1040" role="img" aria-label="Unified Commerce Platform — Deployment Architecture L2" style={{ width: "100%", height: "auto" }}>
       <style>{baseStyles}</style>
       <ArrowDefs />
 
@@ -1060,8 +1060,8 @@ export function DeploymentL2Diagram(_: Props) {
 
       <path className="edge edge-batch" d="M330 630 H540" />
 
-      <Legend x={720} y={620} />
-      <Glossary x={100} y={620} items={glossary} />
+      <Legend x={720} y={660} />
+      <Glossary x={100} y={660} items={glossary} />
     </svg>
   );
 }
