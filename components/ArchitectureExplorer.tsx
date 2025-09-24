@@ -276,6 +276,57 @@ export function ArchitectureExplorer({ data, defaultRole = "business" }: { data?
             </span>
           )}
         </div>
+
+        {/* Diagram legend */}
+        <div
+          aria-label="Legend"
+          className="diagram-legend"
+          style={{
+            display: "flex",
+            gap: 16,
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 8,
+            marginTop: 4,
+            border: "1px solid var(--border)",
+            borderRadius: 8,
+            background: "#fff",
+          }}
+        >
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <span style={{ width: 10, height: 10, borderRadius: "50%", background: COLORS.business, display: "inline-block", border: "1px solid rgba(0,0,0,0.1)" }} />
+            <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Business</span>
+          </span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <span style={{ width: 10, height: 10, borderRadius: "50%", background: COLORS.solution, display: "inline-block", border: "1px solid rgba(0,0,0,0.1)" }} />
+            <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Solution</span>
+          </span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <span style={{ width: 10, height: 10, borderRadius: "50%", background: COLORS.deployment, display: "inline-block", border: "1px solid rgba(0,0,0,0.1)" }} />
+            <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Deployment</span>
+          </span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <span style={{ width: 10, height: 10, borderRadius: "50%", background: COLORS.concept, display: "inline-block", border: "1px solid rgba(0,0,0,0.1)" }} />
+            <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Concept</span>
+          </span>
+
+          <span aria-hidden="true" style={{ width: 1, height: 18, background: "var(--border)" }} />
+
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <svg width="34" height="14" viewBox="0 0 34 14" aria-label="Connector sample">
+              <path d="M2 7 H32" stroke="#D1D5DB" strokeWidth="2" fill="none" />
+            </svg>
+            <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Connector</span>
+          </span>
+
+          <span aria-hidden="true" style={{ width: 1, height: 18, background: "var(--border)" }} />
+
+          <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>L0–L3: depth of detail</span>
+          <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Click nodes to expand/collapse</span>
+          <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Scroll/drag to zoom & pan</span>
+          <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Double‑click to refit</span>
+        </div>
       </div>
       <div style={{ height: 520, borderRadius: 12, overflow: "hidden", background: "#fff" }}>
         <svg ref={svgRef} style={{ width: "100%", height: "100%" }}>
