@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="water">
+      <feTurbulence baseFrequency="0.02" numOctaves="1" seed="1" stitchTiles="stitch" type="fractalNoise"/>
+      <feDisplacementMap in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>

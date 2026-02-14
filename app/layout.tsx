@@ -1,57 +1,43 @@
-import type { Metadata } from "next";
-// import { Inter } from "next/font/google";
-import "./globals.css";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-// Use the React runtime for Vercel Analytics to avoid server vendor-chunk issues
-import dynamic from "next/dynamic";
-const Analytics = dynamic(() => import("@vercel/analytics/react").then(m => m.Analytics), { ssr: false });
-
-// const inter = Inter({ subsets: ["latin"] });
+import type { Metadata } from 'next'
+import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://digitalplatformarchitect.com"),
-  title: {
-    default: "Digital Platform Architect",
-    template: "%s | Digital Platform Architect"
-  },
-  description:
-    "Master enterprise digital platform architecture: explore core building blocks like message brokers, streaming platforms, API management, and more.",
-  openGraph: {
-    title: "Digital Platform Architect",
-    description:
-      "Master enterprise digital platform architecture: explore core building blocks like message brokers, streaming platforms, API management, and more.",
-    url: "https://digitalplatformarchitect.com",
-    siteName: "Digital Platform Architect",
-    locale: "en_US",
-    type: "website"
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Digital Platform Architect",
-    description:
-      "Master enterprise digital platform architecture: explore core building blocks like message brokers, streaming platforms, API management, and more."
-  },
-  icons: {
-    icon: "/favicon.svg"
-  }
-};
+  title: 'Digital Platform Architect - Learn Enterprise Architecture Interactively',
+  description: 'Master enterprise architecture through hands-on interactive playgrounds. Learn data pipelines, message flows, and integration patterns by doing.',
+}
 
 export default function RootLayout({
-  children
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <body>
-        <div className="page">
-          <Header />
-          <main className="container">{children}</main>
-          <Footer />
-        </div>
-        <Analytics />
+      <body className="bg-slate-50 text-slate-900">
+        <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-16 items-center">
+              <div className="flex items-center">
+                <a href="/" className="text-xl font-bold text-blue-600">
+                  Digital Platform Architect
+                </a>
+              </div>
+              <div className="flex space-x-8">
+                <a href="/playgrounds" className="text-slate-700 hover:text-blue-600 font-medium">
+                  Playgrounds
+                </a>
+                <a href="/patterns" className="text-slate-700 hover:text-blue-600 font-medium">
+                  Patterns
+                </a>
+                <a href="/skill-tree" className="text-slate-700 hover:text-blue-600 font-medium">
+                  Skill Tree
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <main>{children}</main>
       </body>
     </html>
-  );
+  )
 }

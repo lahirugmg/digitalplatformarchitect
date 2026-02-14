@@ -1,172 +1,97 @@
-import Link from "next/link";
-import { patternList } from "@/lib/patterns";
-// (explore stats removed)
-import { EventDrivenDiagram } from "@/components/diagrams/EventDrivenDiagram";
-import { LayeredArchitectureDiagram } from "@/components/diagrams/LayeredArchitectureDiagram";
-import { MicroserviceDiagram } from "@/components/diagrams/MicroserviceDiagram";
-import { HexagonalDiagram } from "@/components/diagrams/HexagonalDiagram";
-import { MonolithicDiagram } from "@/components/diagrams/MonolithicDiagram";
-import { ZeroTrustDiagram } from "@/components/diagrams/ZeroTrustDiagram";
-import { CellBasedDiagram } from "@/components/diagrams/CellBasedDiagram";
-import { OAuth2Diagram } from "@/components/diagrams/OAuth2Diagram";
-import { APISecurityDiagram } from "@/components/diagrams/APISecurityDiagram";
-import { DataEncryptionDiagram } from "@/components/diagrams/DataEncryptionDiagram";
+import { getAllPatterns, getPatternCategories } from '@/lib/patterns'
+import Link from 'next/link'
 
-export const metadata = {
-  title: "Architecture Styles & Patterns",
-  description:
-    "Architecture styles and patterns: layered, microservices, event-driven, client-server, plugin-based, hexagonal, and more."
-};
+export default function PatternsPage() {
+  const patterns = getAllPatterns()
+  const categories = getPatternCategories()
 
-// Map pattern slugs to their corresponding diagrams
-const patternDiagrams: Record<string, React.ComponentType> = {
-  "event-driven-architecture": EventDrivenDiagram,
-  "layered-architecture": LayeredArchitectureDiagram,
-  "microservice-architecture": MicroserviceDiagram,
-  "cell-based-architecture": CellBasedDiagram,
-  "hexagonal-architecture": HexagonalDiagram,
-  "monolithic": MonolithicDiagram,
-  "zero-trust-security": ZeroTrustDiagram,
-  "oauth2-patterns": OAuth2Diagram,
-  "api-security-gateway": APISecurityDiagram,
-  "data-encryption-patterns": DataEncryptionDiagram,
-};
-
-export default function PatternsIndexPage() {
-  // Separate patterns with and without diagrams
-  const patternsWithDiagrams = patternList.filter(p => patternDiagrams[p.slug]);
-  const patternsWithoutDiagrams = patternList.filter(p => !patternDiagrams[p.slug]);
+  // Group patterns by category
+  const patternsByCategory = patterns.reduce((acc, pattern) => {
+    if (!acc[pattern.category]) {
+      acc[pattern.category] = []
+    }
+    acc[pattern.category].push(pattern)
+    return acc
+  }, {} as Record<string, typeof patterns>)
 
   return (
-    <div className="container">
-      <article className="patterns-article">
-        <header className="page-hero stack gap-sm">
-          <h1 className="page-title">Architecture Styles & Patterns</h1>
-          <p className="lede">
-            Explore common architecture styles and patterns, their trade-offs, and when to use them.
-            Visual diagrams help you understand structure and relationships.
+    <div className="min-h-screen py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold mb-4">Architecture Patterns</h1>
+          <p className="text-xl text-slate-600 max-w-3xl">
+            Explore {patterns.length} proven architectural patterns. Each pattern includes detailed explanations,
+            use cases, and trade-offs to help you make informed design decisions.
           </p>
-        </header>
+        </div>
 
-        {/* Overview stats removed per request */}
-
-        {/* Featured Patterns with Diagrams */}
-        <section className="patterns-section">
-          <div className="section-header">
-            <div className="section-icon">📐</div>
-            <h2>Featured Patterns</h2>
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-6 mb-12">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+            <div className="text-3xl font-bold text-blue-600">{patterns.length}</div>
+            <div className="text-sm text-slate-600">Total Patterns</div>
           </div>
-          <div className="patterns-with-diagrams">
-            {patternsWithDiagrams.map((p) => {
-            const DiagramComponent = patternDiagrams[p.slug];
-            return (
-              <div key={p.slug} className="pattern-with-diagram">
-                <div className="pattern-info">
-                  <Link href={`/patterns/${p.slug}`} className="pattern-link">
-                    <h3>{p.title}</h3>
-                    {p.aka && p.aka.length > 0 && (
-                      <div className="aka-tags">
-                        {p.aka.map(alias => (
-                          <span key={alias} className="aka-tag">aka {alias}</span>
-                        ))}
-                      </div>
-                    )}
-                  </Link>
-                  <p>{p.summary}</p>
-                  <div className="pattern-keywords">
-                    {p.keywords.slice(0, 4).map(k => (
-                      <span key={k} className="keyword-tag">{k}</span>
-                    ))}
+          <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+            <div className="text-3xl font-bold text-green-600">{categories.length}</div>
+            <div className="text-sm text-slate-600">Categories</div>
+          </div>
+          <div className="bg-purple-50 border border-purple-200 rounded-lg p-6">
+            <div className="text-3xl font-bold text-purple-600">3</div>
+            <div className="text-sm text-slate-600">Interactive Playgrounds</div>
+          </div>
+        </div>
+
+        {/* Patterns by Category */}
+        {categories.map((category) => (
+          <div key={category} className="mb-12">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              <span>{getCategoryIcon(category)}</span>
+              <span>{category}</span>
+              <span className="text-sm font-normal text-slate-500">
+                ({patternsByCategory[category].length} patterns)
+              </span>
+            </h2>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {patternsByCategory[category].map((pattern) => (
+                <Link
+                  key={pattern.slug}
+                  href={`/patterns/${pattern.slug}`}
+                  className="border border-slate-200 rounded-lg p-6 hover:shadow-lg hover:border-blue-300 transition bg-white group"
+                >
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600">
+                    {pattern.title}
+                  </h3>
+                  <div className="text-sm text-slate-600 mb-3">
+                    {pattern.content.substring(0, 150)}...
                   </div>
-                  <Link href={`/patterns/${p.slug}`} className="pattern-cta">
-                    Explore Pattern Details →
-                  </Link>
-                </div>
-                <div className="pattern-diagram">
-                  <DiagramComponent />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Other Patterns */}
-      {patternsWithoutDiagrams.length > 0 && (
-        <section className="stack gap-md">
-          <h2 className="section-title centered blue">Additional Architecture Patterns</h2>
-          <div className="card-grid">
-            {patternsWithoutDiagrams.map((p) => (
-              <Link key={p.slug} href={`/patterns/${p.slug}`} className="card enhanced-card">
-                <div className="card-header">
-                  <h3>{p.title}</h3>
-                  {p.aka && p.aka.length > 0 && (
-                    <div className="aka-tags">
-                      {p.aka.map(alias => (
-                        <span key={alias} className="aka-tag">aka {alias}</span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <p>{p.summary}</p>
-                <div className="card-keywords">
-                  {p.keywords.slice(0, 4).map(k => (
-                    <span key={k} className="keyword-tag">{k}</span>
-                  ))}
-                </div>
-                <div className="card-footer">
-                  <span className="card-link-text">See implementation details →</span>
-                </div>
-              </Link>
-            ))}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs px-2 py-1 bg-slate-100 rounded">
+                      {pattern.category}
+                    </span>
+                    <span className="text-blue-600 text-sm font-medium group-hover:underline">
+                      Learn More →
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
-        </section>
-      )}
-
-      {/* Learning Guide */}
-      <section className="stack gap-md" style={{marginTop: '2rem'}}>
-        <h2 className="section-title centered blue">Understanding Architectural Patterns</h2>
-        <div className="guide-grid">
-          <div className="guide-card">
-            <h3>🏗️ Structural Patterns</h3>
-            <p>Focus on how components are organized and layered. Examples: Layered, Hexagonal, Clean Architecture.</p>
-          </div>
-          <div className="guide-card">
-            <h3>🚀 Distribution Patterns</h3>
-            <p>Address how to split systems across services and processes. Examples: Microservices, SOA, Event-Driven.</p>
-          </div>
-          <div className="guide-card">
-            <h3>🔐 Security Patterns</h3>
-            <p>Provide proven approaches for securing systems and data. Examples: Zero-Trust, OAuth2, API Security.</p>
-          </div>
-          <div className="guide-card">
-            <h3>📊 Data Patterns</h3>
-            <p>Handle information flow and storage strategies. Examples: CQRS, Event Sourcing, Data Mesh.</p>
-          </div>
-        </div>
-        
-        <div className="pattern-selection-tips">
-          <h3>Choosing the Right Pattern</h3>
-          <ul>
-            <li><strong>Consider your context:</strong> Team size, domain complexity, and organizational constraints</li>
-            <li><strong>Understand trade-offs:</strong> Every pattern comes with benefits and costs</li>
-            <li><strong>Start simple:</strong> Begin with proven patterns and evolve as needed</li>
-            <li><strong>Combine patterns:</strong> Most real systems use multiple patterns together</li>
-          </ul>
-        </div>
-
-        {/* Exploration Tips (moved from Explore) */}
-        <div className="pattern-selection-tips">
-          <h3>Exploration Tips</h3>
-          <ul>
-            <li><strong>Start with patterns:</strong> Choose the architecture that fits your problem first.</li>
-            <li><strong>Then choose blocks:</strong> Use pattern↔block relationships to pick enabling capabilities.</li>
-            <li><strong>Search and filter:</strong> Focus on the terms that match your constraints.</li>
-            <li><strong>Deep dive:</strong> Open pattern pages for diagrams, trade‑offs, and implementation advice.</li>
-          </ul>
-        </div>
-      </section>
-    </article>
+        ))}
+      </div>
     </div>
-  );
+  )
+}
+
+function getCategoryIcon(category: string): string {
+  const icons: Record<string, string> = {
+    'Event-Driven': '⚡',
+    'Security': '🔒',
+    'Data Architecture': '🗄️',
+    'Distributed Systems': '🌐',
+    'Structural': '🏗️',
+    'General': '📋',
+  }
+  return icons[category] || '📋'
 }
