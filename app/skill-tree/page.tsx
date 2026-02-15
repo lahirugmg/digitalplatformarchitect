@@ -9,14 +9,8 @@ import { loadUserProgress, saveUserProgress } from '@/lib/unlock-system'
 import type { UserProgress } from '@/lib/unlock-system'
 
 export default function SkillTreePage() {
-  const [userProgress, setUserProgress] = useState<UserProgress | null>(null)
+  const [userProgress, setUserProgress] = useState<UserProgress>(() => loadUserProgress())
   const [selectedBranch, setSelectedBranch] = useState<string | null>(null)
-
-  // Load user progress on mount
-  useEffect(() => {
-    const progress = loadUserProgress()
-    setUserProgress(progress)
-  }, [])
 
   // Save progress whenever it changes
   useEffect(() => {
@@ -28,17 +22,6 @@ export default function SkillTreePage() {
   const handleProgressUpdate = useCallback((newProgress: UserProgress) => {
     setUserProgress(newProgress)
   }, [])
-
-  if (!userProgress) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-slate-600">Loading your learning journey...</p>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="h-screen flex flex-col bg-slate-50">
@@ -80,19 +63,19 @@ export default function SkillTreePage() {
             </button>
 
             {[
-              { id: 'integration', name: 'Integration', icon: '🔗', color: 'blue' },
-              { id: 'data', name: 'Data Architecture', icon: '🗄️', color: 'purple' },
-              { id: 'cloud', name: 'Cloud Native', icon: '☁️', color: 'cyan' },
-              { id: 'security', name: 'Security', icon: '🔒', color: 'red' },
-              { id: 'resilience', name: 'Resilience', icon: '🛡️', color: 'green' },
-              { id: 'observability', name: 'Observability', icon: '📊', color: 'orange' },
+              { id: 'integration', name: 'Integration', icon: '🔗', color: 'blue', activeClass: 'bg-blue-600 text-white' },
+              { id: 'data', name: 'Data Architecture', icon: '🗄️', color: 'purple', activeClass: 'bg-purple-600 text-white' },
+              { id: 'cloud', name: 'Cloud Native', icon: '☁️', color: 'cyan', activeClass: 'bg-cyan-600 text-white' },
+              { id: 'security', name: 'Security', icon: '🔒', color: 'red', activeClass: 'bg-red-600 text-white' },
+              { id: 'resilience', name: 'Resilience', icon: '🛡️', color: 'green', activeClass: 'bg-green-600 text-white' },
+              { id: 'observability', name: 'Observability', icon: '📊', color: 'orange', activeClass: 'bg-orange-600 text-white' },
             ].map((branch) => (
               <button
                 key={branch.id}
                 onClick={() => setSelectedBranch(branch.id)}
                 className={`w-full text-left px-4 py-3 rounded-lg transition ${
                   selectedBranch === branch.id
-                    ? `bg-${branch.color}-600 text-white`
+                    ? branch.activeClass
                     : 'bg-slate-50 hover:bg-slate-100'
                 }`}
               >
@@ -104,8 +87,34 @@ export default function SkillTreePage() {
             ))}
           </div>
 
+          {/* How to Progress */}
+          <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h4 className="font-semibold text-sm mb-3 flex items-center gap-2">
+              <span className="text-xl">🎯</span>
+              How to Progress
+            </h4>
+            <ul className="text-xs space-y-2 text-slate-700">
+              <li className="flex items-start gap-2">
+                <span className="text-green-500 mt-0.5">•</span>
+                <span><strong>Green nodes</strong> are unlocked and ready to learn</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-500 mt-0.5">•</span>
+                <span><strong>Blue nodes</strong> can be unlocked with tokens</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-slate-400 mt-0.5">•</span>
+                <span><strong>Gray nodes</strong> require prerequisites first</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-yellow-500 mt-0.5">•</span>
+                <span>Earn daily tokens and build your streak!</span>
+              </li>
+            </ul>
+          </div>
+
           {/* Legend */}
-          <div className="mt-8 p-4 bg-slate-50 rounded-lg">
+          <div className="mt-4 p-4 bg-slate-50 rounded-lg">
             <h4 className="font-semibold text-xs uppercase text-slate-500 mb-3">Legend</h4>
             <div className="space-y-2 text-xs">
               <div className="flex items-center gap-2">

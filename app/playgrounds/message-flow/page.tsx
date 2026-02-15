@@ -1,11 +1,13 @@
 'use client'
 
 import { useState } from 'react'
+import { toast } from 'sonner'
 import MessageFlowCanvas from './components/MessageFlowCanvas'
 
 export default function MessageFlowPlayground() {
   const [isRunning, setIsRunning] = useState(false)
   const [selectedPattern, setSelectedPattern] = useState<string>('point-to-point')
+  const [resetKey, setResetKey] = useState(0)
 
   const patterns = [
     { id: 'point-to-point', name: 'Point-to-Point', icon: '→', description: 'Direct message from sender to receiver' },
@@ -13,6 +15,13 @@ export default function MessageFlowPlayground() {
     { id: 'request-reply', name: 'Request/Reply', icon: '↔', description: 'Synchronous request and response' },
     { id: 'event-driven', name: 'Event-Driven', icon: '📡', description: 'Events broadcast to interested parties' },
   ]
+
+  const handleReset = () => {
+    setIsRunning(false)
+    setSelectedPattern('point-to-point')
+    setResetKey(prev => prev + 1)
+    toast.info('Message flow reset')
+  }
 
   return (
     <div className="h-screen flex flex-col">
@@ -35,7 +44,7 @@ export default function MessageFlowPlayground() {
               {isRunning ? '⏸️ Stop' : '▶️ Send Messages'}
             </button>
             <button
-              onClick={() => window.location.reload()}
+              onClick={handleReset}
               className="px-6 py-2 border border-slate-300 rounded-lg font-medium hover:bg-slate-50"
             >
               🔄 Reset
@@ -83,7 +92,7 @@ export default function MessageFlowPlayground() {
 
         {/* Canvas */}
         <div className="flex-1 bg-slate-50">
-          <MessageFlowCanvas pattern={selectedPattern} isRunning={isRunning} />
+          <MessageFlowCanvas key={resetKey} pattern={selectedPattern} isRunning={isRunning} />
         </div>
 
         {/* Info Panel */}

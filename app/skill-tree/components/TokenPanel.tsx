@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { toast } from 'sonner'
 import { UserProgress, grantDailyTokens, calculateDailyTokens } from '@/lib/unlock-system'
 
 interface TokenPanelProps {
@@ -35,9 +36,13 @@ export default function TokenPanel({ userProgress, onProgressUpdate }: TokenPane
     const newProgress = grantDailyTokens(userProgress)
     if (newProgress.tokens > userProgress.tokens) {
       onProgressUpdate(newProgress)
-      alert(`🎉 Daily tokens claimed! +${newProgress.tokens - userProgress.tokens} tokens`)
+      toast.success(`Daily tokens claimed! +${newProgress.tokens - userProgress.tokens} tokens`, {
+        icon: '🎉',
+      })
     } else {
-      alert('⏰ You already claimed today\'s tokens. Come back tomorrow!')
+      toast.info('You already claimed today\'s tokens. Come back tomorrow!', {
+        icon: '⏰',
+      })
     }
   }
 

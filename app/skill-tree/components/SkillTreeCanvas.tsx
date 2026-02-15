@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import ReactFlow, {
   Node,
   Edge,
@@ -12,6 +12,7 @@ import ReactFlow, {
   Position,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
+import { toast } from 'sonner'
 
 import { skillTreeData } from '@/lib/skill-tree'
 import { UserProgress, unlockNode, completeNode } from '@/lib/unlock-system'
@@ -134,7 +135,7 @@ export default function SkillTreeCanvas({
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
 
   // Update nodes when userProgress changes
-  useMemo(() => {
+  useEffect(() => {
     setNodes(initialNodes)
     setEdges(initialEdges)
   }, [initialNodes, initialEdges, setNodes, setEdges])
@@ -144,10 +145,9 @@ export default function SkillTreeCanvas({
       const result = unlockNode(userProgress, nodeId, difficulty)
       if (result.success) {
         onProgressUpdate(result.userProgress)
-        // Show success notification
-        alert(result.message)
+        toast.success(result.message)
       } else {
-        alert(result.message)
+        toast.error(result.message)
       }
     },
     [userProgress, onProgressUpdate]
@@ -157,8 +157,9 @@ export default function SkillTreeCanvas({
     (nodeId: string, xp: number) => {
       const newProgress = completeNode(userProgress, nodeId, xp)
       onProgressUpdate(newProgress)
-      // Show success notification
-      alert(`🎉 Node completed! +${xp} XP earned`)
+      toast.success(`Node completed! +${xp} XP earned`, {
+        icon: '🎉',
+      })
     },
     [userProgress, onProgressUpdate]
   )
@@ -178,21 +179,6 @@ export default function SkillTreeCanvas({
       >
         <Background color="#cbd5e1" gap={16} />
         <Controls />
-
-        {/* Instructions overlay */}
-        <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-4 max-w-md z-10">
-          <h3 className="font-bold mb-2 flex items-center gap-2">
-            <span className="text-2xl">🎯</span>
-            How to Progress
-          </h3>
-          <ul className="text-sm space-y-1 text-slate-700">
-            <li>• <strong>Green nodes</strong> are unlocked and ready to learn</li>
-            <li>• <strong>Blue nodes</strong> can be unlocked with tokens</li>
-            <li>• <strong>Gray nodes</strong> are locked (complete prerequisites first)</li>
-            <li>• Complete nodes to earn XP and unlock new skills!</li>
-            <li>• Earn tokens daily to unlock new content</li>
-          </ul>
-        </div>
       </ReactFlow>
     </div>
   )
