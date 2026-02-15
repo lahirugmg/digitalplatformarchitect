@@ -10,7 +10,16 @@
 // ============================================================================
 
 export type DetailLevel = 'L0' | 'L1' | 'L2' | 'L3';
-export type Persona = 'business' | 'ba' | 'ea' | 'techlead' | 'developer';
+export type Persona =
+  | 'business'           // Business Stakeholder
+  | 'product'            // Product Manager
+  | 'ba'                 // Business Analyst
+  | 'uxdesigner'         // UX/UI Designer
+  | 'ea'                 // Enterprise Architect
+  | 'security'           // Security Architect
+  | 'data'               // Data Architect
+  | 'implementation'     // Implementation Lead (Dev/SRE)
+  | 'qa';                // QA Engineer
 export type NodeCategory = 'infrastructure' | 'service' | 'data' | 'integration' | 'security' | 'frontend' | 'platform';
 export type ConnectionType = 'sync' | 'async' | 'data-flow' | 'dependency' | 'deployment';
 export type PlaygroundMode = 'explore' | 'theory' | 'practice';
