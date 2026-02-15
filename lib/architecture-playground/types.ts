@@ -552,6 +552,9 @@ export type RequiredFields<T, K extends keyof T> = T & Required<Pick<T, K>>;
 // ============================================================================
 
 export const DETAIL_LEVELS: DetailLevel[] = ['L0', 'L1', 'L2', 'L3'];
-export const PERSONAS: Persona[] = ['business', 'ba', 'ea', 'techlead', 'developer'];
+export const PERSONAS: Persona[] = [
+  'business', 'product', 'ba', 'uxdesigner', 'ea',
+  'security', 'data', 'implementation', 'qa'
+];
 export const NODE_CATEGORIES: NodeCategory[] = ['infrastructure', 'service', 'data', 'integration', 'security', 'frontend', 'platform'];
 export const CONNECTION_TYPES: ConnectionType[] = ['sync', 'async', 'data-flow', 'dependency', 'deployment'];
