@@ -153,7 +153,7 @@ export default function CapacityPlanningPage() {
             <div className="bg-white rounded-lg p-6 border-2 border-red-200">
               <h3 className="text-xl font-bold text-red-800 mb-3">✗ Don't</h3>
               <ul className="space-y-2 text-slate-700 text-sm">
-                <li>• Run production at >70% CPU utilization</li>
+                <li>• Run production at &gt;70% CPU utilization</li>
                 <li>• Ignore network bandwidth requirements</li>
                 <li>• Assume linear scaling without testing</li>
                 <li>• Skip load testing before launch</li>
