@@ -1,4 +1,5 @@
 import { getAllPatterns, getPatternCategories } from '@/lib/patterns'
+import { getPreviewText } from '@/lib/markdown'
 import Link from 'next/link'
 
 export default function PatternsPage() {
@@ -64,7 +65,7 @@ export default function PatternsPage() {
                     {pattern.title}
                   </h3>
                   <div className="text-sm text-slate-600 mb-3">
-                    {pattern.content.substring(0, 150)}...
+                    {getPreviewText(pattern.content, 150)}
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-xs px-2 py-1 bg-slate-100 rounded">

@@ -13,6 +13,30 @@ export interface Pattern {
   category: string
 }
 
+function getCategoryFromTitle(title: string): string {
+  if (title.includes('event') || title.includes('cqrs') || title.includes('saga')) {
+    return 'Event-Driven'
+  }
+  if (title.includes('security') || title.includes('oauth') || title.includes('zero-trust')) {
+    return 'Security'
+  }
+  if (title.includes('data') || title.includes('mesh')) {
+    return 'Data Architecture'
+  }
+  if (title.includes('microservice') || title.includes('service')) {
+    return 'Distributed Systems'
+  }
+  if (
+    title.includes('layered') ||
+    title.includes('hexagonal') ||
+    title.includes('clean') ||
+    title.includes('onion')
+  ) {
+    return 'Structural'
+  }
+  return 'General'
+}
+
 export function getAllPatterns(): Pattern[] {
   const fileNames = fs.readdirSync(patternsDirectory)
   const patterns = fileNames
@@ -23,21 +47,8 @@ export function getAllPatterns(): Pattern[] {
       const fileContents = fs.readFileSync(fullPath, 'utf8')
       const { data, content } = matter(fileContents)
 
-      // Categorize patterns
-      let category = 'General'
       const title = (data.title || slug).toLowerCase()
-
-      if (title.includes('event') || title.includes('cqrs') || title.includes('saga')) {
-        category = 'Event-Driven'
-      } else if (title.includes('security') || title.includes('oauth') || title.includes('zero-trust')) {
-        category = 'Security'
-      } else if (title.includes('data') || title.includes('mesh')) {
-        category = 'Data Architecture'
-      } else if (title.includes('microservice') || title.includes('service')) {
-        category = 'Distributed Systems'
-      } else if (title.includes('layered') || title.includes('hexagonal') || title.includes('clean') || title.includes('onion')) {
-        category = 'Structural'
-      }
+      const category = getCategoryFromTitle(title)
 
       return {
         slug,
@@ -58,20 +69,8 @@ export function getPatternBySlug(slug: string): Pattern | null {
     const fileContents = fs.readFileSync(fullPath, 'utf8')
     const { data, content } = matter(fileContents)
 
-    let category = 'General'
     const title = (data.title || slug).toLowerCase()
-
-    if (title.includes('event') || title.includes('cqrs')) {
-      category = 'Event-Driven'
-    } else if (title.includes('security') || title.includes('oauth')) {
-      category = 'Security'
-    } else if (title.includes('data') || title.includes('mesh')) {
-      category = 'Data Architecture'
-    } else if (title.includes('microservice') || title.includes('service')) {
-      category = 'Distributed Systems'
-    } else if (title.includes('layered') || title.includes('hexagonal') || title.includes('clean')) {
-      category = 'Structural'
-    }
+    const category = getCategoryFromTitle(title)
 
     return {
       slug,

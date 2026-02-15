@@ -14,7 +14,7 @@ export default function PatternDetailPage({ params }: { params: { slug: string }
   const pattern = getPatternBySlug(params.slug)
 
   if (!pattern) {
-    notFound()
+    return notFound()
   }
 
   const contentHtml = marked(pattern.content)
