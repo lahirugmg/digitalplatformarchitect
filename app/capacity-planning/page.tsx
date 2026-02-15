@@ -1,5 +1,7 @@
 import { Metadata } from 'next'
 import { CapacityCalculator } from '@/components/capacity-planning/CapacityCalculator'
+import { NextSteps } from '@/components/shared/NextSteps'
+import { TheoryLink } from '@/components/shared/TheoryLink'
 
 export const metadata: Metadata = {
   title: 'Capacity Planning Calculator | Digital Platform Architect',
@@ -83,6 +85,51 @@ export default function CapacityPlanningPage() {
       {/* Calculator */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <CapacityCalculator />
+      </div>
+
+      {/* Next Steps */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <NextSteps
+          title="Complete Your Production Readiness Assessment"
+          steps={[
+            {
+              title: 'Return to Production Readiness Hub',
+              description: 'Track your overall progress and complete remaining assessments',
+              href: '/playgrounds/production-readiness',
+              icon: '🎯',
+              badge: 'NEXT'
+            },
+            {
+              title: 'Review Operational Sympathy',
+              description: 'Go back to review your architecture assessment scores',
+              href: '/operational-sympathy',
+              icon: '✅'
+            }
+          ]}
+        />
+      </div>
+
+      {/* Related Resources */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h3 className="text-2xl font-bold text-slate-900 mb-6">
+          Related Resources
+        </h3>
+        <div className="grid md:grid-cols-2 gap-6">
+          <TheoryLink
+            href="/blocks/observability-operations"
+            title="Observability & Operations"
+            description="Learn how to monitor and operate your infrastructure"
+            type="component"
+            icon="📊"
+          />
+          <TheoryLink
+            href="/patterns"
+            title="Scalability Patterns"
+            description="Explore patterns for handling load and scale"
+            type="pattern"
+            icon="📈"
+          />
+        </div>
       </div>
 
       {/* Best Practices */}

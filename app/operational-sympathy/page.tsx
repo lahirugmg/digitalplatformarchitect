@@ -2,6 +2,8 @@ import { Metadata } from 'next'
 import { ChecklistEngine } from '@/components/operational-sympathy/ChecklistEngine'
 import { ArticleIntro } from '@/components/operational-sympathy/ArticleIntro'
 import { KeyElementsGrid } from '@/components/operational-sympathy/KeyElementsGrid'
+import { NextSteps } from '@/components/shared/NextSteps'
+import { TheoryLink } from '@/components/shared/TheoryLink'
 
 export const metadata: Metadata = {
   title: 'Operational Sympathy | Digital Platform Architect',
@@ -82,6 +84,51 @@ export default function OperationalSympathyPage() {
         </div>
 
         <ChecklistEngine />
+      </div>
+
+      {/* Next Steps - Navigate to Capacity Planning */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <NextSteps
+          title="After Scoring, Plan Your Infrastructure"
+          steps={[
+            {
+              title: 'Infrastructure Capacity Planning',
+              description: 'Size your infrastructure based on load, scale, and availability requirements',
+              href: '/capacity-planning',
+              icon: '📊',
+              badge: 'NEXT'
+            },
+            {
+              title: 'Complete Production Readiness',
+              description: 'Return to the hub to track your overall progress',
+              href: '/playgrounds/production-readiness',
+              icon: '🎯'
+            }
+          ]}
+        />
+      </div>
+
+      {/* Related Theory */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h3 className="text-2xl font-bold text-slate-900 mb-6">
+          Related Resources
+        </h3>
+        <div className="grid md:grid-cols-2 gap-6">
+          <TheoryLink
+            href="/patterns"
+            title="Architecture Patterns"
+            description="Explore 65+ patterns to improve your system design"
+            type="pattern"
+            icon="🏗️"
+          />
+          <TheoryLink
+            href="/blocks"
+            title="Platform Building Blocks"
+            description="Understand the 9 core platform components"
+            type="component"
+            icon="🧱"
+          />
+        </div>
       </div>
 
       {/* Closing Section */}

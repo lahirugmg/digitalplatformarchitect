@@ -7,10 +7,9 @@ const navItems = [
   { href: '/blocks', label: 'Blocks', ariaLabel: 'Navigate to building blocks' },
   { href: '/patterns', label: 'Patterns', ariaLabel: 'Navigate to architecture patterns' },
   { href: '/playgrounds', label: 'Playgrounds', ariaLabel: 'Navigate to interactive playgrounds' },
-  { href: '/readiness', label: 'Production Readiness', ariaLabel: 'Navigate to production readiness checklist', badge: 'NEW' },
+  { href: '/playgrounds/production-readiness', label: 'Production Readiness', ariaLabel: 'Navigate to production readiness hub', badge: 'NEW' },
   { href: '/skill-tree', label: 'Skill Tree', ariaLabel: 'Navigate to the skill tree' },
   { href: '/articles', label: 'Articles', ariaLabel: 'Navigate to articles' },
-  { href: '/solution', label: 'Solution', ariaLabel: 'Navigate to solution story' },
   { href: '/about', label: 'About', ariaLabel: 'Navigate to about page' },
 ]
 
