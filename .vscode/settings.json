@@ -1,4 +1,7 @@
 {
     "chat.agentSessionProjection.enabled": true,
-    "geminicodeassist.agentYoloMode": true
+    "geminicodeassist.agentYoloMode": true,
+    "chat.tools.terminal.autoApprove": {
+        "npm install": true
+    }
 }

@@ -1,0 +1,26 @@
+Key Element,Weight (%),Score (0-5),"Weighted 
+Score",Scoring Guidance
+Production-Aware Design,10,5,50,"Is production environment, deployment, rollback, and runtime behavior 
+clearly understood and designed for?"
+Load & Scale Consciousness,15,5,75,"Does the design explicitly handle peak load, burst traffic, limits, and back-pressure?"
+Failure-Aware Architecture,15,5,75,"Are failure modes identified and handled with 
+graceful degradation instead of catastrophic failure?"
+Built-In Observability,15,5,75,"Are meaningful metrics, logs, traces, and actionable alerts 
+designed into the system?"
+Operability & Recovery,15,5,75,"Can operators mitigate, rollback, and recover quickly 
+without code changes?"
+Security as a Runtime Concern,10,5,50,"Are security failures detectable, credentials rotatable, 
+and blast radius controlled at runtime?"
+Cost Awareness by Design,10,5,50,"Is cost behavior under scale understood, bounded, and monitored?"
+Runbook-Driven Thinking,5,5,25,"Are known failure scenarios documented with clear diagnosis 
+and remediation steps?"
+Shared Ownership of Outcomes,5,5,25,"Do architects and developers share accountability for production
+ incidents and outcomes?"
+Operational sympathy score,100,,100,
+,,,,
+,,,,
+Score Range        ,Interpretation,,,
+85-100,Strong Operational Sympathy,,,
+70-84,"Acceptable, but risks exist",,,
+50-69,Incidents likely,,,
+0-49,High risk,,,
