@@ -209,6 +209,7 @@ For questions about any feature proposal:
 | [FEAT-025](./FEAT-025-disaster-recovery-failover.md) | Disaster Recovery and Multi-Region Failover Simulator | High 🟢 | Medium (2-3 weeks) | High | 📝 Proposed |
 | [FEAT-026](./FEAT-026-ddd-bounded-context-map.md) | DDD Bounded Context Map Explorer | Medium 🟡 | Medium (2-3 weeks) | Medium | 📝 Proposed |
 | [FEAT-027](./FEAT-027-oauth2-jwt-sequence.md) | OAuth2 and JWT Handshake Sequence | High 🟢 | Medium (2-3 weeks) | High | 📝 Proposed |
+| [FEAT-028](./FEAT-028-defense-in-depth-security-architecture.md) | Defense-in-Depth Security Architecture Explainer | High 🟢 | Medium (2-3 weeks) | High | 📝 Proposed |
 
 ### Updated Implementation Recommendations
 
