@@ -8,6 +8,7 @@ import {
   type ChecklistScore
 } from '@/lib/operational-sympathy'
 import { ScoreSummary } from './ScoreSummary'
+import { ReportExport } from './ReportExport'
 
 export function ChecklistEngine() {
   const [scores, setScores] = useState<ChecklistScore[]>(
@@ -30,6 +31,9 @@ export function ChecklistEngine() {
     <div className="space-y-6">
       {/* Score Summary */}
       <ScoreSummary result={result} onReset={handleReset} />
+
+      {/* Export Report */}
+      <ReportExport result={result} scores={scores} />
 
       {/* Checklist Grid */}
       <div className="bg-white rounded-lg shadow-sm border border-slate-200">
