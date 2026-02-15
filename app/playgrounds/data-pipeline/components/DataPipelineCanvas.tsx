@@ -14,6 +14,7 @@ import ReactFlow, {
   EdgeTypes,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
+import { toast } from 'sonner';
 import CustomNode, { NodeData } from './CustomNode';
 import AnimatedEdge, { EdgeData } from './AnimatedEdge';
 import { validateConnection, validatePipeline, calculateMetrics } from '../lib/validation';
@@ -59,7 +60,7 @@ export default function DataPipelineCanvas({
   const onSave = useCallback(() => {
     const pipeline = { nodes, edges };
     localStorage.setItem('pipeline-save', JSON.stringify(pipeline));
-    alert('Pipeline saved!');
+    toast.success('Pipeline saved!');
   }, [nodes, edges]);
 
   const onLoad = useCallback(() => {
@@ -68,9 +69,9 @@ export default function DataPipelineCanvas({
       const pipeline = JSON.parse(savedPipeline);
       setNodes(pipeline.nodes || []);
       setEdges(pipeline.edges || []);
-      alert('Pipeline loaded!');
+      toast.success('Pipeline loaded!');
     } else {
-      alert('No saved pipeline found.');
+      toast.info('No saved pipeline found');
     }
   }, [setNodes, setEdges]);
 
@@ -146,15 +147,49 @@ export default function DataPipelineCanvas({
       onMetricsUpdate(metrics);
 
       setNodes((nds) =>
-        nds.map((node) => ({
-          ...node,
-          data: {
-            ...node.data,
-            status: 'running',
-            throughput: metrics.throughput,
-            quality: metrics.quality,
-          },
-        }))
+        nds.map((node) => {
+          // Assign weather characteristics based on node type
+          let writeIntensity = metrics.writeIntensity;
+          let replicationLag: number | undefined = undefined;
+          let consistencyModel: 'CA' | 'CP' | 'AP' | undefined = undefined;
+
+          // Source nodes have high write intensity
+          if (node.data.type === 'source') {
+            writeIntensity = Math.min(100, (metrics.writeIntensity || 0) * 1.2);
+          }
+
+          // Streaming platforms show moderate writes
+          if (node.data.type === 'streaming') {
+            writeIntensity = metrics.writeIntensity;
+          }
+
+          // Storage nodes show replication lag and CAP classification
+          if (node.data.type === 'storage') {
+            replicationLag = metrics.replicationLag;
+            // Classify storage CAP based on quality (simplified)
+            if (metrics.quality > 95) consistencyModel = 'CA'; // High consistency
+            else if (metrics.quality > 80) consistencyModel = 'CP'; // Partition tolerant
+            else consistencyModel = 'AP'; // Available but eventually consistent
+          }
+
+          // Analytics nodes show replication lag
+          if (node.data.type === 'analytics') {
+            replicationLag = Math.round((metrics.replicationLag || 0) * 1.5); // Higher lag for analytics
+          }
+
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              status: 'running',
+              throughput: metrics.throughput,
+              quality: metrics.quality,
+              writeIntensity,
+              replicationLag,
+              consistencyModel,
+            },
+          };
+        })
       );
 
       setEdges((eds) =>
@@ -166,6 +201,7 @@ export default function DataPipelineCanvas({
             isRunning: true,
             throughput: metrics.throughput,
             quality: metrics.quality,
+            backpressure: metrics.backpressure,
           },
         }))
       );
@@ -213,8 +249,9 @@ export default function DataPipelineCanvas({
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
-        fitView
-        minZoom={0.5}
+        defaultViewport={{ x: 0, y: 0, zoom: 0.7 }}
+        fitViewOptions={{ padding: 0.3 }}
+        minZoom={0.3}
         maxZoom={1.5}
       >
         <Background />

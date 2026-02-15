@@ -11,6 +11,9 @@ export type NodeData = {
   throughput?: number;
   quality?: number;
   status?: 'idle' | 'running' | 'warning' | 'error';
+  writeIntensity?: number; // 0-100 representing write heat
+  replicationLag?: number; // milliseconds
+  consistencyModel?: 'CA' | 'CP' | 'AP'; // CAP theorem classification
 };
 
 const CustomNode = ({ data }: NodeProps<NodeData>) => {
@@ -27,6 +30,42 @@ const CustomNode = ({ data }: NodeProps<NodeData>) => {
     const { color } = qualityColors.find(({ threshold }) => data.quality! >= threshold) || { color: 'bg-red-500' };
     return color;
   };
+
+  // Weather Station: Write intensity as temperature/heat
+  const getTemperatureIndicator = () => {
+    const intensity = data.writeIntensity || 0;
+    if (intensity > 75) return { emoji: '🔥', color: 'text-red-600', label: 'Hot writes' };
+    if (intensity > 50) return { emoji: '☀️', color: 'text-orange-500', label: 'Warm writes' };
+    if (intensity > 25) return { emoji: '🌤️', color: 'text-yellow-500', label: 'Moderate writes' };
+    return { emoji: '❄️', color: 'text-blue-400', label: 'Cool' };
+  };
+
+  // Replication as weather fronts
+  const getReplicationStatus = () => {
+    const lag = data.replicationLag || 0;
+    if (lag > 1000) return { emoji: '🌩️', color: 'text-red-600', label: 'Storm (high lag)' };
+    if (lag > 500) return { emoji: '⛅', color: 'text-amber-600', label: 'Cloudy (medium lag)' };
+    if (lag > 100) return { emoji: '🌤️', color: 'text-blue-500', label: 'Partly cloudy' };
+    return { emoji: '☀️', color: 'text-green-500', label: 'Clear (low lag)' };
+  };
+
+  // CAP theorem as climate zones
+  const getClimateZone = () => {
+    switch (data.consistencyModel) {
+      case 'CA':
+        return { emoji: '🌡️', color: 'text-amber-600', label: 'Temperate (CA - fragile)' };
+      case 'CP':
+        return { emoji: '🏜️', color: 'text-orange-600', label: 'Desert (CP - reliable but dry)' };
+      case 'AP':
+        return { emoji: '🌴', color: 'text-green-600', label: 'Tropical (AP - always flowing)' };
+      default:
+        return null;
+    }
+  };
+
+  const temperature = getTemperatureIndicator();
+  const replication = data.replicationLag !== undefined ? getReplicationStatus() : null;
+  const climate = getClimateZone();
 
   return (
     <div className={`${styles.node} ${styles[data.status || 'idle']}`}>
@@ -63,6 +102,35 @@ const CustomNode = ({ data }: NodeProps<NodeData>) => {
                     />
                   </div>
                   <span className={styles.qualityPercentage}>{data.quality}%</span>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Weather Station Indicators */}
+          {data.status === 'running' && (
+            <div className="mt-2 space-y-1">
+              {/* Write intensity / Temperature */}
+              {data.writeIntensity !== undefined && data.writeIntensity > 0 && (
+                <div className="flex items-center gap-1 text-xs" title={temperature.label}>
+                  <span className={temperature.color}>{temperature.emoji}</span>
+                  <span className="text-slate-600">{data.writeIntensity}% writes</span>
+                </div>
+              )}
+
+              {/* Replication lag / Weather front */}
+              {replication && (
+                <div className="flex items-center gap-1 text-xs" title={replication.label}>
+                  <span className={replication.color}>{replication.emoji}</span>
+                  <span className="text-slate-600">{data.replicationLag}ms lag</span>
+                </div>
+              )}
+
+              {/* CAP climate zone */}
+              {climate && (
+                <div className="flex items-center gap-1 text-xs" title={climate.label}>
+                  <span className={climate.color}>{climate.emoji}</span>
+                  <span className="text-slate-600">{data.consistencyModel}</span>
                 </div>
               )}
             </div>

@@ -8,11 +8,48 @@
 
 .waterEffect {
   animation: flowAnimation 2s linear infinite, waveAnimation 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 3px currentColor);
+}
+
+/* Fast flowing water (high throughput) */
+.waterEffectFast {
+  animation: flowAnimationFast 0.8s linear infinite, waveAnimation 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 5px currentColor) brightness(1.1);
+}
+
+/* Slow flowing water (low throughput) */
+.waterEffectSlow {
+  animation: flowAnimationSlow 4s linear infinite, waveAnimationSlow 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 2px currentColor) brightness(0.9);
+}
+
+/* Turbulent flow (data quality issues) */
+.waterEffectTurbulent {
+  animation: flowAnimation 2s linear infinite, turbulentAnimation 1s ease-in-out infinite;
+  filter: drop-shadow(0 0 4px currentColor) blur(0.5px);
+}
+
+/* Backpressure buildup indicator */
+.backpressureGlow {
+  animation: backpressurePulse 1.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px #ef4444);
 }
 
 @keyframes flowAnimation {
   to {
     stroke-dashoffset: -20;
+  }
+}
+
+@keyframes flowAnimationFast {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+@keyframes flowAnimationSlow {
+  to {
+    stroke-dashoffset: -10;
   }
 }
 
@@ -22,6 +59,72 @@
   }
   50% {
     transform: translateY(2px);
+  }
+}
+
+@keyframes waveAnimationSlow {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(1px) translateX(-0.5px);
+  }
+  75% {
+    transform: translateY(-1px) translateX(0.5px);
+  }
+}
+
+@keyframes turbulentAnimation {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.02) rotate(0.5deg);
+  }
+  75% {
+    transform: scale(0.98) rotate(-0.5deg);
+  }
+}
+
+@keyframes backpressurePulse {
+  0%, 100% {
+    opacity: 0.6;
+    stroke-width: inherit;
+  }
+  50% {
+    opacity: 1;
+    stroke-width: calc(var(--edge-width, 3px) * 1.3);
+  }
+}
+
+/* Particle effects container */
+.particleContainer {
+  position: absolute;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: particleFlow 3s linear infinite;
+}
+
+@keyframes particleFlow {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
   }
 }
 

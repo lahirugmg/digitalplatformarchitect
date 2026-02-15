@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Node, Edge } from 'reactflow'
+import { toast } from 'sonner'
 import {
   generateTerraform,
   generateCloudFormation,
@@ -40,7 +41,7 @@ export default function ExportModal({ nodes, edges, onClose }: ExportModalProps)
 
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(exportedCode)
-    alert('✓ Copied to clipboard!')
+    toast.success('Copied to clipboard!')
   }
 
   const handleDownload = () => {

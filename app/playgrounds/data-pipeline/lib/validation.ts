@@ -155,11 +155,42 @@ export function calculateMetrics(nodes: Node<NodeData>[], edges: Edge[]) {
   const transformationNodes = nodes.filter(n => n.data.type === 'processing').length
   const quality = Math.max(70, 100 - (transformationNodes * 5)) // Each transformation can reduce quality slightly
 
+  // Backpressure calculation - simulate reservoir filling
+  // Backpressure increases when:
+  // 1. Many nodes in pipeline (more processing = more potential bottlenecks)
+  // 2. High throughput (more data = more pressure)
+  // 3. Complex transformations (slower processing)
+  const complexityFactor = nodeCount * 0.1
+  const throughputFactor = (throughput / baseThroughput) * 30
+  const transformationFactor = transformationNodes * 15
+  const baseBackpressure = complexityFactor + throughputFactor + transformationFactor
+
+  // Add some realistic variation (simulates bursts)
+  const variation = Math.sin(Date.now() / 2000) * 15
+  const backpressure = Math.min(95, Math.max(0, baseBackpressure + variation))
+
   // Cost estimation
   const storageCost = nodes.filter(n => n.data.type === 'storage').length * 500
   const streamingCost = nodes.filter(n => n.data.type === 'streaming').length * 800
   const analyticsCost = nodes.filter(n => n.data.type === 'analytics').length * 300
   const monthlyCost = storageCost + streamingCost + analyticsCost
+
+  // Weather patterns - Write intensity (simulates heat spikes)
+  // Write intensity is higher for:
+  // - Source nodes (generating data)
+  // - Streaming platforms (high write throughput)
+  // - Storage nodes (persisting data)
+  const timeBasedVariation = Math.sin(Date.now() / 1500) * 20 + 50 // Oscillates 30-70
+  const baseWriteIntensity = throughput / baseThroughput * 100
+
+  // Replication lag simulation (weather fronts)
+  // Higher lag when:
+  // - More storage/analytics nodes (more replication targets)
+  // - Higher throughput (more data to replicate)
+  const replicationTargets = nodes.filter(n => n.data.type === 'storage' || n.data.type === 'analytics').length
+  const baseLag = replicationTargets * 100 + (throughput / baseThroughput) * 200
+  const lagVariation = Math.sin(Date.now() / 3000) * 300
+  const replicationLag = Math.max(10, baseLag + lagVariation)
 
   return {
     throughput,
@@ -168,6 +199,9 @@ export function calculateMetrics(nodes: Node<NodeData>[], edges: Edge[]) {
     monthlyCost,
     nodeCount,
     edgeCount,
+    backpressure: Math.round(backpressure),
+    writeIntensity: Math.min(100, Math.max(0, Math.round(baseWriteIntensity + timeBasedVariation))),
+    replicationLag: Math.round(replicationLag),
   }
 }
 
