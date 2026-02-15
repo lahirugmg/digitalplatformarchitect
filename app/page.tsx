@@ -1,51 +1,149 @@
+import EmbeddedPlayground from './components/EmbeddedPlayground';
+
 export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 text-white py-20">
+      <section className="bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
+            <div className="inline-block bg-white/20 backdrop-blur text-white text-sm px-4 py-2 rounded-full font-bold mb-4 animate-pulse">
+              🎉 NEW: Interactive Architecture Playground Below!
+            </div>
             <h1 className="text-5xl font-bold mb-6">
               Master Enterprise Architecture by Doing
             </h1>
             <p className="text-xl mb-8 text-blue-100 max-w-3xl mx-auto">
-              Learn through 4 interactive playgrounds, 65+ patterns, and a gamified skill tree.
-              Experience architecture—don't just read about it.
+              Explore real architectures from 5 different perspectives. See the same system through Business, Analyst, Architect, Tech Lead, and Developer eyes.
             </p>
             <div className="flex justify-center gap-4 flex-wrap">
               <a
-                href="#learning-path"
-                className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition shadow-lg"
+                href="#playground"
+                className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition shadow-lg flex items-center gap-2"
               >
-                🚀 Start Learning Path
+                👇 Try the Playground Below
               </a>
               <a
-                href="/playgrounds/pattern-composer"
-                className="bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-600 transition shadow-lg flex items-center gap-2"
+                href="#learning-path"
+                className="bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-600 transition shadow-lg"
               >
-                ✨ NEW: Pattern Composer
+                🚀 Explore Learning Path
               </a>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Embedded Interactive Playground */}
+      <section id="playground" className="py-12 bg-gradient-to-br from-slate-50 to-purple-50">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <div className="inline-block bg-purple-600 text-white text-xs px-3 py-1 rounded-full font-bold mb-3">
+              🏛️ INTERACTIVE DEMO
+            </div>
+            <h2 className="text-4xl font-bold mb-4">
+              Explore Architecture Live
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-2">
+              This is a real, interactive architecture playground. Select your persona, choose detail levels,
+              and click components to learn how enterprise systems work.
+            </p>
+            <p className="text-sm text-slate-500">
+              No sign-up required. Start exploring immediately.
+            </p>
+          </div>
+
+          <EmbeddedPlayground />
+
+          {/* Quick Stats Below Playground */}
+          <div className="grid md:grid-cols-4 gap-4 mt-8">
+            <div className="bg-white rounded-lg p-4 text-center border border-purple-200">
+              <div className="text-3xl font-bold text-purple-600">5</div>
+              <div className="text-sm text-slate-600">Personas</div>
+            </div>
+            <div className="bg-white rounded-lg p-4 text-center border border-blue-200">
+              <div className="text-3xl font-bold text-blue-600">4</div>
+              <div className="text-sm text-slate-600">Detail Levels</div>
+            </div>
+            <div className="bg-white rounded-lg p-4 text-center border border-green-200">
+              <div className="text-3xl font-bold text-green-600">8</div>
+              <div className="text-sm text-slate-600">Components</div>
+            </div>
+            <div className="bg-white rounded-lg p-4 text-center border border-cyan-200">
+              <div className="text-3xl font-bold text-cyan-600">∞</div>
+              <div className="text-sm text-slate-600">Ways to Learn</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* What's New Section */}
-      <section className="py-12 bg-gradient-to-r from-green-50 to-blue-50 border-y border-green-200">
+      <section className="py-12 bg-gradient-to-r from-purple-50 via-blue-50 to-cyan-50 border-y border-purple-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <div className="inline-block bg-green-500 text-white text-xs px-3 py-1 rounded-full font-bold mb-2">
-                NEW FEATURES
+              <div className="inline-block bg-purple-600 text-white text-xs px-3 py-1 rounded-full font-bold mb-2 animate-pulse">
+                🎉 JUST LAUNCHED
               </div>
-              <h2 className="text-2xl font-bold">Production-Ready Architecture Tools</h2>
+              <h2 className="text-2xl font-bold">Interactive Architecture Playground</h2>
               <p className="text-slate-600 mt-1">
-                Bridge the gap from learning to production with our latest features
+                Explore enterprise architectures with persona-driven views and multi-level depth
               </p>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Interactive Architecture Playground - HERO */}
+            <a
+              href="/architecture-playground"
+              className="md:col-span-3 bg-gradient-to-br from-purple-600 to-blue-600 text-white rounded-xl p-8 hover:shadow-2xl transition group relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 opacity-10">
+                <div className="text-9xl">🏛️</div>
+              </div>
+              <div className="relative z-10">
+                <div className="flex items-start gap-6">
+                  <div className="text-6xl">🏛️</div>
+                  <div className="flex-1">
+                    <div className="inline-block bg-white/20 text-white text-xs px-3 py-1 rounded-full font-bold mb-3">
+                      ✨ BRAND NEW FEATURE
+                    </div>
+                    <h3 className="text-3xl font-bold mb-3">
+                      Interactive Architecture Playground
+                    </h3>
+                    <p className="text-purple-100 mb-4 text-lg max-w-3xl">
+                      The world's first persona-driven, multi-level architecture visualization platform.
+                      See the same architecture from 5 different perspectives (Business, BA, EA, Tech Lead, Developer)
+                      across 4 detail levels (L0-L3). Seamlessly bridge theory and practice.
+                    </p>
+                    <div className="grid md:grid-cols-3 gap-4 mb-6">
+                      <div className="bg-white/10 backdrop-blur rounded-lg p-3">
+                        <div className="font-bold mb-1">5 Personas</div>
+                        <div className="text-sm text-purple-100">From Business to Developer</div>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur rounded-lg p-3">
+                        <div className="font-bold mb-1">4 Detail Levels</div>
+                        <div className="text-sm text-purple-100">L0 (Business) → L3 (Code)</div>
+                      </div>
+                      <div className="bg-white/10 backdrop-blur rounded-lg p-3">
+                        <div className="font-bold mb-1">Theory ↔ Practice</div>
+                        <div className="text-sm text-purple-100">Bidirectional Navigation</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="text-white font-bold text-lg group-hover:underline">
+                        Explore the Playground →
+                      </span>
+                      <div className="flex gap-2 text-xs">
+                        <span className="bg-white/20 px-2 py-1 rounded">Interactive</span>
+                        <span className="bg-white/20 px-2 py-1 rounded">Zoomable</span>
+                        <span className="bg-white/20 px-2 py-1 rounded">Real Examples</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
             {/* Production Readiness Checklist */}
             <a
               href="/readiness"
@@ -239,20 +337,35 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Pattern Composer - FEATURED */}
-            <a href="/playgrounds/pattern-composer" className="relative border-2 border-purple-300 rounded-lg p-6 hover:shadow-xl transition bg-white group ring-2 ring-purple-200">
-              <div className="absolute -top-3 -right-3 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                ✨ NEW
+            {/* Architecture Playground - FEATURED */}
+            <a href="/architecture-playground" className="relative border-2 border-purple-300 rounded-lg p-6 hover:shadow-xl transition bg-white group ring-2 ring-purple-200">
+              <div className="absolute -top-3 -right-3 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg animate-pulse">
+                🎉 NEW
               </div>
+              <div className="text-5xl mb-4 group-hover:scale-110 transition">🏛️</div>
+              <div className="mb-2">
+                <span className="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded font-semibold">ALL LEVELS</span>
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-purple-700 group-hover:text-purple-800">Architecture Playground</h3>
+              <p className="text-slate-600 mb-4 text-sm">
+                Persona-driven, multi-level architecture explorer. See Business to Code in one canvas.
+              </p>
+              <span className="text-purple-600 font-medium text-sm group-hover:underline">
+                Explore Architecture →
+              </span>
+            </a>
+
+            {/* Pattern Composer */}
+            <a href="/playgrounds/pattern-composer" className="relative border-2 border-blue-300 rounded-lg p-6 hover:shadow-xl transition bg-white group">
               <div className="text-5xl mb-4 group-hover:scale-110 transition">🎨</div>
               <div className="mb-2">
-                <span className="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded font-semibold">ADVANCED</span>
+                <span className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded font-semibold">ADVANCED</span>
               </div>
-              <h3 className="text-xl font-bold mb-2 text-purple-700 group-hover:text-purple-800">Pattern Composer</h3>
+              <h3 className="text-xl font-bold mb-2 text-blue-700 group-hover:text-blue-800">Pattern Composer</h3>
               <p className="text-slate-600 mb-4 text-sm">
                 Compose patterns with intelligent conflict detection. Export to Infrastructure as Code.
               </p>
-              <span className="text-purple-600 font-medium text-sm group-hover:underline">
+              <span className="text-blue-600 font-medium text-sm group-hover:underline">
                 Compose Patterns →
               </span>
             </a>
@@ -355,7 +468,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-5xl font-bold text-blue-400 mb-2">4</div>
+              <div className="text-5xl font-bold text-blue-400 mb-2">5</div>
               <div className="text-slate-300">Interactive Playgrounds</div>
             </div>
             <div>

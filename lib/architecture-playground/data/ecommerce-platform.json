@@ -1,0 +1,866 @@
+{
+  "metadata": {
+    "id": "ecommerce-platform",
+    "title": "Modern E-Commerce Platform Architecture",
+    "description": "A complete cloud-native e-commerce platform built with microservices, event-driven architecture, and modern DevOps practices",
+    "version": "2.1.0",
+    "author": "Platform Architecture Team",
+    "created": "2024-01-15",
+    "updated": "2024-12-01",
+    "tags": ["ecommerce", "microservices", "cloud-native", "event-driven"],
+    "domain": "E-commerce"
+  },
+  "components": [
+    {
+      "id": "cdn",
+      "type": "infrastructure",
+      "names": {
+        "business": "Global Content Delivery",
+        "technical": "CloudFront CDN"
+      },
+      "description": "Distributes static assets and caches dynamic content globally",
+      "levels": {
+        "L0": {
+          "businessCapability": "Fast global content delivery",
+          "kpis": [
+            { "name": "Global Reach", "value": "150+ locations", "impact": "high" },
+            { "name": "Cache Hit Rate", "value": "95%", "impact": "high" }
+          ],
+          "icon": "Globe",
+          "color": "#3b82f6",
+          "value": "Reduces page load time by 60%"
+        },
+        "L1": {
+          "systemType": "Content Delivery Network",
+          "integrations": ["load-balancer", "object-storage"],
+          "sla": { "uptime": "99.99%", "latency": "50ms p99" }
+        },
+        "L2": {
+          "techStack": {
+            "runtime": "AWS CloudFront",
+            "other": {
+              "ssl": "AWS Certificate Manager",
+              "waf": "AWS WAF"
+            }
+          }
+        }
+      },
+      "linkage": {
+        "theoryPage": "/patterns/cdn-pattern",
+        "relatedConcepts": ["caching", "edge-computing", "performance"],
+        "implementationGuides": ["/guides/cloudfront-setup"]
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea", "techlead", "developer"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 400, "y": 50 },
+      "metrics": {
+        "cost": { "monthly": 500, "currency": "USD" },
+        "performance": { "p99Latency": 45 }
+      },
+      "tags": ["infrastructure", "cdn", "aws"],
+      "icon": "Cloud"
+    },
+    {
+      "id": "load-balancer",
+      "type": "infrastructure",
+      "names": {
+        "business": "Traffic Distribution",
+        "technical": "Application Load Balancer"
+      },
+      "description": "Distributes incoming traffic across multiple application instances",
+      "levels": {
+        "L0": {
+          "businessCapability": "Handle millions of requests",
+          "kpis": [
+            { "name": "Requests/day", "value": "50M", "impact": "high" },
+            { "name": "Availability", "value": "99.99%", "impact": "high" }
+          ],
+          "icon": "Network",
+          "color": "#8b5cf6"
+        },
+        "L1": {
+          "systemType": "Load Balancer",
+          "integrations": ["web-app", "api-gateway"],
+          "pattern": "Load Balancing",
+          "sla": { "uptime": "99.99%", "latency": "10ms p99" }
+        },
+        "L2": {
+          "techStack": {
+            "runtime": "AWS ALB",
+            "other": {
+              "healthCheck": "HTTP /health",
+              "sslTermination": "enabled"
+            }
+          },
+          "security": {
+            "authentication": "mTLS",
+            "encryption": {
+              "inTransit": true,
+              "atRest": false
+            }
+          }
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["high-availability", "scalability"],
+        "implementationGuides": ["/guides/alb-setup"]
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea", "techlead", "developer"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 400, "y": 150 },
+      "tags": ["infrastructure", "load-balancer", "aws"]
+    },
+    {
+      "id": "api-gateway",
+      "type": "integration",
+      "names": {
+        "business": "API Management Platform",
+        "technical": "Kong API Gateway"
+      },
+      "description": "Centralized API gateway for authentication, rate limiting, and routing",
+      "levels": {
+        "L0": {
+          "businessCapability": "Secure and manage all APIs",
+          "kpis": [
+            { "name": "APIs Managed", "value": "50+", "impact": "high" },
+            { "name": "Security Events Blocked", "value": "10K/day", "impact": "high" }
+          ],
+          "icon": "Shield",
+          "color": "#f59e0b"
+        },
+        "L1": {
+          "systemType": "API Gateway",
+          "integrations": ["order-service", "payment-service", "inventory-service", "user-service"],
+          "pattern": "API Gateway Pattern",
+          "sla": { "uptime": "99.95%", "latency": "100ms p99" },
+          "responsibilities": [
+            "Authentication & Authorization",
+            "Rate Limiting",
+            "Request Routing",
+            "API Analytics"
+          ]
+        },
+        "L2": {
+          "techStack": {
+            "runtime": "Kong Gateway 3.4",
+            "database": "PostgreSQL 16",
+            "cache": "Redis 7"
+          },
+          "apis": {
+            "rest": [
+              { "path": "/api/orders/*", "methods": ["GET", "POST", "PUT", "DELETE"] },
+              { "path": "/api/products/*", "methods": ["GET"] },
+              { "path": "/api/users/*", "methods": ["GET", "POST"] }
+            ]
+          },
+          "security": {
+            "authentication": "OAuth 2.0 + JWT",
+            "authorization": "RBAC"
+          }
+        },
+        "L3": {
+          "deploymentConfigs": {
+            "kubernetes": {
+              "helmChart": "charts/kong",
+              "values": {
+                "replicas": 3,
+                "resources": {
+                  "requests": { "cpu": "500m", "memory": "1Gi" }
+                }
+              }
+            }
+          },
+          "configuration": {
+            "database": "postgres",
+            "log_level": "notice",
+            "plugins": ["jwt", "rate-limiting", "cors", "prometheus"]
+          }
+        }
+      },
+      "linkage": {
+        "theoryPage": "/patterns/api-gateway",
+        "practicePlayground": "/playgrounds/api-gateway-demo",
+        "relatedConcepts": ["microservices", "security", "oauth2"],
+        "implementationGuides": ["/guides/kong-setup"]
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea", "techlead", "developer"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 400, "y": 300 },
+      "metrics": {
+        "cost": { "monthly": 800, "currency": "USD" },
+        "performance": { "rps": 5000, "p99Latency": 95 }
+      },
+      "tags": ["integration", "api-gateway", "security", "critical"]
+    },
+    {
+      "id": "order-service",
+      "type": "service",
+      "names": {
+        "business": "Order Processing System",
+        "technical": "order-service"
+      },
+      "description": "Core service for managing customer orders with event sourcing",
+      "levels": {
+        "L0": {
+          "businessCapability": "Process customer orders",
+          "kpis": [
+            { "name": "Orders/day", "value": "50K", "impact": "high", "trend": "up" },
+            { "name": "Revenue Impact", "value": "$2M/month", "impact": "high" },
+            { "name": "Order Success Rate", "value": "99.7%", "impact": "high" }
+          ],
+          "icon": "ShoppingCart",
+          "color": "#3b82f6",
+          "value": "Core revenue-generating capability",
+          "owner": "E-commerce Product Team"
+        },
+        "L1": {
+          "systemType": "Microservice",
+          "integrations": ["payment-service", "inventory-service", "event-bus", "api-gateway"],
+          "pattern": "CQRS + Event Sourcing",
+          "sla": { "uptime": "99.95%", "latency": "200ms p99", "throughput": "500 req/s" },
+          "responsibilities": [
+            "Accept and validate orders",
+            "Orchestrate order fulfillment",
+            "Publish order events",
+            "Maintain order history"
+          ],
+          "boundaries": [
+            "Does not handle payments (payment-service)",
+            "Does not manage inventory (inventory-service)"
+          ]
+        },
+        "L2": {
+          "techStack": {
+            "runtime": "Spring Boot 3.2",
+            "language": "Java 21",
+            "database": "PostgreSQL 16",
+            "cache": "Redis 7",
+            "messageQueue": "Kafka 3.6"
+          },
+          "apis": {
+            "rest": [
+              { "path": "/api/orders", "methods": ["GET", "POST"], "description": "List and create orders" },
+              { "path": "/api/orders/{id}", "methods": ["GET", "PUT", "DELETE"], "description": "Get, update, or cancel order" },
+              { "path": "/api/orders/{id}/status", "methods": ["GET"], "description": "Get order status" }
+            ]
+          },
+          "dependencies": [
+            "spring-boot-starter-web",
+            "spring-boot-starter-data-jpa",
+            "spring-kafka",
+            "spring-boot-starter-redis",
+            "micrometer-registry-prometheus"
+          ],
+          "scalability": {
+            "horizontal": true,
+            "vertical": true,
+            "autoScaling": {
+              "enabled": true,
+              "minInstances": 3,
+              "maxInstances": 20,
+              "metrics": ["CPU", "Memory", "Request Rate"]
+            }
+          },
+          "security": {
+            "authentication": "JWT (via API Gateway)",
+            "authorization": "RBAC",
+            "encryption": {
+              "inTransit": true,
+              "atRest": true
+            },
+            "compliance": ["PCI-DSS", "GDPR"]
+          }
+        },
+        "L3": {
+          "repositoryUrl": "https://github.com/company/order-service",
+          "deploymentConfigs": {
+            "kubernetes": {
+              "helmChart": "charts/order-service",
+              "namespace": "ecommerce-prod",
+              "values": {
+                "replicas": 3,
+                "image": {
+                  "repository": "company/order-service",
+                  "tag": "v2.1.0"
+                },
+                "resources": {
+                  "requests": { "cpu": "500m", "memory": "1Gi" },
+                  "limits": { "cpu": "2000m", "memory": "4Gi" }
+                },
+                "env": {
+                  "SPRING_PROFILES_ACTIVE": "prod",
+                  "KAFKA_BOOTSTRAP_SERVERS": "kafka:9092"
+                }
+              }
+            },
+            "terraform": {
+              "module": "modules/microservice",
+              "version": "1.2.0"
+            },
+            "docker": {
+              "image": "company/order-service",
+              "tag": "v2.1.0",
+              "dockerfileUrl": "https://github.com/company/order-service/blob/main/Dockerfile"
+            }
+          },
+          "codeSnippets": [
+            {
+              "language": "java",
+              "file": "OrderController.java",
+              "lineRange": [45, 67],
+              "url": "https://github.com/company/order-service/blob/main/src/main/java/com/example/OrderController.java#L45-L67",
+              "description": "REST endpoint for creating orders"
+            },
+            {
+              "language": "java",
+              "file": "OrderEventPublisher.java",
+              "lineRange": [20, 35],
+              "url": "https://github.com/company/order-service/blob/main/src/main/java/com/example/OrderEventPublisher.java#L20-L35",
+              "description": "Kafka event publisher"
+            }
+          ],
+          "configuration": {
+            "spring.datasource.url": "jdbc:postgresql://postgres:5432/orders",
+            "spring.kafka.bootstrap-servers": "kafka:9092",
+            "spring.redis.host": "redis",
+            "spring.redis.port": 6379,
+            "management.metrics.export.prometheus.enabled": true
+          },
+          "monitoring": {
+            "metrics": ["order_created_total", "order_processing_duration", "order_failure_total"],
+            "logs": ["ELK Stack"],
+            "traces": ["Jaeger"],
+            "dashboards": ["https://grafana.company.com/d/orders"],
+            "alerts": ["https://alertmanager.company.com/orders"]
+          },
+          "cicd": {
+            "platform": "GitHub Actions",
+            "pipelineUrl": "https://github.com/company/order-service/actions",
+            "stages": ["Build", "Test", "Security Scan", "Deploy to Staging", "Deploy to Production"]
+          },
+          "documentation": {
+            "readme": "https://github.com/company/order-service/blob/main/README.md",
+            "api": "https://api-docs.company.com/order-service",
+            "runbook": "https://wiki.company.com/runbooks/order-service"
+          }
+        }
+      },
+      "linkage": {
+        "theoryPage": "/patterns/cqrs",
+        "practicePlayground": "/playgrounds/microservices-demo",
+        "relatedConcepts": ["event-sourcing", "microservices", "bounded-context", "saga-pattern"],
+        "implementationGuides": [
+          "/guides/spring-boot-microservice",
+          "/guides/event-sourcing-implementation",
+          "/guides/kubernetes-deployment"
+        ],
+        "references": [
+          {
+            "title": "CQRS Pattern - Martin Fowler",
+            "url": "https://martinfowler.com/bliki/CQRS.html",
+            "type": "article"
+          },
+          {
+            "title": "Event Sourcing",
+            "url": "https://martinfowler.com/eaaDev/EventSourcing.html",
+            "type": "article"
+          }
+        ]
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea", "techlead", "developer"],
+        "minLevel": "L0",
+        "hideComplexity": false,
+        "featuredFor": ["ea", "developer"]
+      },
+      "position": { "x": 200, "y": 450 },
+      "metrics": {
+        "cost": {
+          "monthly": 1200,
+          "currency": "USD",
+          "breakdown": { "compute": 800, "storage": 200, "network": 200 }
+        },
+        "performance": {
+          "rps": 500,
+          "p50Latency": 80,
+          "p95Latency": 150,
+          "p99Latency": 180,
+          "cpu": 45,
+          "memory": 2048
+        },
+        "reliability": {
+          "uptime": 99.96,
+          "errorRate": 0.3,
+          "sloTarget": 99.95,
+          "sloActual": 99.96
+        },
+        "usage": {
+          "requestsPerDay": 50000,
+          "activeUsers": 25000
+        }
+      },
+      "tags": ["microservice", "core-domain", "critical", "cqrs", "event-sourcing"]
+    },
+    {
+      "id": "payment-service",
+      "type": "service",
+      "names": {
+        "business": "Payment Processing",
+        "technical": "payment-service"
+      },
+      "description": "Handles payment processing with third-party payment gateways",
+      "levels": {
+        "L0": {
+          "businessCapability": "Process payments securely",
+          "kpis": [
+            { "name": "Transactions/day", "value": "45K", "impact": "high" },
+            { "name": "Payment Success Rate", "value": "98.5%", "impact": "high" }
+          ],
+          "icon": "CreditCard",
+          "color": "#10b981"
+        },
+        "L1": {
+          "systemType": "Microservice",
+          "integrations": ["order-service", "event-bus", "payment-gateway-stripe", "payment-gateway-paypal"],
+          "pattern": "Adapter Pattern (for multiple gateways)",
+          "sla": { "uptime": "99.99%", "latency": "500ms p99" }
+        },
+        "L2": {
+          "techStack": {
+            "runtime": "Node.js 20",
+            "language": "TypeScript 5",
+            "database": "PostgreSQL 16",
+            "cache": "Redis 7"
+          },
+          "security": {
+            "compliance": ["PCI-DSS Level 1", "GDPR"]
+          }
+        }
+      },
+      "linkage": {
+        "theoryPage": "/patterns/adapter-pattern",
+        "relatedConcepts": ["security", "pci-compliance", "payment-gateway-integration"]
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea", "techlead", "developer"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 400, "y": 450 },
+      "tags": ["microservice", "payment", "critical", "pci-compliant"]
+    },
+    {
+      "id": "inventory-service",
+      "type": "service",
+      "names": {
+        "business": "Inventory Management",
+        "technical": "inventory-service"
+      },
+      "description": "Manages product inventory and stock levels",
+      "levels": {
+        "L0": {
+          "businessCapability": "Track product availability",
+          "kpis": [
+            { "name": "Products Tracked", "value": "100K+", "impact": "medium" },
+            { "name": "Accuracy", "value": "99.9%", "impact": "high" }
+          ],
+          "icon": "Package",
+          "color": "#f59e0b"
+        },
+        "L1": {
+          "systemType": "Microservice",
+          "integrations": ["order-service", "event-bus", "warehouse-system"],
+          "pattern": "Eventual Consistency",
+          "sla": { "uptime": "99.9%", "latency": "150ms p99" }
+        },
+        "L2": {
+          "techStack": {
+            "runtime": "Spring Boot 3.2",
+            "language": "Kotlin",
+            "database": "PostgreSQL 16",
+            "cache": "Redis 7"
+          }
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["eventual-consistency", "optimistic-locking"]
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea", "techlead", "developer"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 600, "y": 450 },
+      "tags": ["microservice", "inventory"]
+    },
+    {
+      "id": "event-bus",
+      "type": "integration",
+      "names": {
+        "business": "Event Distribution Platform",
+        "technical": "Apache Kafka Cluster"
+      },
+      "description": "Distributed event streaming platform for asynchronous communication",
+      "levels": {
+        "L0": {
+          "businessCapability": "Real-time event processing",
+          "kpis": [
+            { "name": "Events/day", "value": "10M+", "impact": "high" },
+            { "name": "Processing Latency", "value": "< 100ms", "impact": "high" }
+          ],
+          "icon": "Zap",
+          "color": "#8b5cf6"
+        },
+        "L1": {
+          "systemType": "Message Broker / Event Streaming",
+          "integrations": ["order-service", "payment-service", "inventory-service", "notification-service", "analytics-service"],
+          "pattern": "Event-Driven Architecture",
+          "sla": { "uptime": "99.95%", "latency": "50ms p99" }
+        },
+        "L2": {
+          "techStack": {
+            "runtime": "Apache Kafka 3.6",
+            "other": {
+              "zookeeper": "Apache ZooKeeper 3.8",
+              "schemaRegistry": "Confluent Schema Registry 7.5"
+            }
+          }
+        },
+        "L3": {
+          "deploymentConfigs": {
+            "kubernetes": {
+              "helmChart": "charts/kafka",
+              "values": {
+                "replicas": 3,
+                "partitions": 10,
+                "replicationFactor": 3
+              }
+            }
+          }
+        }
+      },
+      "linkage": {
+        "theoryPage": "/patterns/event-driven-architecture",
+        "practicePlayground": "/playgrounds/message-flow",
+        "relatedConcepts": ["pub-sub", "event-sourcing", "saga-pattern"]
+      },
+      "visibility": {
+        "personas": ["ba", "ea", "techlead", "developer"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 400, "y": 600 },
+      "tags": ["integration", "messaging", "kafka", "critical"]
+    },
+    {
+      "id": "postgres-db",
+      "type": "data",
+      "names": {
+        "business": "Primary Database",
+        "technical": "PostgreSQL Cluster"
+      },
+      "description": "Primary relational database for transactional data",
+      "levels": {
+        "L0": {
+          "businessCapability": "Store business data",
+          "kpis": [
+            { "name": "Data Size", "value": "5 TB", "impact": "medium" }
+          ],
+          "icon": "Database",
+          "color": "#3b82f6"
+        },
+        "L1": {
+          "systemType": "Relational Database",
+          "integrations": ["order-service", "payment-service", "inventory-service"],
+          "sla": { "uptime": "99.99%", "latency": "10ms p99" }
+        },
+        "L2": {
+          "techStack": {
+            "database": "PostgreSQL 16",
+            "other": {
+              "replication": "Streaming Replication",
+              "backup": "pgBackRest"
+            }
+          }
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["acid", "replication", "backup"]
+      },
+      "visibility": {
+        "personas": ["ea", "techlead", "developer"],
+        "minLevel": "L1",
+        "hideComplexity": true
+      },
+      "position": { "x": 200, "y": 750 },
+      "tags": ["data", "database", "postgresql"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "cdn-to-lb",
+      "source": "cdn",
+      "target": "load-balancer",
+      "type": "sync",
+      "labels": {
+        "L0": "Routes Traffic",
+        "L1": "HTTPS Traffic",
+        "L2": "TLS 1.3 / HTTP/2"
+      },
+      "style": {
+        "animated": true,
+        "color": "#3b82f6"
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea", "techlead", "developer"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "lb-to-gateway",
+      "source": "load-balancer",
+      "target": "api-gateway",
+      "type": "sync",
+      "labels": {
+        "L0": "Distributes Requests",
+        "L1": "HTTP/2",
+        "L2": "Round-robin load balancing"
+      },
+      "style": {
+        "animated": true,
+        "color": "#8b5cf6"
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea", "techlead", "developer"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "gateway-to-order",
+      "source": "api-gateway",
+      "target": "order-service",
+      "type": "sync",
+      "labels": {
+        "L0": "Processes Orders",
+        "L1": "REST API",
+        "L2": "POST /api/orders",
+        "L3": "OpenAPI 3.0, JWT auth, Rate limit: 1000/min"
+      },
+      "pattern": "Request-Reply",
+      "style": {
+        "animated": true,
+        "color": "#10b981",
+        "width": 2
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea", "techlead", "developer"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "dataFlow": {
+        "dataType": "Order Request/Response",
+        "volume": "50K requests/day",
+        "protocol": "HTTP/REST",
+        "format": "JSON"
+      }
+    },
+    {
+      "id": "order-to-payment",
+      "source": "order-service",
+      "target": "payment-service",
+      "type": "sync",
+      "labels": {
+        "L0": "Processes Payment",
+        "L1": "REST API Call",
+        "L2": "POST /api/payments",
+        "L3": "OpenAPI 3.0, JWT auth, Circuit breaker enabled"
+      },
+      "pattern": "Request-Reply",
+      "style": {
+        "animated": true,
+        "color": "#10b981"
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea", "techlead", "developer"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "dataFlow": {
+        "dataType": "Payment Request",
+        "protocol": "HTTP/REST",
+        "format": "JSON"
+      }
+    },
+    {
+      "id": "order-to-eventbus",
+      "source": "order-service",
+      "target": "event-bus",
+      "type": "async",
+      "labels": {
+        "L0": "Publishes Order Events",
+        "L1": "Kafka Events",
+        "L2": "Topics: order.created, order.updated, order.cancelled",
+        "L3": "Avro schema, Exactly-once semantics, Retention: 7 days"
+      },
+      "pattern": "Publish-Subscribe",
+      "style": {
+        "animated": true,
+        "dashed": true,
+        "color": "#f59e0b"
+      },
+      "visibility": {
+        "personas": ["ba", "ea", "techlead", "developer"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "dataFlow": {
+        "dataType": "Order Events",
+        "volume": "50K events/day",
+        "frequency": "Real-time",
+        "protocol": "Kafka",
+        "format": "Avro"
+      }
+    },
+    {
+      "id": "eventbus-to-inventory",
+      "source": "event-bus",
+      "target": "inventory-service",
+      "type": "async",
+      "labels": {
+        "L0": "Updates Inventory",
+        "L1": "Kafka Consumer",
+        "L2": "Subscribes to: order.created",
+        "L3": "Consumer group: inventory-service, Auto-commit: false"
+      },
+      "pattern": "Event-Driven",
+      "style": {
+        "animated": true,
+        "dashed": true,
+        "color": "#f59e0b"
+      },
+      "visibility": {
+        "personas": ["ba", "ea", "techlead", "developer"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "order-to-db",
+      "source": "order-service",
+      "target": "postgres-db",
+      "type": "data-flow",
+      "labels": {
+        "L1": "Reads/Writes Order Data",
+        "L2": "PostgreSQL / JPA",
+        "L3": "Connection pool: HikariCP, Max connections: 20"
+      },
+      "style": {
+        "color": "#64748b",
+        "width": 1
+      },
+      "visibility": {
+        "personas": ["ea", "techlead", "developer"],
+        "minLevel": "L1",
+        "hideComplexity": true
+      }
+    },
+    {
+      "id": "payment-to-db",
+      "source": "payment-service",
+      "target": "postgres-db",
+      "type": "data-flow",
+      "labels": {
+        "L1": "Reads/Writes Payment Data"
+      },
+      "style": {
+        "color": "#64748b"
+      },
+      "visibility": {
+        "personas": ["ea", "techlead", "developer"],
+        "minLevel": "L1",
+        "hideComplexity": true
+      }
+    }
+  ],
+  "layouts": {
+    "L0": {
+      "algorithm": "hierarchical",
+      "config": { "direction": "TB", "levelSeparation": 150 }
+    },
+    "L1": {
+      "algorithm": "hierarchical",
+      "config": { "direction": "TB", "levelSeparation": 200 }
+    },
+    "L2": {
+      "algorithm": "manual",
+      "config": {}
+    },
+    "L3": {
+      "algorithm": "manual",
+      "config": {}
+    }
+  },
+  "presets": [
+    {
+      "id": "business-overview",
+      "name": "Business Overview",
+      "description": "High-level view of business capabilities",
+      "persona": "business",
+      "level": "L0",
+      "highlightPaths": [
+        ["cdn", "load-balancer", "api-gateway", "order-service", "payment-service"]
+      ]
+    },
+    {
+      "id": "system-architecture",
+      "name": "System Architecture",
+      "description": "Complete system landscape for architects",
+      "persona": "ea",
+      "level": "L1"
+    },
+    {
+      "id": "order-flow",
+      "name": "Order Processing Flow",
+      "description": "Detailed order processing workflow",
+      "persona": "developer",
+      "level": "L2",
+      "focusNodes": ["order-service", "payment-service", "inventory-service", "event-bus"]
+    }
+  ],
+  "annotations": [
+    {
+      "id": "critical-path",
+      "type": "highlight",
+      "title": "Critical Revenue Path",
+      "content": "This is the critical path for order processing. Any downtime here directly impacts revenue.",
+      "position": { "x": 400, "y": 350 },
+      "level": "L0",
+      "personas": ["business", "ea"],
+      "style": {
+        "color": "#ef4444",
+        "backgroundColor": "#fee2e2",
+        "borderColor": "#ef4444"
+      }
+    },
+    {
+      "id": "async-boundary",
+      "type": "note",
+      "title": "Async Boundary",
+      "content": "All communication below this point is asynchronous via Kafka",
+      "position": { "x": 400, "y": 550 },
+      "level": "L1",
+      "personas": ["ea", "techlead", "developer"]
+    }
+  ]
+}
