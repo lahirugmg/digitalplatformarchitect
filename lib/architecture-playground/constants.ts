@@ -117,10 +117,10 @@ export const PERSONA_PROFILES: Record<Persona, PersonaProfile> = {
 };
 
 export const LEVEL_DESCRIPTIONS: Record<DetailLevel, string> = {
-  L0: 'Business View - Capabilities & KPIs',
-  L1: 'System View - Services & Integration',
-  L2: 'Component View - Tech Stack & APIs',
-  L3: 'Detail View - Code & Deployment'
+  L0: 'Abstract overview — major components and interactions. No product names or protocols.',
+  L1: 'Introduces concrete technologies, products, and high-level integration flows.',
+  L2: 'Communication patterns, microservices structure, data paths, and error handling.',
+  L3: 'Deep dives — code snippets, deployment configs, CI/CD pipelines, and monitoring.'
 };
 
 export const NODE_CATEGORY_COLORS: Record<string, string> = {
