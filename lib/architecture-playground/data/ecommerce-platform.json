@@ -234,7 +234,7 @@
         "minLevel": "L0",
         "hideComplexity": false
       },
-      "position": { "x": 400, "y": 50 },
+      "position": { "x": 600, "y": 100 },
       "metrics": {
         "cost": { "monthly": 500, "currency": "USD" },
         "performance": { "p99Latency": 45 }
@@ -429,7 +429,7 @@
         "minLevel": "L0",
         "hideComplexity": false
       },
-      "position": { "x": 400, "y": 150 },
+      "position": { "x": 600, "y": 300 },
       "tags": ["infrastructure", "load-balancer", "aws"]
     },
     {
@@ -778,7 +778,7 @@
         "minLevel": "L0",
         "hideComplexity": false
       },
-      "position": { "x": 400, "y": 300 },
+      "position": { "x": 600, "y": 550 },
       "metrics": {
         "cost": { "monthly": 800, "currency": "USD" },
         "performance": { "rps": 5000, "p99Latency": 95 }
@@ -1267,7 +1267,7 @@
         "hideComplexity": false,
         "featuredFor": ["ea", "developer"]
       },
-      "position": { "x": 200, "y": 450 },
+      "position": { "x": 300, "y": 800 },
       "metrics": {
         "cost": {
           "monthly": 1200,
@@ -1340,7 +1340,7 @@
         "minLevel": "L0",
         "hideComplexity": false
       },
-      "position": { "x": 400, "y": 450 },
+      "position": { "x": 600, "y": 800 },
       "tags": ["microservice", "payment", "critical", "pci-compliant"]
     },
     {
@@ -1384,7 +1384,7 @@
         "minLevel": "L0",
         "hideComplexity": false
       },
-      "position": { "x": 600, "y": 450 },
+      "position": { "x": 900, "y": 800 },
       "tags": ["microservice", "inventory"]
     },
     {
@@ -1443,7 +1443,7 @@
         "minLevel": "L0",
         "hideComplexity": false
       },
-      "position": { "x": 400, "y": 600 },
+      "position": { "x": 600, "y": 1050 },
       "tags": ["integration", "messaging", "kafka", "critical"]
     },
     {
@@ -1486,7 +1486,7 @@
         "minLevel": "L1",
         "hideComplexity": true
       },
-      "position": { "x": 200, "y": 750 },
+      "position": { "x": 300, "y": 1300 },
       "tags": ["data", "database", "postgresql"]
     },
     {
@@ -1519,7 +1519,7 @@
         "minLevel": "L0",
         "hideComplexity": false
       },
-      "position": { "x": -100, "y": 100 },
+      "position": { "x": -150, "y": 200 },
       "tags": ["external", "customer", "b2c"]
     },
     {
@@ -1552,7 +1552,7 @@
         "minLevel": "L0",
         "hideComplexity": false
       },
-      "position": { "x": -100, "y": 250 },
+      "position": { "x": -150, "y": 450 },
       "tags": ["external", "customer", "b2b"]
     },
     {
@@ -1585,7 +1585,7 @@
         "minLevel": "L0",
         "hideComplexity": false
       },
-      "position": { "x": 900, "y": 500 },
+      "position": { "x": 1350, "y": 900 },
       "tags": ["external", "supplier"]
     },
     {
@@ -1618,7 +1618,7 @@
         "minLevel": "L0",
         "hideComplexity": false
       },
-      "position": { "x": 900, "y": 350 },
+      "position": { "x": 1350, "y": 650 },
       "tags": ["external", "payment"]
     }
   ],

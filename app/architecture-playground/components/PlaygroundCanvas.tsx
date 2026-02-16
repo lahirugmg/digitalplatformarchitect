@@ -123,6 +123,12 @@ export default function PlaygroundCanvas({ architectureId }: PlaygroundCanvasPro
           onMoveEnd={onMoveEnd}
           nodeTypes={nodeTypes}
           fitView
+          fitViewOptions={{
+            padding: 0.2,
+            minZoom: 0.3,
+            maxZoom: 1
+          }}
+          defaultViewport={{ x: 0, y: 0, zoom: 0.5 }}
           attributionPosition="bottom-left"
           minZoom={0.1}
           maxZoom={2}
