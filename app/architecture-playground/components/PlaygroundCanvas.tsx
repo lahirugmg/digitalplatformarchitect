@@ -35,7 +35,7 @@ const nodeTypes: NodeTypes = {
 };
 
 export default function PlaygroundCanvas({ architectureId }: PlaygroundCanvasProps) {
-  const { persona, level, architecture, setArchitecture, setLevel, setFocusNode } = usePlaygroundStore();
+  const { persona, level, vertical, architecture, setArchitecture, setLevel, setFocusNode } = usePlaygroundStore();
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [loading, setLoading] = useState(true);
@@ -55,21 +55,22 @@ export default function PlaygroundCanvas({ architectureId }: PlaygroundCanvasPro
       });
   }, [architectureId, setArchitecture]);
 
-  // Update nodes/edges when persona or level changes
+  // Update nodes/edges when persona, level, or vertical changes
   useEffect(() => {
     if (!architecture) return;
 
-    const filtered = PersonaFilter.filterGraph(architecture, persona, level);
+    const filtered = PersonaFilter.filterGraph(architecture, persona, level, vertical);
     const { nodes: flowNodes, edges: flowEdges } = toReactFlow(
       filtered.components,
       filtered.connections,
       level,
-      persona
+      persona,
+      vertical
     );
 
     setNodes(flowNodes);
     setEdges(flowEdges);
-  }, [architecture, persona, level, setNodes, setEdges]);
+  }, [architecture, persona, level, vertical, setNodes, setEdges]);
 
   // Handle node click
   const onNodeClick = useCallback((_event: React.MouseEvent, node: any) => {
