@@ -1,0 +1,1013 @@
+{
+  "metadata": {
+    "id": "business-architecture",
+    "title": "Apparel Company Business Architecture",
+    "description": "Business architecture showing external actors, business processes, and strategic outcomes for an omnichannel B2B & B2C apparel company",
+    "version": "1.0.0",
+    "author": "Business Architecture Team",
+    "created": "2026-02-16",
+    "updated": "2026-02-16",
+    "tags": ["business-architecture", "omnichannel", "b2b", "b2c", "apparel"],
+    "domain": "Apparel Retail & Wholesale"
+  },
+  "components": [
+    {
+      "id": "apparel-enterprise",
+      "type": "platform",
+      "names": {
+        "business": "Apparel Company",
+        "technical": "Enterprise Platform"
+      },
+      "description": "Omnichannel B2B & B2C Apparel Company",
+      "levels": {
+        "L0": {
+          "businessCapability": "Omnichannel Apparel Business",
+          "kpis": [
+            { "name": "Customer Satisfaction", "value": "4.5/5", "impact": "high", "trend": "up" },
+            { "name": "Order Fulfillment Rate", "value": "98%", "impact": "high", "trend": "stable" },
+            { "name": "Annual Revenue", "value": "$50M", "impact": "high", "trend": "up" }
+          ],
+          "icon": "🏢",
+          "color": "#3b82f6",
+          "value": "Delivering quality apparel through retail and wholesale channels"
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["omnichannel", "b2b", "b2c"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "uxdesigner", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 600, "y": 400 },
+      "tags": ["enterprise", "core"]
+    },
+    {
+      "id": "retail-customers",
+      "type": "external",
+      "names": {
+        "business": "Retail Customers",
+        "technical": "B2C Consumers"
+      },
+      "description": "Individual consumers purchasing apparel through online and physical channels",
+      "levels": {
+        "L0": {
+          "businessCapability": "Individual apparel purchases",
+          "kpis": [
+            { "name": "Active Customers", "value": "100K+", "impact": "high" },
+            { "name": "Average Order Value", "value": "$75", "impact": "medium" }
+          ],
+          "icon": "👥",
+          "color": "#ec4899"
+        },
+        "L1": {
+          "systemType": "External Actor",
+          "integrations": ["ecommerce-channel", "customer-experience"]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["b2c", "customer-experience"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "uxdesigner", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 100, "y": 100 },
+      "tags": ["external", "customer", "b2c"]
+    },
+    {
+      "id": "wholesale-customers",
+      "type": "external",
+      "names": {
+        "business": "Wholesale Customers",
+        "technical": "B2B Buyers"
+      },
+      "description": "Business buyers placing bulk apparel orders",
+      "levels": {
+        "L0": {
+          "businessCapability": "Bulk apparel orders",
+          "kpis": [
+            { "name": "Active Accounts", "value": "500+", "impact": "high" },
+            { "name": "Average Order Value", "value": "$10K", "impact": "high" }
+          ],
+          "icon": "🏪",
+          "color": "#ec4899"
+        },
+        "L1": {
+          "systemType": "External Actor",
+          "integrations": ["wholesale-operations"]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["b2b", "wholesale"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 100, "y": 300 },
+      "tags": ["external", "customer", "b2b"]
+    },
+    {
+      "id": "suppliers",
+      "type": "external",
+      "names": {
+        "business": "Suppliers",
+        "technical": "Supply Chain Partners"
+      },
+      "description": "Raw material and apparel sourcing partners",
+      "levels": {
+        "L0": {
+          "businessCapability": "Material sourcing",
+          "kpis": [
+            { "name": "Active Suppliers", "value": "200+", "impact": "medium" },
+            { "name": "On-time Delivery", "value": "95%", "impact": "high" }
+          ],
+          "icon": "🏭",
+          "color": "#f59e0b"
+        },
+        "L1": {
+          "systemType": "External Actor",
+          "integrations": ["procurement"]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["supply-chain", "procurement"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 1100, "y": 700 },
+      "tags": ["external", "supplier"]
+    },
+    {
+      "id": "delivery-partners",
+      "type": "external",
+      "names": {
+        "business": "Delivery Partners",
+        "technical": "Logistics Providers"
+      },
+      "description": "Third-party logistics and shipping providers",
+      "levels": {
+        "L0": {
+          "businessCapability": "Order fulfillment & delivery",
+          "kpis": [
+            { "name": "Delivery Success", "value": "99%", "impact": "high" },
+            { "name": "Avg Delivery Time", "value": "3 days", "impact": "medium" }
+          ],
+          "icon": "🚚",
+          "color": "#10b981"
+        },
+        "L1": {
+          "systemType": "External Actor",
+          "integrations": ["logistics-delivery"]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["logistics", "fulfillment"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 1100, "y": 400 },
+      "tags": ["external", "delivery"]
+    },
+    {
+      "id": "ecommerce-channel",
+      "type": "service",
+      "names": {
+        "business": "E-Commerce Platform",
+        "technical": "ecommerce-platform"
+      },
+      "description": "Online retail shopping experience",
+      "levels": {
+        "L1": {
+          "systemType": "Digital Channel",
+          "integrations": ["customer-experience", "order-management"],
+          "responsibilities": [
+            "Product browsing and search",
+            "Shopping cart management",
+            "Online checkout",
+            "Customer account management"
+          ]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["ecommerce", "digital-experience"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "uxdesigner", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      },
+      "position": { "x": 300, "y": 100 },
+      "tags": ["channel", "retail"]
+    },
+    {
+      "id": "customer-experience",
+      "type": "service",
+      "names": {
+        "business": "Customer Experience",
+        "technical": "customer-experience"
+      },
+      "description": "Personalized retail customer engagement",
+      "levels": {
+        "L1": {
+          "systemType": "Customer Engagement",
+          "integrations": ["ecommerce-channel", "order-management"],
+          "responsibilities": [
+            "Personalized recommendations",
+            "Customer profile management",
+            "Loyalty program",
+            "Marketing campaigns"
+          ]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["personalization", "customer-engagement"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "uxdesigner", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      },
+      "position": { "x": 300, "y": 200 },
+      "tags": ["service", "retail"]
+    },
+    {
+      "id": "wholesale-operations",
+      "type": "service",
+      "names": {
+        "business": "Wholesale Operations",
+        "technical": "wholesale-ops"
+      },
+      "description": "Dedicated wholesale and bulk order processing",
+      "levels": {
+        "L1": {
+          "systemType": "Wholesale Channel",
+          "integrations": ["order-management"],
+          "responsibilities": [
+            "Bulk order processing",
+            "Contract management",
+            "Volume pricing",
+            "Account management"
+          ]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["b2b", "wholesale"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      },
+      "position": { "x": 300, "y": 350 },
+      "tags": ["service", "wholesale"]
+    },
+    {
+      "id": "order-management",
+      "type": "service",
+      "names": {
+        "business": "Order Management",
+        "technical": "order-management"
+      },
+      "description": "Central orchestration point for all B2B and B2C orders",
+      "levels": {
+        "L1": {
+          "systemType": "Order Orchestration Hub",
+          "integrations": ["ecommerce-channel", "customer-experience", "wholesale-operations", "inventory-fulfillment", "customer-support"],
+          "responsibilities": [
+            "Unified order processing",
+            "Order validation and routing",
+            "Payment coordination",
+            "Order status tracking",
+            "System of record for all orders"
+          ]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["order-management", "orchestration"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false,
+        "featuredFor": ["ba", "ea"]
+      },
+      "position": { "x": 600, "y": 250 },
+      "tags": ["service", "core", "orchestration"]
+    },
+    {
+      "id": "inventory-fulfillment",
+      "type": "service",
+      "names": {
+        "business": "Inventory & Fulfillment",
+        "technical": "inventory-fulfillment"
+      },
+      "description": "Physical inventory management and order picking/packing",
+      "levels": {
+        "L1": {
+          "systemType": "Warehouse Operations",
+          "integrations": ["order-management", "procurement", "logistics-delivery"],
+          "responsibilities": [
+            "Inventory tracking",
+            "Stock level monitoring",
+            "Order picking and packing",
+            "Warehouse management"
+          ]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["inventory", "fulfillment", "warehouse"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      },
+      "position": { "x": 600, "y": 500 },
+      "tags": ["service", "operations"]
+    },
+    {
+      "id": "customer-support",
+      "type": "service",
+      "names": {
+        "business": "Customer Support",
+        "technical": "customer-support"
+      },
+      "description": "Inquiry and exception handling",
+      "levels": {
+        "L1": {
+          "systemType": "Support Services",
+          "integrations": ["order-management"],
+          "responsibilities": [
+            "Customer inquiries",
+            "Order exceptions handling",
+            "Returns and refunds",
+            "Issue resolution"
+          ]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["customer-service", "support"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      },
+      "position": { "x": 800, "y": 350 },
+      "tags": ["service", "support"]
+    },
+    {
+      "id": "procurement",
+      "type": "service",
+      "names": {
+        "business": "Procurement",
+        "technical": "procurement"
+      },
+      "description": "Restocking orders to suppliers based on inventory levels",
+      "levels": {
+        "L1": {
+          "systemType": "Procurement Management",
+          "integrations": ["inventory-fulfillment", "suppliers"],
+          "responsibilities": [
+            "Monitor inventory levels",
+            "Generate purchase orders",
+            "Supplier coordination",
+            "Material planning"
+          ]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["procurement", "supply-chain"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      },
+      "position": { "x": 800, "y": 650 },
+      "tags": ["service", "operations"]
+    },
+    {
+      "id": "logistics-delivery",
+      "type": "service",
+      "names": {
+        "business": "Logistics & Delivery",
+        "technical": "logistics-delivery"
+      },
+      "description": "Hand-off to external delivery partners",
+      "levels": {
+        "L1": {
+          "systemType": "Logistics Coordination",
+          "integrations": ["inventory-fulfillment", "delivery-partners"],
+          "responsibilities": [
+            "Shipment coordination",
+            "Carrier selection",
+            "Tracking integration",
+            "Delivery status updates"
+          ]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["logistics", "delivery"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      },
+      "position": { "x": 900, "y": 500 },
+      "tags": ["service", "operations"]
+    },
+    {
+      "id": "customer-satisfaction",
+      "type": "platform",
+      "names": {
+        "business": "Customer Satisfaction",
+        "technical": "customer-satisfaction-kpi"
+      },
+      "description": "Strategic outcome: High customer satisfaction scores",
+      "levels": {
+        "L0": {
+          "businessCapability": "Customer Satisfaction",
+          "kpis": [
+            { "name": "NPS Score", "value": "65", "impact": "high", "trend": "up" },
+            { "name": "CSAT", "value": "4.5/5", "impact": "high" }
+          ],
+          "icon": "⭐",
+          "color": "#10b981",
+          "value": "Delighting customers with quality products and service"
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["customer-satisfaction"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "product"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 900, "y": 100 },
+      "tags": ["outcome", "kpi"]
+    },
+    {
+      "id": "efficient-fulfillment",
+      "type": "platform",
+      "names": {
+        "business": "Efficient Fulfillment",
+        "technical": "fulfillment-efficiency-kpi"
+      },
+      "description": "Strategic outcome: Fast and accurate order fulfillment",
+      "levels": {
+        "L0": {
+          "businessCapability": "Efficient Fulfillment",
+          "kpis": [
+            { "name": "Fill Rate", "value": "98%", "impact": "high" },
+            { "name": "Avg Ship Time", "value": "24h", "impact": "high" }
+          ],
+          "icon": "📦",
+          "color": "#3b82f6",
+          "value": "Getting products to customers quickly and accurately"
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["fulfillment", "efficiency"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business", "product"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 900, "y": 250 },
+      "tags": ["outcome", "kpi"]
+    },
+    {
+      "id": "scalable-growth",
+      "type": "platform",
+      "names": {
+        "business": "Scalable Growth",
+        "technical": "growth-kpi"
+      },
+      "description": "Strategic outcome: Sustainable business growth",
+      "levels": {
+        "L0": {
+          "businessCapability": "Scalable Growth",
+          "kpis": [
+            { "name": "YoY Growth", "value": "25%", "impact": "high", "trend": "up" },
+            { "name": "New Markets", "value": "5", "impact": "medium" }
+          ],
+          "icon": "📈",
+          "color": "#8b5cf6",
+          "value": "Expanding reach and revenue sustainably"
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["growth", "scalability"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 900, "y": 600 },
+      "tags": ["outcome", "kpi"]
+    },
+    {
+      "id": "partner-efficiency",
+      "type": "platform",
+      "names": {
+        "business": "Supplier/Partner Efficiency",
+        "technical": "partner-efficiency-kpi"
+      },
+      "description": "Strategic outcome: Strong supplier and partner relationships",
+      "levels": {
+        "L0": {
+          "businessCapability": "Partner Efficiency",
+          "kpis": [
+            { "name": "Supplier Quality", "value": "95%", "impact": "high" },
+            { "name": "Partner Satisfaction", "value": "4.2/5", "impact": "medium" }
+          ],
+          "icon": "🤝",
+          "color": "#f59e0b",
+          "value": "Building reliable supplier and partner networks"
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["partnerships", "supply-chain"],
+        "implementationGuides": []
+      },
+      "visibility": {
+        "personas": ["business"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 900, "y": 750 },
+      "tags": ["outcome", "kpi"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "retail-to-enterprise",
+      "source": "retail-customers",
+      "target": "apparel-enterprise",
+      "type": "sync",
+      "labels": {
+        "L0": "Browse & Purchase"
+      },
+      "style": {
+        "animated": true,
+        "color": "#ec4899",
+        "width": 2
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "uxdesigner", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "wholesale-to-enterprise",
+      "source": "wholesale-customers",
+      "target": "apparel-enterprise",
+      "type": "sync",
+      "labels": {
+        "L0": "Bulk Orders"
+      },
+      "style": {
+        "animated": true,
+        "color": "#ec4899",
+        "width": 2
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "enterprise-to-suppliers",
+      "source": "apparel-enterprise",
+      "target": "suppliers",
+      "type": "sync",
+      "labels": {
+        "L0": "Sourcing & Procurement"
+      },
+      "style": {
+        "animated": true,
+        "color": "#f59e0b",
+        "width": 2
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "enterprise-to-delivery",
+      "source": "apparel-enterprise",
+      "target": "delivery-partners",
+      "type": "sync",
+      "labels": {
+        "L0": "Order Fulfillment"
+      },
+      "style": {
+        "animated": true,
+        "color": "#10b981",
+        "width": 2
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "enterprise-to-satisfaction",
+      "source": "apparel-enterprise",
+      "target": "customer-satisfaction",
+      "type": "data-flow",
+      "labels": {
+        "L0": "Drives"
+      },
+      "style": {
+        "animated": false,
+        "dashed": true,
+        "color": "#10b981"
+      },
+      "visibility": {
+        "personas": ["business", "product"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "enterprise-to-fulfillment-outcome",
+      "source": "apparel-enterprise",
+      "target": "efficient-fulfillment",
+      "type": "data-flow",
+      "labels": {
+        "L0": "Drives"
+      },
+      "style": {
+        "animated": false,
+        "dashed": true,
+        "color": "#3b82f6"
+      },
+      "visibility": {
+        "personas": ["business", "product"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "enterprise-to-growth",
+      "source": "apparel-enterprise",
+      "target": "scalable-growth",
+      "type": "data-flow",
+      "labels": {
+        "L0": "Drives"
+      },
+      "style": {
+        "animated": false,
+        "dashed": true,
+        "color": "#8b5cf6"
+      },
+      "visibility": {
+        "personas": ["business"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "enterprise-to-partner-efficiency",
+      "source": "apparel-enterprise",
+      "target": "partner-efficiency",
+      "type": "data-flow",
+      "labels": {
+        "L0": "Drives"
+      },
+      "style": {
+        "animated": false,
+        "dashed": true,
+        "color": "#f59e0b"
+      },
+      "visibility": {
+        "personas": ["business"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "retail-to-ecommerce",
+      "source": "retail-customers",
+      "target": "ecommerce-channel",
+      "type": "sync",
+      "labels": {
+        "L1": "Browse Products"
+      },
+      "style": {
+        "animated": true,
+        "color": "#ec4899"
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "uxdesigner", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "ecommerce-to-cx",
+      "source": "ecommerce-channel",
+      "target": "customer-experience",
+      "type": "sync",
+      "labels": {
+        "L1": "Personalization"
+      },
+      "style": {
+        "animated": true,
+        "color": "#3b82f6"
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "uxdesigner", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "cx-to-order",
+      "source": "customer-experience",
+      "target": "order-management",
+      "type": "sync",
+      "labels": {
+        "L1": "Submit Order"
+      },
+      "style": {
+        "animated": true,
+        "color": "#10b981",
+        "width": 2
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "wholesale-to-order",
+      "source": "wholesale-operations",
+      "target": "order-management",
+      "type": "sync",
+      "labels": {
+        "L1": "Submit Order"
+      },
+      "style": {
+        "animated": true,
+        "color": "#10b981",
+        "width": 2
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "order-to-inventory",
+      "source": "order-management",
+      "target": "inventory-fulfillment",
+      "type": "sync",
+      "labels": {
+        "L1": "Fulfill Order"
+      },
+      "style": {
+        "animated": true,
+        "color": "#f59e0b"
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "support-to-order",
+      "source": "customer-support",
+      "target": "order-management",
+      "type": "sync",
+      "labels": {
+        "L1": "Handle Exceptions"
+      },
+      "style": {
+        "animated": true,
+        "color": "#ef4444"
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "inventory-to-procurement",
+      "source": "inventory-fulfillment",
+      "target": "procurement",
+      "type": "async",
+      "labels": {
+        "L1": "Restock Trigger"
+      },
+      "style": {
+        "animated": true,
+        "dashed": true,
+        "color": "#8b5cf6"
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "procurement-to-suppliers",
+      "source": "procurement",
+      "target": "suppliers",
+      "type": "sync",
+      "labels": {
+        "L1": "Purchase Orders"
+      },
+      "style": {
+        "animated": true,
+        "color": "#f59e0b"
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "inventory-to-logistics",
+      "source": "inventory-fulfillment",
+      "target": "logistics-delivery",
+      "type": "sync",
+      "labels": {
+        "L1": "Ready to Ship"
+      },
+      "style": {
+        "animated": true,
+        "color": "#10b981"
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "logistics-to-delivery",
+      "source": "logistics-delivery",
+      "target": "delivery-partners",
+      "type": "sync",
+      "labels": {
+        "L1": "Hand-off Shipment"
+      },
+      "style": {
+        "animated": true,
+        "color": "#10b981"
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "wholesale-customers-to-wholesale",
+      "source": "wholesale-customers",
+      "target": "wholesale-operations",
+      "type": "sync",
+      "labels": {
+        "L1": "Place Orders"
+      },
+      "style": {
+        "animated": true,
+        "color": "#ec4899"
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "ea"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      }
+    }
+  ],
+  "zones": [
+    {
+      "id": "inputs-zone",
+      "name": "Inputs (Customers)",
+      "description": "External actors driving demand",
+      "layer": 0,
+      "color": "#fee2e2",
+      "componentIds": ["retail-customers", "wholesale-customers"],
+      "visibleAtLevels": ["L0"]
+    },
+    {
+      "id": "enterprise-zone",
+      "name": "Enterprise (Black Box)",
+      "description": "The apparel company as a unified entity",
+      "layer": 1,
+      "color": "#dbeafe",
+      "componentIds": ["apparel-enterprise"],
+      "visibleAtLevels": ["L0"]
+    },
+    {
+      "id": "outputs-zone",
+      "name": "Outputs (Partners)",
+      "description": "External partners enabling operations",
+      "layer": 2,
+      "color": "#fef3c7",
+      "componentIds": ["suppliers", "delivery-partners"],
+      "visibleAtLevels": ["L0"]
+    },
+    {
+      "id": "outcomes-zone",
+      "name": "Strategic Outcomes",
+      "description": "Key business results and KPIs",
+      "layer": 3,
+      "color": "#d1fae5",
+      "componentIds": ["customer-satisfaction", "efficient-fulfillment", "scalable-growth", "partner-efficiency"],
+      "visibleAtLevels": ["L0"]
+    },
+    {
+      "id": "retail-stream-zone",
+      "name": "Retail Stream (B2C)",
+      "description": "Individual consumer journey",
+      "layer": 0,
+      "color": "#fce7f3",
+      "componentIds": ["retail-customers", "ecommerce-channel", "customer-experience"],
+      "visibleAtLevels": ["L1"]
+    },
+    {
+      "id": "wholesale-stream-zone",
+      "name": "Wholesale Stream (B2B)",
+      "description": "Business buyer journey",
+      "layer": 1,
+      "color": "#fef3c7",
+      "componentIds": ["wholesale-customers", "wholesale-operations"],
+      "visibleAtLevels": ["L1"]
+    },
+    {
+      "id": "orchestration-zone",
+      "name": "Order Orchestration",
+      "description": "Central hub for all orders",
+      "layer": 2,
+      "color": "#dbeafe",
+      "componentIds": ["order-management", "customer-support"],
+      "visibleAtLevels": ["L1"]
+    },
+    {
+      "id": "operations-zone",
+      "name": "Downstream Operations",
+      "description": "Fulfillment, procurement, and logistics",
+      "layer": 3,
+      "color": "#e0e7ff",
+      "componentIds": ["inventory-fulfillment", "procurement", "logistics-delivery"],
+      "visibleAtLevels": ["L1"]
+    }
+  ],
+  "layouts": {
+    "L0": {
+      "algorithm": "manual",
+      "config": {}
+    },
+    "L1": {
+      "algorithm": "manual",
+      "config": {}
+    }
+  }
+}
