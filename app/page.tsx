@@ -61,7 +61,7 @@ export default function HomePage() {
         style={{ minHeight: 'calc(100vh - 200px)' }}
       >
         {/* Left Sidebar - Controls */}
-        <div className="hidden lg:flex lg:flex-col w-72 xl:w-80 bg-white border-r border-slate-200 overflow-y-auto p-4 space-y-4">
+        <div className="hidden lg:flex lg:flex-col w-80 xl:w-[22rem] bg-white border-r border-slate-200 overflow-y-auto p-4 space-y-4">
           <PersonaSelector />
           <LevelControls />
 
