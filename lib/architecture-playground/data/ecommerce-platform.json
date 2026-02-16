@@ -645,6 +645,138 @@
       },
       "position": { "x": 200, "y": 750 },
       "tags": ["data", "database", "postgresql"]
+    },
+    {
+      "id": "retail-customers",
+      "type": "external",
+      "names": {
+        "business": "Retail Customers",
+        "technical": "B2C Customers"
+      },
+      "description": "Individual consumers shopping via web and mobile",
+      "levels": {
+        "L0": {
+          "businessCapability": "Browse and purchase products",
+          "kpis": [
+            { "name": "Active Users", "value": "2M+", "impact": "high" }
+          ],
+          "icon": "Users",
+          "color": "#ec4899"
+        },
+        "L1": {
+          "systemType": "External Actor",
+          "integrations": ["cdn", "load-balancer"]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["user-experience", "conversion-rate"]
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "uxdesigner", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": -100, "y": 100 },
+      "tags": ["external", "customer", "b2c"]
+    },
+    {
+      "id": "wholesale-customers",
+      "type": "external",
+      "names": {
+        "business": "Wholesale Customers",
+        "technical": "B2B Customers"
+      },
+      "description": "Business buyers placing bulk orders via API or portal",
+      "levels": {
+        "L0": {
+          "businessCapability": "Place bulk orders",
+          "kpis": [
+            { "name": "Active Accounts", "value": "500+", "impact": "high" }
+          ],
+          "icon": "Briefcase",
+          "color": "#ec4899"
+        },
+        "L1": {
+          "systemType": "External Actor",
+          "integrations": ["api-gateway"]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["b2b", "bulk-ordering"]
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": -100, "y": 250 },
+      "tags": ["external", "customer", "b2b"]
+    },
+    {
+      "id": "suppliers",
+      "type": "external",
+      "names": {
+        "business": "Suppliers",
+        "technical": "Supply Chain Partners"
+      },
+      "description": "External suppliers providing inventory updates and fulfillment",
+      "levels": {
+        "L0": {
+          "businessCapability": "Provide inventory and fulfill orders",
+          "kpis": [
+            { "name": "Active Suppliers", "value": "150+", "impact": "medium" }
+          ],
+          "icon": "Truck",
+          "color": "#ec4899"
+        },
+        "L1": {
+          "systemType": "External Actor",
+          "integrations": ["inventory-service"]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["supply-chain", "inventory-management"]
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 900, "y": 500 },
+      "tags": ["external", "supplier"]
+    },
+    {
+      "id": "payment-providers",
+      "type": "external",
+      "names": {
+        "business": "Payment Providers",
+        "technical": "Payment Gateway Partners"
+      },
+      "description": "Third-party payment processors (Stripe, PayPal, etc.)",
+      "levels": {
+        "L0": {
+          "businessCapability": "Process payments securely",
+          "kpis": [
+            { "name": "Success Rate", "value": "99.5%", "impact": "high" }
+          ],
+          "icon": "CreditCard",
+          "color": "#ec4899"
+        },
+        "L1": {
+          "systemType": "External Actor",
+          "integrations": ["payment-service"]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["payment-processing", "pci-compliance"]
+      },
+      "visibility": {
+        "personas": ["business", "security", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 900, "y": 350 },
+      "tags": ["external", "payment"]
     }
   ],
   "connections": [
@@ -903,6 +1035,53 @@
       "position": { "x": 400, "y": 550 },
       "level": "L1",
       "personas": ["ea", "techlead", "developer"]
+    }
+  ],
+  "zones": [
+    {
+      "id": "customer-facing",
+      "name": "Customer-Facing Layer",
+      "description": "External entry points for customer traffic",
+      "layer": 0,
+      "color": "#dbeafe",
+      "componentIds": ["cdn", "load-balancer"],
+      "visibleAtLevels": ["L0", "L1"]
+    },
+    {
+      "id": "api-integration",
+      "name": "API & Integration Layer",
+      "description": "API gateway and service orchestration",
+      "layer": 1,
+      "color": "#e0e7ff",
+      "componentIds": ["api-gateway"],
+      "visibleAtLevels": ["L0", "L1"]
+    },
+    {
+      "id": "core-services",
+      "name": "Core Business Services",
+      "description": "Microservices handling business logic",
+      "layer": 2,
+      "color": "#fef3c7",
+      "componentIds": ["order-service", "payment-service", "inventory-service"],
+      "visibleAtLevels": ["L0", "L1"]
+    },
+    {
+      "id": "messaging",
+      "name": "Event & Messaging",
+      "description": "Asynchronous communication backbone",
+      "layer": 3,
+      "color": "#fef08a",
+      "componentIds": ["event-bus"],
+      "visibleAtLevels": ["L0", "L1"]
+    },
+    {
+      "id": "data-storage",
+      "name": "Data & Storage Layer",
+      "description": "Persistent data storage and management",
+      "layer": 4,
+      "color": "#d1fae5",
+      "componentIds": ["postgres-db"],
+      "visibleAtLevels": ["L0", "L1"]
     }
   ]
 }

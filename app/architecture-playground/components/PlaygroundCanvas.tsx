@@ -23,6 +23,7 @@ import SystemNode from '@/components/architecture-playground/nodes/SystemNode';
 import ComponentNode from '@/components/architecture-playground/nodes/ComponentNode';
 import DetailNode from '@/components/architecture-playground/nodes/DetailNode';
 import Breadcrumb from './Breadcrumb';
+import ZoneBackground from './ZoneBackground';
 
 interface PlaygroundCanvasProps {
   architectureId: string;
@@ -127,6 +128,14 @@ export default function PlaygroundCanvas({ architectureId }: PlaygroundCanvasPro
           maxZoom={2}
         >
         <Background color="#94a3b8" gap={16} />
+
+        {/* Zone backgrounds for L0 grouped layout */}
+        {architecture?.zones && architecture.zones.length > 0 && (
+          <Panel position="top-left" style={{ margin: 0, padding: 0, background: 'transparent', pointerEvents: 'none' }}>
+            <ZoneBackground zones={architecture.zones} />
+          </Panel>
+        )}
+
         <Controls />
         <MiniMap
           nodeColor={(node) => node.data.color || '#94a3b8'}

@@ -23,6 +23,7 @@ export const PERSONA_PROFILES: Record<Persona, PersonaProfile> = {
     preferredViews: ['flowchart', 'capability-map'],
     interests: ['roi', 'cost', 'time-to-market', 'business-value'],
     hideComplexity: true,
+    recommendedVertical: 'business',
     icon: 'Briefcase',
     color: '#ec4899'
   },
@@ -34,6 +35,7 @@ export const PERSONA_PROFILES: Record<Persona, PersonaProfile> = {
     preferredViews: ['journey-map', 'capability-map', 'flowchart'],
     interests: ['features', 'user-value', 'roadmap', 'time-to-market'],
     hideComplexity: true,
+    recommendedVertical: 'business',
     icon: 'Map',
     color: '#f97316'
   },
@@ -45,6 +47,7 @@ export const PERSONA_PROFILES: Record<Persona, PersonaProfile> = {
     preferredViews: ['flowchart', 'data-flow', 'journey-map'],
     interests: ['requirements', 'business-rules', 'data-flow', 'integration-points'],
     hideComplexity: true,
+    recommendedVertical: 'solution',
     icon: 'FileText',
     color: '#06b6d4'
   },
@@ -56,6 +59,7 @@ export const PERSONA_PROFILES: Record<Persona, PersonaProfile> = {
     preferredViews: ['journey-map', 'flowchart', 'api-specs'],
     interests: ['user-experience', 'user-flows', 'api-response-times', 'frontend'],
     hideComplexity: true,
+    recommendedVertical: 'business',
     icon: 'Palette',
     color: '#a855f7'
   },
@@ -67,6 +71,7 @@ export const PERSONA_PROFILES: Record<Persona, PersonaProfile> = {
     preferredViews: ['system-landscape', 'integration-patterns'],
     interests: ['patterns', 'standards', 'governance', 'scalability'],
     hideComplexity: false,
+    recommendedVertical: 'solution',
     icon: 'Building2',
     color: '#8b5cf6'
   },
@@ -78,6 +83,7 @@ export const PERSONA_PROFILES: Record<Persona, PersonaProfile> = {
     preferredViews: ['system-landscape', 'integration-patterns', 'deployment-view'],
     interests: ['security', 'compliance', 'risk', 'encryption', 'authentication'],
     hideComplexity: false,
+    recommendedVertical: 'solution',
     icon: 'Shield',
     color: '#ef4444'
   },
@@ -89,6 +95,7 @@ export const PERSONA_PROFILES: Record<Persona, PersonaProfile> = {
     preferredViews: ['data-flow', 'system-landscape', 'component-diagram'],
     interests: ['data-flow', 'storage', 'data-governance', 'analytics'],
     hideComplexity: false,
+    recommendedVertical: 'solution',
     icon: 'Database',
     color: '#14b8a6'
   },
@@ -100,6 +107,7 @@ export const PERSONA_PROFILES: Record<Persona, PersonaProfile> = {
     preferredViews: ['deployment-view', 'component-diagram', 'code-view'],
     interests: ['implementation', 'deployment', 'reliability', 'performance', 'monitoring'],
     hideComplexity: false,
+    recommendedVertical: 'deployment',
     icon: 'Hammer',
     color: '#f59e0b'
   },
@@ -111,6 +119,7 @@ export const PERSONA_PROFILES: Record<Persona, PersonaProfile> = {
     preferredViews: ['component-diagram', 'api-specs', 'integration-patterns'],
     interests: ['quality', 'testing', 'stability', 'error-handling', 'monitoring'],
     hideComplexity: false,
+    recommendedVertical: 'deployment',
     icon: 'CheckCircle',
     color: '#10b981'
   }
@@ -130,7 +139,8 @@ export const NODE_CATEGORY_COLORS: Record<string, string> = {
   integration: '#f59e0b',
   security: '#ef4444',
   frontend: '#06b6d4',
-  platform: '#64748b'
+  platform: '#64748b',
+  external: '#ec4899'
 };
 
 export const CONNECTION_TYPE_STYLES: Record<string, { dashed: boolean; color: string; animated: boolean }> = {

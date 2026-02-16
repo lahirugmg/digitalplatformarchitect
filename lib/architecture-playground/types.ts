@@ -21,7 +21,7 @@ export type Persona =
   | 'data'               // Data Architect
   | 'implementation'     // Implementation Lead (Dev/SRE)
   | 'qa';                // QA Engineer
-export type NodeCategory = 'infrastructure' | 'service' | 'data' | 'integration' | 'security' | 'frontend' | 'platform';
+export type NodeCategory = 'infrastructure' | 'service' | 'data' | 'integration' | 'security' | 'frontend' | 'platform' | 'external';
 export type ConnectionType = 'sync' | 'async' | 'data-flow' | 'dependency' | 'deployment';
 export type PlaygroundMode = 'explore' | 'theory' | 'practice';
 export type ViewType = 'flowchart' | 'capability-map' | 'system-landscape' | 'integration-patterns' |
@@ -412,6 +412,20 @@ export interface DataFlowInfo {
 }
 
 // ============================================================================
+// Architecture Zones (for L0 grouped layout)
+// ============================================================================
+
+export interface ArchitectureZone {
+  id: string;
+  name: string;
+  description?: string;
+  layer: number;              // Vertical ordering (0 = top)
+  color?: string;             // Background color
+  componentIds: string[];     // Components in this zone
+  visibleAtLevels?: DetailLevel[];  // Which levels show this zone
+}
+
+// ============================================================================
 // Architecture Graph
 // ============================================================================
 
@@ -419,6 +433,7 @@ export interface ArchitectureGraph {
   metadata: GraphMetadata;
   components: ArchitectureComponent[];
   connections: ArchitectureConnection[];
+  zones?: ArchitectureZone[];  // Optional zones for L0 grouped layout
   layouts?: LayoutConfig;
   presets?: ViewPreset[];
   annotations?: Annotation[];
@@ -490,6 +505,7 @@ export interface PersonaProfile {
   preferredViews: ViewType[];
   interests: string[];
   hideComplexity: boolean;
+  recommendedVertical?: ArchitectureVertical;
   icon?: string;
   color?: string;
 }
@@ -582,5 +598,5 @@ export const PERSONAS: Persona[] = [
   'business', 'product', 'ba', 'uxdesigner', 'ea',
   'security', 'data', 'implementation', 'qa'
 ];
-export const NODE_CATEGORIES: NodeCategory[] = ['infrastructure', 'service', 'data', 'integration', 'security', 'frontend', 'platform'];
+export const NODE_CATEGORIES: NodeCategory[] = ['infrastructure', 'service', 'data', 'integration', 'security', 'frontend', 'platform', 'external'];
 export const CONNECTION_TYPES: ConnectionType[] = ['sync', 'async', 'data-flow', 'dependency', 'deployment'];
