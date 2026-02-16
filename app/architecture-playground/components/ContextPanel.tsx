@@ -6,7 +6,7 @@ import { ExternalLink, Code, BookOpen, BarChart3 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ContextPanel() {
-  const { architecture, focusNode } = usePlaygroundStore();
+  const { architecture, focusNode, level, vertical } = usePlaygroundStore();
   const [activeTab, setActiveTab] = useState<'overview' | 'theory' | 'practice' | 'metrics'>('overview');
 
   if (!focusNode || !architecture) {
@@ -23,19 +23,33 @@ export default function ContextPanel() {
   const component = architecture.components.find(c => c.id === focusNode);
   if (!component) return null;
 
-  const { level } = usePlaygroundStore();
-  const levelData = component.levels[level];
+  // Get vertical-specific content if available
+  const verticalContent = component.verticals?.[vertical];
+  const displayName = verticalContent?.name || component.names.display || component.names.technical;
+  const displayDescription = verticalContent?.description || component.description;
+
+  // Get level data - check vertical-specific first, then fall back to common
+  let levelData = component.levels[level];
+  if (verticalContent?.levels?.[level]) {
+    levelData = { ...levelData, ...verticalContent.levels[level] } as any;
+  }
 
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
       <div className="p-4 border-b border-slate-200">
         <h2 className="text-xl font-bold text-slate-900 mb-1">
-          {component.names.display || component.names.technical}
+          {displayName}
         </h2>
-        {component.description && (
-          <p className="text-sm text-slate-600">{component.description}</p>
+        {displayDescription && (
+          <p className="text-sm text-slate-600">{displayDescription}</p>
         )}
+        {/* Show current vertical as a badge */}
+        <div className="mt-2">
+          <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 text-slate-700 capitalize">
+            {vertical} Architecture
+          </span>
+        </div>
       </div>
 
       {/* Tabs */}
