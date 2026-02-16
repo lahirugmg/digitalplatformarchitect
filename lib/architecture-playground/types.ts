@@ -10,6 +10,7 @@
 // ============================================================================
 
 export type DetailLevel = 'L0' | 'L1' | 'L2' | 'L3';
+export type ArchitectureVertical = 'solution' | 'business' | 'deployment';
 export type Persona =
   | 'business'           // Business Stakeholder
   | 'product'            // Product Manager
@@ -26,6 +27,22 @@ export type PlaygroundMode = 'explore' | 'theory' | 'practice';
 export type ViewType = 'flowchart' | 'capability-map' | 'system-landscape' | 'integration-patterns' |
                        'component-diagram' | 'deployment-view' | 'code-view' | 'api-specs' |
                        'deployment-configs' | 'data-flow' | 'journey-map';
+
+// ============================================================================
+// Vertical-Specific Content
+// ============================================================================
+
+export interface VerticalContent {
+  name: string;             // Vertical-specific name (e.g., "Order Processing" for business)
+  description: string;      // Vertical-oriented description
+  visible: boolean;         // Whether to show in this vertical
+  levels?: {                // Vertical-specific level details (overrides common levels)
+    L0?: Partial<L0Details>;
+    L1?: Partial<L1Details>;
+    L2?: Partial<L2Details>;
+    L3?: Partial<L3Details>;
+  };
+}
 
 // ============================================================================
 // Architecture Component
@@ -45,6 +62,13 @@ export interface ArchitectureComponent {
 
   // Description
   description?: string;
+
+  // Per-vertical content (optional - falls back to common fields if not specified)
+  verticals?: {
+    business?: VerticalContent;
+    solution?: VerticalContent;
+    deployment?: VerticalContent;
+  };
 
   // Level-specific details
   levels: {
@@ -498,6 +522,7 @@ export interface PlaygroundState {
   mode: PlaygroundMode;
   persona: Persona;
   level: DetailLevel;
+  vertical: ArchitectureVertical;
   focusNode: string | null;
   selectedNodes: string[];
   viewport: {
@@ -552,6 +577,7 @@ export type RequiredFields<T, K extends keyof T> = T & Required<Pick<T, K>>;
 // ============================================================================
 
 export const DETAIL_LEVELS: DetailLevel[] = ['L0', 'L1', 'L2', 'L3'];
+export const ARCHITECTURE_VERTICALS: ArchitectureVertical[] = ['solution', 'business', 'deployment'];
 export const PERSONAS: Persona[] = [
   'business', 'product', 'ba', 'uxdesigner', 'ea',
   'security', 'data', 'implementation', 'qa'
