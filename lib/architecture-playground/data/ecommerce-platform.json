@@ -19,6 +19,48 @@
         "technical": "CloudFront CDN"
       },
       "description": "Distributes static assets and caches dynamic content globally",
+      "verticals": {
+        "business": {
+          "name": "Customer Experience Acceleration",
+          "description": "Ensures fast, consistent user experience globally by delivering content from nearest locations",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Deliver fast global customer experience",
+              "value": "Increases conversion rate by 15% through faster page loads"
+            },
+            "L1": {
+              "systemType": "Global Distribution Network"
+            }
+          }
+        },
+        "solution": {
+          "name": "Content Delivery Network",
+          "description": "Global CDN infrastructure that caches and delivers static and dynamic content",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Fast global content delivery"
+            },
+            "L1": {
+              "systemType": "CloudFront CDN with edge caching"
+            }
+          }
+        },
+        "deployment": {
+          "name": "Edge Network Infrastructure",
+          "description": "Globally distributed edge locations with TLS termination and DDoS protection",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Multi-region edge network"
+            },
+            "L1": {
+              "systemType": "AWS CloudFront with 150+ edge locations"
+            }
+          }
+        }
+      },
       "levels": {
         "L0": {
           "businessCapability": "Fast global content delivery",
