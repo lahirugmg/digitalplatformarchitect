@@ -12,7 +12,8 @@ export async function loadArchitecture(architectureId: string): Promise<Architec
 
 export async function getAvailableArchitectures(): Promise<{ id: string; title: string }[]> {
   return [
-    { id: 'ecommerce-platform', title: 'E-Commerce Platform' }
+    { id: 'ecommerce-platform', title: 'E-Commerce Platform' },
+    { id: 'business-architecture', title: 'Business Architecture' }
   ];
 }
 

@@ -22,6 +22,11 @@ import BusinessNode from '@/components/architecture-playground/nodes/BusinessNod
 import SystemNode from '@/components/architecture-playground/nodes/SystemNode';
 import ComponentNode from '@/components/architecture-playground/nodes/ComponentNode';
 import DetailNode from '@/components/architecture-playground/nodes/DetailNode';
+import L0BlackBoxNode from '@/components/architecture-playground/nodes/L0BlackBoxNode';
+import ExternalActorNode from '@/components/architecture-playground/nodes/ExternalActorNode';
+import StrategicOutcomeNode from '@/components/architecture-playground/nodes/StrategicOutcomeNode';
+import BusinessProcessNode from '@/components/architecture-playground/nodes/BusinessProcessNode';
+import OrchestrationHubNode from '@/components/architecture-playground/nodes/OrchestrationHubNode';
 import Breadcrumb from './Breadcrumb';
 import ZoneBackground from './ZoneBackground';
 
@@ -34,6 +39,11 @@ const nodeTypes: NodeTypes = {
   'custom-l1': SystemNode,
   'custom-l2': ComponentNode,
   'custom-l3': DetailNode,
+  'blackbox': L0BlackBoxNode,
+  'actor': ExternalActorNode,
+  'outcome': StrategicOutcomeNode,
+  'process': BusinessProcessNode,
+  'hub': OrchestrationHubNode,
 };
 
 export default function PlaygroundCanvas({ architectureId }: PlaygroundCanvasProps) {
