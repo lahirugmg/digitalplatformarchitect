@@ -4,9 +4,9 @@ This directory contains design improvements, UX enhancements, and technical poli
 
 ## Quick Stats
 
-- **Total Improvements:** 9 (documented in detail)
-- **High Priority:** 2
-- **Estimated Total Effort:** ~180 hours (4.5 weeks)
+- **Total Improvements:** 10 (documented in detail)
+- **High Priority:** 3
+- **Estimated Total Effort:** ~260-280 hours (6-7 weeks)
 
 ## High Priority Improvements
 
@@ -14,6 +14,7 @@ This directory contains design improvements, UX enhancements, and technical poli
 |----|-------|----------|----------|--------|--------|
 | [IMP-001](./IMP-001-mobile-responsive-playgrounds.md) | Implement mobile-responsive playground layouts | High | UX / Mobile | Large (80h) | Very High |
 | [IMP-003](./IMP-003-keyboard-navigation-accessibility.md) | Implement comprehensive keyboard navigation | High | Accessibility | Large (80h) | Very High |
+| [IMP-023](./IMP-023-l0-to-ln-architecture-playground-enhancements.md) | L0-to-Ln architecture playground enhancements | High | Architecture Playground | Large (67-97h) | Very High |
 
 ## Medium Priority Improvements
 
