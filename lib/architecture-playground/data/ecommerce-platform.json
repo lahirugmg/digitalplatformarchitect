@@ -27,10 +27,55 @@
           "levels": {
             "L0": {
               "businessCapability": "Deliver fast global customer experience",
-              "value": "Increases conversion rate by 15% through faster page loads"
+              "value": "Increases conversion rate by 15% through faster page loads",
+              "kpis": [
+                { "name": "Page Load Time", "value": "< 2s", "impact": "high", "trend": "stable" },
+                { "name": "Global Availability", "value": "99.99%", "impact": "high" }
+              ]
             },
             "L1": {
-              "systemType": "Global Distribution Network"
+              "systemType": "Global Distribution Network",
+              "responsibilities": [
+                "Cache static assets (images, CSS, JavaScript)",
+                "Accelerate dynamic content delivery",
+                "Protect against DDoS attacks",
+                "Terminate SSL connections at edge"
+              ]
+            },
+            "L2": {
+              "techStack": {
+                "other": {
+                  "caching": "Tiered edge caching with regional fallback",
+                  "optimization": "Automatic image optimization and compression",
+                  "routing": "GeoDNS-based routing to nearest edge"
+                }
+              },
+              "configuration": {
+                "cachePolicy": "Cache-Control headers, TTL: 24h for static, 5m for dynamic",
+                "edgeRules": "Custom cache behaviors per path pattern"
+              }
+            },
+            "L3": {
+              "deploymentConfigs": {
+                "terraform": {
+                  "module": "modules/cdn",
+                  "version": "2.1.0",
+                  "variables": {
+                    "origin_domain": "ecommerce.example.com",
+                    "edge_locations": "all",
+                    "cache_behaviors": {
+                      "/static/*": { "ttl": 86400, "compress": true },
+                      "/api/*": { "ttl": 0, "forward_headers": ["Authorization"] }
+                    }
+                  }
+                }
+              },
+              "configuration": {
+                "distribution.price_class": "PriceClass_All",
+                "distribution.ssl_protocol": "TLSv1.2_2021",
+                "distribution.waf_enabled": true,
+                "distribution.logging": "s3://logs/cdn/"
+              }
             }
           }
         },
@@ -43,7 +88,40 @@
               "businessCapability": "Fast global content delivery"
             },
             "L1": {
-              "systemType": "CloudFront CDN with edge caching"
+              "systemType": "CloudFront CDN with edge caching",
+              "integrations": ["load-balancer", "object-storage"],
+              "pattern": "Edge Caching Pattern"
+            },
+            "L2": {
+              "techStack": {
+                "runtime": "AWS CloudFront",
+                "other": {
+                  "ssl": "AWS Certificate Manager",
+                  "waf": "AWS WAF",
+                  "dns": "Amazon Route 53"
+                }
+              },
+              "apis": {
+                "rest": [
+                  { "path": "/cdn-api/purge", "methods": ["POST"], "description": "Cache invalidation API" }
+                ]
+              }
+            },
+            "L3": {
+              "deploymentConfigs": {
+                "terraform": {
+                  "module": "modules/cloudfront",
+                  "version": "3.1.0"
+                }
+              },
+              "codeSnippets": [
+                {
+                  "language": "typescript",
+                  "file": "cdn-config.ts",
+                  "description": "CloudFront distribution configuration",
+                  "code": "const distribution = new cloudfront.Distribution(this, 'CDN', {\n  defaultBehavior: {\n    origin: new origins.LoadBalancerOrigin(loadBalancer),\n    viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,\n    cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED\n  }\n});"
+                }
+              ]
             }
           }
         },
@@ -53,10 +131,69 @@
           "visible": true,
           "levels": {
             "L0": {
-              "businessCapability": "Multi-region edge network"
+              "businessCapability": "Multi-region edge network",
+              "value": "150+ edge locations across 6 continents"
             },
             "L1": {
-              "systemType": "AWS CloudFront with 150+ edge locations"
+              "systemType": "AWS CloudFront Distribution",
+              "integrations": ["AWS Global Accelerator", "AWS Shield Standard"],
+              "sla": { "uptime": "99.99%", "latency": "< 50ms globally" }
+            },
+            "L2": {
+              "techStack": {
+                "runtime": "AWS CloudFront",
+                "other": {
+                  "dns": "Route 53 with latency-based routing",
+                  "waf": "AWS WAF with managed rule sets",
+                  "protection": "AWS Shield Standard (DDoS)",
+                  "certificate": "ACM wildcard certificate"
+                }
+              },
+              "configuration": {
+                "vpc": "Edge network (AWS managed)",
+                "regions": ["us-east-1", "eu-west-1", "ap-southeast-1", "global-edge"],
+                "securityGroups": "AWS managed edge security"
+              },
+              "scalability": {
+                "horizontal": true,
+                "vertical": false,
+                "autoScaling": {
+                  "enabled": true,
+                  "minInstances": 150,
+                  "maxInstances": 250,
+                  "metrics": ["Request Rate", "Origin Latency"]
+                }
+              }
+            },
+            "L3": {
+              "deploymentConfigs": {
+                "terraform": {
+                  "module": "modules/cloudfront-edge",
+                  "version": "2.1.0",
+                  "variables": {
+                    "edge_lambda_functions": {
+                      "viewer_request": "arn:aws:lambda:us-east-1:123456789:function:cdn-viewer-request",
+                      "origin_response": "arn:aws:lambda:us-east-1:123456789:function:cdn-origin-response"
+                    },
+                    "waf_acl": "arn:aws:wafv2:us-east-1:123456789:global/webacl/cdn-protection",
+                    "ssl_certificate": "arn:aws:acm:us-east-1:123456789:certificate/abc-123"
+                  }
+                }
+              },
+              "configuration": {
+                "cloudfront.origins.load_balancer.connection_attempts": 3,
+                "cloudfront.origins.load_balancer.connection_timeout": 10,
+                "cloudfront.origins.load_balancer.origin_shield.enabled": true,
+                "cloudfront.origins.load_balancer.origin_shield.region": "us-east-1",
+                "cloudfront.cache_behaviors.compress": true,
+                "cloudfront.http_version": "http2and3",
+                "cloudfront.ipv6_enabled": true
+              },
+              "monitoring": {
+                "metrics": ["Requests", "BytesDownloaded", "ErrorRate", "4xxErrorRate", "5xxErrorRate"],
+                "dashboards": ["https://console.aws.amazon.com/cloudwatch/dashboards/cdn-monitoring"],
+                "alerts": ["High error rate (> 1%)", "High latency (> 100ms)", "Origin unreachable"]
+              }
             }
           }
         }
@@ -113,6 +250,143 @@
         "technical": "Application Load Balancer"
       },
       "description": "Distributes incoming traffic across multiple application instances",
+      "verticals": {
+        "business": {
+          "name": "Request Distribution & High Availability",
+          "description": "Ensures system can handle millions of customer requests while maintaining availability",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Handle high traffic volumes reliably",
+              "value": "Supports 50M+ daily requests with zero downtime",
+              "kpis": [
+                { "name": "Daily Requests", "value": "50M+", "impact": "high" },
+                { "name": "System Availability", "value": "99.99%", "impact": "high" }
+              ]
+            },
+            "L1": {
+              "systemType": "Traffic Distribution System",
+              "responsibilities": [
+                "Distribute traffic across healthy application instances",
+                "Detect and route around unhealthy instances",
+                "Provide SSL termination for secure connections",
+                "Enable zero-downtime deployments"
+              ]
+            },
+            "L2": {
+              "techStack": {
+                "other": {
+                  "healthChecks": "HTTP /health endpoint every 30s",
+                  "sslTermination": "TLS 1.3 with perfect forward secrecy",
+                  "algorithm": "Least outstanding requests"
+                }
+              }
+            }
+          }
+        },
+        "solution": {
+          "name": "Application Load Balancer",
+          "description": "Layer 7 load balancer with advanced routing and SSL termination",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Intelligent request routing"
+            },
+            "L1": {
+              "systemType": "Application Load Balancer (Layer 7)",
+              "pattern": "Load Balancing Pattern",
+              "integrations": ["web-app", "api-gateway"]
+            },
+            "L2": {
+              "techStack": {
+                "runtime": "AWS Application Load Balancer",
+                "other": {
+                  "routing": "Path-based and host-based routing",
+                  "sslTermination": "AWS Certificate Manager integration",
+                  "healthCheck": "HTTP GET /health (30s interval)"
+                }
+              }
+            }
+          }
+        },
+        "deployment": {
+          "name": "Load Balancer Infrastructure",
+          "description": "Multi-AZ load balancer with auto-scaling target groups",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Multi-zone traffic distribution",
+              "value": "Deployed across 3 availability zones"
+            },
+            "L1": {
+              "systemType": "AWS Application Load Balancer",
+              "integrations": ["VPC Subnets", "Target Groups", "Security Groups"],
+              "sla": { "uptime": "99.99%", "latency": "< 10ms" }
+            },
+            "L2": {
+              "techStack": {
+                "runtime": "AWS ALB",
+                "other": {
+                  "vpc": "Multi-AZ deployment in public subnets",
+                  "securityGroups": "Allow 80/443 from 0.0.0.0/0",
+                  "targetGroups": "Microservices registered as targets",
+                  "connectionDraining": "300 seconds"
+                }
+              },
+              "configuration": {
+                "subnets": ["subnet-pub-1a", "subnet-pub-1b", "subnet-pub-1c"],
+                "scheme": "internet-facing",
+                "ipAddressType": "dualstack"
+              },
+              "scalability": {
+                "horizontal": true,
+                "vertical": true,
+                "autoScaling": {
+                  "enabled": true,
+                  "minInstances": 2,
+                  "maxInstances": 10,
+                  "metrics": ["RequestCountPerTarget", "TargetResponseTime"]
+                }
+              }
+            },
+            "L3": {
+              "deploymentConfigs": {
+                "terraform": {
+                  "module": "modules/alb",
+                  "version": "1.5.0",
+                  "variables": {
+                    "name": "ecommerce-alb",
+                    "vpc_id": "vpc-0abc123",
+                    "subnets": ["subnet-0a1b2c3", "subnet-4d5e6f7", "subnet-8g9h0i1"],
+                    "security_groups": ["sg-alb-public"],
+                    "enable_deletion_protection": true,
+                    "idle_timeout": 60,
+                    "enable_http2": true,
+                    "enable_cross_zone_load_balancing": true
+                  }
+                }
+              },
+              "configuration": {
+                "alb.access_logs.enabled": true,
+                "alb.access_logs.bucket": "s3://logs/alb",
+                "alb.deletion_protection.enabled": true,
+                "alb.http2.enabled": true,
+                "alb.connection_logs.enabled": true,
+                "target_group.deregistration_delay": 300,
+                "target_group.health_check.interval": 30,
+                "target_group.health_check.timeout": 5,
+                "target_group.health_check.healthy_threshold": 2,
+                "target_group.health_check.unhealthy_threshold": 3
+              },
+              "monitoring": {
+                "metrics": ["RequestCount", "TargetResponseTime", "HTTPCode_Target_2XX_Count", "HTTPCode_Target_4XX_Count", "HTTPCode_Target_5XX_Count", "UnHealthyHostCount"],
+                "dashboards": ["https://console.aws.amazon.com/cloudwatch/dashboards/alb-monitoring"],
+                "alerts": ["Unhealthy targets > 0", "5xx errors > 1%", "Response time > 500ms"]
+              }
+            }
+          }
+        }
+      },
       "levels": {
         "L0": {
           "businessCapability": "Handle millions of requests",
@@ -166,6 +440,274 @@
         "technical": "Kong API Gateway"
       },
       "description": "Centralized API gateway for authentication, rate limiting, and routing",
+      "verticals": {
+        "business": {
+          "name": "API Management & Security Gateway",
+          "description": "Protects and manages all APIs, ensuring secure access and preventing abuse",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Secure API access and management",
+              "value": "Manages 50+ APIs, blocks 10K+ malicious requests daily",
+              "kpis": [
+                { "name": "APIs Managed", "value": "50+", "impact": "high" },
+                { "name": "Security Blocks", "value": "10K/day", "impact": "high" },
+                { "name": "API Uptime", "value": "99.95%", "impact": "high" }
+              ],
+              "owner": "Platform Team"
+            },
+            "L1": {
+              "systemType": "API Management Platform",
+              "responsibilities": [
+                "Authenticate all incoming API requests",
+                "Enforce rate limits to prevent abuse",
+                "Route requests to appropriate backend services",
+                "Provide unified API analytics and monitoring",
+                "Block suspicious or malicious traffic"
+              ]
+            },
+            "L2": {
+              "techStack": {
+                "other": {
+                  "authentication": "OAuth 2.0, JWT tokens with 15min expiry",
+                  "rateLimiting": "Per-consumer limits (1000 req/min premium, 100 req/min basic)",
+                  "routing": "Path-based routing with service discovery"
+                }
+              },
+              "configuration": {
+                "policies": "Rate limiting, JWT validation, CORS, request transformation",
+                "caching": "Response caching with Redis for GET requests"
+              }
+            },
+            "L3": {
+              "deploymentConfigs": {
+                "kubernetes": {
+                  "helmChart": "charts/kong-gateway",
+                  "values": {
+                    "replicas": 3,
+                    "resources": {
+                      "requests": { "cpu": "500m", "memory": "1Gi" },
+                      "limits": { "cpu": "2000m", "memory": "4Gi" }
+                    },
+                    "autoscaling": {
+                      "enabled": true,
+                      "minReplicas": 3,
+                      "maxReplicas": 10,
+                      "targetCPUUtilizationPercentage": 70
+                    }
+                  }
+                }
+              },
+              "configuration": {
+                "kong.database": "postgres",
+                "kong.pg_host": "postgres-kong.svc.cluster.local",
+                "kong.pg_database": "kong",
+                "kong.redis.host": "redis-kong.svc.cluster.local",
+                "kong.plugins": "jwt,rate-limiting,cors,prometheus,request-transformer,response-transformer",
+                "kong.log_level": "notice",
+                "kong.admin_listen": "0.0.0.0:8001",
+                "kong.proxy_listen": "0.0.0.0:8000, 0.0.0.0:8443 ssl"
+              }
+            }
+          }
+        },
+        "solution": {
+          "name": "API Gateway",
+          "description": "Kong-based API Gateway with plugin ecosystem for cross-cutting concerns",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Centralized API management"
+            },
+            "L1": {
+              "systemType": "API Gateway",
+              "pattern": "API Gateway Pattern",
+              "integrations": ["order-service", "payment-service", "inventory-service", "user-service"]
+            },
+            "L2": {
+              "techStack": {
+                "runtime": "Kong Gateway 3.4",
+                "database": "PostgreSQL 16",
+                "cache": "Redis 7",
+                "other": {
+                  "plugins": "JWT, Rate-limiting, CORS, Prometheus, Request/Response Transformer",
+                  "serviceDiscovery": "Kubernetes DNS"
+                }
+              },
+              "apis": {
+                "rest": [
+                  { "path": "/api/orders/*", "methods": ["GET", "POST", "PUT", "DELETE"], "description": "Order management APIs" },
+                  { "path": "/api/products/*", "methods": ["GET"], "description": "Product catalog APIs" },
+                  { "path": "/api/users/*", "methods": ["GET", "POST"], "description": "User management APIs" },
+                  { "path": "/api/payments/*", "methods": ["POST"], "description": "Payment processing APIs" }
+                ]
+              },
+              "security": {
+                "authentication": "OAuth 2.0 + JWT",
+                "authorization": "RBAC with scopes",
+                "encryption": {
+                  "inTransit": true,
+                  "atRest": false
+                }
+              }
+            },
+            "L3": {
+              "deploymentConfigs": {
+                "kubernetes": {
+                  "helmChart": "charts/kong",
+                  "namespace": "api-gateway",
+                  "values": {
+                    "image": {
+                      "repository": "kong",
+                      "tag": "3.4.0"
+                    },
+                    "env": {
+                      "database": "postgres",
+                      "pg_host": "postgres-kong",
+                      "pg_port": "5432",
+                      "pg_user": "kong",
+                      "pg_database": "kong"
+                    },
+                    "proxy": {
+                      "enabled": true,
+                      "type": "LoadBalancer",
+                      "annotations": {
+                        "service.beta.kubernetes.io/aws-load-balancer-type": "nlb"
+                      }
+                    }
+                  }
+                }
+              },
+              "codeSnippets": [
+                {
+                  "language": "yaml",
+                  "file": "kong-route.yaml",
+                  "description": "Kong route configuration for order service",
+                  "code": "apiVersion: configuration.konghq.com/v1\nkind: KongIngress\nmetadata:\n  name: order-service-route\nroute:\n  paths:\n    - /api/orders\n  methods:\n    - GET\n    - POST\n  plugins:\n    - jwt\n    - rate-limiting"
+                }
+              ]
+            }
+          }
+        },
+        "deployment": {
+          "name": "API Gateway Cluster",
+          "description": "Highly available Kong Gateway cluster with PostgreSQL and Redis backends",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Highly available API gateway",
+              "value": "3-node cluster with auto-scaling"
+            },
+            "L1": {
+              "systemType": "Kong Gateway Cluster on EKS",
+              "integrations": ["EKS Cluster", "RDS PostgreSQL", "ElastiCache Redis", "Network Load Balancer"],
+              "sla": { "uptime": "99.95%", "latency": "< 100ms p99" }
+            },
+            "L2": {
+              "techStack": {
+                "runtime": "Kong Gateway 3.4 on Amazon EKS",
+                "database": "RDS PostgreSQL 16 (Multi-AZ)",
+                "cache": "ElastiCache Redis 7 (Cluster mode)",
+                "other": {
+                  "loadBalancer": "Network Load Balancer",
+                  "ingress": "AWS Load Balancer Controller",
+                  "storage": "EBS gp3 for database"
+                }
+              },
+              "configuration": {
+                "vpc": "Private subnets in us-east-1a, us-east-1b, us-east-1c",
+                "namespace": "api-gateway",
+                "securityGroups": ["sg-kong-proxy", "sg-kong-admin"],
+                "serviceAccount": "kong-gateway-sa (IRSA enabled)"
+              },
+              "scalability": {
+                "horizontal": true,
+                "vertical": true,
+                "autoScaling": {
+                  "enabled": true,
+                  "minInstances": 3,
+                  "maxInstances": 10,
+                  "metrics": ["CPU", "Memory", "Request Rate"]
+                }
+              }
+            },
+            "L3": {
+              "deploymentConfigs": {
+                "kubernetes": {
+                  "helmChart": "kong/kong",
+                  "namespace": "api-gateway",
+                  "values": {
+                    "replicaCount": 3,
+                    "podDisruptionBudget": {
+                      "enabled": true,
+                      "minAvailable": 2
+                    },
+                    "resources": {
+                      "requests": {
+                        "cpu": "500m",
+                        "memory": "1Gi"
+                      },
+                      "limits": {
+                        "cpu": "2000m",
+                        "memory": "4Gi"
+                      }
+                    },
+                    "affinity": {
+                      "podAntiAffinity": {
+                        "preferredDuringSchedulingIgnoredDuringExecution": [
+                          {
+                            "weight": 100,
+                            "podAffinityTerm": {
+                              "topologyKey": "topology.kubernetes.io/zone"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "terraform": {
+                  "module": "modules/kong-gateway",
+                  "version": "2.3.0",
+                  "variables": {
+                    "cluster_name": "ecommerce-eks",
+                    "kong_namespace": "api-gateway",
+                    "db_instance_class": "db.r6g.large",
+                    "db_multi_az": true,
+                    "redis_node_type": "cache.r6g.large",
+                    "redis_num_cache_clusters": 3
+                  }
+                }
+              },
+              "configuration": {
+                "kong.deployment.strategy": "RollingUpdate",
+                "kong.deployment.maxSurge": 1,
+                "kong.deployment.maxUnavailable": 0,
+                "kong.readinessProbe.httpGet.path": "/status",
+                "kong.readinessProbe.initialDelaySeconds": 30,
+                "kong.livenessProbe.httpGet.path": "/status",
+                "kong.livenessProbe.initialDelaySeconds": 60,
+                "rds.backup_retention_period": 7,
+                "rds.backup_window": "03:00-04:00",
+                "rds.maintenance_window": "sun:04:00-sun:05:00",
+                "elasticache.snapshot_retention_limit": 5,
+                "elasticache.snapshot_window": "02:00-03:00"
+              },
+              "monitoring": {
+                "metrics": ["kong_http_requests_total", "kong_latency_ms", "kong_bandwidth_bytes", "kong_db_reachable"],
+                "dashboards": ["https://grafana.ecommerce.com/d/kong-overview"],
+                "alerts": [
+                  "Kong pods unavailable (< 2 healthy)",
+                  "Database connection failure",
+                  "Redis cache unavailable",
+                  "High latency (p99 > 200ms)",
+                  "Error rate > 1%"
+                ]
+              }
+            }
+          }
+        }
+      },
       "levels": {
         "L0": {
           "businessCapability": "Secure and manage all APIs",
@@ -251,6 +793,307 @@
         "technical": "order-service"
       },
       "description": "Core service for managing customer orders with event sourcing",
+      "verticals": {
+        "business": {
+          "name": "Order Fulfillment Process",
+          "description": "End-to-end order processing from customer purchase to fulfillment",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Accept and fulfill customer orders",
+              "value": "Processes 50K orders daily, generating $2M monthly revenue",
+              "kpis": [
+                { "name": "Orders Processed", "value": "50K/day", "impact": "high", "trend": "up" },
+                { "name": "Monthly Revenue", "value": "$2M", "impact": "high" },
+                { "name": "Order Success Rate", "value": "99.7%", "impact": "high" },
+                { "name": "Avg Processing Time", "value": "< 5s", "impact": "medium" }
+              ],
+              "owner": "E-commerce Product Team"
+            },
+            "L1": {
+              "systemType": "Order Processing Workflow",
+              "responsibilities": [
+                "Validate customer order details and inventory",
+                "Calculate order totals with taxes and shipping",
+                "Coordinate payment authorization",
+                "Trigger inventory reservation",
+                "Notify warehouse for fulfillment",
+                "Send order confirmation to customer"
+              ]
+            },
+            "L2": {
+              "techStack": {
+                "other": {
+                  "orderValidation": "Validate items, quantities, pricing, and customer eligibility",
+                  "paymentCoordination": "Synchronous payment authorization via payment service",
+                  "inventoryReservation": "Async inventory updates via event bus",
+                  "businessRules": "Priority: Wholesale > Retail when stock < threshold, Hold orders if fraud score > 80"
+                }
+              },
+              "configuration": {
+                "orderStateMachine": "PENDING → VALIDATED → PAYMENT_AUTHORIZED → INVENTORY_RESERVED → CONFIRMED → SHIPPED → DELIVERED",
+                "timeouts": "Payment auth: 30s, Inventory reservation: 5s",
+                "retryPolicy": "Exponential backoff: 3 retries with 1s, 2s, 4s delays"
+              }
+            },
+            "L3": {
+              "deploymentConfigs": {
+                "kubernetes": {
+                  "helmChart": "charts/order-service",
+                  "values": {
+                    "businessRules": {
+                      "maxOrderValue": 100000,
+                      "minOrderValue": 1,
+                      "priorityOrders": ["wholesale", "premium"],
+                      "fraudScoreThreshold": 80
+                    },
+                    "slaTargets": {
+                      "orderProcessingTime": "5s",
+                      "successRate": 99.7
+                    }
+                  }
+                }
+              },
+              "configuration": {
+                "order.validation.enabled": true,
+                "order.fraud_check.enabled": true,
+                "order.fraud_check.provider": "Stripe Radar",
+                "order.payment.timeout_ms": 30000,
+                "order.inventory.timeout_ms": 5000,
+                "order.state_machine.enabled": true,
+                "order.retry.max_attempts": 3,
+                "order.retry.backoff_ms": [1000, 2000, 4000]
+              }
+            }
+          }
+        },
+        "solution": {
+          "name": "Order Microservice",
+          "description": "Event-sourced microservice implementing CQRS pattern for order management",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Order management system"
+            },
+            "L1": {
+              "systemType": "Microservice with Event Sourcing",
+              "pattern": "CQRS + Event Sourcing + Saga",
+              "integrations": ["payment-service", "inventory-service", "event-bus", "api-gateway"]
+            },
+            "L2": {
+              "techStack": {
+                "runtime": "Spring Boot 3.2",
+                "language": "Java 21",
+                "database": "PostgreSQL 16 (write), ElasticSearch 8 (read)",
+                "cache": "Redis 7",
+                "messageQueue": "Kafka 3.6",
+                "framework": "Spring Data JPA, Spring Kafka, Spring State Machine"
+              },
+              "apis": {
+                "rest": [
+                  { "path": "/api/orders", "methods": ["GET", "POST"], "description": "List and create orders" },
+                  { "path": "/api/orders/{id}", "methods": ["GET", "PUT", "DELETE"], "description": "Get, update, or cancel order" },
+                  { "path": "/api/orders/{id}/status", "methods": ["GET"], "description": "Get order status" },
+                  { "path": "/api/orders/{id}/cancel", "methods": ["POST"], "description": "Cancel order with compensation" }
+                ]
+              },
+              "dependencies": [
+                "spring-boot-starter-web",
+                "spring-boot-starter-data-jpa",
+                "spring-kafka",
+                "spring-statemachine",
+                "spring-boot-starter-redis",
+                "elasticsearch-rest-high-level-client",
+                "micrometer-registry-prometheus"
+              ]
+            },
+            "L3": {
+              "deploymentConfigs": {
+                "kubernetes": {
+                  "helmChart": "charts/order-service",
+                  "namespace": "ecommerce-prod",
+                  "values": {
+                    "image": {
+                      "repository": "company/order-service",
+                      "tag": "v2.1.0"
+                    },
+                    "replicas": 3,
+                    "resources": {
+                      "requests": { "cpu": "500m", "memory": "1Gi" },
+                      "limits": { "cpu": "2000m", "memory": "4Gi" }
+                    }
+                  }
+                }
+              },
+              "codeSnippets": [
+                {
+                  "language": "java",
+                  "file": "OrderController.java",
+                  "description": "REST endpoint for creating orders",
+                  "code": "@PostMapping(\"/api/orders\")\npublic ResponseEntity<OrderResponse> createOrder(@RequestBody CreateOrderRequest request) {\n  Order order = orderService.createOrder(request);\n  orderEventPublisher.publishOrderCreated(order);\n  return ResponseEntity.ok(OrderResponse.from(order));\n}"
+                }
+              ]
+            }
+          }
+        },
+        "deployment": {
+          "name": "Order Service Deployment",
+          "description": "Containerized Spring Boot service running on EKS with auto-scaling",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Scalable order processing infrastructure",
+              "value": "Auto-scales from 3 to 20 instances based on load"
+            },
+            "L1": {
+              "systemType": "Kubernetes Deployment on EKS",
+              "integrations": ["EKS Cluster", "RDS PostgreSQL", "ElastiCache Redis", "MSK Kafka"],
+              "sla": { "uptime": "99.95%", "latency": "< 200ms p99", "throughput": "500 req/s" }
+            },
+            "L2": {
+              "techStack": {
+                "runtime": "Spring Boot 3.2 on OpenJDK 21",
+                "container": "Docker on Amazon EKS",
+                "database": "RDS PostgreSQL 16 (Multi-AZ)",
+                "cache": "ElastiCache Redis 7",
+                "messaging": "Amazon MSK (Kafka 3.6)",
+                "storage": "EBS gp3 for persistent volumes",
+                "other": {
+                  "serviceDiscovery": "Kubernetes DNS",
+                  "loadBalancing": "Kubernetes Service (ClusterIP) → ALB",
+                  "secrets": "AWS Secrets Manager with External Secrets Operator"
+                }
+              },
+              "configuration": {
+                "namespace": "ecommerce-prod",
+                "serviceAccount": "order-service-sa (IRSA enabled)",
+                "vpc": "Private subnets in us-east-1a, us-east-1b, us-east-1c",
+                "securityGroups": ["sg-order-service-app", "sg-order-service-db"]
+              },
+              "scalability": {
+                "horizontal": true,
+                "vertical": true,
+                "autoScaling": {
+                  "enabled": true,
+                  "minInstances": 3,
+                  "maxInstances": 20,
+                  "metrics": ["CPU (70%)", "Memory (80%)", "Request Rate (80% of max)"]
+                }
+              }
+            },
+            "L3": {
+              "deploymentConfigs": {
+                "kubernetes": {
+                  "helmChart": "charts/order-service",
+                  "namespace": "ecommerce-prod",
+                  "values": {
+                    "replicaCount": 3,
+                    "image": {
+                      "repository": "123456789.dkr.ecr.us-east-1.amazonaws.com/order-service",
+                      "tag": "v2.1.0",
+                      "pullPolicy": "IfNotPresent"
+                    },
+                    "resources": {
+                      "requests": {
+                        "cpu": "500m",
+                        "memory": "1Gi"
+                      },
+                      "limits": {
+                        "cpu": "2000m",
+                        "memory": "4Gi"
+                      }
+                    },
+                    "autoscaling": {
+                      "enabled": true,
+                      "minReplicas": 3,
+                      "maxReplicas": 20,
+                      "targetCPUUtilizationPercentage": 70,
+                      "targetMemoryUtilizationPercentage": 80
+                    },
+                    "podDisruptionBudget": {
+                      "enabled": true,
+                      "minAvailable": 2
+                    },
+                    "affinity": {
+                      "podAntiAffinity": {
+                        "preferredDuringSchedulingIgnoredDuringExecution": [
+                          {
+                            "weight": 100,
+                            "podAffinityTerm": {
+                              "topologyKey": "topology.kubernetes.io/zone"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "env": {
+                      "SPRING_PROFILES_ACTIVE": "prod",
+                      "JAVA_OPTS": "-Xms1024m -Xmx3072m -XX:+UseG1GC -XX:MaxGCPauseMillis=200",
+                      "KAFKA_BOOTSTRAP_SERVERS": "kafka-broker-1.msk.amazonaws.com:9092,kafka-broker-2.msk.amazonaws.com:9092",
+                      "SPRING_DATASOURCE_URL": "jdbc:postgresql://order-db.cluster-abc123.us-east-1.rds.amazonaws.com:5432/orders",
+                      "SPRING_REDIS_HOST": "order-cache.abc123.cache.amazonaws.com"
+                    }
+                  }
+                },
+                "terraform": {
+                  "module": "modules/microservice",
+                  "version": "1.2.0",
+                  "variables": {
+                    "service_name": "order-service",
+                    "namespace": "ecommerce-prod",
+                    "db_instance_class": "db.r6g.xlarge",
+                    "db_multi_az": true,
+                    "db_backup_retention": 7,
+                    "redis_node_type": "cache.r6g.large",
+                    "redis_num_cache_nodes": 3
+                  }
+                }
+              },
+              "configuration": {
+                "deployment.strategy": "RollingUpdate",
+                "deployment.maxSurge": 1,
+                "deployment.maxUnavailable": 0,
+                "readinessProbe.httpGet.path": "/actuator/health/readiness",
+                "readinessProbe.initialDelaySeconds": 60,
+                "readinessProbe.periodSeconds": 10,
+                "livenessProbe.httpGet.path": "/actuator/health/liveness",
+                "livenessProbe.initialDelaySeconds": 120,
+                "livenessProbe.periodSeconds": 15,
+                "service.type": "ClusterIP",
+                "service.port": 8080,
+                "ingress.enabled": true,
+                "ingress.className": "alb",
+                "ingress.annotations": {
+                  "alb.ingress.kubernetes.io/scheme": "internal",
+                  "alb.ingress.kubernetes.io/target-type": "ip",
+                  "alb.ingress.kubernetes.io/healthcheck-path": "/actuator/health"
+                }
+              },
+              "monitoring": {
+                "metrics": [
+                  "order_created_total",
+                  "order_processing_duration_seconds",
+                  "order_failure_total",
+                  "order_state_transitions",
+                  "jvm_memory_used_bytes",
+                  "jvm_gc_pause_seconds"
+                ],
+                "logs": ["CloudWatch Logs via Fluent Bit"],
+                "traces": ["AWS X-Ray"],
+                "dashboards": ["https://grafana.ecommerce.com/d/order-service"],
+                "alerts": [
+                  "Pods unavailable (< 2 healthy)",
+                  "High error rate (> 0.5%)",
+                  "High latency (p99 > 300ms)",
+                  "Database connection pool exhausted",
+                  "Kafka lag > 1000 messages",
+                  "Memory usage > 90%"
+                ]
+              }
+            }
+          }
+        }
+      },
       "levels": {
         "L0": {
           "businessCapability": "Process customer orders",
