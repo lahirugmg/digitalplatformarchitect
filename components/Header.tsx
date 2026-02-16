@@ -4,8 +4,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const navItems = [
-  { href: '/blocks', label: 'Blocks', ariaLabel: 'Navigate to building blocks' },
-  { href: '/patterns', label: 'Patterns', ariaLabel: 'Navigate to architecture patterns' },
   { href: '/playgrounds', label: 'Playgrounds', ariaLabel: 'Navigate to interactive playgrounds' },
   { href: '/playgrounds/production-readiness', label: 'Production Readiness', ariaLabel: 'Navigate to production readiness hub', badge: 'NEW' },
   { href: '/skill-tree', label: 'Skill Tree', ariaLabel: 'Navigate to the skill tree' },
