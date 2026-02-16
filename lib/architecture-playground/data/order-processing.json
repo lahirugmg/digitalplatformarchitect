@@ -1,0 +1,935 @@
+{
+  "metadata": {
+    "id": "order-processing-system",
+    "title": "Order Processing System Architecture",
+    "description": "Multi-channel order processing system handling B2B (wholesale) and B2C (retail) orders with integration middleware and ERP backend",
+    "version": "1.0.0",
+    "author": "Platform Architecture Team",
+    "created": "2026-02-16",
+    "updated": "2026-02-16",
+    "tags": ["order-processing", "b2b", "b2c", "integration", "erp"],
+    "domain": "Order Management"
+  },
+  "components": [
+    {
+      "id": "wholesale-customers",
+      "type": "external",
+      "names": {
+        "business": "Wholesale Customers",
+        "technical": "B2B Customers"
+      },
+      "description": "Business buyers placing bulk orders via legacy asynchronous channels (Email, EDI)",
+      "verticals": {
+        "solution": {
+          "name": "Wholesale Customers",
+          "description": "B2B customers using asynchronous channels for order placement",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Submit bulk orders via legacy channels"
+            },
+            "L1": {
+              "systemType": "External Actor (B2B)",
+              "integrations": ["email-channel", "edi-files"]
+            }
+          }
+        }
+      },
+      "levels": {
+        "L0": {
+          "businessCapability": "Submit bulk orders via legacy channels",
+          "kpis": [
+            { "name": "Active Accounts", "value": "500+", "impact": "high" }
+          ],
+          "icon": "Briefcase",
+          "color": "#ec4899"
+        },
+        "L1": {
+          "systemType": "External Actor",
+          "integrations": ["email-channel", "edi-files"]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["b2b", "bulk-ordering", "edi"]
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 50, "y": 100 },
+      "tags": ["external", "customer", "b2b"]
+    },
+    {
+      "id": "retail-customers",
+      "type": "external",
+      "names": {
+        "business": "Retail Customers",
+        "technical": "B2C Customers"
+      },
+      "description": "Individual consumers shopping via real-time digital channels (Website)",
+      "verticals": {
+        "solution": {
+          "name": "Retail Customers",
+          "description": "B2C customers using real-time digital channels for shopping",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Browse and purchase products online"
+            },
+            "L1": {
+              "systemType": "External Actor (B2C)",
+              "integrations": ["website"]
+            }
+          }
+        }
+      },
+      "levels": {
+        "L0": {
+          "businessCapability": "Browse and purchase products online",
+          "kpis": [
+            { "name": "Active Users", "value": "50K+", "impact": "high" }
+          ],
+          "icon": "Users",
+          "color": "#ec4899"
+        },
+        "L1": {
+          "systemType": "External Actor",
+          "integrations": ["website"]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["b2c", "ecommerce", "user-experience"]
+      },
+      "visibility": {
+        "personas": ["business", "product", "ba", "uxdesigner", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 50, "y": 300 },
+      "tags": ["external", "customer", "b2c"]
+    },
+    {
+      "id": "email-channel",
+      "type": "integration",
+      "names": {
+        "business": "Email Orders",
+        "technical": "Email Channel"
+      },
+      "description": "Asynchronous order intake via email for wholesale customers",
+      "verticals": {
+        "solution": {
+          "name": "Email Channel",
+          "description": "Email-based order submission for B2B customers",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Receive orders via email"
+            },
+            "L1": {
+              "systemType": "Email Channel",
+              "integrations": ["integrator"]
+            }
+          }
+        }
+      },
+      "levels": {
+        "L0": {
+          "businessCapability": "Receive orders via email",
+          "kpis": [],
+          "icon": "Mail",
+          "color": "#fbbf24"
+        },
+        "L1": {
+          "systemType": "Email Channel",
+          "integrations": ["integrator"]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["async-communication", "email-integration"]
+      },
+      "visibility": {
+        "personas": ["ba", "ea", "implementation"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 250, "y": 50 },
+      "tags": ["integration", "email"]
+    },
+    {
+      "id": "files-channel",
+      "type": "integration",
+      "names": {
+        "business": "File Orders",
+        "technical": "Files Channel"
+      },
+      "description": "Asynchronous order intake via file uploads for wholesale customers",
+      "verticals": {
+        "solution": {
+          "name": "Files Channel",
+          "description": "File-based order submission (L0) / EDI Files (L1)",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Receive orders via file uploads"
+            },
+            "L1": {
+              "systemType": "EDI Files (Electronic Data Interchange)",
+              "integrations": ["integrator"],
+              "pattern": "EDI X12/EDIFACT"
+            }
+          }
+        }
+      },
+      "levels": {
+        "L0": {
+          "businessCapability": "Receive orders via file uploads",
+          "kpis": [],
+          "icon": "FileText",
+          "color": "#fbbf24"
+        },
+        "L1": {
+          "systemType": "EDI Files",
+          "integrations": ["integrator"],
+          "pattern": "EDI X12/EDIFACT"
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["edi", "file-transfer", "b2b-integration"]
+      },
+      "visibility": {
+        "personas": ["ba", "ea", "implementation"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 250, "y": 150 },
+      "tags": ["integration", "edi", "files"]
+    },
+    {
+      "id": "website",
+      "type": "frontend",
+      "names": {
+        "business": "Website",
+        "technical": "Web Application"
+      },
+      "description": "Real-time digital storefront for retail customers",
+      "verticals": {
+        "solution": {
+          "name": "Website",
+          "description": "Web-based order submission for B2C customers",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Enable online shopping and ordering"
+            },
+            "L1": {
+              "systemType": "Web Application",
+              "integrations": ["api-manager"]
+            }
+          }
+        }
+      },
+      "levels": {
+        "L0": {
+          "businessCapability": "Enable online shopping and ordering",
+          "kpis": [],
+          "icon": "Globe",
+          "color": "#3b82f6"
+        },
+        "L1": {
+          "systemType": "Web Application",
+          "integrations": ["api-manager"]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["web-application", "user-interface"]
+      },
+      "visibility": {
+        "personas": ["business", "product", "uxdesigner", "ba", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 250, "y": 300 },
+      "tags": ["frontend", "web"]
+    },
+    {
+      "id": "api-manager",
+      "type": "integration",
+      "names": {
+        "business": "API Manager",
+        "technical": "WSO2 API Manager"
+      },
+      "description": "API governance platform managing traffic from retail channels",
+      "verticals": {
+        "solution": {
+          "name": "API Manager",
+          "description": "Generic API Manager (L0) / WSO2 API Manager with Gateway and Control Plane (L1)",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Govern and secure digital API traffic"
+            },
+            "L1": {
+              "systemType": "WSO2 API Manager",
+              "integrations": ["website", "integrator", "elk-analytics"],
+              "pattern": "API Gateway Pattern",
+              "responsibilities": [
+                "Gateway: Traffic handling, rate limiting, routing",
+                "Control Plane: Policy management, subscriptions, developer portal"
+              ]
+            }
+          }
+        }
+      },
+      "levels": {
+        "L0": {
+          "businessCapability": "Govern and secure digital API traffic",
+          "kpis": [
+            { "name": "APIs Managed", "value": "20+", "impact": "medium" }
+          ],
+          "icon": "Shield",
+          "color": "#8b5cf6"
+        },
+        "L1": {
+          "systemType": "WSO2 API Manager",
+          "integrations": ["website", "integrator", "elk-analytics"],
+          "pattern": "API Gateway Pattern",
+          "sla": { "uptime": "99.9%", "latency": "100ms p99" },
+          "responsibilities": [
+            "Gateway: Traffic routing and rate limiting",
+            "Control Plane: Policy and subscription management"
+          ]
+        },
+        "L2": {
+          "techStack": {
+            "runtime": "WSO2 API Manager 4.2",
+            "database": "PostgreSQL 15",
+            "other": {
+              "gateway": "WSO2 Gateway",
+              "controlPlane": "WSO2 Control Plane"
+            }
+          }
+        }
+      },
+      "linkage": {
+        "theoryPage": "/patterns/api-gateway",
+        "relatedConcepts": ["api-management", "api-gateway", "wso2"]
+      },
+      "visibility": {
+        "personas": ["ba", "ea", "implementation"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 450, "y": 300 },
+      "tags": ["integration", "api-manager", "wso2"]
+    },
+    {
+      "id": "integrator",
+      "type": "integration",
+      "names": {
+        "business": "Integrator",
+        "technical": "WSO2 Integrator"
+      },
+      "description": "Central orchestration platform unifying B2B and B2C traffic",
+      "verticals": {
+        "solution": {
+          "name": "Integrator",
+          "description": "Generic Integrator (L0) / WSO2 Integrator (L1) for mediation and orchestration",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Orchestrate and route orders from all channels"
+            },
+            "L1": {
+              "systemType": "WSO2 Integrator",
+              "integrations": ["email-channel", "files-channel", "api-manager", "erp", "elk-analytics"],
+              "pattern": "Enterprise Service Bus (ESB)",
+              "responsibilities": [
+                "Receive orders from Email and EDI channels",
+                "Receive retail orders from API Manager",
+                "Transform and route to SAP ERP",
+                "Handle message mediation and orchestration"
+              ]
+            }
+          }
+        }
+      },
+      "levels": {
+        "L0": {
+          "businessCapability": "Orchestrate and route orders from all channels",
+          "kpis": [
+            { "name": "Messages/day", "value": "100K+", "impact": "high" }
+          ],
+          "icon": "Network",
+          "color": "#f59e0b"
+        },
+        "L1": {
+          "systemType": "WSO2 Integrator",
+          "integrations": ["email-channel", "files-channel", "api-manager", "erp", "elk-analytics"],
+          "pattern": "ESB / Integration Hub",
+          "sla": { "uptime": "99.9%", "latency": "200ms p99" },
+          "responsibilities": [
+            "Unified message intake from all channels",
+            "Data transformation and enrichment",
+            "Routing and orchestration",
+            "Error handling and retry logic"
+          ]
+        },
+        "L2": {
+          "techStack": {
+            "runtime": "WSO2 Micro Integrator 4.2",
+            "messageQueue": "RabbitMQ 3.12",
+            "other": {
+              "dataMapper": "Built-in data mapper",
+              "connectors": "SAP, Email, File, HTTP"
+            }
+          }
+        }
+      },
+      "linkage": {
+        "theoryPage": "/patterns/esb",
+        "relatedConcepts": ["esb", "integration", "orchestration", "wso2"]
+      },
+      "visibility": {
+        "personas": ["ba", "ea", "implementation"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 450, "y": 150 },
+      "tags": ["integration", "esb", "wso2", "critical"]
+    },
+    {
+      "id": "erp",
+      "type": "service",
+      "names": {
+        "business": "ERP / Internal Systems",
+        "technical": "SAP ERP"
+      },
+      "description": "Core system of record for order processing and business logic",
+      "verticals": {
+        "solution": {
+          "name": "ERP / Internal Systems",
+          "description": "Generic ERP black box (L0) / SAP ERP with Sales, Purchasing, Manufacturing modules (L1)",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Process orders and manage business operations"
+            },
+            "L1": {
+              "systemType": "SAP ERP",
+              "integrations": ["integrator", "suppliers", "delivery-partners"],
+              "pattern": "Monolithic ERP",
+              "responsibilities": [
+                "Sales: Order management, pricing, customer accounts",
+                "Purchasing: Procurement, supplier management",
+                "Manufacturing: Production planning, inventory management"
+              ]
+            }
+          }
+        }
+      },
+      "levels": {
+        "L0": {
+          "businessCapability": "Process orders and manage business operations",
+          "kpis": [
+            { "name": "Orders Processed", "value": "50K/day", "impact": "high" }
+          ],
+          "icon": "Server",
+          "color": "#10b981"
+        },
+        "L1": {
+          "systemType": "SAP ERP",
+          "integrations": ["integrator", "suppliers", "delivery-partners"],
+          "pattern": "ERP System",
+          "sla": { "uptime": "99.95%", "latency": "500ms p99" },
+          "responsibilities": [
+            "Sales module: Order collection and processing",
+            "Purchasing module: Supplier orders and procurement",
+            "Manufacturing module: Inventory and production"
+          ]
+        },
+        "L2": {
+          "techStack": {
+            "runtime": "SAP ERP 6.0 EHP8",
+            "database": "SAP HANA 2.0",
+            "other": {
+              "modules": "SD (Sales), MM (Purchasing), PP (Manufacturing)"
+            }
+          }
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["erp", "sap", "order-management"]
+      },
+      "visibility": {
+        "personas": ["ba", "ea", "implementation"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 650, "y": 150 },
+      "tags": ["service", "erp", "sap", "critical"]
+    },
+    {
+      "id": "elk-analytics",
+      "type": "platform",
+      "names": {
+        "business": "Analytics Platform",
+        "technical": "ELK Analytics"
+      },
+      "description": "Observability platform for logs, metrics, and transaction tracing",
+      "verticals": {
+        "solution": {
+          "name": "ELK Analytics",
+          "description": "Observability platform (L1+ only - not visible at L0)",
+          "visible": true,
+          "levels": {
+            "L1": {
+              "systemType": "ELK Stack (Elasticsearch, Logstash, Kibana)",
+              "integrations": ["api-manager", "integrator"],
+              "pattern": "Centralized Logging & Analytics",
+              "responsibilities": [
+                "Collect logs from API Manager and Integrator",
+                "Store and index log data",
+                "Provide dashboards and alerting",
+                "Enable transaction tracing"
+              ]
+            }
+          }
+        }
+      },
+      "levels": {
+        "L1": {
+          "systemType": "ELK Stack",
+          "integrations": ["api-manager", "integrator"],
+          "sla": { "uptime": "99.5%" },
+          "responsibilities": [
+            "Log aggregation and indexing",
+            "Metrics collection",
+            "Dashboard visualization",
+            "Alerting and monitoring"
+          ]
+        },
+        "L2": {
+          "techStack": {
+            "runtime": "ELK Stack",
+            "other": {
+              "elasticsearch": "Elasticsearch 8.11",
+              "logstash": "Logstash 8.11",
+              "kibana": "Kibana 8.11"
+            }
+          }
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["observability", "logging", "elk", "monitoring"]
+      },
+      "visibility": {
+        "personas": ["ea", "implementation", "qa"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      },
+      "position": { "x": 450, "y": 450 },
+      "tags": ["platform", "observability", "elk"]
+    },
+    {
+      "id": "suppliers",
+      "type": "external",
+      "names": {
+        "business": "Suppliers",
+        "technical": "Supply Chain Partners"
+      },
+      "description": "External suppliers for restocking and dropshipping",
+      "verticals": {
+        "solution": {
+          "name": "Suppliers",
+          "description": "External suppliers for inventory fulfillment",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Provide inventory and fulfill orders"
+            },
+            "L1": {
+              "systemType": "External Actor",
+              "integrations": ["erp"]
+            }
+          }
+        }
+      },
+      "levels": {
+        "L0": {
+          "businessCapability": "Provide inventory and fulfill orders",
+          "kpis": [
+            { "name": "Active Suppliers", "value": "200+", "impact": "medium" }
+          ],
+          "icon": "Truck",
+          "color": "#ec4899"
+        },
+        "L1": {
+          "systemType": "External Actor",
+          "integrations": ["erp"]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["supply-chain", "suppliers"]
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 850, "y": 100 },
+      "tags": ["external", "supplier"]
+    },
+    {
+      "id": "delivery-partners",
+      "type": "external",
+      "names": {
+        "business": "Delivery Partners",
+        "technical": "Logistics Partners"
+      },
+      "description": "Third-party logistics partners for shipping and delivery",
+      "verticals": {
+        "solution": {
+          "name": "Delivery Partners",
+          "description": "Generic delivery partners (L0) / DHL, FedEx, UPS (L1)",
+          "visible": true,
+          "levels": {
+            "L0": {
+              "businessCapability": "Ship orders to customers"
+            },
+            "L1": {
+              "systemType": "Delivery Partners (DHL, FedEx, UPS)",
+              "integrations": ["erp"]
+            }
+          }
+        }
+      },
+      "levels": {
+        "L0": {
+          "businessCapability": "Ship orders to customers",
+          "kpis": [
+            { "name": "Carriers", "value": "3", "impact": "medium" }
+          ],
+          "icon": "Package",
+          "color": "#ec4899"
+        },
+        "L1": {
+          "systemType": "Delivery Partners (DHL, FedEx, UPS)",
+          "integrations": ["erp"]
+        }
+      },
+      "linkage": {
+        "relatedConcepts": ["logistics", "shipping", "delivery"]
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      },
+      "position": { "x": 850, "y": 200 },
+      "tags": ["external", "delivery"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "wholesale-to-email",
+      "source": "wholesale-customers",
+      "target": "email-channel",
+      "type": "async",
+      "labels": {
+        "L0": "Email Orders",
+        "L1": "SMTP Email Orders"
+      },
+      "style": {
+        "dashed": true,
+        "color": "#fbbf24"
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea", "implementation"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "wholesale-to-files",
+      "source": "wholesale-customers",
+      "target": "files-channel",
+      "type": "async",
+      "labels": {
+        "L0": "File Orders",
+        "L1": "EDI X12/EDIFACT Files"
+      },
+      "style": {
+        "dashed": true,
+        "color": "#fbbf24"
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea", "implementation"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "retail-to-website",
+      "source": "retail-customers",
+      "target": "website",
+      "type": "sync",
+      "labels": {
+        "L0": "Browse & Order",
+        "L1": "HTTPS Web Traffic"
+      },
+      "style": {
+        "animated": true,
+        "color": "#3b82f6"
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea", "implementation"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "website-to-apim",
+      "source": "website",
+      "target": "api-manager",
+      "type": "sync",
+      "labels": {
+        "L0": "API Calls",
+        "L1": "REST API / HTTPS"
+      },
+      "style": {
+        "animated": true,
+        "color": "#8b5cf6"
+      },
+      "visibility": {
+        "personas": ["ba", "ea", "implementation"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "email-to-integrator",
+      "source": "email-channel",
+      "target": "integrator",
+      "type": "async",
+      "labels": {
+        "L0": "Order Data",
+        "L1": "Email Messages"
+      },
+      "style": {
+        "dashed": true,
+        "color": "#f59e0b"
+      },
+      "visibility": {
+        "personas": ["ba", "ea", "implementation"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "files-to-integrator",
+      "source": "files-channel",
+      "target": "integrator",
+      "type": "async",
+      "labels": {
+        "L0": "Order Data",
+        "L1": "EDI Files"
+      },
+      "style": {
+        "dashed": true,
+        "color": "#f59e0b"
+      },
+      "visibility": {
+        "personas": ["ba", "ea", "implementation"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "apim-to-integrator",
+      "source": "api-manager",
+      "target": "integrator",
+      "type": "sync",
+      "labels": {
+        "L0": "Retail Orders",
+        "L1": "REST API / JSON"
+      },
+      "style": {
+        "animated": true,
+        "color": "#8b5cf6"
+      },
+      "visibility": {
+        "personas": ["ba", "ea", "implementation"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "integrator-to-erp",
+      "source": "integrator",
+      "target": "erp",
+      "type": "sync",
+      "labels": {
+        "L0": "Unified Orders",
+        "L1": "SAP BAPI / IDoc"
+      },
+      "style": {
+        "animated": true,
+        "color": "#10b981",
+        "width": 2
+      },
+      "visibility": {
+        "personas": ["ba", "ea", "implementation"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "erp-to-suppliers",
+      "source": "erp",
+      "target": "suppliers",
+      "type": "sync",
+      "labels": {
+        "L0": "Restock Requests",
+        "L1": "Purchase Orders / EDI"
+      },
+      "style": {
+        "dashed": true,
+        "color": "#ec4899"
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "erp-to-delivery",
+      "source": "erp",
+      "target": "delivery-partners",
+      "type": "sync",
+      "labels": {
+        "L0": "Shipping Requests",
+        "L1": "Carrier API / EDI"
+      },
+      "style": {
+        "dashed": true,
+        "color": "#ec4899"
+      },
+      "visibility": {
+        "personas": ["business", "ba", "ea"],
+        "minLevel": "L0",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "apim-to-elk",
+      "source": "api-manager",
+      "target": "elk-analytics",
+      "type": "async",
+      "labels": {
+        "L1": "Logs & Metrics"
+      },
+      "style": {
+        "dashed": true,
+        "color": "#64748b"
+      },
+      "visibility": {
+        "personas": ["ea", "implementation"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      }
+    },
+    {
+      "id": "integrator-to-elk",
+      "source": "integrator",
+      "target": "elk-analytics",
+      "type": "async",
+      "labels": {
+        "L1": "Logs & Metrics"
+      },
+      "style": {
+        "dashed": true,
+        "color": "#64748b"
+      },
+      "visibility": {
+        "personas": ["ea", "implementation"],
+        "minLevel": "L1",
+        "hideComplexity": false
+      }
+    }
+  ],
+  "zones": [
+    {
+      "id": "inbound-channels",
+      "name": "Inbound Channels",
+      "description": "Customer-facing order intake channels",
+      "layer": 0,
+      "color": "#fef3c7",
+      "componentIds": ["wholesale-customers", "retail-customers", "email-channel", "files-channel", "website"],
+      "visibleAtLevels": ["L0", "L1"]
+    },
+    {
+      "id": "integration-layer",
+      "name": "Integration Layer",
+      "description": "API management and orchestration middleware",
+      "layer": 1,
+      "color": "#e0e7ff",
+      "componentIds": ["api-manager", "integrator"],
+      "visibleAtLevels": ["L0", "L1"]
+    },
+    {
+      "id": "core-processing",
+      "name": "Core Processing",
+      "description": "ERP system of record for business operations",
+      "layer": 2,
+      "color": "#d1fae5",
+      "componentIds": ["erp"],
+      "visibleAtLevels": ["L0", "L1"]
+    },
+    {
+      "id": "outbound-fulfillment",
+      "name": "Outbound Fulfillment",
+      "description": "External partners for supply chain and delivery",
+      "layer": 3,
+      "color": "#fce7f3",
+      "componentIds": ["suppliers", "delivery-partners"],
+      "visibleAtLevels": ["L0", "L1"]
+    },
+    {
+      "id": "observability",
+      "name": "Observability",
+      "description": "Monitoring, logging, and analytics",
+      "layer": 4,
+      "color": "#f1f5f9",
+      "componentIds": ["elk-analytics"],
+      "visibleAtLevels": ["L1", "L2", "L3"]
+    }
+  ],
+  "layouts": {
+    "L0": {
+      "algorithm": "hierarchical",
+      "config": { "direction": "LR", "levelSeparation": 200 }
+    },
+    "L1": {
+      "algorithm": "hierarchical",
+      "config": { "direction": "LR", "levelSeparation": 200 }
+    }
+  },
+  "presets": [
+    {
+      "id": "l0-abstract",
+      "name": "L0 Abstract Order Processing",
+      "description": "Logical view with generic components and data flows",
+      "persona": "business",
+      "level": "L0"
+    },
+    {
+      "id": "l1-technologies",
+      "name": "L1 Technology Stack",
+      "description": "Physical view with WSO2, SAP, ELK technologies",
+      "persona": "ea",
+      "level": "L1"
+    }
+  ]
+}
