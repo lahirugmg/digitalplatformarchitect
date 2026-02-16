@@ -1,14 +1,15 @@
 import { Node, Edge } from 'reactflow';
-import { ArchitectureComponent, ArchitectureConnection, DetailLevel, Persona } from './types';
+import { ArchitectureComponent, ArchitectureConnection, DetailLevel, Persona, ArchitectureVertical } from './types';
 import { NODE_CATEGORY_COLORS, CONNECTION_TYPE_STYLES } from './constants';
 import { PersonaFilter } from './persona-filter';
 
 export function toReactFlowNode(
   component: ArchitectureComponent,
   level: DetailLevel,
-  persona: Persona
+  persona: Persona,
+  vertical?: ArchitectureVertical
 ): Node {
-  const transformed = PersonaFilter.transformComponent(component, persona);
+  const transformed = PersonaFilter.transformComponent(component, persona, vertical);
   const levelData = component.levels[level];
 
   return {
@@ -60,9 +61,10 @@ export function toReactFlow(
   components: ArchitectureComponent[],
   connections: ArchitectureConnection[],
   level: DetailLevel,
-  persona: Persona
+  persona: Persona,
+  vertical?: ArchitectureVertical
 ): { nodes: Node[]; edges: Edge[] } {
-  const nodes = components.map(comp => toReactFlowNode(comp, level, persona));
+  const nodes = components.map(comp => toReactFlowNode(comp, level, persona, vertical));
   const edges = connections.map(conn => toReactFlowEdge(conn, level));
 
   return { nodes, edges };

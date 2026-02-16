@@ -1,16 +1,24 @@
-import { ArchitectureGraph, ArchitectureComponent, Persona, DetailLevel } from './types';
+import { ArchitectureGraph, ArchitectureComponent, Persona, DetailLevel, ArchitectureVertical } from './types';
 import { PERSONA_PROFILES } from './constants';
 
 export class PersonaFilter {
   static filterGraph(
     graph: ArchitectureGraph,
     persona: Persona,
-    maxLevel: DetailLevel
+    maxLevel: DetailLevel,
+    vertical?: ArchitectureVertical
   ): ArchitectureGraph {
     const profile = PERSONA_PROFILES[persona];
     const maxLevelNum = parseInt(maxLevel[1]);
 
     const filteredComponents = graph.components.filter(component => {
+      // Check vertical visibility if vertical is specified
+      if (vertical && component.verticals?.[vertical]) {
+        if (!component.verticals[vertical].visible) {
+          return false;
+        }
+      }
+
       if (!component.visibility.personas.includes(persona)) {
         return false;
       }
@@ -55,16 +63,29 @@ export class PersonaFilter {
 
   static transformComponent(
     component: ArchitectureComponent,
-    persona: Persona
+    persona: Persona,
+    vertical?: ArchitectureVertical
   ): ArchitectureComponent {
     const useBusinessName = persona === 'business' || persona === 'ba';
+
+    // Get vertical-specific name if available
+    let displayName: string;
+    let description = component.description;
+
+    if (vertical && component.verticals?.[vertical]) {
+      displayName = component.verticals[vertical].name;
+      description = component.verticals[vertical].description;
+    } else {
+      displayName = useBusinessName ? component.names.business : component.names.technical;
+    }
 
     return {
       ...component,
       names: {
         ...component.names,
-        display: useBusinessName ? component.names.business : component.names.technical
-      }
+        display: displayName
+      },
+      description
     };
   }
 
