@@ -22,6 +22,7 @@ import BusinessNode from '@/components/architecture-playground/nodes/BusinessNod
 import SystemNode from '@/components/architecture-playground/nodes/SystemNode';
 import ComponentNode from '@/components/architecture-playground/nodes/ComponentNode';
 import DetailNode from '@/components/architecture-playground/nodes/DetailNode';
+import Breadcrumb from './Breadcrumb';
 
 interface PlaygroundCanvasProps {
   architectureId: string;
@@ -109,20 +110,22 @@ export default function PlaygroundCanvas({ architectureId }: PlaygroundCanvasPro
   }
 
   return (
-    <div className="flex-1 relative">
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onNodeClick={onNodeClick}
-        onMoveEnd={onMoveEnd}
-        nodeTypes={nodeTypes}
-        fitView
-        attributionPosition="bottom-left"
-        minZoom={0.1}
-        maxZoom={2}
-      >
+    <div className="flex-1 flex flex-col">
+      <Breadcrumb />
+      <div className="flex-1 relative">
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onNodeClick={onNodeClick}
+          onMoveEnd={onMoveEnd}
+          nodeTypes={nodeTypes}
+          fitView
+          attributionPosition="bottom-left"
+          minZoom={0.1}
+          maxZoom={2}
+        >
         <Background color="#94a3b8" gap={16} />
         <Controls />
         <MiniMap
@@ -143,6 +146,7 @@ export default function PlaygroundCanvas({ architectureId }: PlaygroundCanvasPro
           </div>
         </Panel>
       </ReactFlow>
+      </div>
     </div>
   );
 }
