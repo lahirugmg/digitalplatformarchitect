@@ -1,0 +1,15 @@
+---
+description: BMAD Reviews - use when user says "review prose", "review structure", "adversarial review", or "bmad review"
+alwaysApply: false
+---
+
+# BMAD Review Tasks
+
+## Editorial Review - Prose
+Read `_bmad/core/tasks/editorial-review-prose.xml` and follow all instructions. Reviews text for clarity, tone, and communication.
+
+## Editorial Review - Structure
+Read `_bmad/core/tasks/editorial-review-structure.xml` and follow all instructions. Proposes cuts, reorganization, and simplification.
+
+## Adversarial Review
+Read `_bmad/core/tasks/review-adversarial-general.xml` and follow all instructions. Critical review to find issues and weaknesses.

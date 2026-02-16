@@ -19,7 +19,7 @@ export default function PersonaSelector() {
   return (
     <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-4">
       <label className="text-sm font-bold text-slate-700 mb-3 block">
-        Who are you?
+        I&apos;m a...
       </label>
 
       <div className="grid grid-cols-5 gap-2">

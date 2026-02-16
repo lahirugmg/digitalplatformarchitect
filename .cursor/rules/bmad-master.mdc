@@ -1,0 +1,12 @@
+---
+description: Activate BMAD Master agent - use when user says "bmad master", "activate bmad", or "start bmad agent"
+alwaysApply: false
+---
+
+# BMAD Master Agent Activation
+
+1. Load the FULL agent file from `_bmad/core/agents/bmad-master.md`
+2. Load `_bmad/core/config.yaml` and store all fields as session variables
+3. Follow every step in the `<activation>` section precisely
+4. Display welcome/greeting using {user_name}, present the numbered menu
+5. WAIT for user input before proceeding

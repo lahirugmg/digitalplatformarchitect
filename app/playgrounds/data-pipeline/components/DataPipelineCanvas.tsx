@@ -14,7 +14,6 @@ import ReactFlow, {
   EdgeTypes,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import { toast } from 'sonner';
 import CustomNode, { NodeData } from './CustomNode';
 import AnimatedEdge, { EdgeData } from './AnimatedEdge';
 import { validateConnection, validatePipeline, calculateMetrics } from '../lib/validation';
@@ -29,6 +28,7 @@ interface DataPipelineCanvasProps {
   onValidationUpdate: (validation: any) => void;
   onNodesChange?: (nodes: Node<NodeData>[]) => void;
   onEdgesChange?: (edges: Edge<EdgeData>[]) => void;
+  loadedPipeline?: { nodes: Node[]; edges: Edge[] } | null;
 }
 
 export default function DataPipelineCanvas({
@@ -37,6 +37,7 @@ export default function DataPipelineCanvas({
   onValidationUpdate,
   onNodesChange: onNodesChangeExternal,
   onEdgesChange: onEdgesChangeExternal,
+  loadedPipeline,
 }: DataPipelineCanvasProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -57,23 +58,30 @@ export default function DataPipelineCanvas({
   const nodeTypes: NodeTypes = useMemo(() => ({ custom: CustomNode }), []);
   const edgeTypes: EdgeTypes = useMemo(() => ({ animated: AnimatedEdge }), []);
 
-  const onSave = useCallback(() => {
-    const pipeline = { nodes, edges };
-    localStorage.setItem('pipeline-save', JSON.stringify(pipeline));
-    toast.success('Pipeline saved!');
-  }, [nodes, edges]);
-
-  const onLoad = useCallback(() => {
-    const savedPipeline = localStorage.getItem('pipeline-save');
-    if (savedPipeline) {
-      const pipeline = JSON.parse(savedPipeline);
-      setNodes(pipeline.nodes || []);
-      setEdges(pipeline.edges || []);
-      toast.success('Pipeline loaded!');
-    } else {
-      toast.info('No saved pipeline found');
+  // Load pipeline from parent when loadedPipeline changes
+  useEffect(() => {
+    if (loadedPipeline && loadedPipeline.nodes.length > 0) {
+      const restoredNodes = loadedPipeline.nodes.map((node) => ({
+        ...node,
+        type: node.type || 'custom',
+        data: {
+          ...node.data,
+          status: 'idle',
+        },
+      }));
+      const restoredEdges = loadedPipeline.edges.map((edge) => ({
+        ...edge,
+        type: edge.type || 'animated',
+        data: {
+          ...edge.data,
+          isRunning: false,
+          isValid: true,
+        },
+      }));
+      setNodes(restoredNodes);
+      setEdges(restoredEdges);
     }
-  }, [setNodes, setEdges]);
+  }, [loadedPipeline, setNodes, setEdges]);
 
   // Handle new connections with validation
   const onConnect = useCallback(
@@ -256,15 +264,6 @@ export default function DataPipelineCanvas({
       >
         <Background />
         <Controls />
-
-        <div className="absolute top-4 right-4 z-10 space-x-2">
-          <button onClick={onSave} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Save
-          </button>
-          <button onClick={onLoad} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-            Load
-          </button>
-        </div>
 
         {nodes.length === 0 && (
           <EmptyCanvas

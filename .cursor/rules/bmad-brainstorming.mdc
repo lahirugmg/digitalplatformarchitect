@@ -1,0 +1,8 @@
+---
+description: BMAD Brainstorming - use when user says "bmad brainstorming", "brainstorm", or "generate ideas"
+alwaysApply: false
+---
+
+# BMAD Brainstorming Workflow
+
+LOAD the FULL workflow file at `_bmad/core/workflows/brainstorming/workflow.md`, READ its entire contents, and follow its directions exactly. Save output to `_bmad-output/brainstorming/`.

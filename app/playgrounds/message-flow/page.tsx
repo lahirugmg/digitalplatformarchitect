@@ -26,26 +26,30 @@ export default function MessageFlowPlayground() {
   return (
     <div className="h-screen flex flex-col">
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-6 py-4">
-        <div className="flex justify-between items-center">
+      <div className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <div>
-            <h1 className="text-2xl font-bold mb-1">⚡ Message Flow Animation</h1>
-            <p className="text-slate-600">Watch messages flow between services with different patterns</p>
+            <h1 className="text-xl sm:text-2xl font-bold mb-1">
+              <span aria-hidden="true">⚡ </span>Message Flow Animation
+            </h1>
+            <p className="text-sm sm:text-base text-slate-600">Watch messages flow between services with different patterns</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-2 sm:gap-3">
             <button
               onClick={() => setIsRunning(!isRunning)}
-              className={`px-6 py-2 rounded-lg font-medium transition ${
+              className={`px-4 sm:px-6 py-2 rounded-lg font-medium transition text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                 isRunning
-                  ? 'bg-red-600 text-white hover:bg-red-700'
-                  : 'bg-blue-600 text-white hover:bg-blue-700'
+                  ? 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500'
+                  : 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500'
               }`}
+              aria-label={isRunning ? 'Stop sending messages' : 'Send messages'}
             >
               {isRunning ? '⏸️ Stop' : '▶️ Send Messages'}
             </button>
             <button
               onClick={handleReset}
-              className="px-6 py-2 border border-slate-300 rounded-lg font-medium hover:bg-slate-50"
+              className="px-4 sm:px-6 py-2 border border-slate-300 rounded-lg font-medium hover:bg-slate-50 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              aria-label="Reset message flow"
             >
               🔄 Reset
             </button>
@@ -54,9 +58,9 @@ export default function MessageFlowPlayground() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex">
+      <div className="flex-1 flex overflow-hidden">
         {/* Pattern Selector */}
-        <div className="w-64 bg-white border-r border-slate-200 p-4 overflow-y-auto">
+        <div className="hidden sm:block w-64 bg-white border-r border-slate-200 p-4 overflow-y-auto" role="navigation" aria-label="Pattern selector">
           <h3 className="font-bold mb-4 text-sm uppercase text-slate-500">Integration Patterns</h3>
 
           <div className="space-y-2">
@@ -96,7 +100,7 @@ export default function MessageFlowPlayground() {
         </div>
 
         {/* Info Panel */}
-        <div className="w-80 bg-white border-l border-slate-200 p-4 overflow-y-auto">
+        <div className="hidden lg:block w-80 bg-white border-l border-slate-200 p-4 overflow-y-auto" role="complementary" aria-label="Pattern details">
           <h3 className="font-bold mb-3">Pattern Details</h3>
 
           {selectedPattern === 'point-to-point' && (

@@ -1,0 +1,12 @@
+---
+description: BMAD Document tools - use when user says "shard document", "index docs", or "bmad index"
+alwaysApply: false
+---
+
+# BMAD Document Tools
+
+## Shard Document
+Read `_bmad/core/tasks/shard-doc.xml` and follow all instructions. Splits large markdown docs into smaller files by sections.
+
+## Index Docs
+Read `_bmad/core/tasks/index-docs.xml` and follow all instructions. Creates lightweight index for quick LLM scanning.

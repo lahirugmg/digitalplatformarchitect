@@ -1,0 +1,32 @@
+---
+description: BMAD Method overview - active when working with _bmad/ files or when user mentions bmad
+globs: _bmad/**/*
+alwaysApply: false
+---
+
+# BMAD Method (v6.0.0-Beta.8)
+
+BMAD is the AI workflow orchestration system installed in this project.
+
+## Configuration
+- Config: `_bmad/core/config.yaml` (user_name: Solar, language: English)
+- Output folder: `_bmad-output/`
+
+## Available Workflows & Tasks
+
+| Name | Code | Description |
+|------|------|-------------|
+| Brainstorming | BSP | Generate ideas via creative techniques. Load `_bmad/core/workflows/brainstorming/workflow.md` |
+| Party Mode | PM | Multi-agent discussions. Load `_bmad/core/workflows/party-mode/workflow.md` |
+| Help | BH | Show next steps. Load `_bmad/core/tasks/help.md` |
+| Index Docs | ID | Create doc index. Load `_bmad/core/tasks/index-docs.xml` |
+| Shard Document | SD | Split large docs. Load `_bmad/core/tasks/shard-doc.xml` |
+| Editorial Review - Prose | EP | Copy-edit text. Load `_bmad/core/tasks/editorial-review-prose.xml` |
+| Editorial Review - Structure | ES | Reorganize docs. Load `_bmad/core/tasks/editorial-review-structure.xml` |
+| Adversarial Review | AR | Critical review. Load `_bmad/core/tasks/review-adversarial-general.xml` |
+
+## Execution Pattern
+1. Load `_bmad/core/config.yaml` first for session variables
+2. Load the task/workflow file referenced above
+3. Follow instructions exactly
+4. Save outputs to `_bmad-output/`

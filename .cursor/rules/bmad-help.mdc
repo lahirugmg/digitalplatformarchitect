@@ -1,0 +1,8 @@
+---
+description: BMAD Help - use when user says "bmad help" or asks what BMAD workflow to run next
+alwaysApply: false
+---
+
+# BMAD Help
+
+Read `_bmad/core/tasks/help.md` and follow all instructions. Load `_bmad/_config/bmad-help.csv` as the catalog. Present recommendations based on phase/sequence ordering.

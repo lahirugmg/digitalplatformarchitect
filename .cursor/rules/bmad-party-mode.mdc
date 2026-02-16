@@ -1,0 +1,8 @@
+---
+description: BMAD Party Mode - use when user says "party mode" or "multi-agent discussion"
+alwaysApply: false
+---
+
+# BMAD Party Mode
+
+LOAD the FULL workflow file at `_bmad/core/workflows/party-mode/workflow.md`, READ its entire contents, and follow its directions exactly.

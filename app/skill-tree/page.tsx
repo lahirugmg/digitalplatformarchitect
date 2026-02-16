@@ -26,17 +26,17 @@ export default function SkillTreePage() {
   return (
     <div className="h-screen flex flex-col bg-slate-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-4 shadow-lg">
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 sm:px-6 py-3 sm:py-4 shadow-lg">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div>
-            <h1 className="text-2xl font-bold mb-1">🌳 Architecture Mastery Path</h1>
-            <p className="text-blue-100 text-sm">
+            <h1 className="text-xl sm:text-2xl font-bold mb-1"><span aria-hidden="true">🌳 </span>Architecture Mastery Path</h1>
+            <p className="text-blue-100 text-xs sm:text-sm">
               Your personalized journey to becoming a platform architect
             </p>
           </div>
           <Link
             href="/"
-            className="px-6 py-2 bg-white/20 hover:bg-white/30 rounded-lg font-medium transition"
+            className="px-4 sm:px-6 py-2 bg-white/20 hover:bg-white/30 rounded-lg font-medium transition text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-white"
           >
             ← Home
           </Link>
@@ -46,7 +46,7 @@ export default function SkillTreePage() {
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
         {/* Left Sidebar - Branch Filter */}
-        <div className="w-64 bg-white border-r border-slate-200 p-4 overflow-y-auto">
+        <div className="hidden md:block w-64 bg-white border-r border-slate-200 p-4 overflow-y-auto" role="navigation" aria-label="Learning branch filter">
           <h3 className="font-bold text-sm uppercase text-slate-500 mb-4">Learning Branches</h3>
 
           <div className="space-y-2">
@@ -147,7 +147,7 @@ export default function SkillTreePage() {
         </div>
 
         {/* Right Sidebar - Progress & Tokens */}
-        <div className="w-80 bg-white border-l border-slate-200 overflow-y-auto">
+        <div className="hidden lg:block w-80 bg-white border-l border-slate-200 overflow-y-auto" role="complementary" aria-label="Progress and tokens">
           <TokenPanel
             userProgress={userProgress}
             onProgressUpdate={handleProgressUpdate}

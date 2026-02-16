@@ -34,15 +34,17 @@ export default function EnterpriseIntegrationPlayground() {
   return (
     <div className="h-screen flex flex-col">
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-6 py-4">
-        <div className="flex justify-between items-center">
+      <div className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <div>
-            <h1 className="text-2xl font-bold mb-1">🔗 Enterprise Integration Patterns</h1>
-            <p className="text-slate-600">Learn integration patterns through interactive scenarios</p>
+            <h1 className="text-xl sm:text-2xl font-bold mb-1">
+              <span aria-hidden="true">🔗 </span>Enterprise Integration Patterns
+            </h1>
+            <p className="text-sm sm:text-base text-slate-600">Learn integration patterns through interactive scenarios</p>
           </div>
           <a
             href="/playgrounds"
-            className="px-6 py-2 border border-slate-300 rounded-lg font-medium hover:bg-slate-50"
+            className="px-4 sm:px-6 py-2 border border-slate-300 rounded-lg font-medium hover:bg-slate-50 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             ← Back to Playgrounds
           </a>
@@ -50,9 +52,9 @@ export default function EnterpriseIntegrationPlayground() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex">
+      <div className="flex-1 flex overflow-hidden">
         {/* Scenario Selector */}
-        <div className="w-64 bg-white border-r border-slate-200 p-4 overflow-y-auto">
+        <div className="hidden sm:block w-64 bg-white border-r border-slate-200 p-4 overflow-y-auto" role="navigation" aria-label="Scenario selector">
           <h3 className="font-bold mb-4 text-sm uppercase text-slate-500">Integration Scenarios</h3>
 
           <div className="space-y-3">
@@ -98,7 +100,7 @@ export default function EnterpriseIntegrationPlayground() {
         </div>
 
         {/* Info Panel */}
-        <div className="w-80 bg-white border-l border-slate-200 p-4 overflow-y-auto">
+        <div className="hidden lg:block w-80 bg-white border-l border-slate-200 p-4 overflow-y-auto" role="complementary" aria-label="Pattern guide">
           <h3 className="font-bold mb-3">Pattern Guide</h3>
 
           {scenario === 'data-transformation' && (

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { getPatternBySlug, getAllPatterns } from '@/lib/patterns'
 import { marked } from 'marked'
 import Link from 'next/link'
@@ -8,6 +9,19 @@ export async function generateStaticParams() {
   return patterns.map((pattern) => ({
     slug: pattern.slug,
   }))
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const pattern = getPatternBySlug(params.slug)
+  if (!pattern) return {}
+  return {
+    title: pattern.title,
+    description: `Learn the ${pattern.title} pattern: ${pattern.content.substring(0, 150).replace(/[#*\n]/g, ' ').trim()}...`,
+    openGraph: {
+      title: `${pattern.title} | Digital Platform Architect`,
+      description: `Learn the ${pattern.title} architecture pattern with interactive examples.`,
+    },
+  }
 }
 
 export default function PatternDetailPage({ params }: { params: { slug: string } }) {

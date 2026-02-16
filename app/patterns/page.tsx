@@ -1,6 +1,16 @@
+import type { Metadata } from 'next'
 import { getAllPatterns, getPatternCategories } from '@/lib/patterns'
 import { getPreviewText } from '@/lib/markdown'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Architecture Patterns',
+  description: 'Explore 65+ proven architectural patterns including event-driven, data architecture, security, and distributed systems. Each with detailed explanations and interactive examples.',
+  openGraph: {
+    title: 'Architecture Patterns | Digital Platform Architect',
+    description: 'Explore 65+ proven architectural patterns with detailed explanations and interactive examples.',
+  },
+}
 
 export default function PatternsPage() {
   const patterns = getAllPatterns()
