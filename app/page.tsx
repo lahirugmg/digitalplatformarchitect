@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import VerticalSelector from './architecture-playground/components/VerticalSelector'
 import PersonaSelector from './architecture-playground/components/PersonaSelector'
 import LevelControls from './architecture-playground/components/LevelControls'
 import ContextPanel from './architecture-playground/components/ContextPanel'
@@ -62,6 +63,7 @@ export default function HomePage() {
       >
         {/* Left Sidebar - Controls */}
         <div className="hidden lg:flex lg:flex-col w-80 xl:w-[22rem] bg-white border-r border-slate-200 overflow-y-auto p-4 space-y-4">
+          <VerticalSelector />
           <PersonaSelector />
           <LevelControls />
 
@@ -81,6 +83,9 @@ export default function HomePage() {
         <div className="flex-1 flex flex-col">
           {/* Mobile controls (visible below lg) */}
           <div className="lg:hidden flex items-center gap-2 p-3 bg-white border-b border-slate-200 overflow-x-auto">
+            <div className="flex-shrink-0">
+              <VerticalSelector />
+            </div>
             <div className="flex-shrink-0">
               <PersonaSelector />
             </div>
