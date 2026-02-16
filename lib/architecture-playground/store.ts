@@ -1,11 +1,12 @@
 import { create } from 'zustand';
-import { PlaygroundState, Persona, DetailLevel, PlaygroundMode, ArchitectureGraph } from './types';
+import { PlaygroundState, Persona, DetailLevel, PlaygroundMode, ArchitectureGraph, ArchitectureVertical } from './types';
 
 interface PlaygroundStore extends PlaygroundState {
   architecture: ArchitectureGraph | null;
   setArchitecture: (arch: ArchitectureGraph) => void;
   setPersona: (persona: Persona) => void;
   setLevel: (level: DetailLevel) => void;
+  setVertical: (vertical: ArchitectureVertical) => void;
   setMode: (mode: PlaygroundMode) => void;
   setFocusNode: (nodeId: string | null) => void;
   toggleNodeSelection: (nodeId: string) => void;
@@ -21,6 +22,7 @@ export const usePlaygroundStore = create<PlaygroundStore>((set) => ({
   mode: 'explore',
   persona: 'ea',
   level: 'L1',
+  vertical: 'solution',
   focusNode: null,
   selectedNodes: [],
   viewport: { x: 0, y: 0, zoom: 1 },
@@ -31,6 +33,7 @@ export const usePlaygroundStore = create<PlaygroundStore>((set) => ({
   setArchitecture: (arch) => set({ architecture: arch }),
   setPersona: (persona) => set({ persona }),
   setLevel: (level) => set({ level }),
+  setVertical: (vertical) => set({ vertical }),
   setMode: (mode) => set({ mode }),
   setFocusNode: (nodeId) => set({ focusNode: nodeId }),
 
