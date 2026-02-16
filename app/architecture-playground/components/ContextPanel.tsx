@@ -2,11 +2,27 @@
 
 import { useState } from 'react';
 import { usePlaygroundStore } from '@/lib/architecture-playground/store';
-import { ExternalLink, Code, BookOpen, BarChart3 } from 'lucide-react';
+import { ExternalLink, Code, BookOpen, BarChart3, Building2, Cloud, BarChart, ChevronRight, ChevronLeft } from 'lucide-react';
+import { ArchitectureVertical, ARCHITECTURE_VERTICALS, DetailLevel } from '@/lib/architecture-playground/types';
 import Link from 'next/link';
 
+const VERTICAL_ICONS: Record<ArchitectureVertical, any> = {
+  business: BarChart,
+  solution: Building2,
+  deployment: Cloud
+};
+
+const LEVEL_ORDER: DetailLevel[] = ['L0', 'L1', 'L2', 'L3'];
+
+const LEVEL_NEXT_DESCRIPTIONS: Record<DetailLevel, string> = {
+  L0: 'See concrete technologies and products',
+  L1: 'Explore communication patterns and data flows',
+  L2: 'View code snippets and deployment configs',
+  L3: '' // No next level
+};
+
 export default function ContextPanel() {
-  const { architecture, focusNode, level, vertical } = usePlaygroundStore();
+  const { architecture, focusNode, level, vertical, setVertical, setLevel } = usePlaygroundStore();
   const [activeTab, setActiveTab] = useState<'overview' | 'theory' | 'practice' | 'metrics'>('overview');
 
   if (!focusNode || !architecture) {
@@ -49,6 +65,36 @@ export default function ContextPanel() {
           <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 text-slate-700 capitalize">
             {vertical} Architecture
           </span>
+        </div>
+
+        {/* Cross-reference links to other verticals */}
+        <div className="mt-3 pt-3 border-t border-slate-200">
+          <p className="text-xs font-semibold text-slate-600 mb-2">View in other verticals:</p>
+          <div className="flex gap-2">
+            {ARCHITECTURE_VERTICALS.filter(v => v !== vertical).map((vert) => {
+              const Icon = VERTICAL_ICONS[vert];
+              // Check if component is visible in this vertical
+              const vertContent = component.verticals?.[vert];
+              const isVisible = !vertContent || vertContent.visible !== false;
+
+              return (
+                <button
+                  key={vert}
+                  onClick={() => setVertical(vert)}
+                  disabled={!isVisible}
+                  className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded text-xs font-medium transition ${
+                    isVisible
+                      ? 'bg-purple-50 text-purple-700 hover:bg-purple-100 border border-purple-200'
+                      : 'bg-slate-50 text-slate-400 cursor-not-allowed border border-slate-200'
+                  }`}
+                  title={isVisible ? `View in ${vert} architecture` : `Not available in ${vert} view`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  <span className="capitalize">{vert}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -172,6 +218,55 @@ export default function ContextPanel() {
                 </div>
               </>
             )}
+
+            {/* Level Navigation: Go Deeper / Go Broader */}
+            <div className="mt-6 pt-4 border-t border-slate-200 space-y-2">
+              {(() => {
+                const currentIndex = LEVEL_ORDER.indexOf(level);
+                const canGoDeeper = currentIndex < LEVEL_ORDER.length - 1;
+                const canGoBroader = currentIndex > 0;
+                const nextLevel = canGoDeeper ? LEVEL_ORDER[currentIndex + 1] : null;
+                const prevLevel = canGoBroader ? LEVEL_ORDER[currentIndex - 1] : null;
+
+                return (
+                  <>
+                    {canGoDeeper && nextLevel && (
+                      <button
+                        onClick={() => setLevel(nextLevel)}
+                        className="w-full flex items-center justify-between px-4 py-3 rounded-lg bg-purple-50 hover:bg-purple-100 border border-purple-200 transition group"
+                      >
+                        <div className="flex-1 text-left">
+                          <div className="text-sm font-semibold text-purple-700">
+                            Go Deeper → {nextLevel}
+                          </div>
+                          <div className="text-xs text-purple-600 mt-0.5">
+                            {LEVEL_NEXT_DESCRIPTIONS[level]}
+                          </div>
+                        </div>
+                        <ChevronRight className="w-5 h-5 text-purple-600 group-hover:translate-x-1 transition-transform" />
+                      </button>
+                    )}
+
+                    {canGoBroader && prevLevel && (
+                      <button
+                        onClick={() => setLevel(prevLevel)}
+                        className="w-full flex items-center justify-between px-4 py-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 transition group"
+                      >
+                        <ChevronLeft className="w-5 h-5 text-slate-600 group-hover:-translate-x-1 transition-transform" />
+                        <div className="flex-1 text-right">
+                          <div className="text-sm font-semibold text-slate-700">
+                            ← Go Broader to {prevLevel}
+                          </div>
+                          <div className="text-xs text-slate-500 mt-0.5">
+                            Return to higher-level view
+                          </div>
+                        </div>
+                      </button>
+                    )}
+                  </>
+                );
+              })()}
+            </div>
           </div>
         )}
 
