@@ -27,8 +27,17 @@ const PERSONA_ICONS = {
   CheckCircle
 };
 
+const PERSONA_GROUPS = {
+  'Business & Strategy': ['business', 'product', 'uxdesigner'],
+  'Architecture & Analysis': ['ba', 'ea', 'security', 'data'],
+  'Engineering & Operations': ['implementation', 'qa']
+} as const;
+
 export default function PersonaSelector() {
-  const { persona, setPersona } = usePlaygroundStore();
+  const { persona, setPersona, vertical, setVertical } = usePlaygroundStore();
+  const currentProfile = PERSONA_PROFILES[persona];
+  const recommendedVertical = currentProfile.recommendedVertical;
+  const showSuggestion = recommendedVertical && recommendedVertical !== vertical;
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-4">
@@ -36,8 +45,15 @@ export default function PersonaSelector() {
         I&apos;m a...
       </label>
 
-      <div className="space-y-1.5">
-        {Object.values(PERSONA_PROFILES).map((profile) => {
+      <div className="space-y-4">
+        {Object.entries(PERSONA_GROUPS).map(([groupName, personaIds]) => (
+          <div key={groupName}>
+            <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 px-1">
+              {groupName}
+            </h3>
+            <div className="space-y-1.5">
+              {personaIds.map((personaId) => {
+                const profile = PERSONA_PROFILES[personaId as Persona];
           const Icon = PERSONA_ICONS[profile.icon as keyof typeof PERSONA_ICONS];
           const isActive = persona === profile.id;
 
@@ -78,8 +94,28 @@ export default function PersonaSelector() {
               )}
             </button>
           );
-        })}
+              })}
+            </div>
+          </div>
+        ))}
       </div>
+
+      {/* Vertical Suggestion */}
+      {showSuggestion && recommendedVertical && (
+        <div className="mt-4 pt-4 border-t border-slate-200">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <p className="text-xs font-semibold text-blue-900 mb-2">
+              💡 Recommended view for {currentProfile.name}
+            </p>
+            <button
+              onClick={() => setVertical(recommendedVertical)}
+              className="w-full px-3 py-2 bg-blue-100 hover:bg-blue-200 border border-blue-300 rounded text-sm font-medium text-blue-700 transition capitalize"
+            >
+              Switch to {recommendedVertical} Architecture →
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
