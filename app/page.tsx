@@ -6,6 +6,9 @@ import VerticalSelector from './architecture-playground/components/VerticalSelec
 import PersonaSelector from './architecture-playground/components/PersonaSelector'
 import LevelControls from './architecture-playground/components/LevelControls'
 import ContextPanel from './architecture-playground/components/ContextPanel'
+import OnboardingModal from '@/components/onboarding/OnboardingModal'
+import { useOnboardingStore } from '@/lib/onboarding/store'
+import { Sparkles } from 'lucide-react'
 
 const PlaygroundCanvas = dynamic(
   () => import('./architecture-playground/components/PlaygroundCanvas'),
@@ -23,8 +26,11 @@ const PlaygroundCanvas = dynamic(
 )
 
 export default function HomePage() {
+  const { openModal } = useOnboardingStore();
+
   return (
     <div className="min-h-screen flex flex-col">
+      <OnboardingModal />
       {/* ── SECTION 1: Hero Banner (compact) ──────────────────────── */}
       <section className="bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
@@ -37,7 +43,14 @@ export default function HomePage() {
                 Explore how theory meets practice — select your role, zoom through detail levels, click any block to learn more
               </p>
             </div>
-            <div className="flex gap-2 flex-shrink-0">
+            <div className="flex gap-2 flex-shrink-0 flex-wrap">
+              <button
+                onClick={openModal}
+                className="px-4 py-2 bg-white text-purple-600 hover:bg-purple-50 rounded-lg text-sm font-semibold transition shadow-lg flex items-center gap-2"
+              >
+                <Sparkles className="w-4 h-4" />
+                Get Personalized Guidance
+              </button>
               <Link
                 href="/playgrounds"
                 className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition"
