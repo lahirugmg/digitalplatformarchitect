@@ -178,7 +178,7 @@ export function buildRankedRecommendations(input: BuildRecommendationsInput): Ra
         score,
       }
     })
-    .filter((item) => item.score.total > DISMISSAL_PENALTY)
+    .filter((item) => item.score.dismissalPenalty === 0)
     .sort((left, right) => {
       if (right.score.total !== left.score.total) {
         return right.score.total - left.score.total
