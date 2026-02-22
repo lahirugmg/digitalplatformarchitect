@@ -4,6 +4,7 @@ import PlaygroundCanvas from './components/PlaygroundCanvas';
 import PersonaSelector from './components/PersonaSelector';
 import LevelControls from './components/LevelControls';
 import ContextPanel from './components/ContextPanel';
+import PersonaContextBootstrap from './components/PersonaContextBootstrap';
 
 export const metadata: Metadata = {
   title: 'Interactive Architecture Playground | Digital Platform Architect',
@@ -43,6 +44,7 @@ export default function ArchitecturePlaygroundPage() {
       <div className="flex-1 flex overflow-hidden">
         {/* Left Sidebar - Controls */}
         <div className="w-80 bg-white border-r border-slate-200 overflow-y-auto p-4 space-y-4">
+          <PersonaContextBootstrap />
           <PersonaSelector />
           <LevelControls />
 

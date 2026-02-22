@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import VerticalSelector from './architecture-playground/components/VerticalSelector'
@@ -7,7 +8,11 @@ import PersonaSelector from './architecture-playground/components/PersonaSelecto
 import LevelControls from './architecture-playground/components/LevelControls'
 import ContextPanel from './architecture-playground/components/ContextPanel'
 import OnboardingModal from '@/components/onboarding/OnboardingModal'
+import ContextOverrideControl from '@/components/personalization/ContextOverrideControl'
+import PersonalizedSectionHeader from '@/components/personalization/PersonalizedSectionHeader'
+import ReasonChips from '@/components/personalization/ReasonChips'
 import { useOnboardingStore } from '@/lib/onboarding/store'
+import { trackRecommendationClick, usePersonalization } from '@/lib/personalization/use-personalization'
 import { Sparkles } from 'lucide-react'
 
 const PlaygroundCanvas = dynamic(
@@ -26,7 +31,12 @@ const PlaygroundCanvas = dynamic(
 )
 
 export default function HomePage() {
-  const { openModal } = useOnboardingStore();
+  const { openModal } = useOnboardingStore()
+  const [showOverride, setShowOverride] = useState(false)
+  const { enabled, recommendations, context, sessionActive, dismiss, setOverride } = usePersonalization({
+    surface: 'home',
+    limit: 3,
+  })
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -63,10 +73,74 @@ export default function HomePage() {
               >
                 Skill Tree
               </Link>
+              <Link
+                href="/vault"
+                className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition"
+              >
+                File Vault
+              </Link>
             </div>
           </div>
         </div>
       </section>
+
+      {enabled && (
+        <section className="bg-white border-b border-slate-200" aria-labelledby="recommended-next-steps">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+            <div className="space-y-4">
+              <PersonalizedSectionHeader
+                title="Recommended Next Steps"
+                subtitle="Guided actions based on your context, with full control to override anytime."
+                context={context}
+                sessionActive={sessionActive}
+                onChangeContext={() => setShowOverride((previous) => !previous)}
+              />
+
+              {showOverride && (
+                <ContextOverrideControl
+                  role={context.role}
+                  goal={context.goal}
+                  source={context.source}
+                  onApply={setOverride}
+                  onDone={() => setShowOverride(false)}
+                />
+              )}
+
+              <div className="grid gap-4 lg:grid-cols-3">
+                {recommendations.map((recommendation) => (
+                  <article
+                    key={recommendation.id}
+                    className="rounded-xl border border-slate-200 bg-slate-50 p-4"
+                  >
+                    <h3 className="text-base font-bold text-slate-900">{recommendation.title}</h3>
+                    <p className="mt-1 text-sm text-slate-600">{recommendation.description}</p>
+                    <ReasonChips chips={recommendation.reasonChips} className="mt-3" />
+
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <Link
+                        href={recommendation.href}
+                        className="rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold text-white transition hover:bg-blue-700"
+                        onClick={() =>
+                          trackRecommendationClick('home', recommendation, context, sessionActive)
+                        }
+                      >
+                        Open
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => dismiss(recommendation.id, 14)}
+                        className="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+                      >
+                        Not relevant
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── SECTION 2: Interactive Playground (main content) ───────── */}
       <section

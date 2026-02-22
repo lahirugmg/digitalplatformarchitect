@@ -1,15 +1,84 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { useState, useEffect, useMemo } from 'react'
 import { READINESS_STEPS, calculateProgress, getProgressColor, generateReadinessReport, type ReadinessStep } from '@/lib/production-readiness'
+import type { GoalId } from '@/lib/onboarding/types'
+import ContextOverrideControl from '@/components/personalization/ContextOverrideControl'
+import PersonalizedSectionHeader from '@/components/personalization/PersonalizedSectionHeader'
+import ReasonChips from '@/components/personalization/ReasonChips'
+import { getGoalLabel } from '@/lib/personalization/context'
+import { emitPersonalizationEvent } from '@/lib/personalization/telemetry'
+import { usePersonalization } from '@/lib/personalization/use-personalization'
 import { WorkflowSteps } from './WorkflowSteps'
 import { PlaygroundLink } from '@/components/shared/PlaygroundLink'
 import { TheoryLink } from '@/components/shared/TheoryLink'
 
+const DEFAULT_CATEGORY_PRIORITY: ReadinessStep['category'][] = [
+  'assessment',
+  'planning',
+  'operations',
+  'security',
+]
+
+const GOAL_CATEGORY_PRIORITY: Partial<Record<GoalId, ReadinessStep['category'][]>> = {
+  'assess-readiness': ['assessment', 'operations', 'planning', 'security'],
+  'security-review': ['security', 'assessment', 'operations', 'planning'],
+  'performance-optimization': ['operations', 'planning', 'assessment', 'security'],
+  'cloud-migration': ['planning', 'operations', 'assessment', 'security'],
+  'evaluate-architecture': ['assessment', 'planning', 'operations', 'security'],
+}
+
 export function ProductionReadinessHub() {
   const [steps, setSteps] = useState<ReadinessStep[]>(READINESS_STEPS)
+  const [showOverride, setShowOverride] = useState(false)
+  const { enabled, context, sessionActive, setOverride } = usePersonalization({
+    surface: 'production-readiness',
+    limit: 3,
+  })
   const progress = calculateProgress(steps)
   const progressColor = getProgressColor(progress.overallProgress)
+
+  const categoryPriority = useMemo(() => {
+    if (!context.goal) {
+      return DEFAULT_CATEGORY_PRIORITY
+    }
+    return GOAL_CATEGORY_PRIORITY[context.goal] ?? DEFAULT_CATEGORY_PRIORITY
+  }, [context.goal])
+
+  const nextBestStep = useMemo(() => {
+    const incompleteSteps = steps.filter((step) => step.status !== 'completed')
+    if (incompleteSteps.length === 0) {
+      return null
+    }
+
+    return [...incompleteSteps].sort((left, right) => {
+      const leftRank = categoryPriority.indexOf(left.category)
+      const rightRank = categoryPriority.indexOf(right.category)
+      const normalizedLeftRank = leftRank === -1 ? categoryPriority.length : leftRank
+      const normalizedRightRank = rightRank === -1 ? categoryPriority.length : rightRank
+
+      if (normalizedLeftRank !== normalizedRightRank) {
+        return normalizedLeftRank - normalizedRightRank
+      }
+
+      return READINESS_STEPS.findIndex((step) => step.id === left.id) - READINESS_STEPS.findIndex((step) => step.id === right.id)
+    })[0]
+  }, [categoryPriority, steps])
+
+  const nextBestReasonChips = useMemo(() => {
+    if (!nextBestStep) {
+      return []
+    }
+
+    const reasons = ['First incomplete workflow step']
+    if (context.goal) {
+      reasons.unshift(`Goal: ${getGoalLabel(context.goal)}`)
+      reasons.push(`Category fit: ${nextBestStep.category}`)
+    }
+
+    return reasons
+  }, [context.goal, nextBestStep])
 
   // Load progress from localStorage
   useEffect(() => {
@@ -47,6 +116,28 @@ export function ProductionReadinessHub() {
       setSteps(READINESS_STEPS)
       localStorage.removeItem('production-readiness-progress')
     }
+  }
+
+  const markStepCompleted = (stepId: string) => {
+    setSteps((previousSteps) =>
+      previousSteps.map((step) =>
+        step.id === stepId
+          ? {
+              ...step,
+              status: 'completed',
+              score: step.score ?? 100,
+            }
+          : step,
+      ),
+    )
+
+    emitPersonalizationEvent('personalization_next_step_completed', {
+      surface: 'production-readiness',
+      recommendation_id: stepId,
+      role: context.role,
+      goal: context.goal,
+      session_active: sessionActive,
+    })
   }
 
   return (
@@ -164,6 +255,68 @@ export function ProductionReadinessHub() {
           </div>
         </div>
       </div>
+
+      {enabled && nextBestStep && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-2">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <PersonalizedSectionHeader
+              title="Next Best Step for You"
+              subtitle="Recommended from your current context and remaining workflow."
+              context={context}
+              sessionActive={sessionActive}
+              onChangeContext={() => setShowOverride((previous) => !previous)}
+            />
+
+            {showOverride && (
+              <div className="mt-4">
+                <ContextOverrideControl
+                  role={context.role}
+                  goal={context.goal}
+                  source={context.source}
+                  onApply={setOverride}
+                  onDone={() => setShowOverride(false)}
+                />
+              </div>
+            )}
+
+            <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-4">
+              <h3 className="text-lg font-bold text-slate-900">{nextBestStep.title}</h3>
+              <p className="mt-1 text-sm text-slate-700">{nextBestStep.description}</p>
+              <ReasonChips chips={nextBestReasonChips} className="mt-3" />
+
+              <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
+                <Link
+                  href={nextBestStep.playgroundLink}
+                  className="rounded-md bg-blue-600 px-3 py-1.5 font-semibold text-white transition hover:bg-blue-700"
+                  onClick={() =>
+                    emitPersonalizationEvent('personalization_reco_click', {
+                      surface: 'production-readiness',
+                      recommendation_id: nextBestStep.id,
+                      role: context.role,
+                      goal: context.goal,
+                      session_active: sessionActive,
+                    })
+                  }
+                >
+                  Start this step
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => markStepCompleted(nextBestStep.id)}
+                  className="rounded-md border border-slate-300 bg-white px-3 py-1.5 font-medium text-slate-700 transition hover:bg-slate-100"
+                >
+                  Mark as completed
+                </button>
+                {context.goal && (
+                  <span className="ml-1 text-xs text-slate-500">
+                    Context goal: {getGoalLabel(context.goal)}
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Introduction */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

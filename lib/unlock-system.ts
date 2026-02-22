@@ -1,3 +1,12 @@
+import { LEGACY_PROGRESS_KEY } from '@/lib/profile/constants'
+import {
+  getCachedState,
+  isProfileFeatureEnabled,
+  queueSync,
+  updateCachedProgress,
+} from '@/lib/profile/profile-client'
+import { normalizeProgressState } from '@/lib/profile/types'
+
 export interface UserProgress {
   userId: string
   completedNodes: string[]
@@ -8,6 +17,8 @@ export interface UserProgress {
   lastActivityDate: string // ISO date
   totalXP: number
   level: number
+  completedAtByNode?: Record<string, string>
+  updatedAt?: string
 }
 
 export interface UnlockCost {
@@ -27,6 +38,7 @@ const DAILY_TOKEN_GRANT = 3
 const STREAK_BONUS_7_DAYS = 2
 const STREAK_BONUS_30_DAYS = 5
 const STREAK_BONUS_100_DAYS = 10
+const PROGRESS_STORAGE_KEY = LEGACY_PROGRESS_KEY
 
 // Token System
 export function calculateDailyTokens(streakDays: number): number {
@@ -84,6 +96,7 @@ export function grantDailyTokens(userProgress: UserProgress): UserProgress {
     lastTokenGrant: now,
     streakDays: newStreak,
     lastActivityDate: now,
+    updatedAt: now,
   }
 }
 
@@ -125,6 +138,7 @@ export function unlockNode(
     tokens: userProgress.tokens - cost,
     unlockedNodes: [...userProgress.unlockedNodes, nodeId],
     lastActivityDate: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   }
 
   return {
@@ -147,12 +161,18 @@ export function completeNode(
   const newXP = userProgress.totalXP + xpReward
   const newLevel = calculateLevel(newXP)
 
+  const completedAt = new Date().toISOString()
   return {
     ...userProgress,
     completedNodes: [...userProgress.completedNodes, nodeId],
     totalXP: newXP,
     level: newLevel,
-    lastActivityDate: new Date().toISOString(),
+    lastActivityDate: completedAt,
+    completedAtByNode: {
+      ...(userProgress.completedAtByNode ?? {}),
+      [nodeId]: completedAt,
+    },
+    updatedAt: completedAt,
   }
 }
 
@@ -188,32 +208,55 @@ export function getProgressToNextLevel(totalXP: number, currentLevel: number): {
 
 // Initialize new user
 export function createNewUserProgress(userId: string): UserProgress {
+  const now = new Date().toISOString()
   return {
     userId,
     completedNodes: [],
     unlockedNodes: [],
     tokens: 5, // Starting tokens
-    lastTokenGrant: new Date().toISOString(),
+    lastTokenGrant: now,
     streakDays: 0,
-    lastActivityDate: new Date().toISOString(),
+    lastActivityDate: now,
     totalXP: 0,
     level: 1,
+    completedAtByNode: {},
+    updatedAt: now,
   }
 }
 
 // Storage helpers (localStorage)
 export function saveUserProgress(userProgress: UserProgress): void {
   if (typeof window !== 'undefined') {
-    localStorage.setItem('dpa-user-progress', JSON.stringify(userProgress))
+    const payload: UserProgress = {
+      ...userProgress,
+      updatedAt: new Date().toISOString(),
+    }
+
+    localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(payload))
+
+    if (isProfileFeatureEnabled()) {
+      updateCachedProgress(payload)
+      queueSync()
+    }
   }
 }
 
 export function loadUserProgress(userId: string = 'default'): UserProgress {
   if (typeof window !== 'undefined') {
-    const saved = localStorage.getItem('dpa-user-progress')
+    if (isProfileFeatureEnabled()) {
+      const cachedProgress = normalizeProgressState(getCachedState().progress)
+      if (cachedProgress) {
+        return grantDailyTokens(cachedProgress)
+      }
+    }
+
+    const saved = localStorage.getItem(PROGRESS_STORAGE_KEY)
     if (saved) {
       try {
-        const progress = JSON.parse(saved) as UserProgress
+        const progress = normalizeProgressState(JSON.parse(saved))
+        if (!progress) {
+          return createNewUserProgress(userId)
+        }
         // Auto-grant daily tokens if applicable
         return grantDailyTokens(progress)
       } catch (e) {

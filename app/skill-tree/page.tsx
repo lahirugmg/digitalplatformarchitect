@@ -7,10 +7,37 @@ import ProgressPanel from './components/ProgressPanel'
 import TokenPanel from './components/TokenPanel'
 import { loadUserProgress, saveUserProgress } from '@/lib/unlock-system'
 import type { UserProgress } from '@/lib/unlock-system'
+import {
+  hydrateStateFromServer,
+  isProfileFeatureEnabled,
+} from '@/lib/profile/profile-client'
 
 export default function SkillTreePage() {
   const [userProgress, setUserProgress] = useState<UserProgress>(() => loadUserProgress())
   const [selectedBranch, setSelectedBranch] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!isProfileFeatureEnabled()) {
+      return
+    }
+
+    void hydrateStateFromServer().then((state) => {
+      if (state?.progress) {
+        setUserProgress(state.progress)
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    const onProfileStateChange = () => {
+      setUserProgress(loadUserProgress())
+    }
+
+    window.addEventListener('stemized:profile-status-change', onProfileStateChange)
+    return () => {
+      window.removeEventListener('stemized:profile-status-change', onProfileStateChange)
+    }
+  }, [])
 
   // Save progress whenever it changes
   useEffect(() => {
