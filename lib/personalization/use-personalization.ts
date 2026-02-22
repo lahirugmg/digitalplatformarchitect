@@ -60,6 +60,7 @@ const FALLBACK_CONTEXT: ResolvedPersonalizationContext = {
 export function usePersonalization({ surface, limit = 3 }: UsePersonalizationOptions): UsePersonalizationResult {
   const [snapshot, setSnapshot] = useState<PersonalizationSnapshot>(readSnapshot)
   const impressionKeyRef = useRef<string>('')
+  const hasMarkedSurfaceRef = useRef<boolean>(false)
 
   const refresh = useCallback(() => {
     setSnapshot(readSnapshot())
@@ -111,7 +112,10 @@ export function usePersonalization({ surface, limit = 3 }: UsePersonalizationOpt
 
     impressionKeyRef.current = impressionKey
 
-    markSurfaceSeen(surface, recommendationIds)
+    if (!hasMarkedSurfaceRef.current) {
+      markSurfaceSeen(surface, recommendationIds)
+      hasMarkedSurfaceRef.current = true
+    }
 
     recommendations.forEach((item) => {
       emitPersonalizationEvent('personalization_reco_impression', {
