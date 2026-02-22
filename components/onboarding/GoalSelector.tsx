@@ -11,21 +11,33 @@ const CATEGORY_INFO = {
     label: 'Learn',
     color: 'violet',
     description: 'Understand concepts and patterns',
+    activeClass: 'bg-violet-600 text-white',
+    inactiveClass: 'bg-violet-50 text-violet-700 hover:bg-violet-100',
+    badgeClass: 'bg-violet-100 text-violet-700',
   },
   design: {
     label: 'Design',
     color: 'blue',
     description: 'Create new architectures',
+    activeClass: 'bg-blue-600 text-white',
+    inactiveClass: 'bg-blue-50 text-blue-700 hover:bg-blue-100',
+    badgeClass: 'bg-blue-100 text-blue-700',
   },
   evaluate: {
     label: 'Evaluate',
     color: 'cyan',
     description: 'Assess existing systems',
+    activeClass: 'bg-cyan-600 text-white',
+    inactiveClass: 'bg-cyan-50 text-cyan-700 hover:bg-cyan-100',
+    badgeClass: 'bg-cyan-100 text-cyan-700',
   },
   build: {
     label: 'Build',
     color: 'purple',
     description: 'Hands-on implementation',
+    activeClass: 'bg-purple-600 text-white',
+    inactiveClass: 'bg-purple-50 text-purple-700 hover:bg-purple-100',
+    badgeClass: 'bg-purple-100 text-purple-700',
   },
 };
 
@@ -90,8 +102,8 @@ export default function GoalSelector() {
               onClick={() => setSelectedCategory(key as Goal['category'])}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
                 selectedCategory === key
-                  ? `bg-${info.color}-600 text-white`
-                  : `bg-${info.color}-50 text-${info.color}-700 hover:bg-${info.color}-100`
+                  ? info.activeClass
+                  : info.inactiveClass
               }`}
             >
               {info.label} ({count})
@@ -128,7 +140,7 @@ export default function GoalSelector() {
                   <div className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded ${
                     isSelected
                       ? 'bg-purple-200 text-purple-900'
-                      : `bg-${categoryInfo.color}-100 text-${categoryInfo.color}-700`
+                      : categoryInfo.badgeClass
                   }`}>
                     {categoryInfo.label}
                   </div>

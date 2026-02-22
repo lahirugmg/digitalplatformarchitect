@@ -12,6 +12,26 @@ export const metadata: Metadata = {
 export default function PlaygroundsPage() {
   const playgrounds = [
     {
+      id: 'architecture-docs',
+      title: 'Architecture Documentation Explorer',
+      icon: '📚',
+      description: 'Explore architecture documentation across Business, Solution, and Deployment views. See how different roles view architecture at different levels.',
+      difficulty: 'Beginner',
+      duration: '10-15 min',
+      tags: ['Documentation', 'C4 Model', 'Multi-Layer'],
+      href: '/playgrounds/architecture-docs'
+    },
+    {
+      id: 'capacity-planning',
+      title: 'Capacity Planning Calculator',
+      icon: '💡',
+      description: 'Calculate infrastructure requirements, estimate costs, and plan for scale. Interactive playground for sizing your system correctly.',
+      difficulty: 'Beginner',
+      duration: '10-15 min',
+      tags: ['Infrastructure', 'Cost Optimization', 'Performance'],
+      href: '/playgrounds/capacity-planning'
+    },
+    {
       id: 'data-pipeline',
       title: 'Data Pipeline Choreography',
       icon: '🌊',

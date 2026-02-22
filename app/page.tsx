@@ -124,7 +124,7 @@ export default function HomePage() {
             {[
               { value: '9', label: 'Building Blocks', color: 'text-purple-600' },
               { value: '65+', label: 'Patterns', color: 'text-blue-600' },
-              { value: '5', label: 'Playgrounds', color: 'text-cyan-600' },
+              { value: '7', label: 'Playgrounds', color: 'text-cyan-600' },
               { value: '9', label: 'Personas', color: 'text-pink-600' },
             ].map((stat) => (
               <div key={stat.label} className="text-center py-3">
@@ -201,6 +201,13 @@ export default function HomePage() {
           <div className="grid sm:grid-cols-3 gap-4">
             {[
               {
+                href: '/playgrounds/capacity-planning',
+                icon: '💡',
+                title: 'Capacity Planning Calculator',
+                desc: 'Calculate infrastructure requirements and estimate costs. Size your system correctly from day one.',
+                tag: 'Infrastructure',
+              },
+              {
                 href: '/playgrounds/data-pipeline',
                 icon: '🌊',
                 title: 'Data Pipeline Choreography',
@@ -213,13 +220,6 @@ export default function HomePage() {
                 title: 'Message Flow Animation',
                 desc: 'Design integration patterns. See messages flow between services in real-time.',
                 tag: 'Messaging',
-              },
-              {
-                href: '/playgrounds/enterprise-integration',
-                icon: '🔗',
-                title: 'Enterprise Integration',
-                desc: 'Connect systems with transformation patterns, routing logic, and message choreography.',
-                tag: 'Integration',
               },
             ].map((pg) => (
               <Link

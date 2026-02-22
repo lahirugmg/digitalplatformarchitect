@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6aa6ff"/>
+      <stop offset="100%" stop-color="#3f7fe6"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="22" fill="#0b0f17"/>
+  <g transform="translate(20,20)">
+    <path d="M0 44 C0 14 14 0 44 0 L44 12 C22 12 12 22 12 44 Z" fill="url(#g)"/>
+    <path d="M44 0 C74 0 88 14 88 44 L76 44 C76 22 66 12 44 12 Z" fill="#99c1ff"/>
+    <circle cx="44" cy="44" r="10" fill="#dceaff"/>
+  </g>
+  <title>DPA</title>
+</svg>
+

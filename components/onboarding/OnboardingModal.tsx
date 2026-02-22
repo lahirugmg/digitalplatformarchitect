@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useOnboardingStore } from '@/lib/onboarding/store';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import RoleSelector from './RoleSelector';
@@ -19,6 +19,8 @@ export default function OnboardingModal() {
     reset,
   } = useOnboardingStore();
 
+  const modalRef = useRef<HTMLDivElement>(null);
+
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (isModalOpen) {
@@ -31,6 +33,54 @@ export default function OnboardingModal() {
       document.body.style.overflow = 'unset';
     };
   }, [isModalOpen]);
+
+  // Handle Escape key to close modal
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isModalOpen) {
+        closeModal();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isModalOpen, closeModal]);
+
+  // Focus trap: keep focus within modal
+  useEffect(() => {
+    if (!isModalOpen || !modalRef.current) return;
+
+    const modal = modalRef.current;
+    const focusableElements = modal.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    const firstElement = focusableElements[0] as HTMLElement;
+    const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+
+    // Focus first element when modal opens
+    firstElement?.focus();
+
+    const handleTabKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+
+      if (e.shiftKey) {
+        // Shift + Tab
+        if (document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement?.focus();
+        }
+      } else {
+        // Tab
+        if (document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement?.focus();
+        }
+      }
+    };
+
+    modal.addEventListener('keydown', handleTabKey as EventListener);
+    return () => modal.removeEventListener('keydown', handleTabKey as EventListener);
+  }, [isModalOpen, currentStep]);
 
   if (!isModalOpen) return null;
 
@@ -49,19 +99,33 @@ export default function OnboardingModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="onboarding-title"
+    >
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={handleClose}
+        aria-hidden="true"
       />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+      <div
+        ref={modalRef}
+        className="relative bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+      >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+          {/* Hidden title for screen readers */}
+          <h2 id="onboarding-title" className="sr-only">
+            Personalized Onboarding - Step {currentStep === 'role' ? '1: Select Role' : currentStep === 'goal' ? '2: Select Goal' : '3: Your Journey'}
+          </h2>
+
           {/* Progress indicator */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2" role="progressbar" aria-valuenow={currentStep === 'role' ? 1 : currentStep === 'goal' ? 2 : 3} aria-valuemin={1} aria-valuemax={3} aria-label="Onboarding progress">
             <StepIndicator
               label="Role"
               isActive={currentStep === 'role'}

@@ -12,26 +12,31 @@ const RECOMMENDATION_TYPE_INFO = {
     icon: PlayCircle,
     color: 'blue',
     label: 'Interactive Playground',
+    badgeClass: 'bg-blue-100 text-blue-700',
   },
   pattern: {
     icon: Blocks,
     color: 'violet',
     label: 'Pattern',
+    badgeClass: 'bg-violet-100 text-violet-700',
   },
   article: {
     icon: BookOpen,
     color: 'cyan',
     label: 'Article',
+    badgeClass: 'bg-cyan-100 text-cyan-700',
   },
   'skill-tree': {
     icon: Building,
     color: 'purple',
     label: 'Skill Tree',
+    badgeClass: 'bg-purple-100 text-purple-700',
   },
   'building-block': {
     icon: Building,
     color: 'slate',
     label: 'Building Block',
+    badgeClass: 'bg-slate-100 text-slate-700',
   },
 };
 
@@ -195,7 +200,7 @@ function RecommendationCard({
 
           <div className="flex items-center gap-2">
             <span
-              className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-${typeInfo.color}-100 text-${typeInfo.color}-700`}
+              className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded ${typeInfo.badgeClass}`}
             >
               {typeInfo.label}
             </span>

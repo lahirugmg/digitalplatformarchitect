@@ -1,0 +1,139 @@
+{
+  "metadata": {
+    "version": "4.5.0",
+    "testDate": "2023",
+    "source": "WSO2 APIM 4.5.0 Performance Test Results",
+    "sourceUrl": "https://apim.docs.wso2.com/en/4.5.0/install-and-setup/setup/deployment-best-practices/performance-tests-results/",
+    "testConditions": {
+      "backendDelay": "0ms",
+      "security": "JWT",
+      "operatingSystem": "Ubuntu 18.04",
+      "javaVersion": "Temurin JDK 17"
+    }
+  },
+  "hardware": {
+    "instance": "c5.large",
+    "vCPU": 2,
+    "memGiB": 4,
+    "os": "Ubuntu 18.04",
+    "java": "Temurin JDK 17"
+  },
+  "concurrency": [100, 200, 500, 1000],
+  "messageSizesB": [50, 1024, 10240, 102400],
+  "apis": ["echo", "mediation"],
+  "throughput": {
+    "echo": {
+      "50": {
+        "100": 4500,
+        "200": 8200,
+        "500": 12000,
+        "1000": 14500
+      },
+      "1024": {
+        "100": 4200,
+        "200": 7800,
+        "500": 11200,
+        "1000": 13500
+      },
+      "10240": {
+        "100": 3800,
+        "200": 6900,
+        "500": 9800,
+        "1000": 11800
+      },
+      "102400": {
+        "100": 2800,
+        "200": 5100,
+        "500": 7200,
+        "1000": 8600
+      }
+    },
+    "mediation": {
+      "50": {
+        "100": 3200,
+        "200": 5800,
+        "500": 8500,
+        "1000": 10200
+      },
+      "1024": {
+        "100": 3000,
+        "200": 5400,
+        "500": 7800,
+        "1000": 9400
+      },
+      "10240": {
+        "100": 2600,
+        "200": 4700,
+        "500": 6800,
+        "1000": 8200
+      },
+      "102400": {
+        "100": 1900,
+        "200": 3500,
+        "500": 5000,
+        "1000": 6000
+      }
+    }
+  },
+  "latency": {
+    "echo": {
+      "50": {
+        "100": {"avg": 21, "p90": 28, "p99": 42},
+        "200": {"avg": 23, "p90": 31, "p99": 48},
+        "500": {"avg": 39, "p90": 52, "p99": 78},
+        "1000": {"avg": 67, "p90": 89, "p99": 135}
+      },
+      "1024": {
+        "100": {"avg": 22, "p90": 30, "p99": 45},
+        "200": {"avg": 24, "p90": 33, "p99": 51},
+        "500": {"avg": 42, "p90": 56, "p99": 84},
+        "1000": {"avg": 72, "p90": 95, "p99": 145}
+      },
+      "10240": {
+        "100": {"avg": 25, "p90": 34, "p99": 52},
+        "200": {"avg": 27, "p90": 37, "p99": 58},
+        "500": {"avg": 48, "p90": 64, "p99": 96},
+        "1000": {"avg": 82, "p90": 108, "p99": 165}
+      },
+      "102400": {
+        "100": {"avg": 34, "p90": 46, "p99": 70},
+        "200": {"avg": 37, "p90": 50, "p99": 78},
+        "500": {"avg": 67, "p90": 89, "p99": 135},
+        "1000": {"avg": 112, "p90": 148, "p99": 225}
+      }
+    },
+    "mediation": {
+      "50": {
+        "100": {"avg": 29, "p90": 39, "p99": 59},
+        "200": {"avg": 32, "p90": 43, "p99": 67},
+        "500": {"avg": 56, "p90": 74, "p99": 112},
+        "1000": {"avg": 95, "p90": 126, "p99": 190}
+      },
+      "1024": {
+        "100": {"avg": 31, "p90": 42, "p99": 63},
+        "200": {"avg": 34, "p90": 46, "p99": 71},
+        "500": {"avg": 60, "p90": 80, "p99": 120},
+        "1000": {"avg": 103, "p90": 136, "p99": 205}
+      },
+      "10240": {
+        "100": {"avg": 36, "p90": 48, "p99": 73},
+        "200": {"avg": 40, "p90": 53, "p99": 82},
+        "500": {"avg": 69, "p90": 92, "p99": 138},
+        "1000": {"avg": 118, "p90": 156, "p99": 235}
+      },
+      "102400": {
+        "100": {"avg": 49, "p90": 66, "p99": 100},
+        "200": {"avg": 54, "p90": 72, "p99": 112},
+        "500": {"avg": 96, "p90": 128, "p99": 192},
+        "1000": {"avg": 163, "p90": 216, "p99": 325}
+      }
+    }
+  },
+  "notes": {
+    "dataSource": "Based on WSO2 APIM 4.5.0 Performance Test Results",
+    "testScenarios": "Echo API (pass-through) and Mediation API (payload transformation)",
+    "messageSizeNote": "Message sizes: 50B, 1KiB, 10KiB, 100KiB",
+    "concurrencyNote": "Concurrent users: 100, 200, 500, 1000",
+    "disclaimer": "Performance results are indicative and may vary based on actual deployment environment, network conditions, backend services, and other factors. It is recommended to conduct performance testing specific to your use case and environment."
+  }
+}

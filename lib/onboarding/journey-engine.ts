@@ -108,6 +108,14 @@ export function generateJourney(role: Persona, goal: GoalId): Journey {
         },
         {
           type: 'playground',
+          title: 'Capacity Planning Calculator',
+          description: 'Size your infrastructure correctly from the start',
+          url: '/playgrounds/capacity-planning',
+          priority: 'secondary',
+          estimatedTime: '15 min',
+        },
+        {
+          type: 'playground',
           title: 'Business Architecture',
           description: 'Start with business architecture view',
           url: '/architecture-playground/business',
@@ -119,6 +127,7 @@ export function generateJourney(role: Persona, goal: GoalId): Journey {
         'Map functional requirements to architecture components',
         'Select appropriate patterns for your constraints',
         'Design integration points and data flows',
+        'Calculate capacity requirements for your workload',
         'Document decisions and trade-offs',
       ],
     },
@@ -169,6 +178,14 @@ export function generateJourney(role: Persona, goal: GoalId): Journey {
         },
         {
           type: 'playground',
+          title: 'Capacity Planning Calculator',
+          description: 'Calculate infrastructure requirements',
+          url: '/playgrounds/capacity-planning',
+          priority: 'secondary',
+          estimatedTime: '15 min',
+        },
+        {
+          type: 'playground',
           title: 'Enterprise Integration',
           description: 'Practice integration patterns',
           url: '/playgrounds/enterprise-integration',
@@ -180,6 +197,7 @@ export function generateJourney(role: Persona, goal: GoalId): Journey {
         'Build a simple pub-sub pattern',
         'Add error handling and retry logic',
         'Test with different failure scenarios',
+        'Calculate capacity needs for your expected load',
         'Move to Data Pipeline for more complex flows',
       ],
     },
@@ -237,6 +255,71 @@ export function generateJourney(role: Persona, goal: GoalId): Journey {
         'Select storage patterns for different use cases',
         'Plan data governance and quality controls',
         'Document data lineage and dependencies',
+      ],
+    },
+
+    // Documentation journeys
+    'ea-create-documentation': {
+      recs: [
+        {
+          type: 'playground',
+          title: 'Architecture Documentation Explorer',
+          description: 'Learn how to structure documentation across Business, Solution, and Deployment layers',
+          url: '/playgrounds/architecture-docs',
+          priority: 'primary',
+          estimatedTime: '15 min',
+        },
+        {
+          type: 'playground',
+          title: 'Architecture Playground',
+          description: 'Create visual architecture diagrams',
+          url: '/architecture-playground',
+          priority: 'secondary',
+        },
+      ],
+      steps: [
+        'Understand the C4 model (Context, Containers, Components, Code)',
+        'Explore how different roles need different views',
+        'Create Business Architecture view (L0-L1)',
+        'Design Solution Architecture view (L1-L2)',
+        'Document Deployment Architecture (L1-L2)',
+        'Maintain consistency across all documentation',
+      ],
+    },
+    'ba-create-documentation': {
+      recs: [
+        {
+          type: 'playground',
+          title: 'Architecture Documentation Explorer',
+          description: 'Structure documentation for business and technical audiences',
+          url: '/playgrounds/architecture-docs',
+          priority: 'primary',
+          estimatedTime: '15 min',
+        },
+      ],
+      steps: [
+        'Start with business architecture view',
+        'Map capabilities to processes',
+        'Document integrations and dependencies',
+        'Keep documentation updated as architecture evolves',
+      ],
+    },
+    'implementation-create-documentation': {
+      recs: [
+        {
+          type: 'playground',
+          title: 'Architecture Documentation Explorer',
+          description: 'Create technical documentation for implementation teams',
+          url: '/playgrounds/architecture-docs',
+          priority: 'primary',
+          estimatedTime: '15 min',
+        },
+      ],
+      steps: [
+        'Focus on Solution and Deployment architecture layers',
+        'Document component interfaces and contracts',
+        'Include deployment and operational details',
+        'Link documentation to code repositories',
       ],
     },
 
