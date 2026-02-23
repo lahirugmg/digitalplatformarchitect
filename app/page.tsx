@@ -198,7 +198,7 @@ export default function HomePage() {
             {[
               { value: '9', label: 'Building Blocks', color: 'text-purple-600' },
               { value: '65+', label: 'Patterns', color: 'text-blue-600' },
-              { value: '7', label: 'Playgrounds', color: 'text-cyan-600' },
+              { value: '8', label: 'Playgrounds', color: 'text-cyan-600' },
               { value: '9', label: 'Personas', color: 'text-pink-600' },
             ].map((stat) => (
               <div key={stat.label} className="text-center py-3">

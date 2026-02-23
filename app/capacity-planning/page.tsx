@@ -102,7 +102,7 @@ export default function CapacityPlanningPage() {
             {
               title: 'Review Operational Sympathy',
               description: 'Go back to review your architecture assessment scores',
-              href: '/operational-sympathy',
+              href: '/playgrounds/operational-sympathy',
               icon: '✅'
             }
           ]}

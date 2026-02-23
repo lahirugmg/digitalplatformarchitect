@@ -28,7 +28,7 @@ export const READINESS_STEPS: ReadinessStep[] = [
     title: 'Operational Sympathy Assessment',
     description: 'Evaluate your architecture against 9 key production-ready elements',
     theoryLink: '/articles/operational-sympathy', // Will create this
-    playgroundLink: '/operational-sympathy',
+    playgroundLink: '/playgrounds/operational-sympathy',
     icon: '✅',
     category: 'assessment',
     estimatedTime: '15-20 min',

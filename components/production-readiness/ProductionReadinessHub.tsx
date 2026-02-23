@@ -418,7 +418,7 @@ export function ProductionReadinessHub() {
           <div className="flex justify-center gap-4">
             {progress.overallProgress === 0 ? (
               <a
-                href="/operational-sympathy"
+                href="/playgrounds/operational-sympathy"
                 className="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-bold hover:bg-blue-50 transition shadow-lg text-lg"
               >
                 Start with Step 1 →
@@ -432,7 +432,7 @@ export function ProductionReadinessHub() {
               </button>
             ) : (
               <a
-                href={steps.find(s => s.status !== 'completed')?.playgroundLink || '/operational-sympathy'}
+                href={steps.find(s => s.status !== 'completed')?.playgroundLink || '/playgrounds/operational-sympathy'}
                 className="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-bold hover:bg-blue-50 transition shadow-lg text-lg"
               >
                 Continue Assessment →

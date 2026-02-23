@@ -44,6 +44,17 @@ const PLAYGROUNDS: PlaygroundCard[] = [
     href: '/playgrounds/capacity-planning',
   },
   {
+    id: 'operational-sympathy',
+    title: 'Operational Sympathy Scorecard',
+    icon: '🧭',
+    description:
+      'Evaluate production readiness with a weighted nine-element scorecard. Identify operational risks and export a concise report.',
+    difficulty: 'Beginner',
+    duration: '10-15 min',
+    tags: ['Production Readiness', 'Risk Assessment', 'Operations'],
+    href: '/playgrounds/operational-sympathy',
+  },
+  {
     id: 'data-pipeline',
     title: 'Data Pipeline Choreography',
     icon: '🌊',

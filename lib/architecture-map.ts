@@ -166,7 +166,7 @@ export const ARCHITECTURE_TREE: ArchitectureNode = {
           level: 'L1',
           personas: ['architect', 'engineer'],
           category: 'deployment',
-          docLink: '/operational-sympathy',
+          docLink: '/playgrounds/operational-sympathy',
           children: [
             {
               id: 'metrics',
