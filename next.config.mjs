@@ -9,6 +9,8 @@ const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   // Avoid build failures due to slow static generation on content-heavy pages
   staticPageGenerationTimeout: 120,
+  // Enable Turbopack (default in Next.js 16)
+  turbopack: {},
   async redirects() {
     return [
       {
