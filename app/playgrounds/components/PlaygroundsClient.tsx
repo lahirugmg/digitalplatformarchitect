@@ -9,6 +9,7 @@ import {
   Gauge,
   Network,
   ShieldCheck,
+  ShieldAlert,
 } from 'lucide-react'
 import ContextOverrideControl from '@/components/personalization/ContextOverrideControl'
 import PersonalizedSectionHeader from '@/components/personalization/PersonalizedSectionHeader'
@@ -61,6 +62,17 @@ const PLAYGROUNDS: PlaygroundCard[] = [
     tags: ['Production Readiness', 'Risk Assessment', 'Operations'],
     href: '/playgrounds/operational-sympathy',
     Icon: ShieldCheck,
+  },
+  {
+    id: 'security-assessment',
+    title: 'Security Assessment Matrix',
+    description:
+      'Evaluate platform security posture across ten weighted controls and surface the highest-impact remediation priorities.',
+    difficulty: 'Beginner',
+    duration: '10-15 min',
+    tags: ['Security', 'Risk Assessment', 'Compliance'],
+    href: '/playgrounds/security-assessment',
+    Icon: ShieldAlert,
   },
   {
     id: 'data-pipeline',
