@@ -45,10 +45,10 @@ const PLAYGROUNDS: PlaygroundCard[] = [
     id: 'capacity-planning',
     title: 'Capacity Planning Calculator',
     description:
-      'Estimate infrastructure requirements and cost under expected and peak traffic conditions.',
+      'Use industry templates to compare baseline and optimized scenarios with 12-month capacity and cost projections.',
     difficulty: 'Beginner',
     duration: '10-15 min',
-    tags: ['Infrastructure', 'Cost Optimization', 'Performance'],
+    tags: ['Templates', 'Scenario Compare', 'Cost Forecasting'],
     href: '/playgrounds/capacity-planning',
     Icon: Gauge,
   },

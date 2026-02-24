@@ -121,3 +121,21 @@ test('buildRankedRecommendations uses learningProgress as primary progress signa
   assert.ok(progressHub)
   assert.equal(progressHub.score.progressAlignment, 20)
 })
+
+test('production-readiness capacity recommendation uses canonical playground route', () => {
+  const state = createEmptyProfileState()
+
+  const recommendations = buildRankedRecommendations({
+    surface: 'production-readiness',
+    context: context(null, null),
+    profileState: state,
+    sessionActive: false,
+  })
+
+  const capacityRecommendation = recommendations.find(
+    (item) => item.id === 'production-readiness-capacity-planning',
+  )
+
+  assert.ok(capacityRecommendation)
+  assert.equal(capacityRecommendation?.href, '/playgrounds/capacity-planning')
+})

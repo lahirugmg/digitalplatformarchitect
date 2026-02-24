@@ -39,7 +39,7 @@ export const READINESS_STEPS: ReadinessStep[] = [
     title: 'Infrastructure Capacity Planning',
     description: 'Size your infrastructure based on traffic patterns and performance targets',
     theoryLink: '/articles/capacity-planning', // Will create this
-    playgroundLink: '/capacity-planning',
+    playgroundLink: '/playgrounds/capacity-planning',
     icon: '📊',
     category: 'planning',
     estimatedTime: '10-15 min',

@@ -223,7 +223,7 @@ export const PERSONALIZATION_CATALOG: PersonalizationCatalogItem[] = [
     surface: 'production-readiness',
     title: 'Infrastructure Capacity Planning',
     description: 'Estimate load envelopes and right-size your deployment footprint.',
-    href: '/capacity-planning',
+    href: '/playgrounds/capacity-planning',
     type: 'assessment',
     roles: ['implementation', 'ea', 'data'],
     goals: ['assess-readiness', 'performance-optimization', 'cloud-migration'],

@@ -15,6 +15,7 @@ test('homepage and playground surfaces keep core navigation paths', () => {
   const header = read('components/Header.tsx')
   const footer = read('components/Footer.tsx')
   const skillTreeRedirect = read('app/skill-tree/page.tsx')
+  const capacityRedirect = read('app/capacity-planning/page.tsx')
 
   assert.match(homepage, /href="\/playgrounds"/)
   assert.match(homepage, /Get Personalized Guidance/)
@@ -25,6 +26,7 @@ test('homepage and playground surfaces keep core navigation paths', () => {
   assert.match(footer, /href="\/progress"/)
   assert.doesNotMatch(footer, /\/skill-tree/)
   assert.match(skillTreeRedirect, /permanentRedirect\('\/progress'\)/)
+  assert.match(capacityRedirect, /permanentRedirect\('\/playgrounds\/capacity-planning'\)/)
 })
 
 test('onboarding modal keeps accessibility dialog semantics', () => {

@@ -100,3 +100,30 @@ test('emitPersonalizationEvent supports progress milestone telemetry payloads', 
   assert.equal(calls[0]?.payload.milestone_id, 'design-data-pipeline')
   assert.equal(calls[0]?.payload.surface, 'progress')
 })
+
+test('emitPersonalizationEvent supports capacity planning telemetry payloads', () => {
+  const calls: Array<{ eventName: string; payload: Record<string, unknown> }> = []
+  setWindow({
+    va: {
+      track: (eventName: string, payload: Record<string, unknown>) => {
+        calls.push({ eventName, payload })
+      },
+    },
+  })
+
+  emitPersonalizationEvent('capacity_template_selected', {
+    surface: 'playgrounds',
+    template_id: 'ecommerce-api',
+    scenario_mode: 'compare',
+    provider_mode: 'aws-equivalent',
+    role: 'implementation',
+    goal: 'performance-optimization',
+    session_active: true,
+  })
+
+  assert.equal(calls.length, 1)
+  assert.equal(calls[0]?.eventName, 'capacity_template_selected')
+  assert.equal(calls[0]?.payload.template_id, 'ecommerce-api')
+  assert.equal(calls[0]?.payload.scenario_mode, 'compare')
+  assert.equal(calls[0]?.payload.provider_mode, 'aws-equivalent')
+})
