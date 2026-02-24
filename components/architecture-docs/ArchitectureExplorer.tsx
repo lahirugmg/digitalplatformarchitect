@@ -1,338 +1,552 @@
-"use client";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import * as d3 from "d3";
+'use client'
 
-type NodeType = "business" | "solution" | "deployment" | "concept";
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import * as d3 from 'd3'
+
+type NodeType = 'business' | 'solution' | 'deployment' | 'concept'
+
 type ArchNode = {
-  name: string;
-  level: number; // 0..3
-  type: NodeType;
-  children?: ArchNode[];
-  _children?: ArchNode[];
-  info?: string; // optional tooltip/description
-};
+  name: string
+  level: number
+  type: NodeType
+  children?: ArchNode[]
+  _children?: ArchNode[]
+  info?: string
+}
+
+type RolePreset = 'business' | 'architect' | 'engineer' | 'all'
+
+type SelectedNode = Pick<ArchNode, 'name' | 'level' | 'type' | 'info'>
 
 const COLORS: Record<NodeType, string> = {
-  concept: "#374151",
-  business: "#2563EB",
-  solution: "#059669",
-  deployment: "#7C3AED"
-};
-
-const LEVEL_LABELS = ["L0", "L1", "L2", "L3"];
-
-type RolePreset = "business" | "architect" | "engineer" | "all";
-
-// Small helpers to build nodes succinctly
-const N = (name: string, level: number, type: NodeType, info?: string, children?: ArchNode[]): ArchNode => ({ name, level, type, info, children });
-
-// Per-role trees reflecting requested connections and depth per layer
-const DATA_BY_ROLE: Record<RolePreset, ArchNode> = {
-  business: N("Digital Platform", 0, "concept", undefined, [
-    N("Business Architecture", 0, "business", "L0–L2: value streams → capabilities → key processes & KPIs.", [
-      N("Value Streams", 1, "business", undefined, [
-        N("Capabilities", 2, "business", "Key processes & KPIs", [
-          N("Key Processes", 3, "business"),
-          N("KPIs", 3, "business")
-        ])
-      ])
-    ]),
-    N("Solution Architecture", 0, "solution", "L0–L1: solution areas, buy‑vs‑build, major integrations, cost & risk.", [
-      N("Solution Areas", 1, "solution"),
-      N("Buy vs Build", 1, "solution"),
-      N("Major Integrations", 1, "solution"),
-      N("Cost & Risk", 1, "solution")
-    ]),
-    N("Deployment Architecture", 0, "deployment", "L0: deployment options (cloud/provider), resilience posture, compliance notes.")
-  ]),
-
-  architect: N("Digital Platform", 0, "concept", undefined, [
-    N("Business Architecture", 0, "business", "L0–L1: capability map, information domains, traceability to OKRs.", [
-      N("Capability Map", 1, "business"),
-      N("Information Domains", 1, "business"),
-      N("Traceability to OKRs", 1, "business")
-    ]),
-    N("Solution Architecture", 0, "solution", "L0–L2: context + container + component views, interfaces, patterns, trade‑offs.", [
-      N("Context", 1, "solution", undefined, [
-        N("Systems & Actors", 2, "solution"),
-        N("External Dependencies", 2, "solution")
-      ]),
-      N("Containers", 1, "solution", undefined, [
-        N("APIs & Interfaces", 2, "solution"),
-        N("Patterns & Trade‑offs", 2, "solution")
-      ]),
-      N("Components", 1, "solution", undefined, [
-        N("Modules/Services", 2, "solution"),
-        N("Contracts", 2, "solution")
-      ])
-    ]),
-    N("Deployment Architecture", 0, "deployment", "L0–L1: high‑level topology, environments, runtime concerns (HA/DR, scaling).", [
-      N("High‑level Topology", 1, "deployment"),
-      N("Environments", 1, "deployment"),
-      N("Runtime Concerns (HA/DR/Scaling)", 1, "deployment")
-    ])
-  ]),
-
-  engineer: N("Digital Platform", 0, "concept", undefined, [
-    N("Business Architecture", 0, "business", "L0–L1: enough domain context to understand why.", [
-      N("Domain Context (Why)", 1, "business")
-    ]),
-    N("Solution Architecture", 0, "solution", "L0–L2: components, APIs, schemas, contracts, sequence & event flows.", [
-      N("Components", 1, "solution", undefined, [
-        N("Modules/Services", 2, "solution"),
-        N("Data Schemas", 2, "solution"),
-        N("API Contracts", 2, "solution")
-      ]),
-      N("Interactions", 1, "solution", undefined, [
-        N("Sequence Flows", 2, "solution"),
-        N("Event Flows", 2, "solution")
-      ])
-    ]),
-    N("Deployment Architecture", 0, "deployment", "L0–L2: clusters/nodes, CI/CD, networking, secrets, SLOs/observability.", [
-      N("Platform", 1, "deployment", undefined, [
-        N("Clusters & Nodes", 2, "deployment"),
-        N("Networking", 2, "deployment")
-      ]),
-      N("Operations", 1, "deployment", undefined, [
-        N("CI/CD", 2, "deployment"),
-        N("Secrets", 2, "deployment"),
-        N("SLOs & Observability", 2, "deployment")
-      ])
-    ])
-  ]),
-
-  // Richest combined view (acts as a superset preview)
-  all: N("Digital Platform", 0, "concept", undefined, [
-    N("Business Architecture", 0, "business", "Value streams → capabilities → key processes & KPIs.", [
-      N("Value Streams", 1, "business", undefined, [
-        N("Capabilities", 2, "business", undefined, [
-          N("Key Processes", 3, "business"),
-          N("KPIs", 3, "business")
-        ])
-      ])
-    ]),
-    N("Solution Architecture", 0, "solution", "Context → containers → components; interfaces, patterns, trade‑offs.", [
-      N("Context", 1, "solution", undefined, [
-        N("Systems & Actors", 2, "solution"),
-        N("External Dependencies", 2, "solution")
-      ]),
-      N("Containers", 1, "solution", undefined, [
-        N("APIs & Interfaces", 2, "solution"),
-        N("Patterns & Trade‑offs", 2, "solution")
-      ]),
-      N("Components", 1, "solution", undefined, [
-        N("Modules/Services", 2, "solution"),
-        N("Contracts", 2, "solution")
-      ])
-    ]),
-    N("Deployment Architecture", 0, "deployment", "Topology → envs → runtime: HA/DR, scaling; SLOs & observability.", [
-      N("Topology", 1, "deployment", undefined, [
-        N("Cloud/Provider Options", 2, "deployment"),
-        N("Resilience Posture", 2, "deployment")
-      ]),
-      N("Environments", 1, "deployment", undefined, [
-        N("Dev/Test/Stage/Prod", 2, "deployment")
-      ]),
-      N("Runtime Concerns", 1, "deployment", undefined, [
-        N("HA/DR & Scaling", 2, "deployment"),
-        N("Compliance Notes", 2, "deployment"),
-        N("SLOs & Observability", 2, "deployment")
-      ])
-    ])
-  ])
-};
-
-function cloneDeep<T>(obj: T): T { return JSON.parse(JSON.stringify(obj)); }
-function collapseToLevel(root: ArchNode, maxLevel: number) {
-  const recur = (n: ArchNode) => {
-    if (!n.children) return;
-    if (n.level >= maxLevel) { n._children = n.children; n.children = undefined; }
-    else { n._children = undefined; n.children?.forEach(recur); }
-  };
-  recur(root);
+  concept: '#334155',
+  business: '#1d4ed8',
+  solution: '#0f766e',
+  deployment: '#b45309',
 }
-function toggleNode(n: any) { if (n.children) { n._children = n.children; n.children = null; } else { n.children = n._children; n._children = null; } }
 
-export function ArchitectureExplorer({ data, defaultRole = "business" }: { data?: ArchNode; defaultRole?: RolePreset }) {
-  const [rolePreset, setRolePreset] = useState<RolePreset>(defaultRole);
-  const [maxLevel, setMaxLevel] = useState<number>(2);
-  const svgRef = useRef<SVGSVGElement | null>(null);
-  const gRef = useRef<SVGGElement | null>(null);
-  const roleData = useMemo(() => cloneDeep(data ?? DATA_BY_ROLE[rolePreset]), [data, rolePreset]);
-  const prepared = useMemo(() => { const seed = cloneDeep(roleData); collapseToLevel(seed, maxLevel); return seed; }, [roleData, maxLevel]);
+const LEVEL_LABELS = ['L0', 'L1', 'L2', 'L3']
+
+const ROLE_OPTIONS: Array<{ key: RolePreset; label: string }> = [
+  { key: 'business', label: 'Business' },
+  { key: 'architect', label: 'Architect' },
+  { key: 'engineer', label: 'Engineer' },
+  { key: 'all', label: 'All views' },
+]
+
+const ROLE_HINTS: Record<RolePreset, string> = {
+  business:
+    'Business leaders typically stay at L0-L2 to validate value streams, capabilities, and KPI alignment before delivery planning.',
+  architect:
+    'Architects bridge business and delivery. They usually need L0-L2 to compare options, interfaces, and design trade-offs.',
+  engineer:
+    'Engineers focus on implementation and runtime behavior, often working at L1-L2 with selected L3 detail for execution.',
+  all: 'Combined mode helps compare what each audience sees and where important handoffs can be missed.',
+}
+
+const TYPE_LABELS: Record<NodeType, string> = {
+  business: 'Business layer',
+  solution: 'Solution layer',
+  deployment: 'Deployment layer',
+  concept: 'Concept',
+}
+
+const N = (
+  name: string,
+  level: number,
+  type: NodeType,
+  info?: string,
+  children?: ArchNode[]
+): ArchNode => ({ name, level, type, info, children })
+
+const DATA_BY_ROLE: Record<RolePreset, ArchNode> = {
+  business: N('Digital Platform', 0, 'concept', undefined, [
+    N('Business Architecture', 0, 'business', 'L0-L2: value streams, capabilities, key processes, and KPIs.', [
+      N('Value Streams', 1, 'business', undefined, [
+        N('Capabilities', 2, 'business', 'Key processes and KPI definitions.', [
+          N('Key Processes', 3, 'business'),
+          N('KPIs', 3, 'business'),
+        ]),
+      ]),
+    ]),
+    N('Solution Architecture', 0, 'solution', 'L0-L1: solution areas, buy vs build, integrations, cost and risk.', [
+      N('Solution Areas', 1, 'solution'),
+      N('Buy vs Build', 1, 'solution'),
+      N('Major Integrations', 1, 'solution'),
+      N('Cost and Risk', 1, 'solution'),
+    ]),
+    N('Deployment Architecture', 0, 'deployment', 'L0: deployment options, resilience posture, and compliance notes.'),
+  ]),
+
+  architect: N('Digital Platform', 0, 'concept', undefined, [
+    N('Business Architecture', 0, 'business', 'L0-L1: capability map, information domains, and traceability to OKRs.', [
+      N('Capability Map', 1, 'business'),
+      N('Information Domains', 1, 'business'),
+      N('Traceability to OKRs', 1, 'business'),
+    ]),
+    N('Solution Architecture', 0, 'solution', 'L0-L2: context, container, and component views with interfaces and trade-offs.', [
+      N('Context', 1, 'solution', undefined, [
+        N('Systems and Actors', 2, 'solution'),
+        N('External Dependencies', 2, 'solution'),
+      ]),
+      N('Containers', 1, 'solution', undefined, [
+        N('APIs and Interfaces', 2, 'solution'),
+        N('Patterns and Trade-offs', 2, 'solution'),
+      ]),
+      N('Components', 1, 'solution', undefined, [
+        N('Modules and Services', 2, 'solution'),
+        N('Contracts', 2, 'solution'),
+      ]),
+    ]),
+    N('Deployment Architecture', 0, 'deployment', 'L0-L1: high-level topology, environments, and runtime concerns.', [
+      N('High-level Topology', 1, 'deployment'),
+      N('Environments', 1, 'deployment'),
+      N('Runtime Concerns (HA/DR/Scaling)', 1, 'deployment'),
+    ]),
+  ]),
+
+  engineer: N('Digital Platform', 0, 'concept', undefined, [
+    N('Business Architecture', 0, 'business', 'L0-L1: enough domain context to understand intent.', [N('Domain Context', 1, 'business')]),
+    N('Solution Architecture', 0, 'solution', 'L0-L2: components, APIs, schemas, contracts, and interaction flows.', [
+      N('Components', 1, 'solution', undefined, [
+        N('Modules and Services', 2, 'solution'),
+        N('Data Schemas', 2, 'solution'),
+        N('API Contracts', 2, 'solution'),
+      ]),
+      N('Interactions', 1, 'solution', undefined, [
+        N('Sequence Flows', 2, 'solution'),
+        N('Event Flows', 2, 'solution'),
+      ]),
+    ]),
+    N('Deployment Architecture', 0, 'deployment', 'L0-L2: clusters, CI/CD, networking, secrets, and SLO/observability.', [
+      N('Platform', 1, 'deployment', undefined, [
+        N('Clusters and Nodes', 2, 'deployment'),
+        N('Networking', 2, 'deployment'),
+      ]),
+      N('Operations', 1, 'deployment', undefined, [
+        N('CI/CD', 2, 'deployment'),
+        N('Secrets', 2, 'deployment'),
+        N('SLOs and Observability', 2, 'deployment'),
+      ]),
+    ]),
+  ]),
+
+  all: N('Digital Platform', 0, 'concept', undefined, [
+    N('Business Architecture', 0, 'business', 'Value streams to capabilities to process and KPI ownership.', [
+      N('Value Streams', 1, 'business', undefined, [
+        N('Capabilities', 2, 'business', undefined, [
+          N('Key Processes', 3, 'business'),
+          N('KPIs', 3, 'business'),
+        ]),
+      ]),
+    ]),
+    N('Solution Architecture', 0, 'solution', 'Context, containers, and components with interfaces and trade-offs.', [
+      N('Context', 1, 'solution', undefined, [
+        N('Systems and Actors', 2, 'solution'),
+        N('External Dependencies', 2, 'solution'),
+      ]),
+      N('Containers', 1, 'solution', undefined, [
+        N('APIs and Interfaces', 2, 'solution'),
+        N('Patterns and Trade-offs', 2, 'solution'),
+      ]),
+      N('Components', 1, 'solution', undefined, [
+        N('Modules and Services', 2, 'solution'),
+        N('Contracts', 2, 'solution'),
+      ]),
+    ]),
+    N('Deployment Architecture', 0, 'deployment', 'Topology, environments, resilience, and runtime controls.', [
+      N('Topology', 1, 'deployment', undefined, [
+        N('Cloud and Provider Options', 2, 'deployment'),
+        N('Resilience Posture', 2, 'deployment'),
+      ]),
+      N('Environments', 1, 'deployment', undefined, [N('Dev/Test/Stage/Prod', 2, 'deployment')]),
+      N('Runtime Concerns', 1, 'deployment', undefined, [
+        N('HA/DR and Scaling', 2, 'deployment'),
+        N('Compliance Notes', 2, 'deployment'),
+        N('SLOs and Observability', 2, 'deployment'),
+      ]),
+    ]),
+  ]),
+}
+
+function cloneDeep<T>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj)) as T
+}
+
+function toSelectedNode(node: ArchNode): SelectedNode {
+  return {
+    name: node.name,
+    level: node.level,
+    type: node.type,
+    info: node.info,
+  }
+}
+
+function collapseToLevel(root: ArchNode, maxLevel: number) {
+  const visit = (node: ArchNode) => {
+    if (!node.children) {
+      return
+    }
+
+    if (node.level >= maxLevel) {
+      node._children = node.children
+      node.children = undefined
+      return
+    }
+
+    node._children = undefined
+    node.children.forEach(visit)
+  }
+
+  visit(root)
+}
+
+function toggleNode(node: ArchNode) {
+  if (node.children) {
+    node._children = node.children
+    node.children = undefined
+    return
+  }
+
+  if (node._children) {
+    node.children = node._children
+    node._children = undefined
+  }
+}
+
+function countNodes(root: ArchNode, includeCollapsed: boolean): number {
+  let count = 0
+
+  const visit = (node: ArchNode) => {
+    count += 1
+    const branches = includeCollapsed
+      ? [...(node.children ?? []), ...(node._children ?? [])]
+      : [...(node.children ?? [])]
+
+    branches.forEach(visit)
+  }
+
+  visit(root)
+  return count
+}
+
+function countVisibleByType(root: ArchNode): Record<NodeType, number> {
+  const totals: Record<NodeType, number> = {
+    business: 0,
+    solution: 0,
+    deployment: 0,
+    concept: 0,
+  }
+
+  const visit = (node: ArchNode) => {
+    totals[node.type] += 1
+    node.children?.forEach(visit)
+  }
+
+  visit(root)
+  return totals
+}
+
+export function ArchitectureExplorer({
+  data,
+  defaultRole = 'business',
+}: {
+  data?: ArchNode
+  defaultRole?: RolePreset
+}) {
+  const [rolePreset, setRolePreset] = useState<RolePreset>(defaultRole)
+  const [maxLevel, setMaxLevel] = useState(2)
+  const [renderVersion, setRenderVersion] = useState(0)
+  const [selectedNode, setSelectedNode] = useState<SelectedNode | null>(null)
+
+  const svgRef = useRef<SVGSVGElement | null>(null)
+  const gRef = useRef<SVGGElement | null>(null)
+
+  const roleData = useMemo(() => cloneDeep(data ?? DATA_BY_ROLE[rolePreset]), [data, rolePreset])
+  const prepared = useMemo(() => {
+    const seed = cloneDeep(roleData)
+    collapseToLevel(seed, maxLevel)
+    return seed
+  }, [roleData, maxLevel])
+
+  const totalNodes = useMemo(() => countNodes(roleData, true), [roleData])
+  const visibleNodes = useMemo(() => countNodes(prepared, false), [prepared])
+  const visibleByType = useMemo(() => countVisibleByType(prepared), [prepared])
 
   useEffect(() => {
-    // Sensible defaults per role, can be overridden using L0-L3 buttons
-    if (rolePreset === "business") setMaxLevel(2);
-    if (rolePreset === "architect") setMaxLevel(2);
-    if (rolePreset === "engineer") setMaxLevel(2);
-    if (rolePreset === "all") setMaxLevel(3);
-  }, [rolePreset]);
+    setSelectedNode(toSelectedNode(roleData))
+  }, [roleData])
 
   useEffect(() => {
-    const svg = d3.select(svgRef.current);
-    const g = d3.select(gRef.current);
-    const width = svgRef.current?.clientWidth ?? 900;
-    const height = svgRef.current?.clientHeight ?? 600;
-    g.selectAll("*").remove();
+    const svgElement = svgRef.current
+    const groupElement = gRef.current
 
-    const zoom = d3.zoom().scaleExtent([0.4, 2.5]).on("zoom", (event: any) => {
-      g.attr("transform", event.transform.toString());
-    });
-    svg.call(zoom as any);
+    if (!svgElement || !groupElement) {
+      return
+    }
 
-    const root = d3.hierarchy(prepared as any);
-    const tree = d3.tree().size([height - 40, width - 220]);
-    const rootPoint = tree(root) as any;
+    const svg = d3.select(svgElement)
+    const group = d3.select(groupElement)
+    const width = svgElement.clientWidth || 960
+    const height = svgElement.clientHeight || 520
 
-    g.selectAll("path.link")
+    svg.on('.zoom', null)
+    svg.on('dblclick', null)
+    group.selectAll('*').remove()
+
+    const zoom = d3
+      .zoom<SVGSVGElement, unknown>()
+      .scaleExtent([0.4, 2.5])
+      .on('zoom', (event) => {
+        group.attr('transform', event.transform.toString())
+      })
+
+    svg.call(zoom)
+
+    const root = d3.hierarchy(prepared)
+    const tree = d3.tree<ArchNode>().size([height - 48, width - 260])
+    const rootPoint = tree(root)
+
+    group
+      .selectAll<SVGPathElement, d3.HierarchyPointLink<ArchNode>>('path.link')
       .data(rootPoint.links())
       .enter()
-      .append("path")
-      .attr("class", "link")
-      .attr("fill", "none")
-      .attr("stroke", "#D1D5DB")
-      .attr("stroke-width", 2)
-      .attr("d", (d3.linkHorizontal() as any).x((d: any) => d.y).y((d: any) => d.x));
+      .append('path')
+      .attr('class', 'link')
+      .attr('fill', 'none')
+      .attr('stroke', '#cbd5e1')
+      .attr('stroke-width', 1.75)
+      .attr('d', d3.linkHorizontal<d3.HierarchyPointLink<ArchNode>, d3.HierarchyPointNode<ArchNode>>()
+        .x((d) => d.y)
+        .y((d) => d.x))
 
-    const node = g.selectAll("g.node")
+    const node = group
+      .selectAll<SVGGElement, d3.HierarchyPointNode<ArchNode>>('g.node')
       .data(rootPoint.descendants())
       .enter()
-      .append("g")
-      .attr("class", "node cursor-pointer")
-      .attr("transform", (d: any) => `translate(${d.y},${d.x})`)
-      .on("click", (_: any, d: any) => { toggleNode(d.data); setMaxLevel((m) => m + 0); });
+      .append('g')
+      .attr('class', 'node')
+      .attr('transform', (d) => `translate(${d.y},${d.x})`)
+      .attr('tabindex', 0)
+      .attr('role', 'button')
+      .attr('aria-label', (d) => `${d.data.name}, ${TYPE_LABELS[d.data.type]}, ${LEVEL_LABELS[d.data.level]}`)
+      .style('cursor', 'pointer')
+      .on('click', (_, d) => {
+        toggleNode(d.data)
+        setSelectedNode(toSelectedNode(d.data))
+        setRenderVersion((value) => value + 1)
+      })
+      .on('keydown', (event: any, d) => {
+        if (event.key !== 'Enter' && event.key !== ' ') {
+          return
+        }
 
-    node.append("circle").attr("r", 16).attr("fill", (d: any) => COLORS[(d.data.type as NodeType)]).attr("stroke", "white").attr("stroke-width", 2).attr("opacity", (d: any) => (d.data.level <= maxLevel ? 1 : 0.6));
+        event.preventDefault()
+        toggleNode(d.data)
+        setSelectedNode(toSelectedNode(d.data))
+        setRenderVersion((value) => value + 1)
+      })
+
     node
-      .append("text")
-      .attr("dy", 5)
-      .attr("x", 24)
-      .attr("font-size", 15)
-      .attr("font-family", "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial")
-      .text((d: any) => d.data.name)
-      .attr("fill", "#111827")
-      .attr("opacity", (d: any) => (d.data.level <= maxLevel ? 1 : 0.85));
+      .append('circle')
+      .attr('r', 14)
+      .attr('fill', (d) => COLORS[d.data.type])
+      .attr('stroke', '#ffffff')
+      .attr('stroke-width', 2)
 
-    // Native tooltip with role-specific info when available
-    node.append("title").text((d: any) => d.data.info ? `${d.data.name}: ${d.data.info}` : d.data.name);
+    node
+      .append('text')
+      .attr('text-anchor', 'middle')
+      .attr('dy', 4)
+      .attr('font-size', 10)
+      .attr('font-weight', 700)
+      .attr('fill', '#ffffff')
+      .text((d) => {
+        if (d.data.children) {
+          return '-'
+        }
 
-    // Fit-to-view: compute bounding box of rendered content and center it with margin
+        if (d.data._children) {
+          return '+'
+        }
+
+        return ''
+      })
+
+    node
+      .append('text')
+      .attr('x', 22)
+      .attr('dy', 5)
+      .attr('font-size', 13)
+      .attr('font-family', 'var(--font-body), sans-serif')
+      .attr('fill', '#0f172a')
+      .text((d) => d.data.name)
+
+    node
+      .append('title')
+      .text((d) => (d.data.info ? `${d.data.name}: ${d.data.info}` : d.data.name))
+
     try {
-      const margin = 40;
-      const gNode = gRef.current as SVGGElement | null;
-      if (gNode) {
-        const bbox = gNode.getBBox();
-        const scale = Math.min(
-          2.5,
-          Math.max(
-            0.4,
-            Math.min(
-              (width - margin * 2) / Math.max(1, bbox.width),
-              (height - margin * 2) / Math.max(1, bbox.height)
-            )
-          )
-        );
-        const tx = (width - scale * bbox.width) / 2 - scale * bbox.x;
-        const ty = margin - scale * bbox.y; // bias slightly to top for better visibility
-        const fitted = d3.zoomIdentity.translate(tx, ty).scale(scale);
-        svg.transition().duration(300).call(zoom.transform as any, fitted);
-        svg.on("dblclick.zoom", null);
-        svg.on("dblclick", () => { svg.transition().duration(300).call(zoom.transform as any, fitted); });
-      }
-    } catch {}
-  }, [prepared, maxLevel]);
+      const margin = 32
+      const box = groupElement.getBBox()
+      const scale = Math.min(
+        2.5,
+        Math.max(
+          0.4,
+          Math.min((width - margin * 2) / Math.max(1, box.width), (height - margin * 2) / Math.max(1, box.height))
+        )
+      )
+
+      const tx = (width - scale * box.width) / 2 - scale * box.x
+      const ty = (height - scale * box.height) / 2 - scale * box.y
+      const fitted = d3.zoomIdentity.translate(tx, ty).scale(scale)
+
+      svg.transition().duration(220).call(zoom.transform as any, fitted)
+      svg.on('dblclick.zoom', null)
+      svg.on('dblclick', () => {
+        svg.transition().duration(220).call(zoom.transform as any, fitted)
+      })
+    } catch {
+      // no-op if bbox fails on first paint
+    }
+
+    return () => {
+      svg.on('.zoom', null)
+      svg.on('dblclick', null)
+    }
+  }, [prepared, renderVersion])
 
   return (
-    <div className="stack gap-sm" style={{ border: "1px solid var(--border)", borderRadius: 12, padding: 12, background: "var(--surface)" }}>
-      <div className="stack gap-sm" style={{ alignItems: "center" }}>
-        <div>
-          <strong>Explore Architecture Documentation Layers</strong>
-        </div>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {[{ key: "business", label: "Business" }, { key: "architect", label: "Architect" }, { key: "engineer", label: "Engineer" }, { key: "all", label: "All" }].map((p) => (
-            <button key={p.key} onClick={() => setRolePreset(p.key as any)} className="button sm" style={{ background: rolePreset === p.key ? "var(--primary)" : "var(--surface)", color: rolePreset === p.key ? "#fff" : "var(--text)" }}>{p.label}</button>
-          ))}
-          <span style={{ marginInlineStart: 8, color: "var(--text-secondary)", fontSize: 12 }}>Max Level</span>
-          {LEVEL_LABELS.map((lab, i) => (
-            <button key={lab} onClick={() => setMaxLevel(i)} className="button sm" style={{ background: maxLevel === i ? "var(--primary)" : "var(--surface)", color: maxLevel === i ? "#fff" : "var(--text)" }}>{lab}</button>
-          ))}
-        </div>
-        {/* Role mapping hint */}
-        <div style={{ fontSize: 12, color: "var(--text-secondary)", textAlign: "center" }}>
-          {rolePreset === "architect" && (
-            <span>
-              Architect: Business L0–L1 (capability map, info domains, OKR traceability), Solution L0–L2, Deployment L0–L1
+    <section className="card-standard animate-fade-in" aria-label="Architecture documentation explorer">
+      <div className="flex flex-col gap-4 border-b border-slate-200 pb-4">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="text-xl font-semibold text-slate-900">Architecture Documentation Explorer</h2>
+            <p className="text-sm text-slate-600">
+              Compare what each role needs at each level of architectural detail.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2 text-xs">
+            <span className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700">
+              {visibleNodes} visible nodes
             </span>
-          )}
-          {rolePreset === "engineer" && (
-            <span>
-              Engineer: Business L0–L1 (domain context), Solution L0–L2 (components/APIs/flows), Deployment L0–L2 (platform, ops)
+            <span className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700">
+              {totalNodes} total nodes
             </span>
-          )}
-          {rolePreset === "all" && (
-            <span>
-              All: Combined view across layers with deepest available detail
-            </span>
-          )}
+          </div>
         </div>
 
-        {/* Diagram legend */}
-        <div
-          aria-label="Legend"
-          className="diagram-legend"
-          style={{
-            display: "flex",
-            gap: 16,
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 8,
-            marginTop: 4,
-            border: "1px solid var(--border)",
-            borderRadius: 8,
-            background: "#fff",
-          }}
-        >
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-            <span style={{ width: 10, height: 10, borderRadius: "50%", background: COLORS.business, display: "inline-block", border: "1px solid rgba(0,0,0,0.1)" }} />
-            <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Business</span>
-          </span>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-            <span style={{ width: 10, height: 10, borderRadius: "50%", background: COLORS.solution, display: "inline-block", border: "1px solid rgba(0,0,0,0.1)" }} />
-            <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Solution</span>
-          </span>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-            <span style={{ width: 10, height: 10, borderRadius: "50%", background: COLORS.deployment, display: "inline-block", border: "1px solid rgba(0,0,0,0.1)" }} />
-            <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Deployment</span>
-          </span>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-            <span style={{ width: 10, height: 10, borderRadius: "50%", background: COLORS.concept, display: "inline-block", border: "1px solid rgba(0,0,0,0.1)" }} />
-            <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Concept</span>
-          </span>
+        <div className="space-y-3">
+          <div
+            className="flex flex-wrap gap-2"
+            role="radiogroup"
+            aria-label="Select role view"
+          >
+            {ROLE_OPTIONS.map((option) => (
+              <button
+                key={option.key}
+                type="button"
+                role="radio"
+                aria-checked={rolePreset === option.key}
+                onClick={() => {
+                  setRolePreset(option.key)
+                  setMaxLevel(option.key === 'all' ? 3 : 2)
+                }}
+                className={`rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors duration-200 ${
+                  rolePreset === option.key
+                    ? 'border-blue-700 bg-accent text-white'
+                    : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50'
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
 
-          <span aria-hidden="true" style={{ width: 1, height: 18, background: "var(--border)" }} />
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Detail level</span>
+            {LEVEL_LABELS.map((label, index) => (
+              <button
+                key={label}
+                type="button"
+                aria-pressed={maxLevel === index}
+                onClick={() => setMaxLevel(index)}
+                className={`rounded-md border px-2.5 py-1 text-sm font-medium transition-colors duration-200 ${
+                  maxLevel === index
+                    ? 'border-blue-700 bg-accent text-white'
+                    : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => setMaxLevel(3)}
+              className="rounded-md border border-slate-300 bg-white px-2.5 py-1 text-sm font-medium text-slate-700 transition-colors duration-200 hover:border-slate-400 hover:bg-slate-50"
+            >
+              Expand all
+            </button>
+            <button
+              type="button"
+              onClick={() => setRenderVersion((value) => value + 1)}
+              className="rounded-md border border-slate-300 bg-white px-2.5 py-1 text-sm font-medium text-slate-700 transition-colors duration-200 hover:border-slate-400 hover:bg-slate-50"
+            >
+              Refit view
+            </button>
+          </div>
+        </div>
+      </div>
 
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-            <svg width="34" height="14" viewBox="0 0 34 14" aria-label="Connector sample">
-              <path d="M2 7 H32" stroke="#D1D5DB" strokeWidth="2" fill="none" />
+      <div className="mt-4 grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
+        <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-white">
+          <div className="pointer-events-none absolute left-3 top-3 z-10 rounded-md bg-white/90 px-2 py-1 text-xs text-slate-500 shadow-sm">
+            Drag to pan. Scroll to zoom. Double-click to refit.
+          </div>
+          <div className="h-[420px] sm:h-[500px]">
+            <svg ref={svgRef} className="h-full w-full" role="img" aria-label="Interactive architecture documentation tree">
+              <g ref={gRef} />
             </svg>
-            <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Connector</span>
-          </span>
-
-          <span aria-hidden="true" style={{ width: 1, height: 18, background: "var(--border)" }} />
-
-          <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>L0–L3: depth of detail</span>
-          <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Click nodes to expand/collapse</span>
-          <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Scroll/drag to zoom & pan</span>
-          <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>Double‑click to refit</span>
+          </div>
         </div>
+
+        <aside className="space-y-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Role focus</p>
+            <p className="mt-1 text-sm text-slate-700">{ROLE_HINTS[rolePreset]}</p>
+          </div>
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Current selection</p>
+            {selectedNode ? (
+              <div className="mt-2 space-y-1 rounded-lg border border-slate-200 bg-white p-3">
+                <p className="text-sm font-semibold text-slate-900">{selectedNode.name}</p>
+                <p className="text-xs text-slate-600">
+                  {TYPE_LABELS[selectedNode.type]} - {LEVEL_LABELS[selectedNode.level]}
+                </p>
+                {selectedNode.info ? <p className="text-xs text-slate-600">{selectedNode.info}</p> : null}
+              </div>
+            ) : (
+              <p className="mt-1 text-sm text-slate-600">Select a node to inspect details.</p>
+            )}
+          </div>
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Visible layer mix</p>
+            <ul className="mt-2 space-y-2">
+              {(Object.keys(TYPE_LABELS) as NodeType[]).map((type) => (
+                <li key={type} className="flex items-center justify-between rounded-md border border-slate-200 bg-white px-2.5 py-1.5 text-xs">
+                  <span className="inline-flex items-center gap-2 text-slate-700">
+                    <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: COLORS[type] }} aria-hidden="true" />
+                    {TYPE_LABELS[type]}
+                  </span>
+                  <span className="font-semibold text-slate-900">{visibleByType[type]}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
       </div>
-      <div style={{ height: 520, borderRadius: 12, overflow: "hidden", background: "#fff" }}>
-        <svg ref={svgRef} style={{ width: "100%", height: "100%" }}>
-          <g ref={gRef} />
-        </svg>
-      </div>
-    </div>
-  );
+    </section>
+  )
 }
