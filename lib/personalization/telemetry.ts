@@ -8,6 +8,9 @@ export type PersonalizationEventName =
   | 'personalization_context_override'
   | 'personalization_reco_dismiss'
   | 'personalization_next_step_completed'
+  | 'ux_theme_applied'
+  | 'ux_compact_mode_toggled'
+  | 'ux_home_cta_click'
 
 export interface PersonalizationTelemetryPayload {
   surface: PersonalizationSurfaceId
@@ -15,6 +18,7 @@ export interface PersonalizationTelemetryPayload {
   role: Persona | null
   goal: GoalId | null
   session_active: boolean
+  ux_variant?: string
 }
 
 export function emitPersonalizationEvent(

@@ -9,12 +9,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        blue: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
+        surface: {
+          0: '#f7f8fa',
+          1: '#ffffff',
+          2: '#eef2f7',
+        },
+        accent: {
+          DEFAULT: '#1d4ed8',
+          soft: '#dbeafe',
+        },
+        semantic: {
+          success: '#15803d',
+          warning: '#b45309',
+          danger: '#b91c1c',
         },
       },
       typography: (theme: any) => ({
@@ -33,21 +40,21 @@ const config: Config = {
               paddingBottom: '0.5rem',
             },
             h3: {
-              color: theme('colors.blue.900'),
+              color: theme('colors.slate.900'),
               fontWeight: '600',
             },
             a: {
-              color: theme('colors.blue.600'),
+              color: theme('colors.accent.DEFAULT'),
               textDecoration: 'none',
               fontWeight: '500',
               '&:hover': {
-                color: theme('colors.blue.700'),
+                color: '#1e40af',
                 textDecoration: 'underline',
               },
             },
             code: {
-              color: theme('colors.blue.700'),
-              backgroundColor: theme('colors.blue.50'),
+              color: theme('colors.accent.DEFAULT'),
+              backgroundColor: theme('colors.accent.soft'),
               padding: '0.25rem 0.5rem',
               borderRadius: '0.25rem',
               fontWeight: '500',
@@ -72,8 +79,8 @@ const config: Config = {
               borderRadius: '0.25rem',
             },
             blockquote: {
-              borderLeftColor: theme('colors.blue.500'),
-              backgroundColor: theme('colors.blue.50'),
+              borderLeftColor: theme('colors.accent.DEFAULT'),
+              backgroundColor: theme('colors.accent.soft'),
               borderLeftWidth: '4px',
               padding: '0.5rem 1.5rem',
               borderRadius: '0 0.5rem 0.5rem 0',
@@ -89,7 +96,7 @@ const config: Config = {
                 content: '"→"',
                 position: 'absolute',
                 left: 0,
-                color: theme('colors.blue.500'),
+                color: theme('colors.accent.DEFAULT'),
                 fontWeight: '700',
               },
             },
@@ -97,9 +104,9 @@ const config: Config = {
         },
       }),
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'slide-in-right': 'slideInRight 0.5s ease-out',
+        'fade-in': 'fadeIn 180ms ease-out',
+        'slide-up': 'slideUp 180ms ease-out',
+        'slide-in-right': 'slideInRight 180ms ease-out',
       },
       keyframes: {
         fadeIn: {

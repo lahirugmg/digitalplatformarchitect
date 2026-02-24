@@ -21,7 +21,7 @@ export default function PersonalizedSectionHeader({
       <div>
         <h2 className="text-xl font-bold text-slate-900 sm:text-2xl">{title}</h2>
         {subtitle && <p className="mt-1 text-sm text-slate-600">{subtitle}</p>}
-        <p className="mt-2 inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
+        <p className="mt-2 inline-flex items-center rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
           Why this: {buildContextSummary(context)}
         </p>
         {!sessionActive && (

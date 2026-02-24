@@ -152,3 +152,43 @@ Reference lens: Concepts from the books *System Design Interview* (requirements 
 3. Add quality baseline: unit tests for journey mapping and e2e smoke tests for onboarding.
 4. Add architecture spike: workspace data model for journeys, ADRs, and review approvals.
 
+## 9) Implementation Update (February 23, 2026)
+
+### Completed in this pass
+
+1. **Design token foundation** implemented in `app/globals.css` and `tailwind.config.ts` with neutral surfaces, one accent family, and semantic status colors.
+2. **Typography contract** implemented in `app/layout.tsx` using `next/font`:
+   - Headings: `Manrope`
+   - Body/UI: `Source Sans 3`
+3. **Shared component primitives** added:
+   - `.surface-base`, `.surface-elevated`, `.surface-muted`
+   - `.text-strong`, `.text-muted`
+   - `.btn-primary`, `.btn-secondary`, `.btn-ghost`
+   - `.card-standard`, `.card-interactive`
+4. **Homepage UX simplification** completed in `app/page.tsx`:
+   - Removed rainbow-heavy treatment in favor of neutral-first hierarchy.
+   - Reduced emoji emphasis and moved to icon-first card language.
+   - Enforced clearer CTA hierarchy (primary + optional secondary).
+5. **Playgrounds index harmonization** completed in `app/playgrounds/components/PlaygroundsClient.tsx`:
+   - Unified card hierarchy and metadata treatment.
+   - Muted chip language with accent used only for recommendation emphasis.
+6. **Onboarding visual cleanup** completed in:
+   - `components/onboarding/OnboardingModal.tsx`
+   - `components/onboarding/RoleSelector.tsx`
+   - `components/onboarding/GoalSelector.tsx`
+   - `components/onboarding/JourneyView.tsx`
+7. **Discovery page visual consistency** completed in:
+   - `app/patterns/PatternsClient.tsx`
+   - `app/articles/ArticlesClient.tsx`
+8. **Telemetry interface extension** completed in `lib/personalization/telemetry.ts`:
+   - Added `ux_theme_applied`
+   - Added `ux_compact_mode_toggled`
+   - Added `ux_home_cta_click`
+   - Added optional payload field `ux_variant`
+
+### Remaining items (next incremental pass)
+
+1. Add explicit compact-mode toggle UI to emit `ux_compact_mode_toggled`.
+2. Add automated browser-level smoke tests for homepage, onboarding, and playground navigation.
+3. Run formal visual QA rubric for color-clutter reduction and capture before/after screenshots.
+4. Add analytics dashboards for UX event trend monitoring (theme/CTA/context usage).

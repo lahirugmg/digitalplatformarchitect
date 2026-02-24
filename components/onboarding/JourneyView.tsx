@@ -10,31 +10,26 @@ import { ExternalLink, CheckCircle2, PlayCircle, BookOpen, Building, Blocks } fr
 const RECOMMENDATION_TYPE_INFO = {
   playground: {
     icon: PlayCircle,
-    color: 'blue',
     label: 'Interactive Playground',
-    badgeClass: 'bg-blue-100 text-blue-700',
+    badgeClass: 'bg-slate-100 text-slate-700',
   },
   pattern: {
     icon: Blocks,
-    color: 'violet',
     label: 'Pattern',
-    badgeClass: 'bg-violet-100 text-violet-700',
+    badgeClass: 'bg-slate-100 text-slate-700',
   },
   article: {
     icon: BookOpen,
-    color: 'cyan',
     label: 'Article',
-    badgeClass: 'bg-cyan-100 text-cyan-700',
+    badgeClass: 'bg-slate-100 text-slate-700',
   },
   'skill-tree': {
     icon: Building,
-    color: 'purple',
     label: 'Skill Tree',
-    badgeClass: 'bg-purple-100 text-purple-700',
+    badgeClass: 'bg-slate-100 text-slate-700',
   },
   'building-block': {
     icon: Building,
-    color: 'slate',
     label: 'Building Block',
     badgeClass: 'bg-slate-100 text-slate-700',
   },
@@ -69,7 +64,7 @@ export default function JourneyView() {
         <div className="inline-flex items-center gap-2 mb-4">
           <div
             className="w-12 h-12 rounded-full flex items-center justify-center text-2xl"
-            style={{ backgroundColor: `${roleProfile.color}20` }}
+            style={{ backgroundColor: '#dbeafe' }}
           >
             {goalInfo.icon}
           </div>
@@ -78,7 +73,7 @@ export default function JourneyView() {
           Your Personalized Journey
         </h2>
         <p className="text-slate-600 max-w-2xl mx-auto">
-          As a <span className="font-semibold" style={{ color: roleProfile.color }}>
+          As a <span className="font-semibold text-blue-700">
             {roleProfile.name}
           </span>, here&apos;s your path to{' '}
           <span className="font-semibold">{goalInfo.title.toLowerCase()}</span>
@@ -115,15 +110,15 @@ export default function JourneyView() {
 
       {/* Next Steps */}
       {journey.nextSteps.length > 0 && (
-        <div className="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-xl p-6">
-          <h3 className="text-sm font-bold text-purple-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+        <div className="rounded-xl border border-slate-200 bg-slate-50 p-6">
+          <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4" />
             Recommended Steps
           </h3>
           <ol className="space-y-2">
             {journey.nextSteps.map((step, idx) => (
               <li key={idx} className="flex gap-3 text-sm text-slate-700">
-                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-600 text-white flex items-center justify-center text-xs font-bold">
+                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">
                   {idx + 1}
                 </span>
                 <span className="pt-0.5">{step}</span>
@@ -137,7 +132,7 @@ export default function JourneyView() {
       <div className="flex gap-3 justify-center pt-4">
         <button
           onClick={handleStartJourney}
-          className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition shadow-lg shadow-purple-600/30"
+          className="px-6 py-3 rounded-lg bg-blue-600 text-white font-semibold transition hover:bg-blue-700 shadow-sm"
         >
           Start My Journey
         </button>
@@ -161,19 +156,19 @@ function RecommendationCard({
       href={recommendation.url}
       className={`group block rounded-xl border-2 transition-all ${
         isPrimary
-          ? 'border-purple-300 bg-purple-50 hover:border-purple-400 hover:shadow-lg p-5'
+          ? 'border-blue-200 bg-blue-50 hover:border-blue-300 hover:shadow-sm p-5'
           : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-md p-4'
       }`}
     >
       <div className="flex items-start gap-3">
         <div
           className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${
-            isPrimary ? 'bg-purple-200' : 'bg-slate-100'
+            isPrimary ? 'bg-blue-100' : 'bg-slate-100'
           }`}
         >
           <Icon
             className={`w-5 h-5 ${
-              isPrimary ? 'text-purple-700' : 'text-slate-600'
+              isPrimary ? 'text-blue-700' : 'text-slate-600'
             }`}
           />
         </div>
@@ -182,12 +177,12 @@ function RecommendationCard({
           <div className="flex items-start justify-between gap-2 mb-1">
             <h4
               className={`font-bold leading-tight ${
-                isPrimary ? 'text-purple-900 text-base' : 'text-slate-900 text-sm'
+                isPrimary ? 'text-blue-900 text-base' : 'text-slate-900 text-sm'
               }`}
             >
               {recommendation.title}
             </h4>
-            <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-purple-600 flex-shrink-0 transition" />
+            <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-blue-700 flex-shrink-0 transition" />
           </div>
 
           <p

@@ -3,6 +3,15 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import {
+  Activity,
+  BarChart3,
+  BookOpen,
+  Compass,
+  Database,
+  Hammer,
+  Sparkles,
+} from 'lucide-react'
 import VerticalSelector from './architecture-playground/components/VerticalSelector'
 import PersonaSelector from './architecture-playground/components/PersonaSelector'
 import LevelControls from './architecture-playground/components/LevelControls'
@@ -12,23 +21,47 @@ import ContextOverrideControl from '@/components/personalization/ContextOverride
 import PersonalizedSectionHeader from '@/components/personalization/PersonalizedSectionHeader'
 import ReasonChips from '@/components/personalization/ReasonChips'
 import { useOnboardingStore } from '@/lib/onboarding/store'
+import { emitPersonalizationEvent } from '@/lib/personalization/telemetry'
 import { trackRecommendationClick, usePersonalization } from '@/lib/personalization/use-personalization'
-import { Sparkles } from 'lucide-react'
 
 const PlaygroundCanvas = dynamic(
   () => import('./architecture-playground/components/PlaygroundCanvas'),
   {
     ssr: false,
     loading: () => (
-      <div className="flex-1 flex items-center justify-center bg-slate-50">
+      <div className="flex flex-1 items-center justify-center bg-slate-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4" />
+          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-[var(--accent)]" />
           <p className="text-slate-600">Loading Architecture Explorer...</p>
         </div>
       </div>
     ),
-  }
+  },
 )
+
+const FEATURED_PLAYGROUNDS = [
+  {
+    href: '/playgrounds/capacity-planning',
+    title: 'Capacity Planning Calculator',
+    desc: 'Estimate infrastructure requirements and costs for your target load profile.',
+    tag: 'Infrastructure',
+    Icon: BarChart3,
+  },
+  {
+    href: '/playgrounds/data-pipeline',
+    title: 'Data Pipeline Choreography',
+    desc: 'Model ingestion-to-analytics flow and identify bottlenecks across the path.',
+    tag: 'Data',
+    Icon: Database,
+  },
+  {
+    href: '/playgrounds/message-flow',
+    title: 'Message Flow Animation',
+    desc: 'Compare synchronous and asynchronous integration behavior between services.',
+    tag: 'Messaging',
+    Icon: Activity,
+  },
+]
 
 export default function HomePage() {
   const { openModal } = useOnboardingStore()
@@ -38,46 +71,42 @@ export default function HomePage() {
     limit: 3,
   })
 
+  const handleGuidanceClick = () => {
+    emitPersonalizationEvent('ux_home_cta_click', {
+      surface: 'home',
+      role: context.role,
+      goal: context.goal,
+      session_active: sessionActive,
+      ux_variant: 'hero_guidance',
+    })
+    openModal()
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <OnboardingModal />
-      {/* ── SECTION 1: Hero Banner (compact) ──────────────────────── */}
-      <section className="bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1 className="text-xl sm:text-2xl font-bold mb-1">
-                Interactive Architecture Playground
-              </h1>
-              <p className="text-sm text-purple-100">
-                Explore how theory meets practice — select your role, zoom through detail levels, click any block to learn more
-              </p>
-            </div>
-            <div className="flex gap-2 flex-shrink-0 flex-wrap">
-              <button
-                onClick={openModal}
-                className="px-4 py-2 bg-white text-purple-600 hover:bg-purple-50 rounded-lg text-sm font-semibold transition shadow-lg flex items-center gap-2"
-              >
-                <Sparkles className="w-4 h-4" />
+
+      <section className="border-b border-slate-200 bg-gradient-to-b from-slate-100 to-[var(--surface-0)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+          <div className="max-w-4xl">
+            <p className="inline-flex items-center rounded-full border border-slate-300 bg-white px-3 py-1 text-xs font-semibold tracking-wide text-slate-700">
+              Architecture Learning Platform
+            </p>
+            <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              Learn, simulate, and validate architecture decisions
+            </h1>
+            <p className="mt-3 max-w-3xl text-base text-slate-600 sm:text-lg">
+              Explore architecture visually, personalize learning paths, and move from theory to operationally-ready
+              design choices with less visual noise and clearer next steps.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <button onClick={handleGuidanceClick} className="btn-primary">
+                <Sparkles className="h-4 w-4" />
                 Get Personalized Guidance
               </button>
-              <Link
-                href="/playgrounds"
-                className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition"
-              >
-                Other Playgrounds
-              </Link>
-              <Link
-                href="/skill-tree"
-                className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition"
-              >
-                Skill Tree
-              </Link>
-              <Link
-                href="/vault"
-                className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition"
-              >
-                File Vault
+              <Link href="/playgrounds" className="btn-secondary">
+                View Playgrounds
               </Link>
             </div>
           </div>
@@ -90,7 +119,7 @@ export default function HomePage() {
             <div className="space-y-4">
               <PersonalizedSectionHeader
                 title="Recommended Next Steps"
-                subtitle="Guided actions based on your context, with full control to override anytime."
+                subtitle="Actions ranked by your current role and goal context."
                 context={context}
                 sessionActive={sessionActive}
                 onChangeContext={() => setShowOverride((previous) => !previous)}
@@ -108,10 +137,7 @@ export default function HomePage() {
 
               <div className="grid gap-4 lg:grid-cols-3">
                 {recommendations.map((recommendation) => (
-                  <article
-                    key={recommendation.id}
-                    className="rounded-xl border border-slate-200 bg-slate-50 p-4"
-                  >
+                  <article key={recommendation.id} className="card-standard">
                     <h3 className="text-base font-bold text-slate-900">{recommendation.title}</h3>
                     <p className="mt-1 text-sm text-slate-600">{recommendation.description}</p>
                     <ReasonChips chips={recommendation.reasonChips} className="mt-3" />
@@ -119,17 +145,15 @@ export default function HomePage() {
                     <div className="mt-4 flex flex-wrap gap-2">
                       <Link
                         href={recommendation.href}
-                        className="rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold text-white transition hover:bg-blue-700"
-                        onClick={() =>
-                          trackRecommendationClick('home', recommendation, context, sessionActive)
-                        }
+                        className="btn-primary px-3 py-1.5 text-sm"
+                        onClick={() => trackRecommendationClick('home', recommendation, context, sessionActive)}
                       >
                         Open
                       </Link>
                       <button
                         type="button"
                         onClick={() => dismiss(recommendation.id, 14)}
-                        className="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+                        className="btn-secondary px-3 py-1.5 text-sm"
                       >
                         Not relevant
                       </button>
@@ -142,33 +166,28 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* ── SECTION 2: Interactive Playground (main content) ───────── */}
       <section
-        className="flex-1 flex overflow-hidden"
+        className="flex-1 flex overflow-hidden border-b border-slate-200"
         aria-label="Interactive Architecture Playground"
-        style={{ minHeight: 'calc(100vh - 200px)' }}
+        style={{ minHeight: 'calc(100vh - 220px)' }}
       >
-        {/* Left Sidebar - Controls */}
         <div className="hidden lg:flex lg:flex-col w-80 xl:w-[22rem] bg-white border-r border-slate-200 overflow-y-auto p-4 space-y-4">
           <VerticalSelector />
           <PersonaSelector />
           <LevelControls />
 
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h3 className="text-sm font-bold text-blue-900 mb-2">How to Use</h3>
-            <ul className="text-xs text-blue-800 space-y-2">
-              <li><strong>Choose your role</strong> to see relevant information</li>
-              <li><strong>Select detail level</strong> (L0-L3) to zoom in/out</li>
-              <li><strong>Click nodes</strong> to view detailed information</li>
-              <li><strong>Scroll to zoom</strong> on the canvas</li>
-              <li><strong>Drag to pan</strong> around the architecture</li>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+            <h3 className="text-sm font-bold text-slate-900 mb-2">How to use</h3>
+            <ul className="space-y-2 text-xs text-slate-600">
+              <li>Choose your role to tailor detail and language.</li>
+              <li>Select depth level (L0-L3) to control abstraction.</li>
+              <li>Click a node to inspect architecture context and rationale.</li>
+              <li>Use scroll to zoom and drag to pan the canvas.</li>
             </ul>
           </div>
         </div>
 
-        {/* Center - Canvas */}
         <div className="flex-1 flex flex-col">
-          {/* Mobile controls (visible below lg) */}
           <div className="lg:hidden flex items-center gap-2 p-3 bg-white border-b border-slate-200 overflow-x-auto">
             <div className="flex-shrink-0">
               <VerticalSelector />
@@ -184,135 +203,108 @@ export default function HomePage() {
           <PlaygroundCanvas architectureId="ecommerce-platform" />
         </div>
 
-        {/* Right Sidebar - Context Panel */}
         <div className="hidden xl:block w-96 bg-white border-l border-slate-200 overflow-y-auto">
           <ContextPanel />
         </div>
       </section>
 
-      {/* ── SECTION 3: Quick Stats + Journey Paths ────────────────── */}
-      <section className="bg-white border-t border-slate-200" aria-labelledby="journey-heading">
+      <section className="bg-[var(--surface-1)] border-b border-slate-200" aria-labelledby="journey-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-          {/* Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
             {[
-              { value: '9', label: 'Building Blocks', color: 'text-purple-600' },
-              { value: '65+', label: 'Patterns', color: 'text-blue-600' },
-              { value: '8', label: 'Playgrounds', color: 'text-cyan-600' },
-              { value: '9', label: 'Personas', color: 'text-pink-600' },
+              { value: '9', label: 'Building Blocks' },
+              { value: '65+', label: 'Patterns' },
+              { value: '8', label: 'Playgrounds' },
+              { value: '9', label: 'Personas' },
             ].map((stat) => (
-              <div key={stat.label} className="text-center py-3">
-                <div className={`text-2xl sm:text-3xl font-bold ${stat.color}`}>{stat.value}</div>
-                <div className="text-xs sm:text-sm text-slate-500 mt-0.5">{stat.label}</div>
+              <div key={stat.label} className="card-standard py-4 text-center">
+                <div className="text-2xl sm:text-3xl font-bold text-slate-900">{stat.value}</div>
+                <div className="mt-1 text-xs sm:text-sm text-slate-500">{stat.label}</div>
               </div>
             ))}
           </div>
 
-          {/* Theory / Practice Paths */}
-          <h2 id="journey-heading" className="text-lg sm:text-xl font-bold text-center mb-2">
+          <h2 id="journey-heading" className="text-lg sm:text-xl font-bold text-center mb-2 text-slate-900">
             Start Your Journey
           </h2>
           <p className="text-sm text-slate-500 text-center mb-6 max-w-lg mx-auto">
-            Learn the concepts or jump straight into hands-on practice.
+            Choose theory or practice based on what you need next.
           </p>
 
           <div className="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto">
-            <Link
-              href="/patterns"
-              className="group block rounded-xl border-2 border-slate-200 hover:border-violet-400 p-5 sm:p-6 transition-all hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2"
-            >
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center text-xl flex-shrink-0">
-                  📚
+            <Link href="/patterns" className="card-interactive group p-6 focus:ring-2 focus:ring-blue-500">
+              <div className="mb-3 flex items-center gap-3">
+                <div className="rounded-lg bg-blue-50 p-2 text-blue-700">
+                  <BookOpen className="h-5 w-5" />
                 </div>
-                <div>
-                  <h3 className="text-base font-bold text-slate-900">Theory</h3>
-                  <p className="text-xs text-violet-600 font-medium">Patterns &amp; Principles</p>
-                </div>
+                <h3 className="text-base font-bold text-slate-900">Theory</h3>
               </div>
-              <p className="text-sm text-slate-600 leading-relaxed mb-3">
-                Understand the &quot;what&quot;, &quot;why&quot;, and &quot;when&quot; of architecture patterns. Learn trade-offs and decision frameworks.
+              <p className="text-sm text-slate-600">
+                Understand when and why to apply architecture patterns and trade-offs.
               </p>
-              <span className="inline-flex items-center text-xs font-semibold text-violet-600 group-hover:gap-2 gap-1 transition-all">
-                Explore Theory <span aria-hidden="true">→</span>
-              </span>
+              <span className="mt-3 inline-flex text-xs font-semibold text-blue-700">Explore Theory →</span>
             </Link>
 
-            <Link
-              href="/playgrounds"
-              className="group block rounded-xl border-2 border-slate-200 hover:border-blue-400 p-5 sm:p-6 transition-all hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-xl flex-shrink-0">
-                  🛠️
+            <Link href="/playgrounds" className="card-interactive group p-6 focus:ring-2 focus:ring-blue-500">
+              <div className="mb-3 flex items-center gap-3">
+                <div className="rounded-lg bg-blue-50 p-2 text-blue-700">
+                  <Hammer className="h-5 w-5" />
                 </div>
-                <div>
-                  <h3 className="text-base font-bold text-slate-900">Practice</h3>
-                  <p className="text-xs text-blue-600 font-medium">Playgrounds &amp; Hands-on</p>
-                </div>
+                <h3 className="text-base font-bold text-slate-900">Practice</h3>
               </div>
-              <p className="text-sm text-slate-600 leading-relaxed mb-3">
-                Build architectures by doing. Interactive playgrounds with real-time feedback and live simulations.
+              <p className="text-sm text-slate-600">
+                Build and test architecture decisions in guided interactive environments.
               </p>
-              <span className="inline-flex items-center text-xs font-semibold text-blue-600 group-hover:gap-2 gap-1 transition-all">
-                Start Practicing <span aria-hidden="true">→</span>
-              </span>
+              <span className="mt-3 inline-flex text-xs font-semibold text-blue-700">Start Practicing →</span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ── SECTION 4: Featured Playgrounds ───────────────────────── */}
-      <section className="bg-slate-50 border-t border-slate-200" aria-labelledby="playgrounds-heading">
+      <section className="bg-[var(--surface-0)]" aria-labelledby="playgrounds-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-          <h2 id="playgrounds-heading" className="text-lg sm:text-xl font-bold text-center mb-2">
-            Interactive Playgrounds
-          </h2>
-          <p className="text-sm text-slate-500 text-center mb-6">
-            Hands-on environments to build, test, and learn architecture patterns.
-          </p>
+          <div className="mb-6 text-center">
+            <h2 id="playgrounds-heading" className="text-lg sm:text-xl font-bold text-slate-900">
+              Featured Playgrounds
+            </h2>
+            <p className="mt-1 text-sm text-slate-500">Focused tools for planning, data flow, and integrations.</p>
+          </div>
 
           <div className="grid sm:grid-cols-3 gap-4">
-            {[
-              {
-                href: '/playgrounds/capacity-planning',
-                icon: '💡',
-                title: 'Capacity Planning Calculator',
-                desc: 'Calculate infrastructure requirements and estimate costs. Size your system correctly from day one.',
-                tag: 'Infrastructure',
-              },
-              {
-                href: '/playgrounds/data-pipeline',
-                icon: '🌊',
-                title: 'Data Pipeline Choreography',
-                desc: 'Build data pipelines from IoT sensors to analytics. Watch data flow through your architecture.',
-                tag: 'Data',
-              },
-              {
-                href: '/playgrounds/message-flow',
-                icon: '⚡',
-                title: 'Message Flow Animation',
-                desc: 'Design integration patterns. See messages flow between services in real-time.',
-                tag: 'Messaging',
-              },
-            ].map((pg) => (
+            {FEATURED_PLAYGROUNDS.map((pg) => (
               <Link
                 key={pg.href}
                 href={pg.href}
-                className="group block rounded-xl bg-white border border-slate-200 p-5 hover:shadow-md hover:border-slate-300 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="card-interactive group p-5 focus:ring-2 focus:ring-blue-500"
+                onClick={() =>
+                  emitPersonalizationEvent('ux_home_cta_click', {
+                    surface: 'home',
+                    role: context.role,
+                    goal: context.goal,
+                    session_active: sessionActive,
+                    ux_variant: `featured_${pg.tag.toLowerCase()}`,
+                  })
+                }
               >
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="text-2xl">{pg.icon}</span>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
+                <div className="mb-3 flex items-center gap-2">
+                  <div className="rounded-md bg-blue-50 p-2 text-blue-700">
+                    <pg.Icon className="h-4 w-4" />
+                  </div>
+                  <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-600">
                     {pg.tag}
                   </span>
                 </div>
-                <h3 className="text-sm font-bold text-slate-900 mb-1 group-hover:text-blue-600 transition-colors">
-                  {pg.title}
-                </h3>
-                <p className="text-xs text-slate-500 leading-relaxed">{pg.desc}</p>
+                <h3 className="text-sm font-bold text-slate-900 mb-1 group-hover:text-blue-700">{pg.title}</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">{pg.desc}</p>
               </Link>
             ))}
+          </div>
+
+          <div className="mt-8 flex justify-center">
+            <Link href="/playgrounds" className="btn-secondary">
+              <Compass className="h-4 w-4" />
+              Browse All Playgrounds
+            </Link>
           </div>
         </div>
       </section>

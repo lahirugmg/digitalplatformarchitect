@@ -9,35 +9,31 @@ import { Goal } from '@/lib/onboarding/types';
 const CATEGORY_INFO = {
   learn: {
     label: 'Learn',
-    color: 'violet',
     description: 'Understand concepts and patterns',
-    activeClass: 'bg-violet-600 text-white',
-    inactiveClass: 'bg-violet-50 text-violet-700 hover:bg-violet-100',
-    badgeClass: 'bg-violet-100 text-violet-700',
+    activeClass: 'bg-blue-600 text-white',
+    inactiveClass: 'bg-slate-100 text-slate-700 hover:bg-slate-200',
+    badgeClass: 'bg-slate-100 text-slate-700',
   },
   design: {
     label: 'Design',
-    color: 'blue',
     description: 'Create new architectures',
     activeClass: 'bg-blue-600 text-white',
-    inactiveClass: 'bg-blue-50 text-blue-700 hover:bg-blue-100',
-    badgeClass: 'bg-blue-100 text-blue-700',
+    inactiveClass: 'bg-slate-100 text-slate-700 hover:bg-slate-200',
+    badgeClass: 'bg-slate-100 text-slate-700',
   },
   evaluate: {
     label: 'Evaluate',
-    color: 'cyan',
     description: 'Assess existing systems',
-    activeClass: 'bg-cyan-600 text-white',
-    inactiveClass: 'bg-cyan-50 text-cyan-700 hover:bg-cyan-100',
-    badgeClass: 'bg-cyan-100 text-cyan-700',
+    activeClass: 'bg-blue-600 text-white',
+    inactiveClass: 'bg-slate-100 text-slate-700 hover:bg-slate-200',
+    badgeClass: 'bg-slate-100 text-slate-700',
   },
   build: {
     label: 'Build',
-    color: 'purple',
     description: 'Hands-on implementation',
-    activeClass: 'bg-purple-600 text-white',
-    inactiveClass: 'bg-purple-50 text-purple-700 hover:bg-purple-100',
-    badgeClass: 'bg-purple-100 text-purple-700',
+    activeClass: 'bg-blue-600 text-white',
+    inactiveClass: 'bg-slate-100 text-slate-700 hover:bg-slate-200',
+    badgeClass: 'bg-slate-100 text-slate-700',
   },
 };
 
@@ -74,7 +70,7 @@ export default function GoalSelector() {
           I want to...
         </h2>
         <p className="text-slate-600">
-          As a <span className="font-semibold" style={{ color: roleProfile.color }}>
+          As a <span className="font-semibold text-blue-700">
             {roleProfile.name}
           </span>, what would you like to do?
         </p>
@@ -130,8 +126,8 @@ export default function GoalSelector() {
                 onClick={() => setGoal(goal.id)}
                 className={`group relative flex flex-col gap-3 p-5 rounded-xl border-2 transition-all text-left ${
                   isSelected
-                    ? 'border-purple-500 bg-purple-50 ring-2 ring-purple-200 shadow-md'
-                    : 'border-slate-200 hover:border-purple-300 hover:bg-slate-50'
+                    ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200 shadow-sm'
+                    : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
                 {/* Icon & Category */}
@@ -139,7 +135,7 @@ export default function GoalSelector() {
                   <div className="text-3xl">{goal.icon}</div>
                   <div className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded ${
                     isSelected
-                      ? 'bg-purple-200 text-purple-900'
+                      ? 'bg-blue-100 text-blue-900'
                       : categoryInfo.badgeClass
                   }`}>
                     {categoryInfo.label}
@@ -148,7 +144,7 @@ export default function GoalSelector() {
 
                 {/* Title */}
                 <h4 className={`text-base font-bold leading-tight ${
-                  isSelected ? 'text-purple-900' : 'text-slate-900'
+                  isSelected ? 'text-blue-900' : 'text-slate-900'
                 }`}>
                   {goal.title}
                 </h4>
@@ -171,7 +167,7 @@ export default function GoalSelector() {
                 {/* Selected indicator */}
                 {isSelected && (
                   <div className="absolute top-3 right-3">
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center bg-purple-600">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center bg-blue-600">
                       <svg
                         className="w-4 h-4 text-white"
                         fill="none"

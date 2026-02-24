@@ -65,20 +65,20 @@ export default function RoleSelector() {
                     onClick={() => setRole(profile.id)}
                     className={`group relative flex flex-col items-start gap-3 p-4 rounded-xl border-2 transition-all text-left ${
                       isSelected
-                        ? 'border-purple-500 bg-purple-50 ring-2 ring-purple-200 shadow-md'
-                        : 'border-slate-200 hover:border-purple-300 hover:bg-slate-50'
+                        ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200 shadow-sm'
+                        : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
                     }`}
                   >
                     {/* Icon */}
                     <div
                       className={`w-12 h-12 rounded-lg flex items-center justify-center transition-colors ${
-                        isSelected ? 'bg-white' : 'bg-slate-100 group-hover:bg-white'
+                        isSelected ? 'bg-blue-100' : 'bg-slate-100 group-hover:bg-white'
                       }`}
                     >
                       {Icon && (
                         <Icon
                           className="w-6 h-6"
-                          style={{ color: profile.color }}
+                          style={{ color: isSelected ? '#1d4ed8' : '#334155' }}
                         />
                       )}
                     </div>
@@ -87,7 +87,7 @@ export default function RoleSelector() {
                     <div className="flex-1 min-w-0">
                       <h4
                         className={`text-sm font-bold mb-1 ${
-                          isSelected ? 'text-purple-900' : 'text-slate-900'
+                          isSelected ? 'text-blue-900' : 'text-slate-900'
                         }`}
                       >
                         {profile.name}
@@ -101,7 +101,7 @@ export default function RoleSelector() {
                     {isSelected && (
                       <div className="absolute top-3 right-3">
                         <div
-                          className="w-6 h-6 rounded-full flex items-center justify-center bg-purple-600"
+                          className="w-6 h-6 rounded-full flex items-center justify-center bg-blue-600"
                         >
                           <svg
                             className="w-4 h-4 text-white"

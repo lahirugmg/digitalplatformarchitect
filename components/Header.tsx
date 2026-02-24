@@ -22,23 +22,22 @@ export default function Header() {
   const closeMobileMenu = () => setMobileMenuOpen(false)
 
   return (
-    <nav className="bg-white border-b border-slate-200 sticky top-0 z-50" aria-label="Primary">
+    <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-sm" aria-label="Primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-          {/* Logo */}
           <div className="flex items-center">
             <Link
               href="/"
-              className="text-xl font-bold text-blue-600 hover:text-blue-700 transition"
+              className="text-xl font-bold text-slate-900 transition hover:text-[var(--accent)]"
               aria-label="Digital Platform Architect home"
               onClick={closeMobileMenu}
             >
-              <span className="hidden sm:inline">Digital Platform Architect</span>
+              <span className="hidden sm:inline">Digital Platform Architect</span>{' '}
+              <span className="hidden sm:inline text-[var(--accent)]">Platform</span>
               <span className="inline sm:hidden">DPA</span>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">
             {navItems.map((item) => {
               const isActive = pathname === item.href
@@ -49,12 +48,12 @@ export default function Header() {
                   aria-label={item.ariaLabel}
                   aria-current={isActive ? 'page' : undefined}
                   className={`font-medium transition relative ${
-                    isActive ? 'text-blue-700' : 'text-slate-700 hover:text-blue-600'
+                    isActive ? 'text-[var(--accent)]' : 'text-slate-700 hover:text-slate-900'
                   }`}
                 >
                   {item.label}
                   {'badge' in item && item.badge && (
-                    <span className="absolute -top-2 -right-8 bg-green-500 text-white text-xs px-1.5 py-0.5 rounded font-bold">
+                    <span className="absolute -top-2 -right-8 rounded border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-xs font-bold text-blue-700">
                       {item.badge}
                     </span>
                   )}
@@ -66,11 +65,10 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <ProfileKeyManager />
 
-            {/* Mobile Menu Button */}
             <div className="md:hidden">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition"
+                className="rounded-lg p-2 text-slate-700 transition hover:bg-slate-100"
                 aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
                 aria-expanded={mobileMenuOpen}
                 aria-controls="mobile-menu"
@@ -105,13 +103,13 @@ export default function Header() {
                   className={`block px-3 py-2 rounded-lg font-medium transition ${
                     isActive
                       ? 'bg-blue-50 text-blue-700'
-                      : 'text-slate-700 hover:bg-slate-100 hover:text-blue-600'
+                      : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
                   }`}
                 >
                   <span className="flex items-center justify-between">
                     {item.label}
                     {'badge' in item && item.badge && (
-                      <span className="bg-green-500 text-white text-xs px-2 py-0.5 rounded font-bold ml-2">
+                      <span className="ml-2 rounded border border-blue-200 bg-blue-50 px-2 py-0.5 text-xs font-bold text-blue-700">
                         {item.badge}
                       </span>
                     )}

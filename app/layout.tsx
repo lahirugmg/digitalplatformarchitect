@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Manrope, Source_Sans_3 } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -6,6 +7,16 @@ import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { Toaster } from 'sonner'
 
 const siteUrl = 'https://digitalplatformarchitect.com'
+const headingFont = Manrope({
+  subsets: ['latin'],
+  variable: '--font-heading',
+  display: 'swap',
+})
+const bodyFont = Source_Sans_3({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -42,7 +53,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-slate-50 text-slate-900">
+      <body className={`${headingFont.variable} ${bodyFont.variable} bg-[var(--surface-0)] text-[var(--text-strong)]`}>
         <ErrorBoundary name="RootLayout">
           <a href="#main-content" className="skip-link">
             Skip to main content

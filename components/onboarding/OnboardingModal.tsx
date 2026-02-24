@@ -115,7 +115,7 @@ export default function OnboardingModal() {
       {/* Modal */}
       <div
         ref={modalRef}
-        className="relative bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+        className="relative flex w-full max-h-[90vh] max-w-5xl flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl"
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
@@ -134,7 +134,7 @@ export default function OnboardingModal() {
             <div className="w-8 h-0.5 bg-slate-200">
               <div
                 className={`h-full transition-all ${
-                  currentStep !== 'role' ? 'bg-purple-600 w-full' : 'bg-transparent w-0'
+                  currentStep !== 'role' ? 'bg-blue-600 w-full' : 'bg-transparent w-0'
                 }`}
               />
             </div>
@@ -146,7 +146,7 @@ export default function OnboardingModal() {
             <div className="w-8 h-0.5 bg-slate-200">
               <div
                 className={`h-full transition-all ${
-                  currentStep === 'journey' ? 'bg-purple-600 w-full' : 'bg-transparent w-0'
+                  currentStep === 'journey' ? 'bg-blue-600 w-full' : 'bg-transparent w-0'
                 }`}
               />
             </div>
@@ -200,7 +200,7 @@ export default function OnboardingModal() {
               disabled={!canGoNext}
               className={`flex items-center gap-2 px-6 py-2 rounded-lg font-semibold transition ${
                 canGoNext
-                  ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-600/30'
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-sm'
                   : 'bg-slate-200 text-slate-400 cursor-not-allowed'
               }`}
             >
@@ -228,9 +228,9 @@ function StepIndicator({
       <div
         className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition ${
           isComplete
-            ? 'bg-purple-600 text-white'
+            ? 'bg-blue-600 text-white'
             : isActive
-            ? 'bg-purple-100 text-purple-700 ring-2 ring-purple-600'
+            ? 'bg-blue-100 text-blue-700 ring-2 ring-blue-600'
             : 'bg-slate-100 text-slate-400'
         }`}
       >
