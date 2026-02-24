@@ -38,10 +38,10 @@ export function generateJourney(role: Persona, goal: GoalId): Journey {
     'business-build-roadmap': {
       recs: [
         {
-          type: 'skill-tree',
-          title: 'Architecture Roadmap Skills',
-          description: 'Learn how to plan and prioritize architecture initiatives',
-          url: '/skill-tree',
+          type: 'progress',
+          title: 'Progress Hub',
+          description: 'Track roadmap milestones and confirm progress as you execute architecture initiatives',
+          url: '/progress',
           priority: 'primary',
           estimatedTime: '45 min',
         },
@@ -377,10 +377,10 @@ export function generateJourney(role: Persona, goal: GoalId): Journey {
         priority: 'secondary',
       },
       {
-        type: 'skill-tree',
-        title: 'Skill Tree',
-        description: 'Map your architecture learning journey',
-        url: '/skill-tree',
+        type: 'progress',
+        title: 'Progress Hub',
+        description: 'Track your architecture learning milestones naturally',
+        url: '/progress',
         priority: 'secondary',
       }
     );

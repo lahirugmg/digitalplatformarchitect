@@ -58,7 +58,7 @@ The **Interactive Architecture Playground** is now **embedded directly on the ho
                            ↓
 ┌─────────────────────────────────────────────────────────┐
 │ Learning Path Section                                    │
-│ (4 steps: Blocks → Patterns → Playgrounds → Skill Tree) │
+│ (4 steps: Blocks → Patterns → Playgrounds → Progress Hub) │
 └─────────────────────────────────────────────────────────┘
                            ↓
          [All other existing content...]

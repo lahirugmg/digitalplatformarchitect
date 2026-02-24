@@ -3,6 +3,7 @@ import {
   getGoalLabel,
   getPersonaLabel,
 } from '@/lib/personalization/context'
+import { getLearningProgressSnapshot } from '@/lib/progress/tracker'
 import type {
   BuildRecommendationsInput,
   PersonalizationCatalogItem,
@@ -38,10 +39,24 @@ function isDismissed(itemId: string, dismissed: Record<string, { until: string }
   return untilTs > now.getTime()
 }
 
-function getProgressSnapshot(completedNodes: string[] | undefined): ProgressSnapshot {
+function getProgressSnapshot(profileState: BuildRecommendationsInput['profileState']): ProgressSnapshot {
+  if (profileState.learningProgress) {
+    const learningSnapshot = getLearningProgressSnapshot(profileState.learningProgress)
+
+    return {
+      completedCount: learningSnapshot.completedMilestones,
+      stage: learningSnapshot.stage,
+      learningProgress: profileState.learningProgress,
+    }
+  }
+
+  const completedCount = profileState.progress?.completedNodes.length ?? 0
+  const stage = completedCount <= 4 ? 'early' : completedCount <= 10 ? 'mid' : 'late'
+
   return {
-    completedCount: completedNodes?.length ?? 0,
-    progress: null,
+    completedCount,
+    stage,
+    learningProgress: null,
   }
 }
 
@@ -65,15 +80,7 @@ function alignsWithProgress(item: PersonalizationCatalogItem, snapshot: Progress
     return true
   }
 
-  if (hints.stage === 'early') {
-    return completedCount <= 4
-  }
-
-  if (hints.stage === 'mid') {
-    return completedCount >= 3 && completedCount <= 10
-  }
-
-  return completedCount >= 8
+  return hints.stage === snapshot.stage
 }
 
 function buildReasonChips(
@@ -160,7 +167,7 @@ export function buildRankedRecommendations(input: BuildRecommendationsInput): Ra
   const now = input.now ?? new Date()
   const surfaceState = input.profileState.personalization.surfaces[input.surface]
   const lastSeenIds = surfaceState?.lastRecommendationIds ?? []
-  const progressSnapshot = getProgressSnapshot(input.profileState.progress?.completedNodes)
+  const progressSnapshot = getProgressSnapshot(input.profileState)
 
   return catalog
     .filter((item) => (item.requiresSession ? input.sessionActive : true))

@@ -302,7 +302,7 @@ interface Goal {
 // RECOMMENDATION (New)
 // ─────────────────────────────────────────
 interface Recommendation {
-  type: 'playground' | 'pattern' | 'article' | 'skill-tree' | 'building-block'
+  type: 'playground' | 'pattern' | 'article' | 'progress' | 'building-block'
   title: string
   description: string
   url: string
@@ -365,7 +365,7 @@ interface OnboardingState {
 │    └─ generates Journey with links to:                    │
 │       - /playgrounds/* (existing)                          │
 │       - /patterns/* (existing)                             │
-│       - /skill-tree (existing)                             │
+│       - /progress (canonical)                               │
 │       - /blocks/* (existing)                               │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘

@@ -51,7 +51,7 @@ Personas:                   Architecture Types:
 │   ├── /explore/business       ← L1: Business Architecture view
 │   ├── /explore/solution       ← L1: Solution Architecture view
 │   └── /explore/deployment     ← L1: Deployment Architecture view
-└── /skill-tree/                ← Existing skill tree (persona-aware)
+└── /progress/                  ← Learning Progress Hub (natural milestone tracking)
 ```
 
 ### 2.2 Depth Levels (L0 -> Ln)
@@ -97,7 +97,7 @@ The landing page becomes **one large interactive diagram** replacing the current
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  Digital Platform Architect                    [Theory] [Practice] [Skill Tree] │
+│  Digital Platform Architect                    [Theory] [Practice] [Progress] │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  ┌─ "I am a..." persona selector (optional, top-right) ─┐     │
@@ -220,7 +220,7 @@ prerequisites:
    - Keep responsive: on mobile, show a simplified list view with expand/collapse
 
 4. Restructure navigation (`app/layout.tsx`)
-   - Update nav: Home | Theory | Practice | Skill Tree
+   - Update nav: Home | Theory | Practice | Progress
    - Add breadcrumb component for depth navigation (L0 > L1 > L2...)
 
 5. Migrate existing content into dual taxonomy
@@ -291,7 +291,7 @@ prerequisites:
 2. Create persona-specific recommended paths
    - After persona selection, show a guided path through content
    - Highlight most relevant theory and practice content
-   - Adjust skill tree starting nodes based on persona
+   - Adjust progress hub milestone emphasis based on persona
 
 3. Polish cross-linking
    - Ensure every theory page links to related practice
@@ -373,7 +373,7 @@ Architecture Type   Framework/Methodology    Reference Architecture
 | `content-export/blocks/*.md` | `/theory/building-blocks/[slug]` | `/practice/blueprints/[slug]` |
 | `content-export/blueprints/*.md` | (reference from theory) | `/practice/blueprints/[slug]` |
 | `app/playgrounds/*` | (link from theory pages) | `/practice/playgrounds/*` |
-| `app/skill-tree/*` | (unchanged, add persona awareness) | (unchanged) |
+| `app/progress/page.tsx` | (links from theory/practice) | Progress milestone hub |
 
 ### URL Redirects Required
 

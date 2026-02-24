@@ -32,7 +32,7 @@ The onboarding flow helps users get personalized guidance by:
 
 - [x] **Journey Generation**
   - Personalized recommendations based on role + goal combination
-  - Links to playgrounds, patterns, skill tree, building blocks
+  - Links to playgrounds, patterns, progress hub, building blocks
   - Prioritized resources (primary vs secondary)
   - Step-by-step action plan
 
@@ -114,7 +114,7 @@ generateJourney(role: Persona, goal: GoalId): Journey
 - `security + security-review` → Security patterns, Service mesh
 - `data + data-strategy` → Data pipeline, Data patterns
 
-**Fallback**: If no specific mapping exists, returns general recommendations (patterns, playgrounds, skill tree).
+**Fallback**: If no specific mapping exists, returns general recommendations (patterns, playgrounds, progress hub).
 
 ## Usage
 

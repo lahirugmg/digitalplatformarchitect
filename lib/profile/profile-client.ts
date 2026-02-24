@@ -12,6 +12,7 @@ import {
 import { mergeProfileState } from '@/lib/profile/merge'
 import {
   createEmptyProfileState,
+  normalizeLearningProgressState,
   normalizeOnboardingState,
   normalizeProfileState,
   normalizeProgressState,
@@ -23,6 +24,14 @@ import {
   type ProfileState,
   type VaultFileMetadata,
 } from '@/lib/profile/types'
+import { migrateLegacySkillTreeProgressToLearningProgress } from '@/lib/progress/migrate-legacy'
+import {
+  createEmptyLearningProgressState,
+  markMilestoneCompleted,
+  trackRecommendationStart,
+  trackRouteVisit,
+} from '@/lib/progress/tracker'
+import type { LearningProgressSource, LearningProgressState } from '@/lib/progress/types'
 
 const SYNC_DEBOUNCE_MS = 1200
 const DEFAULT_DISMISSAL_TTL_DAYS = 14
@@ -156,9 +165,14 @@ function parseLegacyOnboarding(): ProfileOnboardingState | null {
 
 function buildLocalStateForSync(): ProfileState {
   const cached = getCachedState()
+  const legacyProgress = parseLegacyProgress()
 
   const legacyState = createEmptyProfileState()
-  legacyState.progress = parseLegacyProgress()
+  legacyState.progress = legacyProgress
+  legacyState.learningProgress = migrateLegacySkillTreeProgressToLearningProgress(
+    legacyProgress,
+    cached.learningProgress,
+  )
   legacyState.onboarding = parseLegacyOnboarding()
 
   return mergeProfileState(cached, legacyState)
@@ -253,6 +267,79 @@ export function clearCachedState(): void {
   removeStorage(PROFILE_CACHE_KEY)
   removeStorage(PROFILE_HINT_KEY)
   dispatchProfileStatusEvent()
+}
+
+function getBaseLearningProgress(state: ProfileState): LearningProgressState {
+  const migrated = migrateLegacySkillTreeProgressToLearningProgress(
+    parseLegacyProgress(),
+    state.learningProgress,
+  )
+
+  return migrated ?? createEmptyLearningProgressState()
+}
+
+export function updateCachedLearningProgress(learningProgress: LearningProgressState): void {
+  const current = getCachedState()
+  const normalizedLearningProgress = normalizeLearningProgressState(learningProgress)
+
+  if (!normalizedLearningProgress) {
+    return
+  }
+
+  const now = new Date().toISOString()
+  const nextState: ProfileState = {
+    ...current,
+    learningProgress: {
+      ...normalizedLearningProgress,
+      updatedAt: now,
+    },
+    updatedAt: now,
+  }
+
+  setCachedStateInternal(nextState)
+}
+
+function mutateLearningProgress(
+  mutator: (learningProgress: LearningProgressState) => LearningProgressState,
+): LearningProgressState {
+  const current = getCachedState()
+  const base = getBaseLearningProgress(current)
+  const next = mutator(base)
+
+  const shouldPersist = next !== base || current.learningProgress === null
+
+  if (!shouldPersist) {
+    return base
+  }
+
+  updateCachedLearningProgress(next)
+  queueSync()
+  return next
+}
+
+export function ensureLearningProgressState(): LearningProgressState {
+  return mutateLearningProgress((learningProgress) => learningProgress)
+}
+
+export function trackLearningPathVisit(
+  path: string,
+  source: LearningProgressSource = 'route',
+): LearningProgressState {
+  return mutateLearningProgress((learningProgress) =>
+    trackRouteVisit(learningProgress, path, source),
+  )
+}
+
+export function startLearningMilestoneFromPath(path: string): LearningProgressState {
+  return mutateLearningProgress((learningProgress) =>
+    trackRecommendationStart(learningProgress, path),
+  )
+}
+
+export function completeLearningProgressMilestone(milestoneId: string): LearningProgressState {
+  return mutateLearningProgress((learningProgress) =>
+    markMilestoneCompleted(learningProgress, milestoneId),
+  )
 }
 
 export function getResolvedPersonalizationContext(): ResolvedPersonalizationContext {

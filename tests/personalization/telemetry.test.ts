@@ -76,3 +76,27 @@ test('emitPersonalizationEvent remains no-op when analytics is unavailable', () 
     }),
   )
 })
+
+test('emitPersonalizationEvent supports progress milestone telemetry payloads', () => {
+  const calls: Array<{ eventName: string; payload: Record<string, unknown> }> = []
+  setWindow({
+    va: {
+      track: (eventName: string, payload: Record<string, unknown>) => {
+        calls.push({ eventName, payload })
+      },
+    },
+  })
+
+  emitPersonalizationEvent('progress_milestone_completed', {
+    surface: 'progress',
+    milestone_id: 'design-data-pipeline',
+    role: 'ea',
+    goal: 'hands-on-practice',
+    session_active: true,
+  })
+
+  assert.equal(calls.length, 1)
+  assert.equal(calls[0]?.eventName, 'progress_milestone_completed')
+  assert.equal(calls[0]?.payload.milestone_id, 'design-data-pipeline')
+  assert.equal(calls[0]?.payload.surface, 'progress')
+})

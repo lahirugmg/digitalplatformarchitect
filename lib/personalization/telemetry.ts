@@ -8,6 +8,8 @@ export type PersonalizationEventName =
   | 'personalization_context_override'
   | 'personalization_reco_dismiss'
   | 'personalization_next_step_completed'
+  | 'progress_milestone_started'
+  | 'progress_milestone_completed'
   | 'ux_theme_applied'
   | 'ux_compact_mode_toggled'
   | 'ux_home_cta_click'
@@ -15,6 +17,7 @@ export type PersonalizationEventName =
 export interface PersonalizationTelemetryPayload {
   surface: PersonalizationSurfaceId
   recommendation_id?: string
+  milestone_id?: string
   role: Persona | null
   goal: GoalId | null
   session_active: boolean

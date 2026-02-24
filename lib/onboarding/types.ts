@@ -42,7 +42,7 @@ export interface Journey {
 }
 
 export interface Recommendation {
-  type: 'playground' | 'pattern' | 'article' | 'skill-tree' | 'building-block';
+  type: 'playground' | 'pattern' | 'article' | 'progress' | 'building-block';
   title: string;
   description: string;
   url: string;

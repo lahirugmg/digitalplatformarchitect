@@ -3,6 +3,7 @@ import test from 'node:test'
 import { buildRankedRecommendations } from '@/lib/personalization/engine'
 import type { ResolvedPersonalizationContext } from '@/lib/personalization/types'
 import { createEmptyProfileState } from '@/lib/profile/types'
+import { createEmptyLearningProgressState } from '@/lib/progress/tracker'
 
 function context(role: ResolvedPersonalizationContext['role'], goal: ResolvedPersonalizationContext['goal']): ResolvedPersonalizationContext {
   return {
@@ -68,7 +69,7 @@ test('buildRankedRecommendations filters session-required items when session is 
     sessionActive: false,
   })
 
-  assert.equal(recommendations.some((item) => item.id === 'home-skill-tree'), false)
+  assert.equal(recommendations.some((item) => item.id === 'home-progress-hub'), false)
   assert.equal(recommendations.some((item) => item.id === 'home-file-vault'), false)
 })
 
@@ -86,4 +87,37 @@ test('buildRankedRecommendations removes novelty boost for previously seen recom
   const top = recommendations.find((item) => item.id === 'home-architecture-playground')
   assert.ok(top)
   assert.equal(top.score.novelty, 0)
+})
+
+test('buildRankedRecommendations uses learningProgress as primary progress signal', () => {
+  const state = createEmptyProfileState()
+  const learningProgress = createEmptyLearningProgressState('2026-02-24T00:00:00.000Z')
+
+  for (const milestoneId of [
+    'foundations-patterns',
+    'foundations-blocks',
+    'explore-architecture-playground',
+    'document-architecture',
+  ]) {
+    learningProgress.milestones[milestoneId] = {
+      status: 'completed',
+      startedAt: '2026-02-20T00:00:00.000Z',
+      completedAt: '2026-02-21T00:00:00.000Z',
+      source: 'manual',
+    }
+  }
+
+  state.learningProgress = learningProgress
+  state.progress = null
+
+  const recommendations = buildRankedRecommendations({
+    surface: 'home',
+    context: context(null, null),
+    profileState: state,
+    sessionActive: true,
+  })
+
+  const progressHub = recommendations.find((item) => item.id === 'home-progress-hub')
+  assert.ok(progressHub)
+  assert.equal(progressHub.score.progressAlignment, 20)
 })

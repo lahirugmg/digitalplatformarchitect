@@ -2,13 +2,17 @@ import assert from 'node:assert/strict'
 import { afterEach, beforeEach, test } from 'node:test'
 import {
   clearExpiredDismissals,
+  completeLearningProgressMilestone,
   dismissRecommendation,
+  ensureLearningProgressState,
   getCachedState,
   getResolvedPersonalizationContext,
   markSurfaceSeen,
   setCachedState,
   setPersonalizationContextOverride,
+  startLearningMilestoneFromPath,
 } from '@/lib/profile/profile-client'
+import { LEGACY_PROGRESS_KEY } from '@/lib/profile/constants'
 import { createEmptyProfileState } from '@/lib/profile/types'
 
 class MockStorage implements Storage {
@@ -178,4 +182,57 @@ test('clearExpiredDismissals removes expired entries and keeps active entries', 
   const next = getCachedState()
   assert.ok(next.personalization.dismissed.active)
   assert.equal(next.personalization.dismissed.expired, undefined)
+})
+
+test('ensureLearningProgressState migrates legacy skill tree cache into learningProgress', () => {
+  localStorage.setItem(
+    LEGACY_PROGRESS_KEY,
+    JSON.stringify({
+      userId: 'legacy-user',
+      completedNodes: ['int-core'],
+      unlockedNodes: ['data-lab'],
+      tokens: 30,
+      lastTokenGrant: '2026-02-20T00:00:00.000Z',
+      streakDays: 3,
+      lastActivityDate: '2026-02-20T00:00:00.000Z',
+      totalXP: 120,
+      level: 2,
+      completedAtByNode: {
+        'int-core': '2026-02-20T00:00:00.000Z',
+      },
+    }),
+  )
+
+  const first = ensureLearningProgressState()
+  const second = ensureLearningProgressState()
+
+  assert.ok(first.migration?.legacySkillTreeImportedAt)
+  assert.equal(first.milestones['run-enterprise-integration']?.status, 'completed')
+  assert.equal(first.milestones['design-data-pipeline']?.status, 'in_progress')
+  assert.equal(second.milestones['run-enterprise-integration']?.status, 'completed')
+  assert.equal(second.milestones['design-data-pipeline']?.status, 'in_progress')
+  assert.equal(second.migration?.legacySkillTreeImportedAt, first.migration?.legacySkillTreeImportedAt)
+
+  const cached = getCachedState()
+  assert.ok(cached.learningProgress)
+  assert.equal(cached.learningProgress?.milestones['run-enterprise-integration']?.status, 'completed')
+})
+
+test('learning progress milestone start and completion mutate cached learningProgress state', () => {
+  setCachedState(createEmptyProfileState())
+
+  const started = startLearningMilestoneFromPath('/playgrounds/data-pipeline')
+  assert.equal(started.milestones['design-data-pipeline']?.status, 'in_progress')
+
+  const completed = completeLearningProgressMilestone('design-data-pipeline')
+  assert.equal(completed.milestones['design-data-pipeline']?.status, 'completed')
+
+  const cached = getCachedState()
+  assert.equal(cached.learningProgress?.milestones['design-data-pipeline']?.status, 'completed')
+  assert.equal(
+    cached.learningProgress?.activity.some(
+      (item) => item.kind === 'complete' && item.milestoneId === 'design-data-pipeline',
+    ),
+    true,
+  )
 })

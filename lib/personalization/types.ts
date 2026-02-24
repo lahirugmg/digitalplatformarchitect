@@ -1,6 +1,7 @@
 import type { Persona } from '@/lib/architecture-playground/types'
 import type { GoalId } from '@/lib/onboarding/types'
-import type { PersonalizationSurfaceId, ProfileProgressState, ProfileState } from '@/lib/profile/types'
+import type { PersonalizationSurfaceId, ProfileState } from '@/lib/profile/types'
+import type { LearningProgressState } from '@/lib/progress/types'
 
 export type PersonalizationContextSource = 'override' | 'onboarding' | 'fallback'
 export type RecommendationType = 'playground' | 'assessment' | 'resource' | 'workflow'
@@ -64,5 +65,6 @@ export interface BuildRecommendationsInput {
 
 export interface ProgressSnapshot {
   completedCount: number
-  progress: ProfileProgressState | null
+  stage: ProgressStage
+  learningProgress: LearningProgressState | null
 }

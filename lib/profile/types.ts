@@ -1,6 +1,14 @@
 import { PROFILE_STATE_VERSION } from '@/lib/profile/constants'
 import type { Persona } from '@/lib/architecture-playground/types'
 import type { GoalId } from '@/lib/onboarding/types'
+import type {
+  LearningMilestoneState,
+  LearningProgressActivity,
+  LearningProgressMigrationState,
+  LearningProgressSource,
+  LearningProgressState,
+  LearningStage,
+} from '@/lib/progress/types'
 
 export type OnboardingStep = 'role' | 'goal' | 'journey'
 export type PersonalizationSurfaceId =
@@ -8,6 +16,7 @@ export type PersonalizationSurfaceId =
   | 'playgrounds'
   | 'architecture-playground'
   | 'production-readiness'
+  | 'progress'
 
 export interface PersonalizationContextOverride {
   role: Persona | null
@@ -66,12 +75,30 @@ const VALID_GOALS: readonly GoalId[] = [
 
 const PERSONA_SET = new Set<string>(VALID_PERSONAS)
 const GOAL_SET = new Set<string>(VALID_GOALS)
+const LEARNING_STAGE_SET = new Set<LearningStage>(['early', 'mid', 'late'])
+const LEARNING_STATUS_SET = new Set<LearningMilestoneState['status']>([
+  'not_started',
+  'in_progress',
+  'completed',
+])
+const LEARNING_SOURCE_SET = new Set<LearningProgressSource>([
+  'route',
+  'recommendation',
+  'manual',
+  'migration',
+])
+const LEARNING_ACTIVITY_KIND_SET = new Set<LearningProgressActivity['kind']>([
+  'visit',
+  'start',
+  'complete',
+])
 
 export const PERSONALIZATION_SURFACES: PersonalizationSurfaceId[] = [
   'home',
   'playgrounds',
   'architecture-playground',
   'production-readiness',
+  'progress',
 ]
 
 export interface ProfileProgressState {
@@ -114,6 +141,7 @@ export interface ProfileState {
   updatedAt: string
   onboarding: ProfileOnboardingState | null
   progress: ProfileProgressState | null
+  learningProgress: LearningProgressState | null
   files: Record<string, VaultFileMetadata>
   personalization: PersonalizationState
 }
@@ -154,6 +182,7 @@ export function createEmptyProfileState(): ProfileState {
     updatedAt: new Date().toISOString(),
     onboarding: null,
     progress: null,
+    learningProgress: null,
     files: {},
     personalization: createEmptyPersonalizationState(),
   }
@@ -307,6 +336,123 @@ export function normalizeProgressState(input: unknown): ProfileProgressState | n
   }
 }
 
+function normalizeLearningStage(value: unknown): LearningStage {
+  if (typeof value !== 'string' || !LEARNING_STAGE_SET.has(value as LearningStage)) {
+    return 'early'
+  }
+
+  return value as LearningStage
+}
+
+function normalizeLearningStatus(value: unknown): LearningMilestoneState['status'] {
+  if (typeof value !== 'string' || !LEARNING_STATUS_SET.has(value as LearningMilestoneState['status'])) {
+    return 'not_started'
+  }
+
+  return value as LearningMilestoneState['status']
+}
+
+function normalizeLearningSource(value: unknown): LearningProgressSource | undefined {
+  if (typeof value !== 'string') {
+    return undefined
+  }
+
+  return LEARNING_SOURCE_SET.has(value as LearningProgressSource)
+    ? (value as LearningProgressSource)
+    : undefined
+}
+
+function normalizeLearningMilestoneState(input: unknown): LearningMilestoneState | null {
+  if (!input || typeof input !== 'object') {
+    return null
+  }
+
+  const value = input as Record<string, unknown>
+  return {
+    status: normalizeLearningStatus(value.status),
+    startedAt: typeof value.startedAt === 'string' ? value.startedAt : undefined,
+    completedAt: typeof value.completedAt === 'string' ? value.completedAt : undefined,
+    source: normalizeLearningSource(value.source),
+  }
+}
+
+function normalizeLearningActivityKind(value: unknown): LearningProgressActivity['kind'] {
+  if (typeof value !== 'string' || !LEARNING_ACTIVITY_KIND_SET.has(value as LearningProgressActivity['kind'])) {
+    return 'visit'
+  }
+
+  return value as LearningProgressActivity['kind']
+}
+
+function normalizeLearningActivity(input: unknown): LearningProgressActivity | null {
+  if (!input || typeof input !== 'object') {
+    return null
+  }
+
+  const value = input as Record<string, unknown>
+  const id = coerceString(value.id)
+  const at = coerceString(value.at)
+  const path = coerceString(value.path)
+
+  if (!id || !at || !path) {
+    return null
+  }
+
+  return {
+    id,
+    kind: normalizeLearningActivityKind(value.kind),
+    path,
+    milestoneId: typeof value.milestoneId === 'string' ? value.milestoneId : undefined,
+    at,
+  }
+}
+
+function normalizeLearningProgressMigration(input: unknown): LearningProgressMigrationState | undefined {
+  if (!input || typeof input !== 'object') {
+    return undefined
+  }
+
+  const value = input as Record<string, unknown>
+  if (typeof value.legacySkillTreeImportedAt !== 'string') {
+    return undefined
+  }
+
+  return {
+    legacySkillTreeImportedAt: value.legacySkillTreeImportedAt,
+  }
+}
+
+export function normalizeLearningProgressState(input: unknown): LearningProgressState | null {
+  if (!input || typeof input !== 'object') {
+    return null
+  }
+
+  const value = input as Record<string, unknown>
+  const milestonesRaw = coerceRecord(value.milestones)
+  const milestones: Record<string, LearningMilestoneState> = {}
+
+  for (const [milestoneId, milestoneState] of Object.entries(milestonesRaw)) {
+    const normalizedMilestoneState = normalizeLearningMilestoneState(milestoneState)
+    if (normalizedMilestoneState) {
+      milestones[milestoneId] = normalizedMilestoneState
+    }
+  }
+
+  const activityRaw = Array.isArray(value.activity) ? value.activity : []
+  const activity = activityRaw
+    .map((item) => normalizeLearningActivity(item))
+    .filter((item): item is LearningProgressActivity => item !== null)
+
+  return {
+    version: 1,
+    stage: normalizeLearningStage(value.stage),
+    milestones,
+    activity,
+    migration: normalizeLearningProgressMigration(value.migration),
+    updatedAt: coerceString(value.updatedAt, new Date().toISOString()),
+  }
+}
+
 export function normalizeOnboardingState(input: unknown): ProfileOnboardingState | null {
   if (!input || typeof input !== 'object') {
     return null
@@ -375,6 +521,7 @@ export function normalizeProfileState(input: unknown): ProfileState {
     updatedAt: coerceString(value.updatedAt, new Date().toISOString()),
     onboarding: normalizeOnboardingState(value.onboarding),
     progress: normalizeProgressState(value.progress),
+    learningProgress: normalizeLearningProgressState(value.learningProgress),
     files,
     personalization: normalizePersonalizationState(value.personalization),
   }

@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { Toaster } from 'sonner'
+import ProgressRouteTracker from '@/components/progress/ProgressRouteTracker'
 
 const siteUrl = 'https://digitalplatformarchitect.com'
 const headingFont = Manrope({
@@ -59,6 +60,7 @@ export default function RootLayout({
             Skip to main content
           </a>
           <Header />
+          <ProgressRouteTracker />
           <main id="main-content">{children}</main>
           <Footer />
           <Toaster

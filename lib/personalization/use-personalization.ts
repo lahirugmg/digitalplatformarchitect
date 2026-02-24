@@ -10,10 +10,12 @@ import {
   getCachedState,
   getResolvedPersonalizationContext,
   markSurfaceSeen,
+  startLearningMilestoneFromPath,
   setPersonalizationContextOverride,
 } from '@/lib/profile/profile-client'
 import type { PersonalizationSurfaceId, ProfileState } from '@/lib/profile/types'
 import { buildRankedRecommendations } from '@/lib/personalization/engine'
+import { findMilestoneByPath, normalizeLearningPath } from '@/lib/progress/catalog'
 import type {
   RankedRecommendation,
   ResolvedPersonalizationContext,
@@ -178,9 +180,22 @@ export function trackRecommendationClick(
   context: ResolvedPersonalizationContext,
   sessionActive: boolean,
 ): void {
+  const milestoneId = findMilestoneByPath(normalizeLearningPath(recommendation.href))?.id
+
+  startLearningMilestoneFromPath(recommendation.href)
+
   emitPersonalizationEvent('personalization_reco_click', {
     surface,
     recommendation_id: recommendation.id,
+    role: context.role,
+    goal: context.goal,
+    session_active: sessionActive,
+  })
+
+  emitPersonalizationEvent('progress_milestone_started', {
+    surface,
+    recommendation_id: recommendation.id,
+    milestone_id: milestoneId,
     role: context.role,
     goal: context.goal,
     session_active: sessionActive,

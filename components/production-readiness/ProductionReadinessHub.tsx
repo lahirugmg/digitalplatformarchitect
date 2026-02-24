@@ -393,11 +393,11 @@ export function ProductionReadinessHub() {
           />
 
           <PlaygroundLink
-            href="/skill-tree"
-            title="Architecture Skill Tree"
-            description="Track your learning progress and unlock new skills"
+            href="/progress"
+            title="Learning Progress Hub"
+            description="Track natural milestone progress across architecture workflows"
             category="skill"
-            icon="🌳"
+            icon="📈"
           />
         </div>
       </div>

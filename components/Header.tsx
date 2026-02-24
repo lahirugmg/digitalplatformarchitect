@@ -9,8 +9,8 @@ import ProfileKeyManager from '@/components/profile/ProfileKeyManager'
 const navItems = [
   { href: '/playgrounds', label: 'Playgrounds', ariaLabel: 'Navigate to interactive playgrounds' },
   { href: '/playgrounds/production-readiness', label: 'Production Readiness', ariaLabel: 'Navigate to production readiness hub', badge: 'NEW' },
+  { href: '/progress', label: 'Progress', ariaLabel: 'Navigate to learning progress hub' },
   { href: '/vault', label: 'File Vault', ariaLabel: 'Navigate to secure file vault' },
-  { href: '/skill-tree', label: 'Skill Tree', ariaLabel: 'Navigate to the skill tree' },
   { href: '/articles', label: 'Articles', ariaLabel: 'Navigate to articles' },
   { href: '/about', label: 'About', ariaLabel: 'Navigate to about page' },
 ]

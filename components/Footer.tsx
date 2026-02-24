@@ -10,7 +10,7 @@ export default function Footer() {
               Digital Platform Architect <span className="text-[var(--accent)]">Platform</span>
             </div>
             <p className="text-sm text-slate-600 mt-2 max-w-md">
-              Learn enterprise architecture through interactive diagrams, patterns, and guided skill paths.
+              Learn enterprise architecture through interactive diagrams, patterns, and natural progress tracking.
             </p>
           </div>
           <div className="flex flex-wrap gap-4 text-sm">
@@ -23,8 +23,8 @@ export default function Footer() {
             <Link href="/playgrounds" className="text-slate-600 hover:text-slate-900">
               Playgrounds
             </Link>
-            <Link href="/skill-tree" className="text-slate-600 hover:text-slate-900">
-              Skill Tree
+            <Link href="/progress" className="text-slate-600 hover:text-slate-900">
+              Progress
             </Link>
             <Link href="/articles" className="text-slate-600 hover:text-slate-900">
               Articles

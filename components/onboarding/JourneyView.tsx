@@ -23,9 +23,9 @@ const RECOMMENDATION_TYPE_INFO = {
     label: 'Article',
     badgeClass: 'bg-slate-100 text-slate-700',
   },
-  'skill-tree': {
+  progress: {
     icon: Building,
-    label: 'Skill Tree',
+    label: 'Progress Hub',
     badgeClass: 'bg-slate-100 text-slate-700',
   },
   'building-block': {
