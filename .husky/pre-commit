@@ -1,0 +1,4 @@
+set -e
+npm run check:security
+npm run type-check
+npm run test
