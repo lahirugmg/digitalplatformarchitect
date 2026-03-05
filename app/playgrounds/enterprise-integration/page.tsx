@@ -32,19 +32,25 @@ export default function EnterpriseIntegrationPlayground() {
   ]
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen flex flex-col bg-slate-950 text-slate-100 relative overflow-hidden">
+      {/* Background Mesh */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[30%] -left-[10%] w-[50%] h-[50%] rounded-full bg-blue-600/10 blur-[120px]" />
+        <div className="absolute -top-[10%] right-[20%] w-[40%] h-[40%] rounded-full bg-emerald-600/10 blur-[100px]" />
+      </div>
+
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4">
+      <div className="relative z-10 bg-white/5 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold mb-1">
-              <span aria-hidden="true">🔗 </span>Enterprise Integration Patterns
+            <h1 className="text-xl sm:text-2xl font-bold mb-1 tracking-tight text-white flex items-center gap-2">
+              <span className="text-2xl">🏢</span> Enterprise Integration Patterns
             </h1>
-            <p className="text-sm sm:text-base text-slate-600">Learn integration patterns through interactive scenarios</p>
+            <p className="text-sm sm:text-base text-slate-400 font-medium">Learn integration patterns through interactive scenarios</p>
           </div>
           <a
             href="/playgrounds"
-            className="px-4 sm:px-6 py-2 border border-slate-300 rounded-lg font-medium hover:bg-slate-50 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 rounded-lg font-medium transition-all text-sm text-slate-300 hover:text-white flex items-center gap-2"
           >
             ← Back to Playgrounds
           </a>
@@ -52,46 +58,53 @@ export default function EnterpriseIntegrationPlayground() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden relative z-10">
         {/* Scenario Selector */}
-        <div className="hidden sm:block w-64 bg-white border-r border-slate-200 p-4 overflow-y-auto" role="navigation" aria-label="Scenario selector">
-          <h3 className="font-bold mb-4 text-sm uppercase text-slate-500">Integration Scenarios</h3>
+        <div className="hidden sm:block w-72 bg-white/5 backdrop-blur-xl border-r border-white/10 p-5 overflow-y-auto" role="navigation" aria-label="Scenario selector">
+          <h3 className="font-bold mb-5 text-xs uppercase tracking-wider text-slate-400">Integration Scenarios</h3>
 
           <div className="space-y-3">
             {scenarios.map((s) => (
               <button
                 key={s.id}
                 onClick={() => setScenario(s.id)}
-                className={`w-full text-left p-4 rounded-lg border-2 transition ${
-                  scenario === s.id
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-slate-200 hover:border-blue-300'
-                }`}
+                className={`w-full text-left p-4 rounded-xl border transition-all duration-300 group ${scenario === s.id
+                    ? 'border-emerald-500/50 bg-emerald-500/10 shadow-[0_0_15px_rgba(16,185,129,0.1)]'
+                    : 'border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10'
+                  }`}
               >
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl">{s.icon}</span>
-                  <span className="font-semibold text-sm">{s.name}</span>
+                <div className="flex items-center gap-3 mb-2">
+                  <span className={`flex items-center justify-center w-8 h-8 rounded-lg text-lg transition-colors ${scenario === s.id ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/10 text-slate-300 group-hover:text-white'}`}>
+                    {s.icon}
+                  </span>
+                  <span className={`font-semibold tracking-tight ${scenario === s.id ? 'text-emerald-300' : 'text-slate-200 group-hover:text-white'}`}>{s.name}</span>
                 </div>
-                <p className="text-xs text-slate-600">{s.description}</p>
+                <p className="text-xs text-slate-400 font-medium leading-relaxed">{s.description}</p>
               </button>
             ))}
           </div>
 
-          <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-            <h4 className="font-semibold text-sm mb-2">✅ Patterns Covered</h4>
-            <ul className="text-xs text-slate-700 space-y-1">
-              <li>• Message Transformation</li>
-              <li>• Content-Based Router</li>
-              <li>• Message Filter</li>
-              <li>• Aggregator</li>
-              <li>• Splitter</li>
+          <div className="mt-8 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
+            <h4 className="font-bold mb-3 text-sm text-emerald-400 flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Patterns Covered
+            </h4>
+            <ul className="text-xs text-emerald-200/70 space-y-2">
+              <li className="flex items-center gap-2"><span className="text-emerald-500">•</span> Message Transformation</li>
+              <li className="flex items-center gap-2"><span className="text-emerald-500">•</span> Content-Based Router</li>
+              <li className="flex items-center gap-2"><span className="text-emerald-500">•</span> Message Filter</li>
+              <li className="flex items-center gap-2"><span className="text-emerald-500">•</span> Aggregator</li>
+              <li className="flex items-center gap-2"><span className="text-emerald-500">•</span> Splitter</li>
             </ul>
           </div>
         </div>
 
         {/* Canvas */}
-        <div className="flex-1 bg-slate-50 p-8">
-          <div className="max-w-4xl mx-auto">
+        <div className="flex-1 relative bg-[#0f172a] p-8 overflow-y-auto">
+          <div className="absolute inset-0 z-0 bg-grid-white/[0.02] bg-[size:40px_40px]" />
+          <div className="max-w-4xl mx-auto relative z-10">
             {/* Scenario Content */}
             {scenario === 'data-transformation' && <DataTransformationScenario />}
             {scenario === 'message-routing' && <MessageRoutingScenario />}
@@ -100,56 +113,60 @@ export default function EnterpriseIntegrationPlayground() {
         </div>
 
         {/* Info Panel */}
-        <div className="hidden lg:block w-80 bg-white border-l border-slate-200 p-4 overflow-y-auto" role="complementary" aria-label="Pattern guide">
-          <h3 className="font-bold mb-3">Pattern Guide</h3>
+        <div className="hidden lg:block w-80 bg-white/5 backdrop-blur-xl border-l border-white/10 p-5 overflow-y-auto" role="complementary" aria-label="Pattern guide">
+          <h3 className="font-bold mb-5 flex items-center gap-2 text-slate-200">
+            <span className="text-xl">📚</span> Pattern Guide
+          </h3>
 
-          {scenario === 'data-transformation' && (
-            <div className="space-y-4">
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                <h4 className="font-semibold mb-2">Message Translator</h4>
-                <p className="text-sm text-slate-700">
-                  Translates messages between different data formats without changing the semantic meaning.
-                </p>
+          <div className="space-y-5">
+            {scenario === 'data-transformation' && (
+              <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-4">
+                <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
+                  <h4 className="font-bold text-sm text-blue-400 mb-2">Message Translator</h4>
+                  <p className="text-sm text-blue-200/80 leading-relaxed">
+                    Translates messages between different data formats without changing the semantic meaning.
+                  </p>
+                </div>
+                <div className="text-sm bg-white/5 border border-white/10 rounded-xl p-4 space-y-3">
+                  <div className="flex flex-col gap-1"><span className="text-xs font-bold uppercase tracking-wider text-slate-500">Use Case</span> <span className="text-slate-300">Legacy system integration</span></div>
+                  <div className="flex flex-col gap-1"><span className="text-xs font-bold uppercase tracking-wider text-slate-500">Tools</span> <span className="text-slate-300">XSLT, JSONata, Apache Camel</span></div>
+                  <div className="flex flex-col gap-1"><span className="text-xs font-bold uppercase tracking-wider text-slate-500">Example</span> <span className="text-slate-300">XML → JSON, CSV → Avro</span></div>
+                </div>
               </div>
-              <div className="text-sm space-y-2">
-                <div><strong>Use Case:</strong> Legacy system integration</div>
-                <div><strong>Tools:</strong> XSLT, JSONata, Apache Camel</div>
-                <div><strong>Example:</strong> XML → JSON, CSV → Avro</div>
-              </div>
-            </div>
-          )}
+            )}
 
-          {scenario === 'message-routing' && (
-            <div className="space-y-4">
-              <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
-                <h4 className="font-semibold mb-2">Content-Based Router</h4>
-                <p className="text-sm text-slate-700">
-                  Routes messages to different destinations based on message content.
-                </p>
+            {scenario === 'message-routing' && (
+              <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-4">
+                <div className="bg-purple-500/10 border border-purple-500/20 rounded-xl p-4">
+                  <h4 className="font-bold text-sm text-purple-400 mb-2">Content-Based Router</h4>
+                  <p className="text-sm text-purple-200/80 leading-relaxed">
+                    Routes messages to different destinations based on message content.
+                  </p>
+                </div>
+                <div className="text-sm bg-white/5 border border-white/10 rounded-xl p-4 space-y-3">
+                  <div className="flex flex-col gap-1"><span className="text-xs font-bold uppercase tracking-wider text-slate-500">Use Case</span> <span className="text-slate-300">Dynamic routing logic</span></div>
+                  <div className="flex flex-col gap-1"><span className="text-xs font-bold uppercase tracking-wider text-slate-500">Tools</span> <span className="text-slate-300">Apache Camel, MuleSoft, WSO2</span></div>
+                  <div className="flex flex-col gap-1"><span className="text-xs font-bold uppercase tracking-wider text-slate-500">Example</span> <span className="text-slate-300">Route by region or priority</span></div>
+                </div>
               </div>
-              <div className="text-sm space-y-2">
-                <div><strong>Use Case:</strong> Dynamic routing logic</div>
-                <div><strong>Tools:</strong> Apache Camel, MuleSoft, WSO2 ESB</div>
-                <div><strong>Example:</strong> Route by region, customer type, priority</div>
-              </div>
-            </div>
-          )}
+            )}
 
-          {scenario === 'aggregation' && (
-            <div className="space-y-4">
-              <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                <h4 className="font-semibold mb-2">Message Aggregator</h4>
-                <p className="text-sm text-slate-700">
-                  Combines multiple related messages into a single message.
-                </p>
+            {scenario === 'aggregation' && (
+              <div className="animate-in fade-in slide-in-from-right-4 duration-300 space-y-4">
+                <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4">
+                  <h4 className="font-bold text-sm text-emerald-400 mb-2">Message Aggregator</h4>
+                  <p className="text-sm text-emerald-200/80 leading-relaxed">
+                    Combines multiple related messages into a single message.
+                  </p>
+                </div>
+                <div className="text-sm bg-white/5 border border-white/10 rounded-xl p-4 space-y-3">
+                  <div className="flex flex-col gap-1"><span className="text-xs font-bold uppercase tracking-wider text-slate-500">Use Case</span> <span className="text-slate-300">Collecting responses from sources</span></div>
+                  <div className="flex flex-col gap-1"><span className="text-xs font-bold uppercase tracking-wider text-slate-500">Tools</span> <span className="text-slate-300">Camel Aggregator, Spring Int.</span></div>
+                  <div className="flex flex-col gap-1"><span className="text-xs font-bold uppercase tracking-wider text-slate-500">Example</span> <span className="text-slate-300">Gathering warehouse inventory</span></div>
+                </div>
               </div>
-              <div className="text-sm space-y-2">
-                <div><strong>Use Case:</strong> Collecting responses from multiple sources</div>
-                <div><strong>Tools:</strong> Apache Camel Aggregator, Spring Integration</div>
-                <div><strong>Example:</strong> Gather inventory from warehouses</div>
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -192,28 +209,30 @@ function DataTransformationScenario() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-bold mb-4">🔄 Data Transformation Challenge</h3>
-        <p className="text-slate-600 mb-4">
+      <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-xl shadow-2xl p-6">
+        <h3 className="text-xl font-bold mb-4 text-white">🔄 Data Transformation Challenge</h3>
+        <p className="text-slate-400 mb-6">
           Transform XML from a legacy CRM system into JSON for your modern microservice API.
         </p>
 
-        <PatternCanvas nodes={nodes} edges={edges}>
-          <div
-            className={`absolute top-0 left-0 text-xs font-mono p-1 rounded shadow-lg transition-all duration-100 ${packetColor}`}
-            style={{ transform: `translate(${packet.x}px, ${packet.y}px)` }}
-          >
-            {packet.data}
-          </div>
-        </PatternCanvas>
+        <div className="bg-white/5 p-4 rounded-xl border border-white/10 mb-6">
+          <PatternCanvas nodes={nodes} edges={edges}>
+            <div
+              className={`absolute top-0 left-0 text-xs font-mono p-1 rounded shadow-lg transition-all duration-100 ${packetColor}`}
+              style={{ transform: `translate(${packet.x}px, ${packet.y}px)` }}
+            >
+              {packet.data}
+            </div>
+          </PatternCanvas>
+        </div>
 
-        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <h4 className="font-semibold mb-2">Transformation Logic</h4>
-          <ul className="text-sm space-y-1">
-            <li>• Flatten nested Name structure</li>
-            <li>• Rename ID → customerId</li>
-            <li>• Combine First + Last → fullName</li>
-            <li>• Remove phone formatting</li>
+        <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+          <h4 className="font-bold mb-3 text-sm text-blue-400">Transformation Logic</h4>
+          <ul className="text-sm text-blue-200/80 space-y-1.5">
+            <li><span className="text-blue-500 mr-2">•</span>Flatten nested Name structure</li>
+            <li><span className="text-blue-500 mr-2">•</span>Rename ID → customerId</li>
+            <li><span className="text-blue-500 mr-2">•</span>Combine First + Last → fullName</li>
+            <li><span className="text-blue-500 mr-2">•</span>Remove phone formatting</li>
           </ul>
         </div>
       </div>
@@ -239,14 +258,15 @@ function MessageRoutingScenario() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-bold mb-4">🔀 Content-Based Routing</h3>
-        <p className="text-slate-600 mb-4">
+      <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-xl shadow-2xl p-6">
+        <h3 className="text-xl font-bold mb-4 text-white">🔀 Content-Based Routing</h3>
+        <p className="text-slate-400 mb-6">
           Route customer orders to the appropriate fulfillment center based on shipping address.
         </p>
 
-        <PatternCanvas nodes={nodes} edges={edges} />
-
+        <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+          <PatternCanvas nodes={nodes} edges={edges} />
+        </div>
       </div>
     </div>
   )
@@ -270,16 +290,18 @@ function AggregationScenario() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-bold mb-4">📦 Message Aggregation</h3>
-        <p className="text-slate-600 mb-4">
+      <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-xl shadow-2xl p-6">
+        <h3 className="text-xl font-bold mb-4 text-white">📦 Message Aggregation</h3>
+        <p className="text-slate-400 mb-6">
           Combine inventory data from multiple warehouses into a single consolidated report.
         </p>
 
-        <PatternCanvas nodes={nodes} edges={edges} />
+        <div className="bg-white/5 p-4 rounded-xl border border-white/10 mb-6">
+          <PatternCanvas nodes={nodes} edges={edges} />
+        </div>
 
-        <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg text-sm">
-          <strong>Aggregation Strategy:</strong> Wait for responses from all 3 warehouses (timeout: 5s),
+        <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-sm text-emerald-200/90 leading-relaxed">
+          <strong className="text-emerald-400">Aggregation Strategy:</strong> Wait for responses from all 3 warehouses (timeout: 5s),
           then combine by SKU and sum quantities.
         </div>
       </div>

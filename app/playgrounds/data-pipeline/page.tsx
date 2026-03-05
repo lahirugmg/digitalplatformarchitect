@@ -68,18 +68,24 @@ export default function DataPipelinePlayground() {
   }
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen flex flex-col bg-slate-950 text-slate-100 relative overflow-hidden">
+      {/* Background Mesh */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-[20%] right-[10%] w-[50%] h-[50%] rounded-full bg-blue-600/10 blur-[100px]" />
+        <div className="absolute bottom-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-cyan-600/10 blur-[100px]" />
+      </div>
+
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4">
+      <div className="relative z-10 bg-white/5 backdrop-blur-md border-b border-white/10 px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold mb-1">
-              <span aria-hidden="true">🌊 </span>Data Pipeline Choreography
+            <h1 className="text-xl sm:text-2xl font-bold mb-1 tracking-tight text-white flex items-center gap-2">
+              <span className="text-2xl">🌊</span> Data Pipeline Choreography
             </h1>
-            <p className="text-sm sm:text-base text-slate-600">
+            <p className="text-sm sm:text-base text-slate-400 font-medium">
               Build data pipelines and watch data flow like water
               {currentPipelineId && saveName && (
-                <span className="ml-2 text-blue-600 text-xs font-medium">({saveName})</span>
+                <span className="ml-2 text-blue-400 text-xs font-semibold">({saveName})</span>
               )}
             </p>
           </div>
@@ -87,15 +93,18 @@ export default function DataPipelinePlayground() {
             {/* Save/Load */}
             <button
               onClick={handleOpenSaveLoad}
-              className="px-3 sm:px-4 py-2 border border-slate-300 rounded-lg font-medium hover:bg-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center gap-1"
+              className="px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 rounded-lg font-medium transition-all text-sm text-slate-300 hover:text-white flex items-center gap-2"
               aria-label="Save or load pipeline"
             >
-              💾 Save/Load
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+              </svg>
+              Save/Load
             </button>
             {/* Quick Save */}
             <button
               onClick={handleSave}
-              className="px-3 sm:px-4 py-2 bg-blue-50 border border-blue-200 text-blue-700 rounded-lg font-medium hover:bg-blue-100 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-300 rounded-lg font-medium hover:bg-blue-500/30 transition-all text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="Quick save current pipeline"
               disabled={currentNodes.length === 0}
             >
@@ -104,7 +113,7 @@ export default function DataPipelinePlayground() {
             {/* Export */}
             <button
               onClick={handleExport}
-              className="px-3 sm:px-6 py-2 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg font-medium hover:from-green-700 hover:to-emerald-700 transition shadow-md flex items-center gap-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+              className="px-4 py-2 bg-gradient-to-r from-emerald-500/80 to-teal-500/80 hover:from-emerald-500 hover:to-teal-500 text-white rounded-lg font-medium transition-all shadow-lg shadow-emerald-500/20 flex items-center gap-2 text-sm border border-emerald-400/20"
               aria-label="Export infrastructure as code"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -115,23 +124,25 @@ export default function DataPipelinePlayground() {
             {/* Run/Stop */}
             <button
               onClick={() => setIsRunning(!isRunning)}
-              className={`px-4 sm:px-6 py-2 rounded-lg font-medium transition text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-                isRunning
-                  ? 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500'
-                  : 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500'
-              }`}
+              className={`px-6 py-2 rounded-lg font-bold transition-all text-sm shadow-lg flex items-center gap-2 ${isRunning
+                  ? 'bg-red-500/80 hover:bg-red-500 text-white shadow-red-500/20 border border-red-500/50'
+                  : 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-600/20 border border-blue-500/50'
+                }`}
               disabled={!validation?.hasSource}
               aria-label={isRunning ? 'Stop pipeline' : 'Run pipeline'}
             >
-              {isRunning ? '⏸️ Stop' : '▶️ Run Pipeline'}
+              {isRunning ? '⏹ Stop' : '▶ Run Pipeline'}
             </button>
             {/* Reset */}
             <button
               onClick={handleReset}
-              className="px-3 sm:px-6 py-2 border border-slate-300 rounded-lg font-medium hover:bg-slate-50 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg font-medium transition-all text-sm text-slate-300 flex items-center gap-2"
               aria-label="Reset pipeline canvas"
             >
-              🔄 Reset
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              Reset
             </button>
           </div>
         </div>
@@ -186,9 +197,8 @@ export default function DataPipelinePlayground() {
                   {savedPipelines.map((p) => (
                     <div
                       key={p.id}
-                      className={`border rounded-lg p-4 ${
-                        p.id === currentPipelineId ? 'border-blue-400 bg-blue-50' : 'border-slate-200'
-                      }`}
+                      className={`border rounded-lg p-4 ${p.id === currentPipelineId ? 'border-blue-400 bg-blue-50' : 'border-slate-200'
+                        }`}
                     >
                       <div className="flex justify-between items-start mb-2">
                         <div>
@@ -235,15 +245,15 @@ export default function DataPipelinePlayground() {
       )}
 
       {/* Main Content */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden relative z-10">
         {/* Sidebar - Component Library */}
-        <div className="hidden md:block w-64 bg-white border-r border-slate-200 p-4 overflow-y-auto" role="complementary" aria-label="Component library">
-          <h3 className="font-bold mb-4 text-sm uppercase text-slate-500">Component Library</h3>
+        <div className="hidden md:block w-64 bg-white/5 backdrop-blur-xl border-r border-white/10 p-5 overflow-y-auto" role="complementary" aria-label="Component library">
+          <h3 className="font-bold mb-5 text-xs uppercase tracking-wider text-slate-400">Component Library</h3>
 
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div>
-              <h4 className="font-semibold mb-2 text-sm">Data Sources</h4>
-              <div className="space-y-2">
+              <h4 className="font-semibold mb-3 text-sm text-slate-300">Data Sources</h4>
+              <div className="space-y-2.5">
                 <ComponentCard icon="📡" name="IoT Sensors" componentType="source" />
                 <ComponentCard icon="🌐" name="REST API" componentType="source" />
                 <ComponentCard icon="📊" name="Database CDC" componentType="source" />
@@ -251,8 +261,8 @@ export default function DataPipelinePlayground() {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-2 text-sm">Stream Processing</h4>
-              <div className="space-y-2">
+              <h4 className="font-semibold mb-3 text-sm text-slate-300">Stream Processing</h4>
+              <div className="space-y-2.5">
                 <ComponentCard icon="⚡" name="Kafka" componentType="streaming" />
                 <ComponentCard icon="🌊" name="Apache Flink" componentType="streaming" />
                 <ComponentCard icon="🔄" name="Transformation" componentType="processing" />
@@ -260,8 +270,8 @@ export default function DataPipelinePlayground() {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-2 text-sm">Storage</h4>
-              <div className="space-y-2">
+              <h4 className="font-semibold mb-3 text-sm text-slate-300">Storage</h4>
+              <div className="space-y-2.5">
                 <ComponentCard icon="🏞️" name="Data Lake" componentType="storage" />
                 <ComponentCard icon="🏛️" name="Data Warehouse" componentType="storage" />
                 <ComponentCard icon="⚡" name="Redis Cache" componentType="storage" />
@@ -269,8 +279,8 @@ export default function DataPipelinePlayground() {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-2 text-sm">Analytics</h4>
-              <div className="space-y-2">
+              <h4 className="font-semibold mb-3 text-sm text-slate-300">Analytics</h4>
+              <div className="space-y-2.5">
                 <ComponentCard icon="📈" name="Analytics Engine" componentType="analytics" />
                 <ComponentCard icon="🤖" name="ML Model" componentType="analytics" />
                 <ComponentCard icon="📊" name="Dashboard" componentType="analytics" />
@@ -280,7 +290,8 @@ export default function DataPipelinePlayground() {
         </div>
 
         {/* Canvas */}
-        <div className="flex-1 bg-slate-50">
+        <div className="flex-1 relative bg-[#0f172a]">
+          <div className="absolute inset-0 z-0 bg-grid-white/[0.02] bg-[size:40px_40px]" />
           <DataPipelineCanvas
             isRunning={isRunning}
             onMetricsUpdate={setMetrics}
@@ -292,37 +303,39 @@ export default function DataPipelinePlayground() {
         </div>
 
         {/* Right Panel - Challenge & Metrics */}
-        <div className="hidden lg:block w-80 bg-white border-l border-slate-200 p-4 overflow-y-auto" role="complementary" aria-label="Challenge progress and metrics">
+        <div className="hidden lg:block w-80 bg-white/5 backdrop-blur-xl border-l border-white/10 p-5 overflow-y-auto" role="complementary" aria-label="Challenge progress and metrics">
           {/* Challenge Progress */}
-          <div className="mb-6">
-            <h3 className="font-bold mb-3 flex items-center gap-2">
-              <span aria-hidden="true">🎯</span> Challenge Progress
+          <div className="mb-8">
+            <h3 className="font-bold mb-4 flex items-center gap-2 text-slate-200">
+              <span className="text-xl">🎯</span> Challenge
             </h3>
-            <div className="space-y-2 text-sm" role="list" aria-label="Challenge requirements">
+            <div className="space-y-3 p-4 rounded-xl bg-white/5 border border-white/10" role="list">
               <ChecklistItem checked={validation?.hasSource} label="Add data source" />
-              <ChecklistItem checked={validation?.hasStreaming} label="Add streaming platform (Kafka)" />
-              <ChecklistItem checked={validation?.hasTransformation} label="Add transformation step" />
+              <ChecklistItem checked={validation?.hasStreaming} label="Add streaming (Kafka)" />
+              <ChecklistItem checked={validation?.hasTransformation} label="Add transformation" />
               <ChecklistItem checked={validation?.hasStorage} label="Add storage layer" />
-              <ChecklistItem checked={validation?.hasAnalytics} label="Connect analytics engine" />
+              <ChecklistItem checked={validation?.hasAnalytics} label="Connect analytics" />
             </div>
 
             {validation?.isComplete && (
-              <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-3" role="alert">
-                <div className="flex items-center gap-2 text-green-700 font-semibold">
-                  <span aria-hidden="true">✅</span> Challenge Complete!
+              <div className="mt-4 bg-emerald-500/20 border border-emerald-500/30 rounded-xl p-4" role="alert">
+                <div className="flex items-center gap-2 text-emerald-400 font-bold mb-1">
+                  <span className="text-xl leading-none">✅</span> Complete!
                 </div>
-                <p className="text-sm text-green-600 mt-1">
-                  Great job! You&apos;ve built a complete data pipeline.
+                <p className="text-sm text-emerald-300/80 leading-snug">
+                  Great job! You&apos;ve built a complete core data pipeline.
                 </p>
               </div>
             )}
 
             {validation?.issues && validation.issues.length > 0 && !validation?.isComplete && (
-              <div className="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-3">
-                <div className="text-xs font-semibold text-amber-700 mb-2">Next Steps:</div>
-                <ul className="text-xs text-amber-600 space-y-1">
+              <div className="mt-4 bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
+                <div className="text-xs font-bold uppercase tracking-wider text-amber-400/80 mb-2">Next Steps</div>
+                <ul className="text-sm text-amber-200/80 space-y-1.5">
                   {validation.issues.map((issue: string, i: number) => (
-                    <li key={i}>• {issue}</li>
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-amber-500/50 mt-1">&rarr;</span> {issue}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -331,30 +344,32 @@ export default function DataPipelinePlayground() {
 
           {/* Live Metrics */}
           {isRunning && metrics && (
-            <div className="mb-6" aria-live="polite">
-              <h3 className="font-bold mb-3 flex items-center gap-2">
-                <span aria-hidden="true">📊</span> Live Metrics
+            <div className="mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500" aria-live="polite">
+              <h3 className="font-bold mb-4 flex items-center gap-2 text-slate-200">
+                <span className="text-xl">📊</span> Live Metrics
               </h3>
-              <div className="space-y-3">
-                <MetricCard label="Throughput" value={`${(metrics.throughput / 1000).toFixed(1)}K`} unit="events/sec" color="blue" />
+              <div className="grid grid-cols-2 gap-3">
+                <MetricCard label="Throughput" value={`${(metrics.throughput / 1000).toFixed(1)}K`} unit="events/s" color="blue" />
                 <MetricCard label="Latency" value={metrics.latency} unit="ms" color="cyan" />
-                <MetricCard label="Data Quality" value={metrics.quality} unit="%" color={metrics.quality >= 90 ? 'green' : metrics.quality >= 70 ? 'amber' : 'red'} />
-                <MetricCard label="Monthly Cost" value={`$${metrics.monthlyCost.toLocaleString()}`} unit="/month" color="slate" />
+                <MetricCard label="Quality" value={metrics.quality} unit="%" color={metrics.quality >= 90 ? 'green' : metrics.quality >= 70 ? 'amber' : 'red'} />
+                <MetricCard label="Cost" value={`$${metrics.monthlyCost.toLocaleString()}`} unit="/mo" color="slate" />
               </div>
             </div>
           )}
 
           {/* Tips */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h4 className="font-semibold mb-2 text-sm">💡 Tips</h4>
-            <ul className="list-disc list-inside text-xs text-slate-700 space-y-1">
-              <li>Drag components from left sidebar</li>
-              <li>Connect nodes by dragging edges</li>
-              <li>Thicker connections = higher throughput</li>
-              <li>Blue streams = clean data quality</li>
-              <li>Brown streams = data quality issues</li>
-              <li>Click Run to see animated flow</li>
-              <li>Use Save/Load to keep your designs</li>
+          <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
+            <h4 className="font-bold mb-3 text-sm text-blue-400 flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Tips
+            </h4>
+            <ul className="text-xs text-blue-200/70 space-y-2">
+              <li className="flex items-start gap-2"><span className="text-blue-500">•</span> Drag components from left</li>
+              <li className="flex items-start gap-2"><span className="text-blue-500">•</span> Connect nodes via ports</li>
+              <li className="flex items-start gap-2"><span className="text-blue-500">•</span> Thicker lines = high load</li>
+              <li className="flex items-start gap-2"><span className="text-blue-500">•</span> Click Run to animate</li>
             </ul>
           </div>
         </div>
@@ -373,16 +388,17 @@ function ComponentCard({ icon, name, componentType }: { icon: string; name: stri
     <div
       draggable
       onDragStart={handleDragStart}
-      className="bg-white border border-slate-200 rounded-lg p-3 cursor-move hover:shadow-md hover:border-blue-300 transition focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="bg-white/5 border border-white/10 rounded-xl p-3 cursor-move transition-all duration-200 hover:scale-105 hover:bg-white/10 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 focus:outline-none focus:ring-2 focus:ring-blue-500 group"
       role="button"
       tabIndex={0}
       aria-label={`Drag ${name} (${componentType}) to canvas`}
     >
-      <div className="flex items-center gap-2">
-        <span className="text-2xl" aria-hidden="true">{icon}</span>
+      <div className="flex items-center gap-3">
+        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/5 ring-1 ring-white/10 group-hover:bg-blue-500/20 group-hover:ring-blue-500/30 transition-all">
+          <span className="text-lg" aria-hidden="true">{icon}</span>
+        </div>
         <div className="flex-1 min-w-0">
-          <div className="font-medium text-sm truncate">{name}</div>
-          <div className="text-xs text-slate-500 capitalize">{componentType}</div>
+          <div className="font-medium text-sm truncate text-slate-200 group-hover:text-white transition-colors">{name}</div>
         </div>
       </div>
     </div>
@@ -391,38 +407,48 @@ function ComponentCard({ icon, name, componentType }: { icon: string; name: stri
 
 function ChecklistItem({ checked, label }: { checked: boolean; label: string }) {
   return (
-    <div className="flex items-center gap-2" role="listitem">
+    <div className="flex items-center gap-3 group" role="listitem">
       <div
-        className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
-          checked ? 'bg-green-500 border-green-500' : 'border-slate-300'
-        }`}
+        className={`w-5 h-5 rounded-md flex items-center justify-center transition-colors ${checked ? 'bg-emerald-500/20 border border-emerald-500/50 text-emerald-400' : 'bg-white/5 border border-white/10 text-transparent'
+          }`}
         role="checkbox"
         aria-checked={checked}
         aria-label={label}
       >
-        {checked && <span className="text-white text-xs" aria-hidden="true">✓</span>}
+        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
       </div>
-      <span className={checked ? 'text-slate-700 line-through' : 'text-slate-600'}>{label}</span>
+      <span className={`text-sm transition-colors ${checked ? 'text-slate-500 line-through' : 'text-slate-300 group-hover:text-white'}`}>{label}</span>
     </div>
   )
 }
 
 function MetricCard({ label, value, unit, color }: { label: string; value: string | number; unit: string; color: string }) {
   const colorClasses = {
-    blue: 'bg-blue-50 border-blue-200 text-blue-700',
-    cyan: 'bg-cyan-50 border-cyan-200 text-cyan-700',
-    green: 'bg-green-50 border-green-200 text-green-700',
-    amber: 'bg-amber-50 border-amber-200 text-amber-700',
-    red: 'bg-red-50 border-red-200 text-red-700',
-    slate: 'bg-slate-50 border-slate-200 text-slate-700',
+    blue: 'bg-blue-500/10 border-blue-500/20 text-blue-100',
+    cyan: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-100',
+    green: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-100',
+    amber: 'bg-amber-500/10 border-amber-500/20 text-amber-100',
+    red: 'bg-red-500/10 border-red-500/20 text-red-100',
+    slate: 'bg-slate-500/20 border-white/10 text-slate-200',
+  }
+
+  const valueColors = {
+    blue: 'text-blue-400',
+    cyan: 'text-cyan-400',
+    green: 'text-emerald-400',
+    amber: 'text-amber-400',
+    red: 'text-red-400',
+    slate: 'text-white',
   }
 
   return (
-    <div className={`border rounded-lg p-3 ${colorClasses[color as keyof typeof colorClasses]}`}>
-      <div className="text-xs font-medium opacity-75">{label}</div>
-      <div className="flex items-baseline gap-1 mt-1">
-        <span className="text-2xl font-bold">{value}</span>
-        <span className="text-xs opacity-75">{unit}</span>
+    <div className={`border rounded-xl p-3 flex flex-col justify-between ${colorClasses[color as keyof typeof colorClasses]}`}>
+      <div className="text-xs font-medium uppercase tracking-wider opacity-60 mb-2">{label}</div>
+      <div className="flex items-baseline gap-1.5">
+        <span className={`text-xl font-bold tracking-tight ${valueColors[color as keyof typeof valueColors]}`}>{value}</span>
+        <span className="text-xs font-medium opacity-60">{unit}</span>
       </div>
     </div>
   )
