@@ -34,6 +34,24 @@ function getCategoryFromTitle(title: string): string {
   ) {
     return 'Structural'
   }
+  if (
+    title.includes('message') ||
+    title.includes('router') ||
+    title.includes('channel') ||
+    title.includes('aggregator') ||
+    title.includes('splitter') ||
+    title.includes('endpoint') ||
+    title.includes('translator') ||
+    title.includes('bridge') ||
+    title.includes('gateway') ||
+    title.includes('bus') ||
+    title.includes('polling') ||
+    title.includes('scatter') ||
+    title.includes('broker') ||
+    title.includes('wire tap')
+  ) {
+    return 'Integration Patterns'
+  }
   return 'General'
 }
 
@@ -48,7 +66,16 @@ export function getAllPatterns(): Pattern[] {
       const { data, content } = matter(fileContents)
 
       const title = (data.title || slug).toLowerCase()
-      const category = getCategoryFromTitle(title)
+
+      let category = data.category
+      if (!category) {
+        const typeStr = (data.type || '').toLowerCase()
+        if (typeStr.includes('integration') || typeStr.includes('eip')) {
+          category = 'Integration Patterns'
+        } else {
+          category = getCategoryFromTitle(title)
+        }
+      }
 
       return {
         slug,
@@ -70,7 +97,16 @@ export function getPatternBySlug(slug: string): Pattern | null {
     const { data, content } = matter(fileContents)
 
     const title = (data.title || slug).toLowerCase()
-    const category = getCategoryFromTitle(title)
+
+    let category = data.category
+    if (!category) {
+      const typeStr = (data.type || '').toLowerCase()
+      if (typeStr.includes('integration') || typeStr.includes('eip')) {
+        category = 'Integration Patterns'
+      } else {
+        category = getCategoryFromTitle(title)
+      }
+    }
 
     return {
       slug,

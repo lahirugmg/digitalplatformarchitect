@@ -104,6 +104,16 @@ const PLAYGROUNDS: PlaygroundCard[] = [
     href: '/playgrounds/enterprise-integration',
     Icon: Network,
   },
+  {
+    id: 'resiliency',
+    title: 'Resiliency & Fault Tolerance',
+    description: 'Simulate cascading failures and visualize Circuit Breaker protection under heavy load.',
+    difficulty: 'Advanced',
+    duration: '15-20 min',
+    tags: ['Cloud-Native', 'Circuit Breaker', 'Chaos'],
+    href: '/playgrounds/resiliency',
+    Icon: ShieldAlert,
+  },
 ]
 
 const COMING_SOON = ['CAP Theorem Simulator', 'Architecture Builder', 'Pattern Composer']
