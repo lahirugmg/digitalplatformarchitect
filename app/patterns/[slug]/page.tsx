@@ -11,8 +11,9 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const pattern = getPatternBySlug(params.slug)
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const resolvedParams = await params
+  const pattern = getPatternBySlug(resolvedParams.slug)
   if (!pattern) return {}
   return {
     title: pattern.title,
@@ -24,8 +25,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-export default function PatternDetailPage({ params }: { params: { slug: string } }) {
-  const pattern = getPatternBySlug(params.slug)
+export default async function PatternDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params
+  const pattern = getPatternBySlug(resolvedParams.slug)
 
   if (!pattern) {
     return notFound()
@@ -124,8 +126,8 @@ export default function PatternDetailPage({ params }: { params: { slug: string }
                   </p>
                   <div className="flex items-center gap-2 text-xs text-slate-500">
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
-                      <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd"/>
+                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                      <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
                     </svg>
                     <span>Visual learning • Step-by-step guides • Real-time feedback</span>
                   </div>
