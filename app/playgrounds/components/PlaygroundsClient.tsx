@@ -10,6 +10,7 @@ import {
   Network,
   ShieldCheck,
   ShieldAlert,
+  Calculator,
 } from 'lucide-react'
 import ContextOverrideControl from '@/components/personalization/ContextOverrideControl'
 import PersonalizedSectionHeader from '@/components/personalization/PersonalizedSectionHeader'
@@ -123,6 +124,16 @@ const PLAYGROUNDS: PlaygroundCard[] = [
     tags: ['System Design', 'Scalability', 'Architecture'],
     href: '/playgrounds/scale-to-millions',
     Icon: Activity,
+  },
+  {
+    id: 'back-of-the-envelope',
+    title: 'Back-of-the-Envelope Estimation',
+    description: 'Interactive calculators for system design capacity planning, availability SLAs, and latency numbers.',
+    difficulty: 'Intermediate',
+    duration: '15-20 min',
+    tags: ['System Design', 'Estimation', 'Capacity'],
+    href: '/playgrounds/back-of-the-envelope',
+    Icon: Calculator,
   },
 ]
 
