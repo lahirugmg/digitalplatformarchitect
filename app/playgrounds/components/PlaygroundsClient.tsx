@@ -114,6 +114,16 @@ const PLAYGROUNDS: PlaygroundCard[] = [
     href: '/playgrounds/resiliency',
     Icon: ShieldAlert,
   },
+  {
+    id: 'scale-to-millions',
+    title: 'Scale to Millions Evolution',
+    description: 'Interactive architecture evolution from a single server to serving millions of users globally.',
+    difficulty: 'Intermediate',
+    duration: '20-25 min',
+    tags: ['System Design', 'Scalability', 'Architecture'],
+    href: '/playgrounds/scale-to-millions',
+    Icon: Activity,
+  },
 ]
 
 const COMING_SOON = ['CAP Theorem Simulator', 'Architecture Builder', 'Pattern Composer']
