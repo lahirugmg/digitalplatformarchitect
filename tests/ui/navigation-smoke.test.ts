@@ -18,14 +18,20 @@ test('homepage and playground surfaces keep core navigation paths', () => {
   const capacityRedirect = read('app/capacity-planning/page.tsx')
 
   assert.match(homepage, /href="\/playgrounds"/)
-  assert.match(homepage, /Get Personalized Guidance/)
+  assert.match(homepage, /Personalized guidance/)
+  assert.match(homepage, /\/playgrounds\/system-design-framework/)
   assert.match(playgrounds, /\/playgrounds\/operational-sympathy/)
   assert.match(playgrounds, /Interactive Playgrounds/)
-  assert.match(header, /href: '\/progress'/)
+  assert.match(header, /href: '\/playgrounds\/system-design-framework'/)
+  assert.match(header, /href: '\/blueprints'/)
   assert.doesNotMatch(header, /\/skill-tree/)
-  assert.match(footer, /href="\/progress"/)
+  assert.match(footer, /href="\/playgrounds\/system-design-framework"/)
+  assert.match(footer, /href="\/blueprints"/)
   assert.doesNotMatch(footer, /\/skill-tree/)
-  assert.match(skillTreeRedirect, /permanentRedirect\('\/progress'\)/)
+  assert.match(
+    skillTreeRedirect,
+    /permanentRedirect\('\/playgrounds\/system-design-framework'\)/,
+  )
   assert.match(capacityRedirect, /permanentRedirect\('\/playgrounds\/capacity-planning'\)/)
 })
 

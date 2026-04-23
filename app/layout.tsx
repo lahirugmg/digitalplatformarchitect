@@ -22,24 +22,38 @@ const bodyFont = Source_Sans_3({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Digital Platform Architect - Learn Enterprise Architecture Interactively',
+    default: 'Digital Platform Architect — system design from FRs and NFRs',
     template: '%s | Digital Platform Architect',
   },
-  description: 'Master enterprise architecture through hands-on interactive playgrounds. Learn data pipelines, message flows, and integration patterns by doing.',
-  keywords: ['enterprise architecture', 'data pipelines', 'integration patterns', 'message flows', 'interactive learning', 'platform architecture'],
+  description:
+    'Interactive system design: start from functional and non-functional requirements, walk a guided design flow, validate production readiness, and study reference blueprints.',
+  keywords: [
+    'system design',
+    'functional requirements',
+    'non-functional requirements',
+    'NFR',
+    'SLO',
+    'availability',
+    'scalability',
+    'architecture',
+    'interactive',
+    'blueprints',
+  ],
   authors: [{ name: 'Digital Platform Architect' }],
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: siteUrl,
     siteName: 'Digital Platform Architect',
-    title: 'Digital Platform Architect - Learn Enterprise Architecture Interactively',
-    description: 'Master enterprise architecture through hands-on interactive playgrounds. Learn data pipelines, message flows, and integration patterns by doing.',
+    title: 'Digital Platform Architect — system design from requirements',
+    description:
+      'Clarify FRs and NFRs, shape a defensible design, and validate with interactive playgrounds and blueprints.',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Digital Platform Architect',
-    description: 'Master enterprise architecture through hands-on interactive playgrounds.',
+    description:
+      'System design with explicit functional and non-functional requirements, guided flows, and production-readiness checks.',
   },
   robots: {
     index: true,

@@ -10,24 +10,22 @@ export default function Footer() {
               Digital Platform Architect <span className="text-[var(--accent)]">Platform</span>
             </div>
             <p className="text-sm text-slate-600 mt-2 max-w-md">
-              Learn enterprise architecture through interactive diagrams, patterns, and natural progress tracking.
+              System design from functional and non-functional requirements: design, validate, and reference
+              blueprints.
             </p>
           </div>
           <div className="flex flex-wrap gap-4 text-sm">
-            <Link href="/blocks" className="text-slate-600 hover:text-slate-900">
-              Blocks
+            <Link href="/playgrounds/system-design-framework" className="text-slate-600 hover:text-slate-900">
+              Design
             </Link>
-            <Link href="/patterns" className="text-slate-600 hover:text-slate-900">
-              Patterns
+            <Link href="/playgrounds/production-readiness" className="text-slate-600 hover:text-slate-900">
+              Validate
+            </Link>
+            <Link href="/blueprints" className="text-slate-600 hover:text-slate-900">
+              Blueprints
             </Link>
             <Link href="/playgrounds" className="text-slate-600 hover:text-slate-900">
               Playgrounds
-            </Link>
-            <Link href="/progress" className="text-slate-600 hover:text-slate-900">
-              Progress
-            </Link>
-            <Link href="/articles" className="text-slate-600 hover:text-slate-900">
-              Articles
             </Link>
             <Link href="/about" className="text-slate-600 hover:text-slate-900">
               About

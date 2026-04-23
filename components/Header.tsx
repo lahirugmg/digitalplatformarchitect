@@ -7,12 +7,26 @@ import { Menu, X } from 'lucide-react'
 import ProfileKeyManager from '@/components/profile/ProfileKeyManager'
 
 const navItems = [
-  { href: '/playgrounds', label: 'Playgrounds', ariaLabel: 'Navigate to interactive playgrounds' },
-  { href: '/playgrounds/production-readiness', label: 'Production Readiness', ariaLabel: 'Navigate to production readiness hub', badge: 'NEW' },
-  { href: '/progress', label: 'Progress', ariaLabel: 'Navigate to learning progress hub' },
-  { href: '/vault', label: 'File Vault', ariaLabel: 'Navigate to secure file vault' },
-  { href: '/articles', label: 'Articles', ariaLabel: 'Navigate to articles' },
-  { href: '/about', label: 'About', ariaLabel: 'Navigate to about page' },
+  {
+    href: '/playgrounds/system-design-framework',
+    label: 'Design',
+    ariaLabel: 'System design: functional and non-functional requirements',
+    isActive: (p: string) => p.startsWith('/playgrounds/system-design-framework'),
+  },
+  {
+    href: '/playgrounds/production-readiness',
+    label: 'Validate',
+    ariaLabel: 'Validate production readiness and NFRs',
+    badge: 'NFR' as const,
+    isActive: (p: string) => p.startsWith('/playgrounds/production-readiness'),
+  },
+  {
+    href: '/blueprints',
+    label: 'Blueprints',
+    ariaLabel: 'Browse system design blueprints',
+    isActive: (p: string) => p.startsWith('/blueprints'),
+  },
+  { href: '/about', label: 'About', ariaLabel: 'About this site', isActive: (p: string) => p === '/about' },
 ]
 
 export default function Header() {
@@ -40,7 +54,7 @@ export default function Header() {
 
           <div className="hidden md:flex space-x-8">
             {navItems.map((item) => {
-              const isActive = pathname === item.href
+              const isActive = item.isActive(pathname)
               return (
                 <Link
                   key={item.href}
@@ -53,7 +67,7 @@ export default function Header() {
                 >
                   {item.label}
                   {'badge' in item && item.badge && (
-                    <span className="absolute -top-2 -right-8 rounded border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-xs font-bold text-blue-700">
+                    <span className="absolute -top-2 -right-6 rounded border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-xs font-bold text-blue-700">
                       {item.badge}
                     </span>
                   )}
@@ -92,7 +106,7 @@ export default function Header() {
         >
           <div className="px-4 py-3 space-y-1">
             {navItems.map((item) => {
-              const isActive = pathname === item.href
+              const isActive = item.isActive(pathname)
               return (
                 <Link
                   key={item.href}

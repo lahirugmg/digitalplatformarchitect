@@ -3,15 +3,7 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import {
-  Activity,
-  BarChart3,
-  BookOpen,
-  Compass,
-  Database,
-  Hammer,
-  Sparkles,
-} from 'lucide-react'
+import { Activity, BarChart3, ClipboardList, Compass, Database, FileStack, LayoutGrid, ShieldCheck, Sparkles } from 'lucide-react'
 import VerticalSelector from './architecture-playground/components/VerticalSelector'
 import PersonaSelector from './architecture-playground/components/PersonaSelector'
 import LevelControls from './architecture-playground/components/LevelControls'
@@ -32,7 +24,7 @@ const PlaygroundCanvas = dynamic(
       <div className="flex flex-1 items-center justify-center bg-slate-50">
         <div className="text-center">
           <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-[var(--accent)]" />
-          <p className="text-slate-600">Loading Architecture Explorer...</p>
+          <p className="text-slate-600">Loading architecture explorer…</p>
         </div>
       </div>
     ),
@@ -42,26 +34,47 @@ const PlaygroundCanvas = dynamic(
 const FEATURED_PLAYGROUNDS = [
   {
     href: '/playgrounds/capacity-planning',
-    title: 'Capacity Planning Calculator',
-    desc: 'Estimate infrastructure requirements and costs for your target load profile.',
-    tag: 'Infrastructure',
+    title: 'Capacity planning',
+    desc: 'Turn throughput and latency NFRs into resource and cost estimates.',
+    tag: 'NFR: scale & cost',
     Icon: BarChart3,
   },
   {
     href: '/playgrounds/data-pipeline',
-    title: 'Data Pipeline Choreography',
-    desc: 'Model ingestion-to-analytics flow and identify bottlenecks across the path.',
-    tag: 'Data',
+    title: 'Data pipeline',
+    desc: 'Trace data paths and where durability or ordering requirements bite.',
+    tag: 'NFR: durability',
     Icon: Database,
   },
   {
     href: '/playgrounds/message-flow',
-    title: 'Message Flow Animation',
-    desc: 'Compare synchronous and asynchronous integration behavior between services.',
-    tag: 'Messaging',
+    title: 'Message flow',
+    desc: 'Compare sync vs async against latency and failure-isolation NFRs.',
+    tag: 'NFR: latency & resilience',
     Icon: Activity,
   },
 ]
+
+const WORKFLOW = [
+  {
+    href: '/playgrounds/system-design-framework',
+    title: '1. Capture FRs and NFRs',
+    body: 'Clarify features, users, and constraints; agree on SLOs, security, and cost boundaries before you draw boxes.',
+    Icon: ClipboardList,
+  },
+  {
+    href: '/playgrounds/system-design-framework',
+    title: '2. Shape the design',
+    body: 'Propose a high-level design, walk concrete use cases, and deep-dive where trade-offs matter most.',
+    Icon: LayoutGrid,
+  },
+  {
+    href: '/playgrounds/production-readiness',
+    title: '3. Validate against NFRs',
+    body: 'Check readiness: observability, failure modes, and operational hardening for what you committed to.',
+    Icon: ShieldCheck,
+  },
+] as const
 
 export default function HomePage() {
   const { openModal } = useOnboardingStore()
@@ -90,24 +103,40 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
           <div className="max-w-4xl">
             <p className="inline-flex items-center rounded-full border border-slate-300 bg-white px-3 py-1 text-xs font-semibold tracking-wide text-slate-700">
-              Architecture Learning Platform
+              System design: requirements first
             </p>
             <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Learn, simulate, and validate architecture decisions
+              From functional and non-functional requirements to a defensible system design
             </h1>
             <p className="mt-3 max-w-3xl text-base text-slate-600 sm:text-lg">
-              Explore architecture visually, personalize learning paths, and move from theory to operationally-ready
-              design choices with less visual noise and clearer next steps.
+              Name the behaviors you must support (FRs) and the qualities you must meet (NFRs: latency, availability,
+              durability, cost, security). Then use the guided flow to design, stress-test, and cross-check with
+              reference blueprints.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
-              <button onClick={handleGuidanceClick} className="btn-primary">
-                <Sparkles className="h-4 w-4" />
-                Get Personalized Guidance
-              </button>
-              <Link href="/playgrounds" className="btn-secondary">
-                View Playgrounds
+              <Link href="/playgrounds/system-design-framework" className="btn-primary">
+                <FileStack className="h-4 w-4" />
+                Start a design
               </Link>
+              <Link href="/playgrounds/production-readiness" className="btn-secondary">
+                <ShieldCheck className="h-4 w-4" />
+                Validate readiness
+              </Link>
+              <Link href="/blueprints" className="btn-secondary">
+                <ClipboardList className="h-4 w-4" />
+                Browse blueprints
+              </Link>
+            </div>
+            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500">
+              <Link href="/playgrounds" className="text-[var(--accent)] font-medium hover:underline">
+                All playgrounds
+              </Link>
+              <span className="hidden sm:inline">·</span>
+              <button type="button" onClick={handleGuidanceClick} className="text-slate-600 hover:text-slate-900 inline-flex items-center gap-1.5">
+                <Sparkles className="h-4 w-4" />
+                Personalized guidance
+              </button>
             </div>
           </div>
         </div>
@@ -118,7 +147,7 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
             <div className="space-y-4">
               <PersonalizedSectionHeader
-                title="Recommended Next Steps"
+                title="Recommended next steps"
                 subtitle="Actions ranked by your current role and goal context."
                 context={context}
                 sessionActive={sessionActive}
@@ -166,10 +195,38 @@ export default function HomePage() {
         </section>
       )}
 
+      <section className="bg-[var(--surface-1)] border-b border-slate-200" aria-labelledby="workflow-heading">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+          <h2 id="workflow-heading" className="text-lg sm:text-xl font-bold text-slate-900 text-center">
+            A simple system-design loop
+          </h2>
+          <p className="mt-1 text-sm text-slate-500 text-center max-w-2xl mx-auto mb-8">
+            Every interview and real project starts the same: explicit FRs, explicit NFRs, then a design you can validate.
+          </p>
+          <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+            {WORKFLOW.map((w) => (
+              <Link
+                key={w.title}
+                href={w.href}
+                className="card-interactive group p-5 focus:ring-2 focus:ring-blue-500"
+              >
+                <div className="mb-3 flex items-center gap-3">
+                  <div className="rounded-lg bg-blue-50 p-2 text-blue-700">
+                    <w.Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-800">{w.title}</h3>
+                </div>
+                <p className="text-sm text-slate-600 leading-relaxed">{w.body}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section
         className="flex-1 flex overflow-hidden border-b border-slate-200"
-        aria-label="Interactive Architecture Playground"
-        style={{ minHeight: 'calc(100vh - 220px)' }}
+        aria-label="Interactive architecture explorer (optional reference)"
+        style={{ minHeight: 'min(70vh, 720px)' }}
       >
         <div className="hidden lg:flex lg:flex-col w-80 xl:w-[22rem] bg-white border-r border-slate-200 overflow-y-auto p-4 space-y-4">
           <VerticalSelector />
@@ -179,15 +236,20 @@ export default function HomePage() {
           <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
             <h3 className="text-sm font-bold text-slate-900 mb-2">How to use</h3>
             <ul className="space-y-2 text-xs text-slate-600">
-              <li>Choose your role to tailor detail and language.</li>
-              <li>Select depth level (L0-L3) to control abstraction.</li>
-              <li>Click a node to inspect architecture context and rationale.</li>
-              <li>Use scroll to zoom and drag to pan the canvas.</li>
+              <li>Choose a persona to match interview tone.</li>
+              <li>Use depth (L0–L3) to keep FR/NFR discussion at the right level.</li>
+              <li>Click nodes to inspect how parts relate to your requirements.</li>
             </ul>
+            <p className="mt-3 text-xs text-slate-500">
+              For full screen:{' '}
+              <Link href="/architecture-playground" className="text-[var(--accent)] font-medium hover:underline">
+                Architecture playground
+              </Link>
+            </p>
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-h-[320px]">
           <div className="lg:hidden flex items-center gap-2 p-3 bg-white border-b border-slate-200 overflow-x-auto">
             <div className="flex-shrink-0">
               <VerticalSelector />
@@ -208,66 +270,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[var(--surface-1)] border-b border-slate-200" aria-labelledby="journey-heading">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
-            {[
-              { value: '9', label: 'Building Blocks' },
-              { value: '65+', label: 'Patterns' },
-              { value: '8', label: 'Playgrounds' },
-              { value: '9', label: 'Personas' },
-            ].map((stat) => (
-              <div key={stat.label} className="card-standard py-4 text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-slate-900">{stat.value}</div>
-                <div className="mt-1 text-xs sm:text-sm text-slate-500">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-
-          <h2 id="journey-heading" className="text-lg sm:text-xl font-bold text-center mb-2 text-slate-900">
-            Start Your Journey
-          </h2>
-          <p className="text-sm text-slate-500 text-center mb-6 max-w-lg mx-auto">
-            Choose theory or practice based on what you need next.
-          </p>
-
-          <div className="grid sm:grid-cols-2 gap-5 max-w-3xl mx-auto">
-            <Link href="/patterns" className="card-interactive group p-6 focus:ring-2 focus:ring-blue-500">
-              <div className="mb-3 flex items-center gap-3">
-                <div className="rounded-lg bg-blue-50 p-2 text-blue-700">
-                  <BookOpen className="h-5 w-5" />
-                </div>
-                <h3 className="text-base font-bold text-slate-900">Theory</h3>
-              </div>
-              <p className="text-sm text-slate-600">
-                Understand when and why to apply architecture patterns and trade-offs.
-              </p>
-              <span className="mt-3 inline-flex text-xs font-semibold text-blue-700">Explore Theory →</span>
-            </Link>
-
-            <Link href="/playgrounds" className="card-interactive group p-6 focus:ring-2 focus:ring-blue-500">
-              <div className="mb-3 flex items-center gap-3">
-                <div className="rounded-lg bg-blue-50 p-2 text-blue-700">
-                  <Hammer className="h-5 w-5" />
-                </div>
-                <h3 className="text-base font-bold text-slate-900">Practice</h3>
-              </div>
-              <p className="text-sm text-slate-600">
-                Build and test architecture decisions in guided interactive environments.
-              </p>
-              <span className="mt-3 inline-flex text-xs font-semibold text-blue-700">Start Practicing →</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       <section className="bg-[var(--surface-0)]" aria-labelledby="playgrounds-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
           <div className="mb-6 text-center">
             <h2 id="playgrounds-heading" className="text-lg sm:text-xl font-bold text-slate-900">
-              Featured Playgrounds
+              Playgrounds that stress NFRs
             </h2>
-            <p className="mt-1 text-sm text-slate-500">Focused tools for planning, data flow, and integrations.</p>
+            <p className="mt-1 text-sm text-slate-500">Quick sandboxes to connect requirements to numbers and flows.</p>
           </div>
 
           <div className="grid sm:grid-cols-3 gap-4">
@@ -282,7 +291,7 @@ export default function HomePage() {
                     role: context.role,
                     goal: context.goal,
                     session_active: sessionActive,
-                    ux_variant: `featured_${pg.tag.toLowerCase()}`,
+                    ux_variant: `featured_${pg.tag.toLowerCase().replace(/[^a-z0-9]+/g, '_')}`,
                   })
                 }
               >
@@ -303,7 +312,7 @@ export default function HomePage() {
           <div className="mt-8 flex justify-center">
             <Link href="/playgrounds" className="btn-secondary">
               <Compass className="h-4 w-4" />
-              Browse All Playgrounds
+              Browse all playgrounds
             </Link>
           </div>
         </div>

@@ -12,10 +12,32 @@ const nextConfig = {
   // Enable Turbopack (default in Next.js 16)
   turbopack: {},
   async redirects() {
+    const toDesign = '/playgrounds/system-design-framework';
+    const toValidate = '/playgrounds/production-readiness';
     return [
       {
         source: '/tools/apim-capacity-planner',
         destination: '/tools/capacity-planner',
+        permanent: true,
+      },
+      { source: '/patterns', destination: toDesign, permanent: true },
+      { source: '/patterns/:path*', destination: toDesign, permanent: true },
+      { source: '/blocks', destination: toDesign, permanent: true },
+      { source: '/blocks/:path*', destination: toDesign, permanent: true },
+      { source: '/articles', destination: toDesign, permanent: true },
+      { source: '/articles/:path*', destination: toDesign, permanent: true },
+      { source: '/progress', destination: toDesign, permanent: true },
+      { source: '/vault', destination: toDesign, permanent: true },
+      { source: '/skill-tree', destination: toDesign, permanent: true },
+      { source: '/readiness', destination: toValidate, permanent: true },
+      { source: '/operational-sympathy', destination: toValidate, permanent: true },
+      { source: '/service-mesh', destination: toDesign, permanent: true },
+      { source: '/ai-capability-matrix', destination: toDesign, permanent: true },
+      { source: '/solution', destination: toDesign, permanent: true },
+      { source: '/architecture-map', destination: '/blueprints', permanent: true },
+      {
+        source: '/capacity-planning',
+        destination: '/playgrounds/capacity-planning',
         permanent: true,
       },
     ];

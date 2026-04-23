@@ -1,96 +1,102 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CheckCircle2, Circle, Clock, Target, Lightbulb, AlertTriangle, MessageSquare, Database, Server, PenTool, HelpCircle } from 'lucide-react'
+import { CheckCircle2, Circle, Clock, Target, AlertTriangle, Database, PenTool, HelpCircle } from 'lucide-react'
 
 // --- Data ---
 const steps = [
   {
     id: 1,
-    title: 'Step 1: Understand Problem & Scope',
-    shortTitle: 'Understand',
+    title: 'Step 1: Elicit functional and non-functional requirements',
+    shortTitle: 'FRs & NFRs',
     timeAlloc: '3-10 min',
     icon: HelpCircle,
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/10',
     borderColor: 'border-blue-500/20',
-    description: 'Do not rush to give answers. Ask questions to clarify requirements, assumptions, and constraints. Evaluate traffic volume and feature scope.',
+    description:
+      'Stay in problem space. Separate what the system must do (functional requirements: actors, use cases, data written/read) from how well it must do it (non-functional requirements: availability, p99 latency, throughput, durability, consistency, security, cost, compliance). Get rough numbers: QPS, growth, SLOs, and failure tolerance.',
     dos: [
-      'Ask questions to clarify obscure requirements.',
-      'Write down your assumptions on the whiteboard.',
-      'Determine the most important features.',
-      'Estimate traffic volume and ask about existing tech stack.'
+      'List FRs: user actions, API shapes, and consistency expectations per operation.',
+      'List NFRs: targets for latency, availability, RPO/RTO, cost ceiling, and regulatory constraints.',
+      'State assumptions and ask the interviewer to confirm or correct them.',
+      'Estimate read/write ratio, peak QPS, and data size to ground later capacity math.',
     ],
     donts: [
-      'Answering without a thorough understanding.',
-      'Jumping straight into a solution.',
-      'Assuming your silent assumptions are correct.'
-    ]
+      'Drawing a diagram before the requirement set is agreed.',
+      'Treating “scalable” or “fast” as requirements without numbers.',
+      'Hiding implicit assumptions (single region, trusted clients, strong consistency everywhere).',
+    ],
   },
   {
     id: 2,
-    title: 'Step 2: Propose High-Level Design',
-    shortTitle: 'High-Level',
+    title: 'Step 2: Propose a high-level design (trace FRs, respect NFRs)',
+    shortTitle: 'High-level',
     timeAlloc: '10-15 min',
     icon: PenTool,
     color: 'text-purple-400',
     bgColor: 'bg-purple-500/10',
     borderColor: 'border-purple-500/20',
-    description: 'Develop a high-level blueprint and get buy-in. Draw boxes for clients, APIs, load balancers, and data stores. Use back-of-the-envelope estimations to prove it fits.',
+    description:
+      'Sketch clients, edge, APIs, stateful services, and data stores. For each major FR path, show how it maps to components. For each NFR, show what mechanism you rely on (e.g., cache for latency, replication/queues for durability, idempotency for failures).',
     dos: [
-      'Actively collaborate with the interviewer.',
-      'Draw high-level boxes (APIs, Servers, Data Stores).',
-      'Walk through concrete use-cases to validate the design.',
-      'Perform back-of-the-envelope calculations if needed.'
+      'Walk 1–2 critical user journeys end to end and name components touched.',
+      'Call out sync vs async boundaries where latency or decoupling NFRs require it.',
+      'Use back-of-the-envelope capacity to show the boxes are not impossible.',
+      'Pause for feedback—adjust before you go deep.',
     ],
     donts: [
-      'Going into deep implementation details too early.',
-      'Ignoring interviewer feedback on the blueprint.'
-    ]
+      'A generic 3-tier diagram that does not connect to the FR list.',
+      'Optimizing a component before the interviewer cares.',
+      'Skipping the “why this database / queue / cache for this NFR” link.',
+    ],
   },
   {
     id: 3,
-    title: 'Step 3: Design Deep Dive',
-    shortTitle: 'Deep Dive',
+    title: 'Step 3: Deep dive (bottlenecks, consistency, and NFR trade-offs)',
+    shortTitle: 'Deep dive',
     timeAlloc: '10-25 min',
     icon: Database,
     color: 'text-amber-400',
     bgColor: 'bg-amber-500/10',
     borderColor: 'border-amber-500/20',
-    description: 'Prioritize components with the interviewer and dig into the details. Resolve specific system bottlenecks and focus on areas that show off your skills.',
+    description:
+      'With the interviewer, pick hotspots: the hot path for latency, the place that risks availability, or the data model that challenges consistency. Tie each deep topic to a stated NFR, and name what you give up (e.g., eventual consistency for partition tolerance).',
     dos: [
-      'Work with interviewer to prioritize components.',
-      'Dive deep into complex areas (e.g., hash functions, latency).',
-      'Keep track of your time allocation.',
-      'Explain your thought process out loud.'
+      'Prioritize: “If we only deep dive one thing, it’s ___ because of NFR ___.”',
+      'Quantify: rough latency per hop, failure modes, retry/idempotency.',
+      'For storage: access patterns, indexes, sharding, hot keys.',
+      'Think out loud; invite course corrections.',
     ],
     donts: [
-      'Getting carried away with details that don\'t show off your skills.',
-      'Going silently into "cave mode" to solve a problem.'
-    ]
+      'Long silence while “optimizing” a minor piece.',
+      'Detail that does not map back to a requirement or risk.',
+    ],
   },
   {
     id: 4,
-    title: 'Step 4: Wrap Up',
-    shortTitle: 'Wrap Up',
+    title: 'Step 4: Validate and wrap (failure modes, ops, SLOs)',
+    shortTitle: 'Validate',
     timeAlloc: '3-5 min',
     icon: Target,
     color: 'text-emerald-400',
     bgColor: 'bg-emerald-500/10',
     borderColor: 'border-emerald-500/20',
-    description: 'Recap the design, discuss bottlenecks, failure modes, and operational considerations. Answer follow-up questions and project future scaling.',
+    description:
+      'Recap how the design meets the FRs and NFRs you started with. List top failure modes (dependencies, data loss, overload) and mitigations. Mention monitoring/alerting against SLOs and what you would load-test next. Then use the production-readiness and blueprint tools to harden the story.',
     dos: [
-      'Identify system bottlenecks and discuss improvements.',
-      'Give a concise recap of the final design.',
-      'Discuss failure modes (server/network loss) and ops (monitoring).',
-      'Discuss next scale curve adjustments (e.g., 1M to 10M users).'
+      '“We meet p99 X because …” and “if we miss, we see it via …”',
+      'RPO/RTO and backup story if durability NFRs matter.',
+      'Explicit non-goals: what you are not building in 45 minutes.',
+      'Point to /playgrounds/production-readiness and /blueprints for follow-on checks.',
     ],
     donts: [
-      'Claiming your design is "perfect".',
-      'Rushing the finish line without answering follow-ups.'
-    ]
-  }
+      'Declaring the design “complete” with no test or ops angle.',
+      'Dodging the “what breaks first under 10x load” question.',
+    ],
+  },
 ]
 
 export default function FrameworkPlayground() {
@@ -111,16 +117,33 @@ export default function FrameworkPlayground() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold mb-1 tracking-tight text-white flex items-center gap-2">
-              <span className="text-2xl">📋</span> System Design Framework
+              <span className="text-2xl">📋</span> System design framework
             </h1>
-            <p className="text-sm sm:text-base text-slate-400 font-medium">
-              Master the 4-step process for cracking system design interviews
+            <p className="text-sm sm:text-base text-slate-400 font-medium max-w-2xl">
+              Four steps: lock functional and non-functional requirements, shape the design, deep dive trade-offs, then
+              validate against the bar you set.
             </p>
           </div>
           
-          <div className="flex items-center gap-3 bg-slate-900/50 px-4 py-2 rounded-xl border border-white/10">
-            <Clock className="w-5 h-5 text-amber-400" />
-            <span className="text-sm font-semibold text-slate-300">Total Interview Time: ~45 min</span>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
+            <div className="flex items-center gap-3 bg-slate-900/50 px-4 py-2 rounded-xl border border-white/10 self-start sm:self-center">
+              <Clock className="w-5 h-5 text-amber-400 shrink-0" />
+              <span className="text-sm font-semibold text-slate-300">Typical flow: ~45 min</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Link
+                href="/playgrounds/production-readiness"
+                className="text-sm font-semibold px-3 py-2 rounded-lg bg-emerald-500/20 text-emerald-200 border border-emerald-500/30 hover:bg-emerald-500/30 transition"
+              >
+                Validate NFRs
+              </Link>
+              <Link
+                href="/blueprints"
+                className="text-sm font-semibold px-3 py-2 rounded-lg bg-slate-900/80 text-slate-200 border border-white/10 hover:bg-slate-800 transition"
+              >
+                Reference blueprints
+              </Link>
+            </div>
           </div>
         </div>
       </div>
