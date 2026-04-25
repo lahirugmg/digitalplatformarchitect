@@ -1,35 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { Activity, BarChart3, ClipboardList, Compass, Database, FileStack, LayoutGrid, ShieldCheck, Sparkles } from 'lucide-react'
-import VerticalSelector from './architecture-playground/components/VerticalSelector'
-import PersonaSelector from './architecture-playground/components/PersonaSelector'
-import LevelControls from './architecture-playground/components/LevelControls'
-import ContextPanel from './architecture-playground/components/ContextPanel'
 import OnboardingModal from '@/components/onboarding/OnboardingModal'
 import ContextOverrideControl from '@/components/personalization/ContextOverrideControl'
 import PersonalizedSectionHeader from '@/components/personalization/PersonalizedSectionHeader'
 import ReasonChips from '@/components/personalization/ReasonChips'
+import EnterpriseArchitectureMap from '@/components/home/EnterpriseArchitectureMap'
 import { useOnboardingStore } from '@/lib/onboarding/store'
 import { emitPersonalizationEvent } from '@/lib/personalization/telemetry'
 import { trackRecommendationClick, usePersonalization } from '@/lib/personalization/use-personalization'
-
-const PlaygroundCanvas = dynamic(
-  () => import('./architecture-playground/components/PlaygroundCanvas'),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex flex-1 items-center justify-center bg-slate-50">
-        <div className="text-center">
-          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-[var(--accent)]" />
-          <p className="text-slate-600">Loading architecture explorer…</p>
-        </div>
-      </div>
-    ),
-  },
-)
 
 const FEATURED_PLAYGROUNDS = [
   {
@@ -223,52 +204,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section
-        className="flex-1 flex overflow-hidden border-b border-slate-200"
-        aria-label="Interactive architecture explorer (optional reference)"
-        style={{ minHeight: 'min(70vh, 720px)' }}
-      >
-        <div className="hidden lg:flex lg:flex-col w-80 xl:w-[22rem] bg-white border-r border-slate-200 overflow-y-auto p-4 space-y-4">
-          <VerticalSelector />
-          <PersonaSelector />
-          <LevelControls />
-
-          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-            <h3 className="text-sm font-bold text-slate-900 mb-2">How to use</h3>
-            <ul className="space-y-2 text-xs text-slate-600">
-              <li>Choose a persona to match interview tone.</li>
-              <li>Use depth (L0–L3) to keep FR/NFR discussion at the right level.</li>
-              <li>Click nodes to inspect how parts relate to your requirements.</li>
-            </ul>
-            <p className="mt-3 text-xs text-slate-500">
-              For full screen:{' '}
-              <Link href="/architecture-playground" className="text-[var(--accent)] font-medium hover:underline">
-                Architecture playground
-              </Link>
-            </p>
-          </div>
-        </div>
-
-        <div className="flex-1 flex flex-col min-h-[320px]">
-          <div className="lg:hidden flex items-center gap-2 p-3 bg-white border-b border-slate-200 overflow-x-auto">
-            <div className="flex-shrink-0">
-              <VerticalSelector />
-            </div>
-            <div className="flex-shrink-0">
-              <PersonaSelector />
-            </div>
-            <div className="flex-shrink-0">
-              <LevelControls />
-            </div>
-          </div>
-
-          <PlaygroundCanvas architectureId="ecommerce-platform" />
-        </div>
-
-        <div className="hidden xl:block w-96 bg-white border-l border-slate-200 overflow-y-auto">
-          <ContextPanel />
-        </div>
-      </section>
+      <EnterpriseArchitectureMap />
 
       <section className="bg-[var(--surface-0)]" aria-labelledby="playgrounds-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">

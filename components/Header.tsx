@@ -46,8 +46,7 @@ export default function Header() {
               aria-label="Digital Platform Architect home"
               onClick={closeMobileMenu}
             >
-              <span className="hidden sm:inline">Digital Platform Architect</span>{' '}
-              <span className="hidden sm:inline text-[var(--accent)]">Platform</span>
+              <span className="hidden sm:inline">Digital Platform Architect</span>
               <span className="inline sm:hidden">DPA</span>
             </Link>
           </div>
