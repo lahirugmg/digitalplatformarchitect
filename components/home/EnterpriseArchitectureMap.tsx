@@ -101,18 +101,18 @@ export default function EnterpriseArchitectureMap() {
 
   return (
     <section className="border-b border-slate-200 bg-white" aria-labelledby="enterprise-map-heading">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] lg:items-start">
+      <div className="mx-auto max-w-screen-2xl px-4 py-12 sm:px-6 sm:py-16 lg:px-10">
+        <div className="grid gap-10 xl:grid-cols-[minmax(0,1.3fr)_minmax(420px,0.7fr)] xl:items-start">
           <div>
-            <p className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-600">
+            <p className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-4 py-1.5 text-sm font-semibold uppercase tracking-wide text-slate-600">
               Simple enterprise architecture playground
             </p>
-            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div className="mt-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <h2 id="enterprise-map-heading" className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+                <h2 id="enterprise-map-heading" className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl lg:text-4xl">
                   Explore enterprise architecture at a glance
                 </h2>
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
+                <p className="mt-3 max-w-4xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
                   Start with a generic enterprise map. Pick a zone to connect high-level architecture decisions back to
                   FRs, NFRs, and the questions architects should ask early.
                 </p>
@@ -123,24 +123,24 @@ export default function EnterpriseArchitectureMap() {
               </Link>
             </div>
 
-            <div className="mt-8 rounded-3xl border border-slate-200 bg-slate-50 p-4 shadow-sm sm:p-6">
-              <div className="grid gap-3 md:grid-cols-3">
+            <div className="mt-10 rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-sm sm:p-7">
+              <div className="grid gap-4 lg:grid-cols-3">
                 {zones.slice(0, 3).map((zone) => (
                   <ZoneButton key={zone.id} zone={zone} active={zone.id === activeZoneId} onSelect={setActiveZoneId} />
                 ))}
               </div>
 
-              <div className="my-4 flex justify-center text-slate-300" aria-hidden="true">
-                <ArrowRight className="h-5 w-5 rotate-90 md:rotate-0" />
+              <div className="my-5 flex justify-center text-slate-300" aria-hidden="true">
+                <ArrowRight className="h-6 w-6 rotate-90 lg:rotate-0" />
               </div>
 
-              <div className="grid gap-3 md:grid-cols-2">
+              <div className="grid gap-4 lg:grid-cols-2">
                 {zones.slice(3, 5).map((zone) => (
                   <ZoneButton key={zone.id} zone={zone} active={zone.id === activeZoneId} onSelect={setActiveZoneId} />
                 ))}
               </div>
 
-              <div className="mt-3 grid gap-3 md:grid-cols-2">
+              <div className="mt-4 grid gap-4 lg:grid-cols-2">
                 {zones.slice(5).map((zone) => (
                   <ZoneButton key={zone.id} zone={zone} active={zone.id === activeZoneId} onSelect={setActiveZoneId} />
                 ))}
@@ -148,15 +148,15 @@ export default function EnterpriseArchitectureMap() {
             </div>
           </div>
 
-          <aside className="rounded-3xl border border-slate-200 bg-slate-950 p-6 text-white shadow-xl" aria-live="polite">
+          <aside className="rounded-3xl border border-slate-200 bg-slate-950 p-7 text-white shadow-xl lg:p-8" aria-live="polite">
             <div className="flex items-start gap-4">
               <div className={`rounded-2xl border p-3 ${activeZone.tone}`}>
-                <ActiveIcon className="h-6 w-6" />
+                <ActiveIcon className="h-7 w-7" />
               </div>
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-300">{activeZone.eyebrow}</p>
-                <h3 className="mt-1 text-xl font-bold">{activeZone.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-300">{activeZone.summary}</p>
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-blue-300">{activeZone.eyebrow}</p>
+                <h3 className="mt-1 text-2xl font-bold">{activeZone.title}</h3>
+                <p className="mt-3 text-base leading-7 text-slate-300">{activeZone.summary}</p>
               </div>
             </div>
 
@@ -188,19 +188,19 @@ function ZoneButton({
       type="button"
       onClick={() => onSelect(zone.id)}
       aria-pressed={active}
-      className={`group rounded-2xl border p-4 text-left transition ${
+      className={`group rounded-2xl border p-5 text-left transition ${
         active
           ? `${zone.tone} shadow-md ring-2 ring-blue-500/20`
           : 'border-slate-200 bg-white text-slate-700 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm'
       }`}
     >
       <div className="flex items-center gap-3">
-        <span className={`rounded-xl border p-2 ${active ? 'border-current bg-white/60' : 'border-slate-200 bg-slate-50 text-slate-500'}`}>
-          <Icon className="h-5 w-5" />
+        <span className={`rounded-xl border p-2.5 ${active ? 'border-current bg-white/60' : 'border-slate-200 bg-slate-50 text-slate-500'}`}>
+          <Icon className="h-6 w-6" />
         </span>
         <span>
-          <span className="block text-[10px] font-bold uppercase tracking-[0.18em] opacity-70">{zone.eyebrow}</span>
-          <span className="block text-sm font-bold">{zone.title}</span>
+          <span className="block text-xs font-bold uppercase tracking-[0.18em] opacity-70">{zone.eyebrow}</span>
+          <span className="block text-base font-bold">{zone.title}</span>
         </span>
       </div>
     </button>
@@ -209,12 +209,12 @@ function ZoneButton({
 
 function DetailList({ title, items, icon }: { title: string; items: readonly string[]; icon: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-      <h4 className="flex items-center gap-2 text-sm font-bold text-slate-100">
+    <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+      <h4 className="flex items-center gap-2 text-base font-bold text-slate-100">
         <span className="text-blue-300">{icon}</span>
         {title}
       </h4>
-      <ul className="mt-3 space-y-2 text-sm text-slate-300">
+      <ul className="mt-3 space-y-2.5 text-base leading-7 text-slate-300">
         {items.map((item) => (
           <li key={item} className="flex gap-2">
             <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-300" />

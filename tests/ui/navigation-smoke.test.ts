@@ -28,6 +28,7 @@ test('homepage and playground surfaces keep core navigation paths', () => {
   assert.doesNotMatch(header, /\/skill-tree/)
   assert.match(footer, /href="\/playgrounds\/system-design-framework"/)
   assert.match(footer, /href="\/blueprints"/)
+  assert.doesNotMatch(footer, /Digital Platform Architect <span[^>]*>Platform/)
   assert.doesNotMatch(footer, /\/skill-tree/)
   assert.match(
     skillTreeRedirect,
@@ -47,6 +48,23 @@ test('homepage uses a simplified enterprise architecture playground', () => {
   assert.match(enterpriseMap, /Users & Channels/)
   assert.match(enterpriseMap, /Security & Governance/)
   assert.match(enterpriseMap, /href="\/architecture-playground"/)
+})
+
+test('homepage layout is readable on wide screens', () => {
+  const homepage = read('app/page.tsx')
+  const enterpriseMap = read('components/home/EnterpriseArchitectureMap.tsx')
+  const header = read('components/Header.tsx')
+  const footer = read('components/Footer.tsx')
+
+  assert.match(homepage, /max-w-screen-2xl/)
+  assert.match(homepage, /lg:text-6xl/)
+  assert.match(homepage, /lg:text-2xl/)
+  assert.doesNotMatch(homepage, /max-w-5xl mx-auto/)
+  assert.match(enterpriseMap, /max-w-screen-2xl/)
+  assert.match(enterpriseMap, /lg:text-4xl/)
+  assert.match(enterpriseMap, /text-base leading-7/)
+  assert.match(header, /max-w-screen-2xl/)
+  assert.match(footer, /max-w-screen-2xl/)
 })
 
 test('production readiness workflow routes do not point to missing pages', () => {

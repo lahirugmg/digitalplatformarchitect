@@ -37,12 +37,12 @@ export default function Header() {
 
   return (
     <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-sm" aria-label="Primary">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-10">
+        <div className="flex justify-between h-20 items-center">
           <div className="flex items-center">
             <Link
               href="/"
-              className="text-xl font-bold text-slate-900 transition hover:text-[var(--accent)]"
+              className="text-2xl font-bold text-slate-900 transition hover:text-[var(--accent)]"
               aria-label="Digital Platform Architect home"
               onClick={closeMobileMenu}
             >
@@ -51,7 +51,7 @@ export default function Header() {
             </Link>
           </div>
 
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex space-x-10">
             {navItems.map((item) => {
               const isActive = item.isActive(pathname)
               return (
